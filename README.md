@@ -13,11 +13,11 @@ In case the vulnerability reporting form is sent on behalf of a researcher or Re
 ## Vulnerability Report Process
 
 
-#### Demonstration using web formulary:
+#### Demonstration using [web formulary](https://www.aliasrobotics.com/bounties.htm):
 
 ![web](https://user-images.githubusercontent.com/8014558/43890769-ed3ab818-9bc7-11e8-9c8e-47b433425e6e.gif)
 
-#### Demonstartion using GitHub issue template:
+#### Demonstration using GitHub issue [template](https://github.com/aliasrobotics/RVDP/issues/new/choose):
 
 ![template](https://user-images.githubusercontent.com/8014558/43891664-2daa350c-9bca-11e8-80a9-ef8e1a765193.gif)
 
