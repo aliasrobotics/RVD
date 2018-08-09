@@ -20,3 +20,7 @@ In case the vulnerability reporting form is sent on behalf of a researcher or Re
 #### Demonstartion using GitHub issue template:
 
 ![template](https://user-images.githubusercontent.com/8014558/43891664-2daa350c-9bca-11e8-80a9-ef8e1a765193.gif)
+
+## Do you want to contact us?
+
+Write an email to **contact[at]aliasrobotics[dot]com**
