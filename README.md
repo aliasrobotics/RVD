@@ -2,7 +2,7 @@
 Robot Vulnerability Disclosure Program
 
 ## Instructions
-In order to add a vulnerability to the RVDP repository, we provide a public web formulary at https://www.aliasrobotics.com/bounties.htm or use github issue [template](https://github.com/aliasrobotics/RVDP/issues/new/choose).
+In order to add a vulnerability to the RVDP repository, we provide a public web formulary at https://www.aliasrobotics.com/bounties.htm or use GitHub issue [template](https://github.com/aliasrobotics/RVDP/issues/new/choose).
 
 Please, fill out the form with as much information as possible, this will allow the vendor to validate the issue in less time.
 
@@ -15,4 +15,8 @@ In case the vulnerability reporting form is sent on behalf of a researcher or Re
 
 #### Demonstration using web formulary:
 
-![out](https://user-images.githubusercontent.com/8014558/43890769-ed3ab818-9bc7-11e8-9c8e-47b433425e6e.gif)
+![web](https://user-images.githubusercontent.com/8014558/43890769-ed3ab818-9bc7-11e8-9c8e-47b433425e6e.gif)
+
+#### Demonstartion using GitHub issue template:
+
+![template](https://user-images.githubusercontent.com/8014558/43891664-2daa350c-9bca-11e8-80a9-ef8e1a765193.gif)
