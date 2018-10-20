@@ -1,6 +1,8 @@
 # Robot Vulnerability Disclosure Program (RVDP)
 
-This repository contains Alias Robotics' Robot Vulnerability Disclosure Programs (RVDPs), an attempt to register and record robot vulnerabilities in a formal manner. Programs are integrated into a single repository to facilitate management of reports.
+<a href="http://www.aliasrobotics.com"><img src="https://aliasrobotics.com/media/alias_logo_central.png" align="left" hspace="8" vspace="2" width="100" ></a>
+
+This repository contains Alias Robotics' [Robot Vulnerability Disclosure Programs (RVDPs)](https://aliasrobotics.com/bounties.htm#rvdp), an attempt to register and record robot vulnerabilities in a formal manner. Programs are integrated into a single repository to facilitate management of reports.
 
 Vulnerabilities are community-contributed. Participants get the chance to obtain public acknowledgement by submitting a vulnerability while providing prove of it. Reports can be submitted in the form of [an issue](https://github.com/aliasrobotics/RVDP/issues/new?template=rvdp-report-template.md). Alternatively, web forms that simplify the reporting process are available at [Alias Robotics' web page](https://aliasrobotics.com/bounties.htm#rvdp). Refer to https://github.com/aliasrobotics/RVDP/issues/87 for an exemplary robot vulnerability report affecting a robot (software) component, namely ROS, the Robot Operating System.
 
