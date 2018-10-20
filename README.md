@@ -4,11 +4,13 @@
 
 This repository contains Alias Robotics' [Robot Vulnerability Disclosure Programs (RVDPs)](https://aliasrobotics.com/bounties.htm#rvdp), an attempt to register and record robot vulnerabilities in a formal manner. Programs are integrated into a single repository to facilitate management of reports.
 
+**Alias Robotics supports hacker-powered robot security in close collaboration with original robot manufacturers. By no means we encourage or promote the unauthorized tampering with running robotic systems. This can cause serious human harm and material damages.**
+
+## Contributions and rewards
+
 Vulnerabilities are community-contributed. Participants get the chance to obtain public acknowledgement by submitting a vulnerability while providing prove of it. Reports can be submitted in the form of [an issue](https://github.com/aliasrobotics/RVDP/issues/new?template=rvdp-report-template.md). Alternatively, web forms that simplify the reporting process are available at [Alias Robotics' web page](https://aliasrobotics.com/bounties.htm#rvdp). Refer to https://github.com/aliasrobotics/RVDP/issues/87 for an exemplary robot vulnerability report affecting a robot (software) component, namely ROS, the Robot Operating System.
 
 *RVDPs do not offer paid rewards. If you found a robot security hole and would like to receive a monetary restribution, we encourage you to check our [Robot Bug Bounty Programs (RBBPs)](https://aliasrobotics.com/bounties.htm#rbbp) or [contact us](https://aliasrobotics.com/about.htm#contact) directly.*
-
-**Alias Robotics supports hacker-powered robot security in close collaboration with original robot manufacturers. By no means we encourage or promote the unauthorized tampering with running robotic systems. This can cause serious human harm and material damages.**
 
 
 ## Additional instructions
