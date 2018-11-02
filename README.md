@@ -47,4 +47,4 @@ Alias Robotics provides public web formularies at https://www.aliasrobotics.com/
 
 ## Do you have any feedback?
 
-Feel free to contact us if you have any requests of feedaback at **contact[at]aliasrobotics[dot]com**,
+Feel free to contact us if you have any requests of feedaback at **contact[at]aliasrobotics[dot]com**
