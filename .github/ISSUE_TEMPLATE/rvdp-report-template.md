@@ -1,7 +1,6 @@
 ---
-name: RVDP report template
-about: Template to report a valid RVDP. Identical to the https://aliasrobotics.com/bounties.htm
-  web formulary's output.
+name: RVD report template
+about: Template to report a valid robot vulnerability
 
 ---
 
@@ -11,13 +10,20 @@ about: Template to report a valid RVDP. Identical to the https://aliasrobotics.c
 | Vendor  | <optional>  |
 | CVE ID  | <if exists>  |
 | CWE ID  | <optional>  |
-| RVSS Score  | <required>      |
-| RVSS Vector | <<optional>e.g:RVSS:1.0/AV:_/AC:_/PR:_/UI:_/Y:_/S:_/C:_/I:_/A:_/H:_> |
+| RVSS Score (if applies)  | <required>      |
+| RVSS Vector (if applies)| <<optional>e.g:RVSS:1.0/AV:_/AC:_/PR:_/UI:_/Y:_/S:_/C:_/I:_/A:_/H:_> |
 | GitHub Account | <required> |
 | Date Reported  | <<required>e.g:YYYY-MM-DD> |
 | Date Updated   | <optional>     |
 | Exploitation vector | <<required>e.g.: Local network> |
+
+## Weakness or Vulnerability?
+
+* Pick one: 
+    * Weakness: yes/no
+    * Vulnerability: yes/no
  
+Refer to https://github.com/aliasrobotics/RVD#discussion if you need to gain some understanding on the differences.
 
 ## Component
 
@@ -84,7 +90,5 @@ about: Template to report a valid RVDP. Identical to the https://aliasrobotics.c
     * Human: yes/no
 
 ### Description:
-
-
 
 <What is the vulnerability? Please, describe in clear steps, how to reproduce the issue.>
