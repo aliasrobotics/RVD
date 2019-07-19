@@ -65,5 +65,21 @@ Vulnerabilities are community-contributed. Participants get the chance to obtain
 
 Feel free to contact us if you have any requests of feedaback at **contact[at]aliasrobotics[dot]com**
 
-## Appendix A: Terminology, vulnerabilities, weaknesses, bugs and more
-TODO
+## Appendix A: Vulnerabilities, weaknesses, bugs and more
+### Discussion
+[Commonly](https://en.wikipedia.org/wiki/Software_bug):
+- A **(robot) software bug** is an error, flaw, failure or fault in a computer program or system that causes it to produce an incorrect or unexpected result, or to behave in unintended ways.
+
+According to [CWE](https://cwe.mitre.org/about/faq.html#A.2):
+- **(robot) software weaknesses** are errors (bugs?) that can lead to software vulnerabilities. 
+- **(robot) software vulnerability** is a mistake in software that can be directly used by a hacker to gain access to a system or network.
+
+[ISO/IEC 27001](https://www.iso.org/isoiec-27001-information-security.html) defines only vulnerability:
+- **(robot) vulnerability**: weakness of an asset or control that can be exploited by one or more threats
+
+Based on all this, we'll assume that both "weakness" and "bug" refer to the same thing, an error in code that might turn into a "vulnerability" if exploitable. To establish some clear relationship:
+
+```
+ bugs == weaknesses
+ weakness -> vulnerability <-> weakness is exploitable
+```
