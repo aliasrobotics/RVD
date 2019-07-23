@@ -64,8 +64,8 @@ Vulnerabilities are community-contributed. Participants get the chance to obtain
 
 Feel free to contact us if you have any requests of feedaback at **contact[at]aliasrobotics[dot]com**
 
-## Appendix A: Vulnerabilities, weaknesses, bugs and more
-### Discussion
+#### Appendix A: Vulnerabilities, weaknesses, bugs and more
+##### Discussion
 [Commonly](https://en.wikipedia.org/wiki/Software_bug):
 - A **(robot) software bug** is an error, flaw, failure or fault in a computer program or system that causes it to produce an incorrect or unexpected result, or to behave in unintended ways.
 
