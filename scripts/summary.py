@@ -4,6 +4,7 @@ Scripts that produces a summary of vulnerabilities and weaknesses
 
 from import_base import RVDImport
 from github import Label
+from time import gmtime, strftime
 
 class Summary(RVDImport):    
     def __init__(self, username="aliasrobotics", repo="RVD"):
@@ -210,6 +211,7 @@ class Summary(RVDImport):
         :return markdown string
         """
         markdown="### General summary"+"\n"
+        markdown+="*Last updated "+str(strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime()))+"*\n"
         markdown+=""+"\n"
         markdown+="|       | All      | Open  |    Closed |"+"\n"
         markdown+="|-------|---------|--------|-----------|"+"\n"
@@ -248,7 +250,7 @@ class Summary(RVDImport):
         markdown+="[~others_closed]: https://img.shields.io/badge/others-"+str(self.nothers_closed)+"-green.svg"+"\n"
         markdown+="[~vulns_critical]: https://img.shields.io/badge/vuln.critical-"+str(self.vulns_critical)+"-ce5b50.svg"+"\n"
         markdown+="[~vulns_high]: https://img.shields.io/badge/vuln.high-"+str(self.vulns_high)+"-e99695.svg"+"\n"
-        markdown+="[~vulns_me<dium]: https://img.shields.io/badge/vuln.medium-"+str(self.vulns_medium)+"-e9cd95.svg"+"\n"
+        markdown+="[~vulns_medium]: https://img.shields.io/badge/vuln.medium-"+str(self.vulns_medium)+"-e9cd95.svg"+"\n"
         markdown+="[~vulns_low]: https://img.shields.io/badge/vuln.low-"+str(self.vulns_low)+"-e9e895.svg"+"\n"
         return markdown
 
@@ -264,18 +266,19 @@ class Summary(RVDImport):
         """
         markdown=""
         markdown+="#### ROS 2"+"\n"
+        markdown+="*Last updated "+str(strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime()))+"*\n"
         markdown+=""+"\n"
         markdown+="|       | All      | Open  |    Closed |"+"\n"
         markdown+="|-------|---------|--------|-----------|"+"\n"
-        markdown+="| Vulnerabilities | [![label: vulns_ros2][~vulns_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
+        markdown+="| `ROS 2` Vulnerabilities | [![label: vulns_ros2][~vulns_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: vulns_open_ros2][~vulns_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: vulns_closed_ros2][~vulns_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |"+"\n"
         
-        markdown+="| Weaknesses | [![label: weaknesses_ros2][~weaknesses_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
+        markdown+="| `ROS 2` Weaknesses | [![label: weaknesses_ros2][~weaknesses_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: weaknesses_open_ros2][~weaknesses_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: weaknesses_closed_ros2][~weaknesses_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |"+"\n"
 
-        markdown+="| Others | [![label: others_ros2][~others_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
+        markdown+="| `ROS 2` Others | [![label: others_ros2][~others_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: others_open_ros2][~others_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: others_closed_ros2][~others_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |"+"\n"
         markdown+="\n"
