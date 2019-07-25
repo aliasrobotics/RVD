@@ -211,7 +211,7 @@ class Summary(RVDImport):
         :return markdown string
         """
         markdown="### General summary"+"\n"
-        markdown+="*Last updated "+str(strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime()))+"*\n"
+        markdown+="*Last updated "+str(strftime("%a, %d %b %Y %H:%M:%S", gmtime()))+"*\n"
         markdown+=""+"\n"
         markdown+="|       | All      | Open  |    Closed |"+"\n"
         markdown+="|-------|---------|--------|-----------|"+"\n"
@@ -266,7 +266,7 @@ class Summary(RVDImport):
         """
         markdown=""
         markdown+="#### ROS 2"+"\n"
-        markdown+="*Last updated "+str(strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime()))+"*\n"
+        markdown+="*Last updated "+str(strftime("%a, %d %b %Y %H:%M:%S", gmtime()))+"*\n"
         markdown+=""+"\n"
         markdown+="|       | All      | Open  |    Closed |"+"\n"
         markdown+="|-------|---------|--------|-----------|"+"\n"
