@@ -210,7 +210,7 @@ class Summary(RVDImport):
         """
         
         markdown="### General summary"+"\n"
-        markdown=""+"\n"
+        markdown+=""+"\n"
         markdown+="|       | All      | Open  |    Closed |"+"\n"
         markdown+="|-------|---------|--------|-----------|"+"\n"
         markdown+="| Vulnerabilities | [![label: vulns][~vulns]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+) | \
@@ -255,7 +255,7 @@ class Summary(RVDImport):
         ########################################################
         markdown+="### ROS 2"+"\n"
         ########################################################
-        markdown=""+"\n"
+        markdown+=""+"\n"
         markdown+="|       | All      | Open  |    Closed |"+"\n"
         markdown+="|-------|---------|--------|-----------|"+"\n"
         markdown+="| Vulnerabilities | [![label: vulns_ros2][~vulns_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
@@ -296,19 +296,19 @@ class Summary(RVDImport):
         markdown+="[~vulns_medium]: https://img.shields.io/badge/vuln.medium-"+str(self.vulns_medium)+"-e9cd95.svg"+"\n"
         markdown+="[~vulns_low]: https://img.shields.io/badge/vuln.low-"+str(self.vulns_low)+"-e9e895.svg"+"\n"
 
-        markdown+="[~vulns_ros2]: https://img.shields.io/badge/vulnerabilities-"+str(self.nvulnerabilities_ros2)+"-7fe0bb.svg"+"\n"
-        markdown+="[~vulns_open_ros2]: https://img.shields.io/badge/vulnerabilities-"+str(self.nvulnerabilities_open_ros2)+"-red.svg"+"\n"
-        markdown+="[~vulns_closed_ros2]: https://img.shields.io/badge/vulnerabilities-"+str(self.nvulnerabilities_closed_ros2)+"-green.svg"+"\n"
-        markdown+="[~weaknesses_ros2]: https://img.shields.io/badge/weaknesses-"+str(self.nweaknesses_ros2)+"-dbf9a2.svg"+"\n"
-        markdown+="[~weaknesses_open_ros2]: https://img.shields.io/badge/weaknesses-"+str(self.nweaknesses_open_ros2)+"-red.svg"+"\n"
-        markdown+="[~weaknesses_closed_ros2]: https://img.shields.io/badge/weaknesses-"+str(self.nweaknesses_closed_ros2)+"-green.svg"+"\n"
-        markdown+="[~others_ros2]: https://img.shields.io/badge/others-"+str(self.nothers_ros2)+"-dbf9a2.svg"+"\n"
-        markdown+="[~others_open_ros2]: https://img.shields.io/badge/others-"+str(self.nothers_open_ros2)+"-red.svg"+"\n"
-        markdown+="[~others_closed_ros2]: https://img.shields.io/badge/others-"+str(self.nothers_closed_ros2)+"-green.svg"+"\n"
-        markdown+="[~vulns_critical_ros2]: https://img.shields.io/badge/vuln.critical-"+str(self.vulns_critical_ros2)+"-ce5b50.svg"+"\n"
-        markdown+="[~vulns_high_ros2]: https://img.shields.io/badge/vuln.high-"+str(self.vulns_high_ros2)+"-e99695.svg"+"\n"
-        markdown+="[~vulns_medium_ros2]: https://img.shields.io/badge/vuln.medium-"+str(self.vulns_medium_ros2)+"-e9cd95.svg"+"\n"
-        markdown+="[~vulns_low_ros2]: https://img.shields.io/badge/vuln.low-"+str(self.vulns_low_ros2)+"-e9e895.svg"+"\n"
+        markdown+="[~vulns_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-"+str(self.nvulnerabilities_ros2)+"-7fe0bb.svg"+"\n"
+        markdown+="[~vulns_open_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-"+str(self.nvulnerabilities_open_ros2)+"-red.svg"+"\n"
+        markdown+="[~vulns_closed_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-"+str(self.nvulnerabilities_closed_ros2)+"-green.svg"+"\n"
+        markdown+="[~weaknesses_ros2]: https://img.shields.io/badge/ros2_weaknesses-"+str(self.nweaknesses_ros2)+"-dbf9a2.svg"+"\n"
+        markdown+="[~weaknesses_open_ros2]: https://img.shields.io/badge/ros2_weaknesses-"+str(self.nweaknesses_open_ros2)+"-red.svg"+"\n"
+        markdown+="[~weaknesses_closed_ros2]: https://img.shields.io/badge/ros2_weaknesses-"+str(self.nweaknesses_closed_ros2)+"-green.svg"+"\n"
+        markdown+="[~others_ros2]: https://img.shields.io/badge/ros2_others-"+str(self.nothers_ros2)+"-dbf9a2.svg"+"\n"
+        markdown+="[~others_open_ros2]: https://img.shields.io/badge/ros2_others-"+str(self.nothers_open_ros2)+"-red.svg"+"\n"
+        markdown+="[~others_closed_ros2]: https://img.shields.io/badge/ros2_others-"+str(self.nothers_closed_ros2)+"-green.svg"+"\n"
+        markdown+="[~vulns_critical_ros2]: https://img.shields.io/badge/ros2_vuln.critical-"+str(self.vulns_critical_ros2)+"-ce5b50.svg"+"\n"
+        markdown+="[~vulns_high_ros2]: https://img.shields.io/badge/ros2_vuln.high-"+str(self.vulns_high_ros2)+"-e99695.svg"+"\n"
+        markdown+="[~vulns_medium_ros2]: https://img.shields.io/badge/ros2_vuln.medium-"+str(self.vulns_medium_ros2)+"-e9cd95.svg"+"\n"
+        markdown+="[~vulns_low_ros2]: https://img.shields.io/badge/ros2_vuln.low-"+str(self.vulns_low_ros2)+"-e9e895.svg"+"\n"
                 
         return markdown
         
