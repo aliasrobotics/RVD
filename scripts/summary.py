@@ -196,11 +196,12 @@ class Summary(RVDImport):
                     self.vulns_low += 1
                     if 'robot component: ROS2' in l_set:
                         self.vulns_low_ros2 += 1
-                
 
-    def to_markdown(self):
+
+
+    def to_markdown_general(self):
         """
-        Produces a markdown output
+        Produces a markdown output for the general table
         
         Inspired by 
         - https://github.com/isaacs/github/issues/305 and
@@ -208,7 +209,6 @@ class Summary(RVDImport):
         
         :return markdown string
         """
-        
         markdown="### General summary"+"\n"
         markdown+=""+"\n"
         markdown+="|       | All      | Open  |    Closed |"+"\n"
@@ -233,7 +233,7 @@ class Summary(RVDImport):
         markdown+="| Vulnerabilities (open) | [![label: vulns_critical][~vulns_critical]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+critical%22+) | \
 [![label: vulns_high][~vulns_high]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+high%22+) | \
 [![label: vulns_medium][~vulns_medium]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+medium%22+) | \
-[![label: vulns_low][~vulns_low]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+low%22+) |"+"\n"
+[![label: vulns_low][~vulns_low]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+low%22+) |"+"\n"                
 
         markdown+="\n"
         markdown+="\n"
@@ -248,13 +248,22 @@ class Summary(RVDImport):
         markdown+="[~others_closed]: https://img.shields.io/badge/others-"+str(self.nothers_closed)+"-green.svg"+"\n"
         markdown+="[~vulns_critical]: https://img.shields.io/badge/vuln.critical-"+str(self.vulns_critical)+"-ce5b50.svg"+"\n"
         markdown+="[~vulns_high]: https://img.shields.io/badge/vuln.high-"+str(self.vulns_high)+"-e99695.svg"+"\n"
-        markdown+="[~vulns_medium]: https://img.shields.io/badge/vuln.medium-"+str(self.vulns_medium)+"-e9cd95.svg"+"\n"
-        markdown+="[~vulns_low]: https://img.shields.io/badge/vuln.low-"+str(self.vulns_low)+"-e9e895.svg"+"\n"        
-        markdown+="\n"
-        markdown+="\n"
-        ########################################################
-        markdown+="### ROS 2"+"\n"
-        ########################################################
+        markdown+="[~vulns_me<dium]: https://img.shields.io/badge/vuln.medium-"+str(self.vulns_medium)+"-e9cd95.svg"+"\n"
+        markdown+="[~vulns_low]: https://img.shields.io/badge/vuln.low-"+str(self.vulns_low)+"-e9e895.svg"+"\n"
+        return markdown
+
+    def to_markdown_ros2(self):
+        """
+        Produces a markdown output for ROS 2
+        
+        Inspired by 
+        - https://github.com/isaacs/github/issues/305 and
+        - https://shields.io/
+        
+        :return markdown string
+        """
+        markdown=""
+        markdown+="#### ROS 2"+"\n"
         markdown+=""+"\n"
         markdown+="|       | All      | Open  |    Closed |"+"\n"
         markdown+="|-------|---------|--------|-----------|"+"\n"
@@ -275,27 +284,14 @@ class Summary(RVDImport):
         # Summary of vulnerabilities (only open issues considered)
         markdown+="|       |       |           |          |          |"+"\n"
         markdown+="|-------|---------|---------|----------|----------|"+"\n"
-        markdown+="| Vulnerabilities (open) | [![label: vulns_critical_ros2][~vulns_critical_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+critical%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
+        markdown+="| `ROS 2` Vulnerabilities (open) | [![label: vulns_critical_ros2][~vulns_critical_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+critical%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: vulns_high_ros2][~vulns_high_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+high%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: vulns_medium_ros2][~vulns_medium_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+medium%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: vulns_low_ros2][~vulns_low_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+low%22+label%3A%22robot%20component%3A%20ROS2%22+) |"+"\n"
-
         markdown+="\n"
         markdown+="\n"
-        markdown+="[~vulns]: https://img.shields.io/badge/vulnerabilities-"+str(self.nvulnerabilities)+"-7fe0bb.svg"+"\n"
-        markdown+="[~vulns_open]: https://img.shields.io/badge/vulnerabilities-"+str(self.nvulnerabilities_open)+"-red.svg"+"\n"
-        markdown+="[~vulns_closed]: https://img.shields.io/badge/vulnerabilities-"+str(self.nvulnerabilities_closed)+"-green.svg"+"\n"
-        markdown+="[~weaknesses]: https://img.shields.io/badge/weaknesses-"+str(self.nweaknesses)+"-dbf9a2.svg"+"\n"
-        markdown+="[~weaknesses_open]: https://img.shields.io/badge/weaknesses-"+str(self.nweaknesses_open)+"-red.svg"+"\n"
-        markdown+="[~weaknesses_closed]: https://img.shields.io/badge/weaknesses-"+str(self.nweaknesses_closed)+"-green.svg"+"\n"
-        markdown+="[~others]: https://img.shields.io/badge/others-"+str(self.nothers)+"-dbf9a2.svg"+"\n"
-        markdown+="[~others_open]: https://img.shields.io/badge/others-"+str(self.nothers_open)+"-red.svg"+"\n"
-        markdown+="[~others_closed]: https://img.shields.io/badge/others-"+str(self.nothers_closed)+"-green.svg"+"\n"
-        markdown+="[~vulns_critical]: https://img.shields.io/badge/vuln.critical-"+str(self.vulns_critical)+"-ce5b50.svg"+"\n"
-        markdown+="[~vulns_high]: https://img.shields.io/badge/vuln.high-"+str(self.vulns_high)+"-e99695.svg"+"\n"
-        markdown+="[~vulns_medium]: https://img.shields.io/badge/vuln.medium-"+str(self.vulns_medium)+"-e9cd95.svg"+"\n"
-        markdown+="[~vulns_low]: https://img.shields.io/badge/vuln.low-"+str(self.vulns_low)+"-e9e895.svg"+"\n"
 
+        # ros 2 labels
         markdown+="[~vulns_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-"+str(self.nvulnerabilities_ros2)+"-7fe0bb.svg"+"\n"
         markdown+="[~vulns_open_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-"+str(self.nvulnerabilities_open_ros2)+"-red.svg"+"\n"
         markdown+="[~vulns_closed_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-"+str(self.nvulnerabilities_closed_ros2)+"-green.svg"+"\n"
@@ -309,10 +305,24 @@ class Summary(RVDImport):
         markdown+="[~vulns_high_ros2]: https://img.shields.io/badge/ros2_vuln.high-"+str(self.vulns_high_ros2)+"-e99695.svg"+"\n"
         markdown+="[~vulns_medium_ros2]: https://img.shields.io/badge/ros2_vuln.medium-"+str(self.vulns_medium_ros2)+"-e9cd95.svg"+"\n"
         markdown+="[~vulns_low_ros2]: https://img.shields.io/badge/ros2_vuln.low-"+str(self.vulns_low_ros2)+"-e9e895.svg"+"\n"
-                
+        return markdown
+
+    def to_markdown(self):
+        """
+        Produces a markdown output
+        
+        Inspired by 
+        - https://github.com/isaacs/github/issues/305 and
+        - https://shields.io/
+        
+        :return markdown string
+        """
+        markdown =""
+        markdown += self.to_markdown_general()
+        markdown += self.to_markdown_ros2()
+        
         return markdown
         
-
 
 summary = Summary()
 print(summary.to_markdown())
