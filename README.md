@@ -11,7 +11,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Thu, 25 Jul 2019 18:33:43 +0000*
+*Last updated Fri, 26 Jul 2019 08:14:01*
 
 |       | All      | Open  |    Closed |
 |-------|---------|--------|-----------|
@@ -25,21 +25,21 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 | Vulnerabilities (open) | [![label: vulns_critical][~vulns_critical]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+critical%22+) | [![label: vulns_high][~vulns_high]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+high%22+) | [![label: vulns_medium][~vulns_medium]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+medium%22+) | [![label: vulns_low][~vulns_low]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+low%22+) |
 
 
-[~vulns]: https://img.shields.io/badge/vulnerabilities-9-7fe0bb.svg
-[~vulns_open]: https://img.shields.io/badge/vulnerabilities-9-red.svg
+[~vulns]: https://img.shields.io/badge/vulnerabilities-49-7fe0bb.svg
+[~vulns_open]: https://img.shields.io/badge/vulnerabilities-49-red.svg
 [~vulns_closed]: https://img.shields.io/badge/vulnerabilities-0-green.svg
 [~weaknesses]: https://img.shields.io/badge/weaknesses-21-dbf9a2.svg
 [~weaknesses_open]: https://img.shields.io/badge/weaknesses-21-red.svg
 [~weaknesses_closed]: https://img.shields.io/badge/weaknesses-0-green.svg
-[~others]: https://img.shields.io/badge/others-92-dbf9a2.svg
-[~others_open]: https://img.shields.io/badge/others-40-red.svg
+[~others]: https://img.shields.io/badge/others-52-dbf9a2.svg
+[~others_open]: https://img.shields.io/badge/others-0-red.svg
 [~others_closed]: https://img.shields.io/badge/others-52-green.svg
-[~vulns_critical]: https://img.shields.io/badge/vuln.critical-0-ce5b50.svg
-[~vulns_high]: https://img.shields.io/badge/vuln.high-3-e99695.svg
-[~vulns_medium]: https://img.shields.io/badge/vuln.medium-6-e9cd95.svg
+[~vulns_critical]: https://img.shields.io/badge/vuln.critical-20-ce5b50.svg
+[~vulns_high]: https://img.shields.io/badge/vuln.high-21-e99695.svg
+[~vulns_medium]: https://img.shields.io/badge/vuln.medium-8-e9cd95.svg
 [~vulns_low]: https://img.shields.io/badge/vuln.low-0-e9e895.svg
 #### ROS 2
-*Last updated Thu, 25 Jul 2019 18:33:43 +0000*
+*Last updated Fri, 26 Jul 2019 08:14:01*
 
 |       | All      | Open  |    Closed |
 |-------|---------|--------|-----------|
