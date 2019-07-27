@@ -83,6 +83,9 @@ class RVDImport_ASan(RVDImport):
         labels = ["weakness", "components software"]
         if robot_component == "ROS 2":
             labels.append("robot component: ROS2")
+        elif robot_component == "moveit2":
+            labels.append("robot component: ROS2")
+            labels.append("robot component: moveit2")
         print("\tMaking issue with title '"+title+"'")
         self.repo.create_issue(title=title, body=body, labels=labels)        
 
@@ -161,7 +164,7 @@ class RVDImport_ASan(RVDImport):
             return "N/A"
         
 
-    def add_new_issues(self, file="issues.csv"):
+    def add_new_issues(self, file="issues.csv", robot_component="ROS 2", reporter = "vmayoral"):
         """
         Retrieves information from csv, determines which ones already
         exist in the RVD and produces the corresponding new issues.        
@@ -176,7 +179,7 @@ class RVDImport_ASan(RVDImport):
         self.discard_existing()
         # Add the remaining as issues to the repo
         for elem in self.csv_elements:
-            self.make_issue(elem)
+            self.make_issue(elem, robot_component=robot_component, reporter=reporter)
 
     def discard_existing(self):
         """
@@ -210,6 +213,6 @@ class RVDImport_ASan(RVDImport):
                             
 
 # Instance to import results
-importer = RVDImport_ASan(username="vmayoral", repo="test")
-# importer = RVDImport_ASan(username="aliasrobotics", repo="RVD")
-importer.add_new_issues("files/issues.csv")
+# importer = RVDImport_ASan(username="vmayoral", repo="test")
+importer = RVDImport_ASan(username="aliasrobotics", repo="RVD")
+importer.add_new_issues("files/issues_moveit2.csv", robot_component="moveit2")

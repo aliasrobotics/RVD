@@ -10,8 +10,10 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 
 ## Robot vulnerabilities (and weaknesses)
 
+-------
+
 ### General summary
-*Last updated Fri, 26 Jul 2019 08:14:01*
+*Last updated Sat, 27 Jul 2019 09:06:44*
 
 |       | All      | Open  |    Closed |
 |-------|---------|--------|-----------|
@@ -28,8 +30,8 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 [~vulns]: https://img.shields.io/badge/vulnerabilities-49-7fe0bb.svg
 [~vulns_open]: https://img.shields.io/badge/vulnerabilities-49-red.svg
 [~vulns_closed]: https://img.shields.io/badge/vulnerabilities-0-green.svg
-[~weaknesses]: https://img.shields.io/badge/weaknesses-21-dbf9a2.svg
-[~weaknesses_open]: https://img.shields.io/badge/weaknesses-21-red.svg
+[~weaknesses]: https://img.shields.io/badge/weaknesses-35-dbf9a2.svg
+[~weaknesses_open]: https://img.shields.io/badge/weaknesses-35-red.svg
 [~weaknesses_closed]: https://img.shields.io/badge/weaknesses-0-green.svg
 [~others]: https://img.shields.io/badge/others-52-dbf9a2.svg
 [~others_open]: https://img.shields.io/badge/others-0-red.svg
@@ -39,7 +41,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 [~vulns_medium]: https://img.shields.io/badge/vuln.medium-8-e9cd95.svg
 [~vulns_low]: https://img.shields.io/badge/vuln.low-0-e9e895.svg
 #### ROS 2
-*Last updated Fri, 26 Jul 2019 08:14:01*
+*Last updated Sat, 27 Jul 2019 09:06:44*
 
 |       | All      | Open  |    Closed |
 |-------|---------|--------|-----------|
@@ -56,8 +58,8 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 [~vulns_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-0-7fe0bb.svg
 [~vulns_open_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-0-red.svg
 [~vulns_closed_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-0-green.svg
-[~weaknesses_ros2]: https://img.shields.io/badge/ros2_weaknesses-21-dbf9a2.svg
-[~weaknesses_open_ros2]: https://img.shields.io/badge/ros2_weaknesses-21-red.svg
+[~weaknesses_ros2]: https://img.shields.io/badge/ros2_weaknesses-35-dbf9a2.svg
+[~weaknesses_open_ros2]: https://img.shields.io/badge/ros2_weaknesses-35-red.svg
 [~weaknesses_closed_ros2]: https://img.shields.io/badge/ros2_weaknesses-0-green.svg
 [~others_ros2]: https://img.shields.io/badge/ros2_others-3-dbf9a2.svg
 [~others_open_ros2]: https://img.shields.io/badge/ros2_others-0-red.svg
@@ -66,6 +68,37 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 [~vulns_high_ros2]: https://img.shields.io/badge/ros2_vuln.high-0-e99695.svg
 [~vulns_medium_ros2]: https://img.shields.io/badge/ros2_vuln.medium-0-e9cd95.svg
 [~vulns_low_ros2]: https://img.shields.io/badge/ros2_vuln.low-0-e9e895.svg
+
+#### MoveIt 2
+*Last updated Sat, 27 Jul 2019 09:06:44*
+
+|       | All      | Open  |    Closed |
+|-------|---------|--------|-----------|
+| `MoveIt 2` Vulnerabilities | [![label: vulns_moveit2][~vulns_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | [![label: vulns_open_moveit2][~vulns_open_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | [![label: vulns_closed_moveit2][~vulns_closed_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |
+| `MoveIt 2` Weaknesses | [![label: weaknesses_moveit2][~weaknesses_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | [![label: weaknesses_open_moveit2][~weaknesses_open_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | [![label: weaknesses_closed_moveit2][~weaknesses_closed_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |
+| `MoveIt 2` Others | [![label: others_moveit2][~others_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | [![label: others_open_moveit2][~others_open_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | [![label: others_closed_moveit2][~others_closed_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |
+
+
+|       |       |           |          |          |
+|-------|---------|---------|----------|----------|
+| `MoveIt 2` Vulnerabilities (open) | [![label: vulns_critical_moveit2][~vulns_critical_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+critical%22+label%3A%22robot%20component%3A%20ROS2%22+) | [![label: vulns_high_moveit2][~vulns_high_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+high%22+label%3A%22robot%20component%3A%20ROS2%22+) | [![label: vulns_medium_moveit2][~vulns_medium_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+medium%22+label%3A%22robot%20component%3A%20ROS2%22+) | [![label: vulns_low_moveit2][~vulns_low_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+low%22+label%3A%22robot%20component%3A%20ROS2%22+) |
+
+
+[~vulns_moveit2]: https://img.shields.io/badge/moveit2_vulnerabilities-0-7fe0bb.svg
+[~vulns_open_moveit2]: https://img.shields.io/badge/moveit2_vulnerabilities-0-red.svg
+[~vulns_closed_moveit2]: https://img.shields.io/badge/moveit2_vulnerabilities-0-green.svg
+[~weaknesses_moveit2]: https://img.shields.io/badge/moveit2_weaknesses-14-dbf9a2.svg
+[~weaknesses_open_moveit2]: https://img.shields.io/badge/moveit2_weaknesses-14-red.svg
+[~weaknesses_closed_moveit2]: https://img.shields.io/badge/moveit2_weaknesses-0-green.svg
+[~others_moveit2]: https://img.shields.io/badge/moveit2_others-0-dbf9a2.svg
+[~others_open_moveit2]: https://img.shields.io/badge/moveit2_others-0-red.svg
+[~others_closed_moveit2]: https://img.shields.io/badge/moveit2_others-0-green.svg
+[~vulns_critical_moveit2]: https://img.shields.io/badge/moveit2_vuln.critical-0-ce5b50.svg
+[~vulns_high_moveit2]: https://img.shields.io/badge/moveit2_vuln.high-0-e99695.svg
+[~vulns_medium_moveit2]: https://img.shields.io/badge/moveit2_vuln.medium-0-e9cd95.svg
+[~vulns_low_moveit2]: https://img.shields.io/badge/moveit2_vuln.low-0-e9e895.svg
+
+-------
 
 <details><summary><b>Robot vulnerabilities by robot component</b></summary>
 
