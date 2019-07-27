@@ -10,6 +10,7 @@ python3 import_asan.py
 ```
 
 ### Produce summary
+This script will re-generate README.md and make the corresponding changes automatically.
 ```bash
 export GITHUB_TOKEN=11b0d091869e647e3db4baa4d71dcb5c3c6a18938 # exemplary token, don't expect it to work, generate your own
 cd scripts/ # head to the scripts folder

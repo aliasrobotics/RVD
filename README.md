@@ -10,10 +10,8 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 
 ## Robot vulnerabilities (and weaknesses)
 
--------
-
 ### General summary
-*Last updated Sat, 27 Jul 2019 09:06:44*
+*Last updated Sat, 27 Jul 2019 09:29:06*
 
 |       | All      | Open  |    Closed |
 |-------|---------|--------|-----------|
@@ -41,7 +39,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 [~vulns_medium]: https://img.shields.io/badge/vuln.medium-8-e9cd95.svg
 [~vulns_low]: https://img.shields.io/badge/vuln.low-0-e9e895.svg
 #### ROS 2
-*Last updated Sat, 27 Jul 2019 09:06:44*
+*Last updated Sat, 27 Jul 2019 09:29:06*
 
 |       | All      | Open  |    Closed |
 |-------|---------|--------|-----------|
@@ -68,9 +66,8 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 [~vulns_high_ros2]: https://img.shields.io/badge/ros2_vuln.high-0-e99695.svg
 [~vulns_medium_ros2]: https://img.shields.io/badge/ros2_vuln.medium-0-e9cd95.svg
 [~vulns_low_ros2]: https://img.shields.io/badge/ros2_vuln.low-0-e9e895.svg
-
 #### MoveIt 2
-*Last updated Sat, 27 Jul 2019 09:06:44*
+*Last updated Sat, 27 Jul 2019 09:29:06*
 
 |       | All      | Open  |    Closed |
 |-------|---------|--------|-----------|
@@ -97,8 +94,6 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 [~vulns_high_moveit2]: https://img.shields.io/badge/moveit2_vuln.high-0-e99695.svg
 [~vulns_medium_moveit2]: https://img.shields.io/badge/moveit2_vuln.medium-0-e9cd95.svg
 [~vulns_low_moveit2]: https://img.shields.io/badge/moveit2_vuln.low-0-e9e895.svg
-
--------
 
 <details><summary><b>Robot vulnerabilities by robot component</b></summary>
 
@@ -171,4 +166,4 @@ Based on all this, we'll assume that both "weakness" and "bug" refer to the same
 ```
  bugs == weaknesses
  weakness -> vulnerability <-> weakness is exploitable
-```
+```        
