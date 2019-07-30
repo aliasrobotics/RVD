@@ -5,6 +5,7 @@ import sys
 import os
 from import_base import RVDImport
 from time import gmtime, strftime
+from sys import argv
 
 class RVDImport_ASan(RVDImport):
     
@@ -214,5 +215,11 @@ class RVDImport_ASan(RVDImport):
 
 # Instance to import results
 # importer = RVDImport_ASan(username="vmayoral", repo="test")
+if len(argv) < 2:
+    print("ERROR: No file provided")
+    sys.exit(0)    
+else:
+    file = argv[1]
+    
 importer = RVDImport_ASan(username="aliasrobotics", repo="RVD")
-importer.add_new_issues("files/issues_moveit2.csv", robot_component="moveit2")
+importer.add_new_issues(file, robot_component="moveit2")
