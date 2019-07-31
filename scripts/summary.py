@@ -545,7 +545,6 @@ Based on all this, we'll assume that both "weakness" and "bug" refer to the same
         readme_file.write(readme_content)
         readme_file.close()
         
-        
 
 summary = Summary()
 # print(summary.to_markdown())
