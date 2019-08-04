@@ -12,7 +12,7 @@ class RVDImport:
         # Authentication for user filing issue (must have read/write access to
         # repository to add issue to)
         try:
-            self.token = os.environ['GITHUB_TOKEN']  # ffb0d091869e647e3db4baa4d71dcb5c3c6a17d7
+            self.token = os.environ['GITHUB_TOKEN'] 
         except KeyError:
             print("Make sure that you've GITHUB_TOKEN exported")
             exit(1)
