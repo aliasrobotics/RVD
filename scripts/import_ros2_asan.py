@@ -1,3 +1,9 @@
+"""
+A script to import the output of ASan sanitizer over ROS 2 into issues
+Usage:
+    python3 import_ros2_asan.py '/opt/ros2_ws/sanitizer_report.csv'  'ROS 2'
+"""
+
 import json
 import requests
 import csv
@@ -7,9 +13,10 @@ from import_base import RVDImport
 from time import gmtime, strftime
 from sys import argv
 
-
 class RVDImport_ASan(RVDImport):
-    
+    """
+    Deal with ASan reports and file them as issues in RVD
+    """    
     def __init__(self, username="vmayoral", repo="test"):
     # def __init__(self, username="aliasrobotics", repo="RVD"):
         super().__init__()
@@ -79,13 +86,15 @@ class RVDImport_ASan(RVDImport):
         :param reporter: username of the person reporting the issues
         """
         title = self.make_issue_title_asan(dict_elem)
-        body = self.make_issue_body_asan(dict_elem, robot_component)
+        body = self.make_issue_body(dict_elem, robot_component)
         labels = ["weakness", "components software"]
         if robot_component == "ROS 2":
             labels.append("robot component: ROS2")
         elif robot_component == "moveit2":
             labels.append("robot component: ROS2")
             labels.append("robot component: moveit2")
+        # Regardless of the package, append it as well
+        labels.append("package: "+str(dict_elem["package"]))
         print("\tMaking issue with title '"+title+"'")
         self.repo.create_issue(title=title, body=body, labels=labels)        
 
@@ -113,7 +122,7 @@ class RVDImport_ASan(RVDImport):
         else:
             return title
 
-    def make_issue_body_asan(self, dict_elem, robot_component="ROS 2", reporter = "vmayoral"):
+    def make_issue_body(self, dict_elem, robot_component="ROS 2", reporter = "vmayoral"):
         """
         Make and return the body of an ASan-related weakness using markdown
         :param robot_component:

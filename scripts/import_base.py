@@ -5,7 +5,6 @@ Base class for importing stuff
 from github import Github
 import os
 
-
 class RVDImport:
 
     def __init__(self):
