@@ -5,6 +5,7 @@ Usage:
 """
 
 from import_ros2_asan import RVDImport_ASan
+from sys import argv
 
 class RVDImport_TSan(RVDImport_ASan):
     """
