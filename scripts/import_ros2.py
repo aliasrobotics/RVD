@@ -1,7 +1,7 @@
 """
-A script to import the output of ASan sanitizer over ROS 2 into issues
+A script to import the output of google sanitizer over ROS 2 into issues
 Usage:
-    python3 import_ros2_asan.py '/opt/ros2_ws/sanitizer_report.csv'  'ROS 2'
+    python3 import_ros2.py '/opt/ros2_ws/sanitizer_report.csv'  'ROS 2'
 """
 
 import json
@@ -13,9 +13,9 @@ from import_base import RVDImport
 from time import gmtime, strftime
 from sys import argv
 
-class RVDImport_ASan(RVDImport):
+class RVDImport_ROS2(RVDImport):
     """
-    Deal with ASan reports and file them as issues in RVD
+    Deal with Google Sanitizers ROS2 reports and file them as issues in RVD
     """    
     def __init__(self, username="vmayoral", repo="test"):
     # def __init__(self, username="aliasrobotics", repo="RVD"):
@@ -36,8 +36,9 @@ class RVDImport_ASan(RVDImport):
         Inits the existing issues in the repo by adding their 
         names into the class attribute self.issues
         """
-        issues = self.repo.get_issues(state="all")
+        issues = self.repo.get_issues(state="all")     
         for issue in issues:
+            print(issue)
             self.issues.append(issue)        
 
     def parse_csv(self, file="issues.csv"):
@@ -52,7 +53,7 @@ class RVDImport_ASan(RVDImport):
         with open(file, 'r') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                # typically ASan dumps the following elements: 
+                # typically Google Sanitizers dumps the following elements: 
                 #   package,error_name,stack_trace_key,count,sample_stack_trace
                 # let's make a dict out of it
                 elem = {
@@ -85,7 +86,7 @@ class RVDImport_ASan(RVDImport):
             the issue related to the robot component
         :param reporter: username of the person reporting the issues
         """
-        title = self.make_issue_title_asan(dict_elem)
+        title = self.make_issue_title(dict_elem)
         body = self.make_issue_body(dict_elem, robot_component)
         labels = ["weakness", "components software"]
         if robot_component == "ROS 2":
@@ -96,12 +97,12 @@ class RVDImport_ASan(RVDImport):
         # Regardless of the package, append it as well
         labels.append("package: "+str(dict_elem["package"]))
         print("\tMaking issue with title '"+title+"'")
-        self.repo.create_issue(title=title, body=body, labels=labels)        
+        self.repo.create_issue(title=title, body=body, labels=labels)
 
     @staticmethod
-    def make_issue_title_asan(dict_elem):
+    def make_issue_title(dict_elem):
         """
-        Make and return the title of an ASan-related weakness using markdown
+        Make and return the title of an Google Sanitizer-related weakness using markdown
         :param dict_elem: dictionary element corresponding to one of the 
             entries of the csv
         :return string
@@ -124,7 +125,7 @@ class RVDImport_ASan(RVDImport):
 
     def make_issue_body(self, dict_elem, robot_component="ROS 2", reporter = "vmayoral"):
         """
-        Make and return the body of an ASan-related weakness using markdown
+        Make and return the body of an Google Sanitizers-related weakness using markdown
         :param robot_component:
         :param reporter:
         :param dict_elem: dictionary element corresponding to one of the
@@ -150,7 +151,7 @@ class RVDImport_ASan(RVDImport):
         body += "\n"
         body += "\n"
         body += "### Description"+"\n"
-        body += "Issue detected while running Address Sanitizer (ASan)."+"\n"
+        body += "Issue detected while running Google Sanitizers."+"\n"
         body += "\n"
         body += "### Stack trace"+"\n"
         body += "```"+"\n"
@@ -200,7 +201,7 @@ class RVDImport_ASan(RVDImport):
         # auxiliary list of dicts with no duplicates when compared to existing issues
         no_duplicates = []
         for elem in self.csv_elements:
-            title = self.make_issue_title_asan(elem)
+            title = self.make_issue_title(elem)
             # print("*******")
             # print(title)
             # print(len(no_duplicates))
@@ -221,16 +222,19 @@ class RVDImport_ASan(RVDImport):
         # print("length no_duplicates: "+str(len(no_duplicates)))
         # print("length self.csv_elements: "+str(len(self.csv_elements)))
         self.csv_elements = no_duplicates
-                            
 
-# Instance to import results
-# importer = RVDImport_ASan(username="vmayoral", repo="test")
-if len(argv) < 3:
-    print("ERROR: No file provided")
-    sys.exit(0)    
-else:
-    file = argv[1]
-    robot_component = argv[2]
-    
-importer = RVDImport_ASan(username="aliasrobotics", repo="RVD")
-importer.add_new_issues(file, robot_component=robot_component)
+def main():
+  # Instance to import results
+  # importer = RVDImport_ROS2(username="vmayoral", repo="test")
+  if len(argv) < 3:
+      print("ERROR: No file provided")
+      sys.exit(0)    
+  else:
+      file = argv[1]
+      robot_component = argv[2]
+      
+  importer = RVDImport_ROS2(username="aliasrobotics", repo="RVD")
+  importer.add_new_issues(file, robot_component=robot_component)
+  
+if __name__== "__main__":
+  main()
