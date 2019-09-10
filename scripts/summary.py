@@ -127,8 +127,11 @@ class Summary(RVDImport):
         # Number of open issues
         self.open_issues_count = self.repo.open_issues_count  # or simply len(self.issues_open)
         self.closed_issues_count = len(self.issues_closed)
+        
         # Number of weaknesses
         for l_set in self.labels:
+            if "invalid" in l_set:
+                continue            
             if "weakness" in l_set:
                 self.nweaknesses += 1
                 if 'robot component: ROS2' in l_set:
@@ -137,6 +140,8 @@ class Summary(RVDImport):
                     self.nweaknesses_moveit2 += 1
 
         for l_set in self.labels_open:
+            if "invalid" in l_set:
+                continue            
             if "weakness" in l_set:
                 self.nweaknesses_open += 1
                 if 'robot component: ROS2' in l_set:
@@ -145,6 +150,8 @@ class Summary(RVDImport):
                     self.nweaknesses_open_moveit2 += 1
 
         for l_set in self.labels_closed:
+            if "invalid" in l_set:
+                continue            
             if "weakness" in l_set:
                 self.nweaknesses_closed += 1
                 if 'robot component: ROS2' in l_set:
@@ -152,8 +159,10 @@ class Summary(RVDImport):
                 if 'robot component: moveit2' in l_set:
                     self.nweaknesses_closed_moveit2 += 1
 
-                    # Number of vulnerabilities
+        # Number of vulnerabilities
         for l_set in self.labels:
+            if "invalid" in l_set:
+                continue            
             if "vulnerability" in l_set:
                 self.nvulnerabilities += 1
                 if 'robot component: ROS2' in l_set:
@@ -162,6 +171,8 @@ class Summary(RVDImport):
                     self.nvulnerabilities_moveit2 += 1
 
         for l_set in self.labels_open:
+            if "invalid" in l_set:
+                continue            
             if "vulnerability" in l_set:
                 self.nvulnerabilities_open += 1
                 if 'robot component: ROS2' in l_set:
@@ -170,6 +181,8 @@ class Summary(RVDImport):
                     self.nvulnerabilities_open_moveit2 += 1
 
         for l_set in self.labels_closed:
+            if "invalid" in l_set:
+                continue            
             if "vulnerability" in l_set:
                 self.nvulnerabilities_closed += 1
                 if 'robot component: ROS2' in l_set:
@@ -179,6 +192,8 @@ class Summary(RVDImport):
 
         # Number of others (neither vulns nor weaknesses)
         for l_set in self.labels:
+            if "invalid" in l_set:
+                continue
             if "vulnerability" not in l_set:
                 if "weakness" not in l_set:
                     self.nothers += 1
@@ -188,6 +203,8 @@ class Summary(RVDImport):
                         self.nothers_moveit2 += 1
 
         for l_set in self.labels_open:
+            if "invalid" in l_set:
+                continue            
             if "vulnerability" not in l_set:
                 if "weakness" not in l_set:
                     self.nothers_open += 1
@@ -197,6 +214,8 @@ class Summary(RVDImport):
                         self.nothers_open_moveit2 += 1
 
         for l_set in self.labels_closed:
+            if "invalid" in l_set:
+                continue            
             if "vulnerability" not in l_set:
                 if "weakness" not in l_set:
                     self.nothers_closed += 1
@@ -207,6 +226,8 @@ class Summary(RVDImport):
 
         # Number of vulnerabilities, by severity
         for l_set in self.labels_open:
+            if "invalid" in l_set:
+                continue            
             if "vulnerability" in l_set:
                 if "severity: critical" in l_set:
                     self.vulns_critical += 1
@@ -216,6 +237,8 @@ class Summary(RVDImport):
                         self.vulns_critical_moveit2 += 1
 
         for l_set in self.labels_open:
+            if "invalid" in l_set:
+                continue            
             if "vulnerability" in l_set:
                 if "severity: high" in l_set:
                     self.vulns_high += 1
@@ -225,6 +248,8 @@ class Summary(RVDImport):
                         self.vulns_high_moveit2 += 1
 
         for l_set in self.labels_open:
+            if "invalid" in l_set:
+                continue            
             if "vulnerability" in l_set:
                 if "severity: medium" in l_set:
                     self.vulns_medium += 1
@@ -234,6 +259,8 @@ class Summary(RVDImport):
                         self.vulns_medium_moveit2 += 1
 
         for l_set in self.labels_open:
+            if "invalid" in l_set:
+                continue            
             if "vulnerability" in l_set:
                 if "severity: low" in l_set:
                     self.vulns_low += 1

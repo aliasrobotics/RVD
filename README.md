@@ -11,7 +11,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Tue, 10 Sep 2019 09:49:01*
+*Last updated Tue, 10 Sep 2019 10:26:40*
 
 |       | All      | Open  |    Closed |
 |-------|---------|--------|-----------|
@@ -31,15 +31,15 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 [~weaknesses]: https://img.shields.io/badge/weaknesses-59-dbf9a2.svg
 [~weaknesses_open]: https://img.shields.io/badge/weaknesses-59-red.svg
 [~weaknesses_closed]: https://img.shields.io/badge/weaknesses-0-green.svg
-[~others]: https://img.shields.io/badge/others-57-dbf9a2.svg
+[~others]: https://img.shields.io/badge/others-0-dbf9a2.svg
 [~others_open]: https://img.shields.io/badge/others-0-red.svg
-[~others_closed]: https://img.shields.io/badge/others-57-green.svg
+[~others_closed]: https://img.shields.io/badge/others-0-green.svg
 [~vulns_critical]: https://img.shields.io/badge/vuln.critical-20-ce5b50.svg
 [~vulns_high]: https://img.shields.io/badge/vuln.high-21-e99695.svg
 [~vulns_medium]: https://img.shields.io/badge/vuln.medium-8-e9cd95.svg
 [~vulns_low]: https://img.shields.io/badge/vuln.low-0-e9e895.svg
 #### ROS 2
-*Last updated Tue, 10 Sep 2019 09:49:01*
+*Last updated Tue, 10 Sep 2019 10:26:40*
 
 |       | All      | Open  |    Closed |
 |-------|---------|--------|-----------|
@@ -59,9 +59,9 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 [~weaknesses_ros2]: https://img.shields.io/badge/ros2_weaknesses-59-dbf9a2.svg
 [~weaknesses_open_ros2]: https://img.shields.io/badge/ros2_weaknesses-59-red.svg
 [~weaknesses_closed_ros2]: https://img.shields.io/badge/ros2_weaknesses-0-green.svg
-[~others_ros2]: https://img.shields.io/badge/ros2_others-3-dbf9a2.svg
+[~others_ros2]: https://img.shields.io/badge/ros2_others-0-dbf9a2.svg
 [~others_open_ros2]: https://img.shields.io/badge/ros2_others-0-red.svg
-[~others_closed_ros2]: https://img.shields.io/badge/ros2_others-3-green.svg
+[~others_closed_ros2]: https://img.shields.io/badge/ros2_others-0-green.svg
 [~vulns_critical_ros2]: https://img.shields.io/badge/ros2_vuln.critical-0-ce5b50.svg
 [~vulns_high_ros2]: https://img.shields.io/badge/ros2_vuln.high-0-e99695.svg
 [~vulns_medium_ros2]: https://img.shields.io/badge/ros2_vuln.medium-0-e9cd95.svg
