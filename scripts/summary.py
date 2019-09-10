@@ -1,5 +1,7 @@
 """
 Scripts that produces a summary of vulnerabilities and weaknesses
+Run:
+    python3 summary.py
 """
 
 from import_base import RVDImport
@@ -455,7 +457,7 @@ class Summary(RVDImport):
         markdown = ""
         markdown += self.to_markdown_general()
         markdown += self.to_markdown_ros2()
-        markdown += self.to_markdown_moveit2()
+        # markdown += self.to_markdown_moveit2()
         return markdown
 
     @staticmethod
