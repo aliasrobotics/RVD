@@ -38,7 +38,7 @@ class RVDImport_ROS2(RVDImport):
         """
         issues = self.repo.get_issues(state="all")     
         for issue in issues:
-            print(issue)
+            # print(issue)
             self.issues.append(issue)        
 
     def parse_csv(self, file="issues.csv"):
@@ -87,8 +87,8 @@ class RVDImport_ROS2(RVDImport):
         :param reporter: username of the person reporting the issues
         """
         title = self.make_issue_title(dict_elem)
-        body = self.make_issue_body(dict_elem, robot_component)
-        labels = ["weakness", "components software"]
+        body = self.make_issue_body(dict_elem, robot_component)                
+        labels = ["weakness", "components software", dict_elem['package']]
         if robot_component == "ROS 2":
             labels.append("robot component: ROS2")
         elif robot_component == "moveit2":

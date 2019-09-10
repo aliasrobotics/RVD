@@ -446,7 +446,7 @@ class Summary(RVDImport):
         
         # Now add the corresponding source code for the labels
         for key in self.processed_packages.keys():
-            markdown += "[~ros2_package_"+str(key)+"]: https://img.shields.io/badge/"+str(key)+"-" + str(
+            markdown += "[~ros2_package_"+str(key)+"]: https://img.shields.io/badge/"+str(key.replace("-","_"))+"-" + str(
                 self.processed_packages[key]) + "-red.svg" + "\n"
 
         # get some space for readability
