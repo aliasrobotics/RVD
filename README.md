@@ -8,10 +8,24 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 
 **Alias Robotics supports hacker-powered robot security in close collaboration with original robot manufacturers. By no means we encourage or promote the unauthorized tampering with running robotic systems. This can cause serious human harm and material damages.**
 
+- [Robot vulnerabilities (and weaknesses)](#robot-vulnerabilities-and-weaknesses)
+	- [General summary](#general-summary)
+	- [ROS 2](#ros-2)
+		- [ROS 2 flaws by package (only `open` ones)](#ros-2-flaws-by-package-only-open-ones)
+- [Disclosure policy](#disclosure-policy)
+	- [Methodology](#methodology)
+	- [FAQ](#faq)
+- [Contributing, reporting a vulnerability](#contributing-reporting-a-vulnerability)
+- [Contact us or send feedback](#contact-us-or-send-feedback)
+	- [Automatic pings for manufacturers](#automatic-pings-for-manufacturers)
+- [Appendices](#appendices)
+	- [Appendix A: Vulnerabilities, weaknesses, bugs and more](#appendix-a-vulnerabilities-weaknesses-bugs-and-more)
+		- [Discussion](#discussion)
+
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Tue, 10 Sep 2019 14:07:33*
+*Last updated Tue, 10 Sep 2019 15:15:42*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -86,7 +100,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Tue, 10 Sep 2019 14:07:33*
+*Last updated Tue, 10 Sep 2019 15:15:42*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -115,6 +129,7 @@ For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues
 [~vulns_low_ros2]: https://img.shields.io/badge/ros2_vuln.low-0-e9e895.svg
 
 
+#### ROS 2 flaws by package (only `open` ones)
 [![label: ros2_package_rclcpp][~ros2_package_rclcpp]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rclcpp%22)
 [![label: ros2_package_rcl_action][~ros2_package_rcl_action]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rcl_action%22)
 [![label: ros2_package_rcl][~ros2_package_rcl]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rcl%22)
@@ -149,16 +164,42 @@ For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues
 [~ros2_package_rcl_lifecycle]: https://img.shields.io/badge/rcl_lifecycle-1-red.svg
 
 
-## Contributing
 
-Vulnerabilities are community-contributed. Participants get the chance to obtain public acknowledgement by submitting a vulnerability while providing prove of it. Reports can be submitted in the form of [an issue](https://github.com/aliasrobotics/RVDP/issues/new?template=rvdp-report-template.md).
+## Disclosure policy
 
-## Feedback?
+*Our disclosure policy is highly inspired by [Google's Project Zero](https://googleprojectzero.blogspot.com/p/vulnerability-disclosure-faq.html). TL;DR, we apply a 90-day disclosure deadline for new vulnerabilities*.
+
+*This policy is strongly in line with our desire to improve the robotics industry response times to security bugs, but also results in softer landings for bugs marginally over deadline. According to [our research](https://arxiv.org/pdf/1806.06681.pdf), most vendors are ignoring security flaws completely. We call on all researchers to adopt disclosure deadlines in some form, and feel free to use our policy verbatim (we've actually done so, from [Google's](https://www.google.com/about/appsecurity/)) if you find our record and reasoning compelling. Creating pressure towards more reasonably-timed fixes will result in smaller windows of opportunity for blackhats to abuse vulnerabilities. Given the direct physical connection with the world that robots have,  in our opinion, vulnerability disclosure policies such as ours result in greater security in robotics and an overall improved safety. A security-first approach is a must to ensure safe robotic operations.*
+
+Alias Robotics believes that vulnerability disclosure is a two-way street where both vendors and researchers, must act responsibly.  We adhere to a **90-day disclosure deadline for new vulnerabilities** while other flaws such as bugs or weaknesses could be filed at any point in time (refer to [Appendix A](#appendix-a-vulnerabilities-weaknesses-bugs-and-more) for the difference between vulnerabilities, weaknesses and bugs). We notify vendors of vulnerabilities immediately, with **details shared in public with the defensive community after 90 days**, or sooner if the vendor releases a fix.
+
+Similar to Google's policy, we want to acknowledge that the deadline can vary in the following ways:
+
+- If a deadline is due to expire on a weekend or public holiday, the deadline will be moved to the next normal work day.
+  
+- Before the 90-day deadline has expired, if a vendor lets us know that a patch is scheduled for release on a specific day that will fall within 14 days following the deadline, we will delay the public disclosure until the availability of the patch.
+
+- When we observe a previously unknown and unpatched vulnerability in software under active exploitation (a “0day”), we believe that more urgent action—within 7 days—is appropriate. The reason for this special designation is that each day an actively exploited vulnerability remains undisclosed to the public and unpatched, more devices or accounts will be compromised. Seven days is an aggressive timeline and may be too short for some vendors to update their products, but it should be enough time to publish advice about possible mitigations, such as temporarily disabling a service, restricting access, or contacting the vendor for more information. As a result, after 7 days have elapsed without a patch or advisory, we will support researchers making details available so that users can take steps to protect themselves.
+
+Alias Robotics reserves the right to bring deadlines forwards or backwards based on extreme circumstances. We remain committed to treating all vendors strictly equally and we expect to be held to the same standard.
+
+## Contributing, reporting a vulnerability
+
+Vulnerabilities are community-contributed. If you believe you have discovered a vulnerability in a robot or robot component (either software or hardware), obtain public acknowledgement by submitting a vulnerability while providing prove of it. Reports can be submitted in the form of [an issue](https://github.com/aliasrobotics/RVDP/issues/new?template=rvdp-report-template.md).
+
+If you wish to contribute to the RVD repository's content, please note that this document (`README.md`) is generated automatically. Submit the corresponding PRs by looking at the `scripts/` folder.
+
+## Contact us or send feedback
 
 Feel free to contact us if you have any requests of feedaback at **contact[at]aliasrobotics[dot]com**
 
-#### Appendix A: Vulnerabilities, weaknesses, bugs and more
-##### Discussion
+### Automatic pings for manufacturers
+By default, new vulnerabilities are reported to manufacturers and/or open source projects however other flaws aren't. Alias Robotics can inform manufacturers directly when weaknesses are reported. If you're interested in this service, contact **contact[at]aliasrobotics[dot]com**.
+
+## Appendices
+
+### Appendix A: Vulnerabilities, weaknesses, bugs and more
+#### Discussion
 [Commonly](https://en.wikipedia.org/wiki/Software_bug):
 - A **(robot) software bug** is an error, flaw, failure or fault in a computer program or system that causes it to produce an incorrect or unexpected result, or to behave in unintended ways.
 
@@ -175,3 +216,5 @@ Based on all this, we'll assume that both "weakness" and "bug" refer to the same
  bugs == weaknesses
  weakness -> vulnerability <-> weakness is exploitable
 ```        
+
+Finally, we consider that a **(robot) flaw** is a generic term to refer too any of the above concepts.
