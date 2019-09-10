@@ -67,6 +67,8 @@ class Summary(RVDImport):
         self.vulns_high_ros2 = 0
         self.vulns_medium_ros2 = 0
         self.vulns_low_ros2 = 0
+                
+        self.processed_packages = {} # dict containg "package_name" as keys and "number of issues" as content
 
         # MoveIt 2 variables
         self.nweaknesses_moveit2 = 0
@@ -127,6 +129,10 @@ class Summary(RVDImport):
         # Number of open issues
         self.open_issues_count = self.repo.open_issues_count  # or simply len(self.issues_open)
         self.closed_issues_count = len(self.issues_closed)
+        
+        #######################
+        # Process general information
+        #######################
         
         # Number of weaknesses
         for l_set in self.labels:
@@ -269,6 +275,34 @@ class Summary(RVDImport):
                     if 'robot component: moveit2' in l_set:
                         self.vulns_low_moveit2 += 1
 
+        #######################
+        # ROS-specific packages
+        #######################                          
+        # Process per package issue
+        # NOTE: only open issues are taken into account
+        packages = []
+        for l_set in self.labels_open:
+            if 'invalid' in l_set:
+                continue
+            if 'robot component: ROS2' in l_set:
+                filtered_package = [i for i in l_set if "package: " in i]
+                if filtered_package != []:
+                    package = filtered_package[0].replace("package: ","")
+                    # print("package: "+package)
+                    packages.append(package)
+                else:
+                    print("\tl_set that has ROS2 component includes NO package: "+str(l_set))
+
+        # now process all the packages
+        # self.processed_packages is a dict containg "package_name" as keys and "number of issues" as content        
+        for p in packages:
+            if p in self.processed_packages.keys():
+                self.processed_packages[p] += 1
+            else:
+                self.processed_packages[p] = 1
+        
+        # print(self.processed_packages)
+
     def to_markdown_general(self):
         """
         Produces a markdown output for the general table
@@ -282,18 +316,18 @@ class Summary(RVDImport):
         markdown = "### General summary" + "\n"
         markdown += "*Last updated " + str(strftime("%a, %d %b %Y %H:%M:%S", gmtime())) + "*\n"
         markdown += "" + "\n"
-        markdown += "|       | Closed      | Open  |    All |" + "\n"
+        markdown += "|       | Open      | Closed  |    All |" + "\n"
         markdown += "|-------|---------|--------|-----------|" + "\n"
-        markdown += "| Vulnerabilities | [![label: vulns_closed][~vulns_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+) | \
-[![label: vulns_open][~vulns_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+) | \
+        markdown += "| Vulnerabilities | [![label: vulns_open][~vulns_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+) | \
+[![label: vulns_closed][~vulns_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+) | \
 [![label: vulns][~vulns]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+) |" + "\n"
 
-        markdown += "| Weaknesses |  [![label: weaknesses_closed][~weaknesses_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+) | \
-[![label: weaknesses_open][~weaknesses_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+) | \
+        markdown += "| Weaknesses | [![label: weaknesses_open][~weaknesses_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+)  | \
+[![label: weaknesses_closed][~weaknesses_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+) | \
 [![label: weaknesses][~weaknesses]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+) |" + "\n"
 
-        markdown += "| Others |  [![label: others_closed][~others_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+) | \
-[![label: others_open][~others_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+) | \
+        markdown += "| Others |  [![label: others_open][~others_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+) | \
+[![label: others_closed][~others_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+) | \
  [![label: others][~others]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+)|" + "\n"
         markdown += "\n"
         markdown += "\n"
@@ -344,21 +378,21 @@ class Summary(RVDImport):
         :return markdown string
         """
         markdown = ""
-        markdown += "#### ROS 2" + "\n"
+        markdown += "### ROS 2" + "\n"
         markdown += "*Last updated " + str(strftime("%a, %d %b %Y %H:%M:%S", gmtime())) + "*\n"
         markdown += "" + "\n"
-        markdown += "|       | Closed      | Open  |    All |" + "\n"
+        markdown += "|       | Open      | Closed  |    All |" + "\n"
         markdown += "|-------|---------|--------|-----------|" + "\n"
-        markdown += "| `ROS 2` Vulnerabilities | [![label: vulns_closed_ros2][~vulns_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
-[![label: vulns_open_ros2][~vulns_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
+        markdown += "| `ROS 2` Vulnerabilities | [![label: vulns_open_ros2][~vulns_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
+[![label: vulns_closed_ros2][~vulns_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: vulns_ros2][~vulns_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |" + "\n"
 
-        markdown += "| `ROS 2` Weaknesses | [![label: weaknesses_closed_ros2][~weaknesses_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
-[![label: weaknesses_open_ros2][~weaknesses_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
+        markdown += "| `ROS 2` Weaknesses | [![label: weaknesses_open_ros2][~weaknesses_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
+[![label: weaknesses_closed_ros2][~weaknesses_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: weaknesses_ros2][~weaknesses_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Aweakness+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |" + "\n"
 
-        markdown += "| `ROS 2` Others | [![label: others_closed_ros2][~others_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
-[![label: others_open_ros2][~others_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
+        markdown += "| `ROS 2` Others | [![label: others_open_ros2][~others_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
+[![label: others_closed_ros2][~others_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+)  | \
 [![label: others_ros2][~others_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=-label%3Aweakness+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |" + "\n"
         markdown += "\n"
         markdown += "\n"
@@ -400,6 +434,23 @@ class Summary(RVDImport):
             self.vulns_medium_ros2) + "-e9cd95.svg" + "\n"
         markdown += "[~vulns_low_ros2]: https://img.shields.io/badge/ros2_vuln.low-" + str(
             self.vulns_low_ros2) + "-e9e895.svg" + "\n"
+        
+        # get some space for readability
+        markdown += "\n\n"
+        
+        for key in self.processed_packages.keys():        
+            markdown += "[![label: ros2_package_"+str(key)+"][~ros2_package_"+str(key)+"]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+"+str(key)+"%22)"  + "\n"
+
+        # get some space for readability
+        markdown += "\n\n"
+        
+        # Now add the corresponding source code for the labels
+        for key in self.processed_packages.keys():
+            markdown += "[~ros2_package_"+str(key)+"]: https://img.shields.io/badge/"+str(key)+"-" + str(
+                self.processed_packages[key]) + "-red.svg" + "\n"
+
+        # get some space for readability
+        markdown += "\n\n"        
         return markdown
 
     def to_markdown_moveit2(self):
@@ -483,7 +534,7 @@ class Summary(RVDImport):
         """
         markdown = ""
         markdown += self.to_markdown_general()
-        markdown += self.to_markdown_ros2()
+        # markdown += self.to_markdown_ros2()
         # markdown += self.to_markdown_moveit2()
         return markdown
 
@@ -506,8 +557,8 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
         return header
 
     @staticmethod
-    def static_content_footer():
-        footer = """\
+    def static_content_header2():
+        header2 = """\
 
 <details><summary><b>Robot vulnerabilities by robot component</b></summary>
 
@@ -555,6 +606,12 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
+"""
+        return header2
+
+    @staticmethod
+    def static_content_footer():
+        footer = """\
 ## Contributing
 
 Vulnerabilities are community-contributed. Participants get the chance to obtain public acknowledgement by submitting a vulnerability while providing prove of it. Reports can be submitted in the form of [an issue](https://github.com/aliasrobotics/RVDP/issues/new?template=rvdp-report-template.md).
@@ -596,6 +653,8 @@ Based on all this, we'll assume that both "weakness" and "bug" refer to the same
         readme = ""
         readme += self.static_content_header()
         readme += self.to_markdown()
+        readme += self.static_content_header2()
+        readme += self.to_markdown_ros2()
         readme += self.static_content_footer()
         return readme
 
