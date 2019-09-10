@@ -194,7 +194,9 @@ If you wish to contribute to the RVD repository's content, please note that this
 Feel free to contact us if you have any requests of feedaback at **contact[at]aliasrobotics[dot]com**
 
 ### Automatic pings for manufacturers
-By default, new vulnerabilities are reported to manufacturers and/or open source projects however other flaws aren't. Alias Robotics can inform manufacturers directly when weaknesses are reported. If you're interested in this service, contact **contact[at]aliasrobotics[dot]com**.
+By default, new vulnerabilities are reported to the original manufacturer and/or open source project maintaners however other flaws aren't. Alias Robotics can inform manufacturers directly when weaknesses are reported. If you're interested in this service, contact **contact[at]aliasrobotics[dot]com**. 
+
+Finally, if you're a manufacturer and are interested in receiving early pings about vulnerabilities in open source projects, reach out.
 
 ## Appendices
 
