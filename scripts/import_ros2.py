@@ -1,6 +1,7 @@
 """
 A script to import the output of google sanitizer over ROS 2 into issues
 Usage:
+    python3 import_ros2.py <file to process with results> <robot_component> [<version> [<commit>]]
     python3 import_ros2.py '/opt/ros2_ws/sanitizer_report.csv'  'ROS 2'
 """
 
@@ -74,7 +75,7 @@ class RVDImport_ROS2(RVDImport):
         """
         self.repo.create_issue(title=title, body=body, labels=labels)
         
-    def make_issue(self, dict_elem, robot_component="ROS 2", reporter="vmayoral"):
+    def make_issue(self, dict_elem, robot_component="ROS 2", reporter="vmayoral", commit=None, version=None):
         """
         Make a new issue
                 
@@ -87,17 +88,26 @@ class RVDImport_ROS2(RVDImport):
         :param reporter: username of the person reporting the issues
         """
         title = self.make_issue_title(dict_elem)
-        body = self.make_issue_body(dict_elem, robot_component)                
-        labels = ["weakness", "components software", dict_elem['package']]
+        body = self.make_issue_body(dict_elem, robot_component, commit)                
+        labels = ["weakness", "components software"]
         if robot_component == "ROS 2":
             labels.append("robot component: ROS2")
         elif robot_component == "moveit2":
             labels.append("robot component: ROS2")
             labels.append("robot component: moveit2")
+        elif robot_component == "navigation2":
+            labels.append("robot component: ROS2")
+            labels.append("robot component: navigation2")            
         # Regardless of the package, append it as well
         labels.append("package: "+str(dict_elem["package"]))
+        # Append version
+        if version:
+            labels.append("v"+version)
         print("\tMaking issue with title '"+title+"'")
-        self.repo.create_issue(title=title, body=body, labels=labels)
+        print(title)
+        print(labels)
+        print(body)
+        # self.repo.create_issue(title=title, body=body, labels=labels)
 
     @staticmethod
     def make_issue_title(dict_elem):
@@ -123,7 +133,7 @@ class RVDImport_ROS2(RVDImport):
         else:
             return title
 
-    def make_issue_body(self, dict_elem, robot_component="ROS 2", reporter = "vmayoral"):
+    def make_issue_body(self, dict_elem, robot_component="ROS 2", commit=None, reporter = "vmayoral"):
         """
         Make and return the body of an Google Sanitizers-related weakness using markdown
         :param robot_component:
@@ -139,6 +149,15 @@ class RVDImport_ROS2(RVDImport):
         body += "| Input      | Value  |"+"\n"
         body += "|---------|--------|"+"\n"
         body += "| Robot component | "+robot_component+" |"+"\n"
+        body += "| Package | "+str(dict_elem["package"])+" |"+"\n"
+        if commit:
+            if robot_component == "ROS 2":
+                body += "| Commit | ["+str(commit)+"](https://github.com/ros2/ros2/tree/"+str(commit)+") |"+"\n"
+            elif robot_component == "moveit2":
+                print("Not supported!")
+                sys.exit(0)
+            elif robot_component == "navigation2":
+                body += "| Commit | ["+str(commit)+"](https://github.com/ros-planning/navigation2/tree/"+str(commit)+") |"+"\n"
         body += "| Vendor  | N/A |"+"\n"
         body += "| CVE ID  | N/A  |"+"\n"
         body += "| CWE ID  | " + self.find_cwe(dict_elem) + " |"+"\n"
@@ -176,7 +195,7 @@ class RVDImport_ROS2(RVDImport):
         else:
             return "N/A"
 
-    def add_new_issues(self, file="issues.csv", robot_component="ROS 2", reporter="vmayoral"):
+    def add_new_issues(self, file="issues.csv", robot_component="ROS 2", reporter="vmayoral", commit=None, version=None):
         """
         Retrieves information from csv, determines which ones already
         exist in the RVD and produces the corresponding new issues.        
@@ -188,10 +207,10 @@ class RVDImport_ROS2(RVDImport):
         # Fetch all issue titles, including closed ones
         self.init_issue_names()
         # Discard already existing ones to avoid duplicates
-        self.discard_existing()
+        # self.discard_existing()
         # Add the remaining as issues to the repo
         for elem in self.csv_elements:
-            self.make_issue(elem, robot_component=robot_component, reporter=reporter)
+            self.make_issue(elem, robot_component=robot_component, reporter=reporter, commit=commit, version=version)
 
     def discard_existing(self):
         """
@@ -224,17 +243,32 @@ class RVDImport_ROS2(RVDImport):
         self.csv_elements = no_duplicates
 
 def main():
-  # Instance to import results
-  # importer = RVDImport_ROS2(username="vmayoral", repo="test")
-  if len(argv) < 3:
-      print("ERROR: No file provided")
-      sys.exit(0)    
-  else:
-      file = argv[1]
-      robot_component = argv[2]
-      
-  importer = RVDImport_ROS2(username="aliasrobotics", repo="RVD")
-  importer.add_new_issues(file, robot_component=robot_component)
+    # Instance to import results
+    # importer = RVDImport_ROS2(username="vmayoral", repo="test")
+    commit = None
+    version = None
+    if len(argv) == 3:
+        file = argv[1]
+        robot_component = argv[2]
+    elif len(argv) == 4:
+        file = argv[1]
+        robot_component = argv[2]
+        version = argv[3]
+    elif len(argv) == 5:
+        file = argv[1]
+        robot_component = argv[2]
+        version = argv[3]
+        commit = argv[4]
+    elif len(argv) < 3:
+        print("ERROR: No file provided")
+        sys.exit(0)    
+    else:
+        print("ERROR: Something went wrong, too many arguments")
+        print(argv)
+        sys.exit(0)                     
+
+    importer = RVDImport_ROS2(username="aliasrobotics", repo="RVD")
+    importer.add_new_issues(file, robot_component=robot_component, commit=commit, version=version)
   
 if __name__== "__main__":
-  main()
+    main()
