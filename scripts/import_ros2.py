@@ -104,10 +104,10 @@ class RVDImport_ROS2(RVDImport):
         if version:
             labels.append("v"+version)
         print("\tMaking issue with title '"+title+"'")
-        print(title)
-        print(labels)
-        print(body)
-        # self.repo.create_issue(title=title, body=body, labels=labels)
+        # print(title)
+        # print(labels)
+        # print(body)
+        self.repo.create_issue(title=title, body=body, labels=labels)
 
     @staticmethod
     def make_issue_title(dict_elem):
