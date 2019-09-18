@@ -681,6 +681,27 @@ Based on all this, we'll assume that both "weakness" and "bug" refer to the same
 ```        
 
 Finally, we consider that a **(robot) flaw** is a generic term to refer too any of the above concepts.
+
+***
+<!--
+    ROSIN acknowledgement from the ROSIN press kit
+    @ https://github.com/rosin-project/press_kit
+-->
+
+<a href="http://rosin-project.eu">
+  <img src="http://rosin-project.eu/wp-content/uploads/rosin_ack_logo_wide.png"
+       alt="rosin_logo" height="60" >
+</a></br>
+
+Supported by ROSIN - ROS-Industrial Quality-Assured Robot Software Components.
+More information: <a href="http://rosin-project.eu">rosin-project.eu</a>
+
+<img src="http://rosin-project.eu/wp-content/uploads/rosin_eu_flag.jpg"
+     alt="eu_flag" height="45" align="left" >
+
+This repository was partly funded by ROSIN RedROS2-I FTP which received funding from the European Union’s Horizon 2020
+research and innovation programme under the project ROSIN with the grant agreement No 732287.
+
 """
         return footer
 

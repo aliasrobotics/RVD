@@ -25,7 +25,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Thu, 12 Sep 2019 20:39:12 GMT *
+*Last updated Wed, 18 Sep 2019 11:25:46 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -100,7 +100,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Thu, 12 Sep 2019 20:39:12 GMT *
+*Last updated Wed, 18 Sep 2019 11:25:46 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -224,3 +224,24 @@ Based on all this, we'll assume that both "weakness" and "bug" refer to the same
 ```        
 
 Finally, we consider that a **(robot) flaw** is a generic term to refer too any of the above concepts.
+
+***
+<!--
+    ROSIN acknowledgement from the ROSIN press kit
+    @ https://github.com/rosin-project/press_kit
+-->
+
+<a href="http://rosin-project.eu">
+  <img src="http://rosin-project.eu/wp-content/uploads/rosin_ack_logo_wide.png"
+       alt="rosin_logo" height="60" >
+</a></br>
+
+Supported by ROSIN - ROS-Industrial Quality-Assured Robot Software Components.
+More information: <a href="http://rosin-project.eu">rosin-project.eu</a>
+
+<img src="http://rosin-project.eu/wp-content/uploads/rosin_eu_flag.jpg"
+     alt="eu_flag" height="45" align="left" >
+
+This repository was partly funded by ROSIN RedROS2-I FTP which received funding from the European Union’s Horizon 2020
+research and innovation programme under the project ROSIN with the grant agreement No 732287.
+
