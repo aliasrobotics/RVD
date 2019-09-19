@@ -90,7 +90,7 @@ class RVDImport_ROS2(RVDImport):
         title = self.make_issue_title(dict_elem)
         body = self.make_issue_body(dict_elem, robot_component, commit)                
         labels = ["weakness", "components software"]
-        if robot_component == "ROS 2":
+        if robot_component == "ros2":
             labels.append("robot component: ROS2")
         elif robot_component == "moveit2":
             labels.append("robot component: ROS2")
