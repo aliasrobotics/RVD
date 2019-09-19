@@ -102,7 +102,8 @@ class RVDImport_ROS2(RVDImport):
         labels.append("package: "+str(dict_elem["package"]))
         # Append version
         if version:
-            labels.append("v"+version)
+            labels.append(version)
+            # labels.append("v"+version) # remove the "v" to ensure all sort of types are accepted
         print("\tMaking issue with title '"+title+"'")
         # print(title)
         # print(labels)
