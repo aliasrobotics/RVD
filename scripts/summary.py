@@ -577,6 +577,8 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 
 <details><summary><b>Robot vulnerabilities by robot component</b></summary>
 
+By robot components, we consider both software and hardware robot components.
+
 - Open Source components
   - [ROS](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=label%3A%22robot+component%3A+ROS%22+-label%3A%22invalid%22+)
   - [ROS 2.0](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=label%3A%22robot+component%3A+ROS2%22+-label%3A%22invalid%22+)
