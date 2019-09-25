@@ -25,7 +25,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Sat, 21 Sep 2019 08:58:54 GMT*
+*Last updated Wed, 25 Sep 2019 15:51:42 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -42,12 +42,12 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 [~vulns]: https://img.shields.io/badge/vulnerabilities-49-7fe0bb.svg
 [~vulns_open]: https://img.shields.io/badge/vulnerabilities-49-red.svg
 [~vulns_closed]: https://img.shields.io/badge/vulnerabilities-0-green.svg
-[~weaknesses]: https://img.shields.io/badge/weaknesses-139-dbf9a2.svg
-[~weaknesses_open]: https://img.shields.io/badge/weaknesses-139-red.svg
-[~weaknesses_closed]: https://img.shields.io/badge/weaknesses-0-green.svg
-[~others]: https://img.shields.io/badge/others-0-dbf9a2.svg
+[~weaknesses]: https://img.shields.io/badge/weaknesses-239-dbf9a2.svg
+[~weaknesses_open]: https://img.shields.io/badge/weaknesses-233-red.svg
+[~weaknesses_closed]: https://img.shields.io/badge/weaknesses-6-green.svg
+[~others]: https://img.shields.io/badge/others-1-dbf9a2.svg
 [~others_open]: https://img.shields.io/badge/others-0-red.svg
-[~others_closed]: https://img.shields.io/badge/others-0-green.svg
+[~others_closed]: https://img.shields.io/badge/others-1-green.svg
 [~vulns_critical]: https://img.shields.io/badge/vuln.critical-20-ce5b50.svg
 [~vulns_high]: https://img.shields.io/badge/vuln.high-21-e99695.svg
 [~vulns_medium]: https://img.shields.io/badge/vuln.medium-8-e9cd95.svg
@@ -107,7 +107,7 @@ By robot components, we consider both software and hardware robot components.
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Sat, 21 Sep 2019 08:58:54 GMT*
+*Last updated Wed, 25 Sep 2019 15:51:42 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -124,12 +124,12 @@ For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues
 [~vulns_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-0-7fe0bb.svg
 [~vulns_open_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-0-red.svg
 [~vulns_closed_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-0-green.svg
-[~weaknesses_ros2]: https://img.shields.io/badge/ros2_weaknesses-139-dbf9a2.svg
-[~weaknesses_open_ros2]: https://img.shields.io/badge/ros2_weaknesses-139-red.svg
-[~weaknesses_closed_ros2]: https://img.shields.io/badge/ros2_weaknesses-0-green.svg
-[~others_ros2]: https://img.shields.io/badge/ros2_others-0-dbf9a2.svg
+[~weaknesses_ros2]: https://img.shields.io/badge/ros2_weaknesses-239-dbf9a2.svg
+[~weaknesses_open_ros2]: https://img.shields.io/badge/ros2_weaknesses-233-red.svg
+[~weaknesses_closed_ros2]: https://img.shields.io/badge/ros2_weaknesses-6-green.svg
+[~others_ros2]: https://img.shields.io/badge/ros2_others-1-dbf9a2.svg
 [~others_open_ros2]: https://img.shields.io/badge/ros2_others-0-red.svg
-[~others_closed_ros2]: https://img.shields.io/badge/ros2_others-0-green.svg
+[~others_closed_ros2]: https://img.shields.io/badge/ros2_others-1-green.svg
 [~vulns_critical_ros2]: https://img.shields.io/badge/ros2_vuln.critical-0-ce5b50.svg
 [~vulns_high_ros2]: https://img.shields.io/badge/ros2_vuln.high-0-e99695.svg
 [~vulns_medium_ros2]: https://img.shields.io/badge/ros2_vuln.medium-0-e9cd95.svg
@@ -137,16 +137,17 @@ For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues
 
 
 #### ROS 2 flaws by package (only `open` ones)
-[![label: ros2_package_tf2_ros][~ros2_package_tf2_ros]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+tf2_ros%22)
-[![label: ros2_package_nav2_map_server][~ros2_package_nav2_map_server]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+nav2_map_server%22)
 [![label: ros2_package_nav2_util][~ros2_package_nav2_util]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+nav2_util%22)
 [![label: ros2_package_image_transport][~ros2_package_image_transport]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+image_transport%22)
-[![label: ros2_package_rclcpp][~ros2_package_rclcpp]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rclcpp%22)
-[![label: ros2_package_rcl][~ros2_package_rcl]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rcl%22)
-[![label: ros2_package_rclcpp_action][~ros2_package_rclcpp_action]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rclcpp_action%22)
-[![label: ros2_package_rcl_action][~ros2_package_rcl_action]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rcl_action%22)
-[![label: ros2_package_rviz_common][~ros2_package_rviz_common]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rviz_common%22)
+[![label: ros2_package_tf2_ros][~ros2_package_tf2_ros]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+tf2_ros%22)
 [![label: ros2_package_message_filters][~ros2_package_message_filters]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+message_filters%22)
+[![label: ros2_package_rclcpp_action][~ros2_package_rclcpp_action]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rclcpp_action%22)
+[![label: ros2_package_rclcpp][~ros2_package_rclcpp]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rclcpp%22)
+[![label: ros2_package_rcl_action][~ros2_package_rcl_action]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rcl_action%22)
+[![label: ros2_package_rcl][~ros2_package_rcl]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rcl%22)
+[![label: ros2_package_nav2_recoveries][~ros2_package_nav2_recoveries]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+nav2_recoveries%22)
+[![label: ros2_package_nav2_map_server][~ros2_package_nav2_map_server]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+nav2_map_server%22)
+[![label: ros2_package_rviz_common][~ros2_package_rviz_common]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rviz_common%22)
 [![label: ros2_package_class_loader][~ros2_package_class_loader]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+class_loader%22)
 [![label: ros2_package_rviz_default_plugins][~ros2_package_rviz_default_plugins]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rviz_default_plugins%22)
 [![label: ros2_package_composition][~ros2_package_composition]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+composition%22)
@@ -166,21 +167,20 @@ For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues
 [![label: ros2_package_intra_process_demo][~ros2_package_intra_process_demo]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+intra_process_demo%22)
 [![label: ros2_package_rosbag2_converter_default_plugins][~ros2_package_rosbag2_converter_default_plugins]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rosbag2_converter_default_plugins%22)
 [![label: ros2_package_rosbag2_storage_default_plugins][~ros2_package_rosbag2_storage_default_plugins]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rosbag2_storage_default_plugins%22)
-[![label: ros2_package_rclcpp_lifecycle][~ros2_package_rclcpp_lifecycle]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rclcpp_lifecycle%22)
 [![label: ros2_package_tlsf_cpp][~ros2_package_tlsf_cpp]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+tlsf_cpp%22)
-[![label: ros2_package_rcl_lifecycle][~ros2_package_rcl_lifecycle]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rcl_lifecycle%22)
 
 
-[~ros2_package_tf2_ros]: https://img.shields.io/badge/tf2_ros-12-red.svg
-[~ros2_package_nav2_map_server]: https://img.shields.io/badge/nav2_map_server-2-red.svg
-[~ros2_package_nav2_util]: https://img.shields.io/badge/nav2_util-4-red.svg
-[~ros2_package_image_transport]: https://img.shields.io/badge/image_transport-3-red.svg
-[~ros2_package_rclcpp]: https://img.shields.io/badge/rclcpp-6-red.svg
-[~ros2_package_rcl]: https://img.shields.io/badge/rcl-18-red.svg
-[~ros2_package_rclcpp_action]: https://img.shields.io/badge/rclcpp_action-9-red.svg
-[~ros2_package_rcl_action]: https://img.shields.io/badge/rcl_action-7-red.svg
+[~ros2_package_nav2_util]: https://img.shields.io/badge/nav2_util-32-red.svg
+[~ros2_package_image_transport]: https://img.shields.io/badge/image_transport-13-red.svg
+[~ros2_package_tf2_ros]: https://img.shields.io/badge/tf2_ros-20-red.svg
+[~ros2_package_message_filters]: https://img.shields.io/badge/message_filters-6-red.svg
+[~ros2_package_rclcpp_action]: https://img.shields.io/badge/rclcpp_action-17-red.svg
+[~ros2_package_rclcpp]: https://img.shields.io/badge/rclcpp-14-red.svg
+[~ros2_package_rcl_action]: https://img.shields.io/badge/rcl_action-15-red.svg
+[~ros2_package_rcl]: https://img.shields.io/badge/rcl-26-red.svg
+[~ros2_package_nav2_recoveries]: https://img.shields.io/badge/nav2_recoveries-13-red.svg
+[~ros2_package_nav2_map_server]: https://img.shields.io/badge/nav2_map_server-3-red.svg
 [~ros2_package_rviz_common]: https://img.shields.io/badge/rviz_common-2-red.svg
-[~ros2_package_message_filters]: https://img.shields.io/badge/message_filters-2-red.svg
 [~ros2_package_class_loader]: https://img.shields.io/badge/class_loader-2-red.svg
 [~ros2_package_rviz_default_plugins]: https://img.shields.io/badge/rviz_default_plugins-4-red.svg
 [~ros2_package_composition]: https://img.shields.io/badge/composition-3-red.svg
@@ -200,9 +200,7 @@ For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues
 [~ros2_package_intra_process_demo]: https://img.shields.io/badge/intra_process_demo-2-red.svg
 [~ros2_package_rosbag2_converter_default_plugins]: https://img.shields.io/badge/rosbag2_converter_default_plugins-2-red.svg
 [~ros2_package_rosbag2_storage_default_plugins]: https://img.shields.io/badge/rosbag2_storage_default_plugins-1-red.svg
-[~ros2_package_rclcpp_lifecycle]: https://img.shields.io/badge/rclcpp_lifecycle-1-red.svg
 [~ros2_package_tlsf_cpp]: https://img.shields.io/badge/tlsf_cpp-9-red.svg
-[~ros2_package_rcl_lifecycle]: https://img.shields.io/badge/rcl_lifecycle-1-red.svg
 
 
 
