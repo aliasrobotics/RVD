@@ -25,7 +25,9 @@ jobs:
         ls -l
         du -a
         pwd
-    #- name: Test with pytest
-    #  run: |
-    #    pip install pytest
-    #    pytest
+    - name: Build RVD summary
+      run: |
+        cd scripts/
+        python3 summary.py
+        cd ../
+        cat README.md        

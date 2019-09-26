@@ -1,7 +1,7 @@
 name: RVD_issues
 
 on:
-  [issues, push]:
+  issues:
     types: [opened, edited, milestoned, deleted, transferred, pinned, unpinned, closed, reopened, assigned, unassigned, labeled, unlabeled, locked, unlocked, milestoned, demilestoned]
     
 jobs:
@@ -27,7 +27,9 @@ jobs:
         ls -l
         du -a
         pwd
-    #- name: Test with pytest
-    #  run: |
-    #    pip install pytest
-    #    pytest
+    - name: Build RVD summary
+      run: |
+        cd scripts/
+        python3 summary.py
+        cd ../
+        cat README.md
