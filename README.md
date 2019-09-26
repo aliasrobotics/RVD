@@ -25,7 +25,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Thu, 26 Sep 2019 12:25:42 GMT*
+*Last updated Thu, 26 Sep 2019 14:44:47 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -107,7 +107,7 @@ By robot components, we consider both software and hardware robot components.
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Thu, 26 Sep 2019 12:25:42 GMT*
+*Last updated Thu, 26 Sep 2019 14:44:47 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
