@@ -75,7 +75,7 @@ class RVDImport_ROS2(RVDImport):
         """
         self.repo.create_issue(title=title, body=body, labels=labels)
         
-    def make_issue(self, dict_elem, robot_component="ROS 2", reporter="vmayoral", commit=None, version=None):
+    def make_issue(self, dict_elem):
         """
         Make a new issue
                 
@@ -83,12 +83,9 @@ class RVDImport_ROS2(RVDImport):
         
         :param dict_elem: dictionary element corresponding to one of the 
             entries of the csv 
-        :param robot_component: additional information for the construction of 
-            the issue related to the robot component
-        :param reporter: username of the person reporting the issues
         """
         title = self.make_issue_title(dict_elem)
-        body = self.make_issue_body(dict_elem, robot_component, commit)                
+        body = self.make_issue_body(dict_elem)
         labels = ["weakness", "components software"]
         if robot_component == "ros2":
             labels.append("robot component: ROS2")
@@ -134,7 +131,7 @@ class RVDImport_ROS2(RVDImport):
         else:
             return title
 
-    def make_issue_body(self, dict_elem, robot_component="ROS 2", commit=None, reporter = "vmayoral"):
+    def make_issue_body(self, dict_elem):
         """
         Make and return the body of an Google Sanitizers-related weakness using markdown
         :param robot_component:
@@ -156,17 +153,23 @@ class RVDImport_ROS2(RVDImport):
                 body += "| Commit | ["+str(commit)+"](https://github.com/ros2/ros2/tree/"+str(commit)+") |"+"\n"
             elif robot_component == "moveit2":
                 print("Not supported!")
-                sys.exit(0)
+                sys.exit(1)
             elif robot_component == "navigation2":
                 body += "| Commit | ["+str(commit)+"](https://github.com/ros-planning/navigation2/tree/"+str(commit)+") |"+"\n"
+            else:
+                print("Something went wrong.")
+                sys.exit(1)
+                
         body += "| Vendor  | N/A |"+"\n"
         body += "| CVE ID  | N/A  |"+"\n"
         body += "| CWE ID  | " + self.find_cwe(dict_elem) + " |"+"\n"
         body += "| RVSS Score  |  N/A |"+"\n"
         body += "| RVSS Vector | N/A |"+"\n"
-        body += "| GitHub Account | "+reporter+" |"+"\n"
+        body += "| GitHub Account | @"+reporter+" |"+"\n"
         body += "| Date Reported  | "+str(strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())) + " |"+"\n"
         body += "| Date Updated   | "+str(strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())) + " |"+"\n"
+        if module_url:
+            body += "| Module URL | "+str(module_url) + " |"+"\n"
         body += "| Exploitation vector | Internal network, robotics framework |"+"\n"
         body += "\n"
         body += "\n"
@@ -196,10 +199,10 @@ class RVDImport_ROS2(RVDImport):
         else:
             return "N/A"
 
-    def add_new_issues(self, file="issues.csv", robot_component="ROS 2", reporter="vmayoral", commit=None, version=None):
+    def add_new_issues(self):
         """
         Retrieves information from csv, determines which ones already
-        exist in the RVD and produces the corresponding new issues.        
+        exist in the RVD and produces the corresponding new issues.                
         """
         self.parse_csv(file)
         if self.csv_elements is None:
@@ -211,7 +214,7 @@ class RVDImport_ROS2(RVDImport):
         self.discard_existing()
         # Add the remaining as issues to the repo
         for elem in self.csv_elements:
-            self.make_issue(elem, robot_component=robot_component, reporter=reporter, commit=commit, version=version)
+            self.make_issue(elem)
 
     def discard_existing(self):
         """
@@ -245,9 +248,17 @@ class RVDImport_ROS2(RVDImport):
 
 def main():
     # Instance to import results
-    # importer = RVDImport_ROS2(username="vmayoral", repo="test")
+    # # Arguments:
+    # - file (e.g. files/test.csv)
+    # - robot_component (e.g. ros2)
+    # - version (e.g. 0.1 or master or dashing)
+    # - commit (e.g. 038e6e648aa556064948225da71715a983e183d2)
+    # - module_url (e.g test.url.com)
+    global commit, version, module_url, file, robot_component, reporter
+    reporter = "vmayoral" # set up vmayoral by default as the maintainer
     commit = None
     version = None
+    module_url = None
     if len(argv) == 3:
         file = argv[1]
         robot_component = argv[2]
@@ -260,6 +271,12 @@ def main():
         robot_component = argv[2]
         version = argv[3]
         commit = argv[4]
+    elif len(argv) == 6:
+        file = argv[1]
+        robot_component = argv[2]
+        version = argv[3]
+        commit = argv[4]
+        module_url = argv[5]
     elif len(argv) < 3:
         print("ERROR: No file provided")
         sys.exit(0)    
@@ -269,7 +286,7 @@ def main():
         sys.exit(0)                     
 
     importer = RVDImport_ROS2(username="aliasrobotics", repo="RVD")
-    importer.add_new_issues(file, robot_component=robot_component, commit=commit, version=version)
+    importer.add_new_issues()
   
 if __name__== "__main__":
     main()
