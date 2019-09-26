@@ -5,7 +5,7 @@ on:
     types: [opened, edited, milestoned, deleted, transferred, pinned, unpinned, closed, reopened, assigned, unassigned, labeled, unlabeled, locked, unlocked, milestoned, demilestoned]
     
 jobs:
-  build:
+  update:
 
     runs-on: ubuntu-latest
 

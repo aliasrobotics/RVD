@@ -3,7 +3,7 @@ name: RVD_push
 on: push  
 
 jobs:
-  build:
+  update:
 
     runs-on: ubuntu-latest
 
@@ -50,4 +50,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo "Pushing upstream"
-        git push -u origin master
+        git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" gh-pages
+        # git push -u origin master
