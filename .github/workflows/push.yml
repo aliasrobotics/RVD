@@ -33,7 +33,7 @@ jobs:
         python3 summary.py
         cd ../
         cat README.md        
-    - name: Push changes upstream
+    - name: Commit changes
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
@@ -44,5 +44,9 @@ jobs:
         git add .
         git commit -m "(automatic) Update README.md"
         git branch
+    - name: Push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
         echo "Pushing upstream"
         git push -u origin master
