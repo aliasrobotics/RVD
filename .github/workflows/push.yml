@@ -26,6 +26,8 @@ jobs:
         du -a
         pwd
     - name: Build RVD summary
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         cd scripts/
         python3 summary.py
