@@ -44,7 +44,7 @@ jobs:
         # git config user.email $(jq .pusher.email $GITHUB_PAYLOAD)
         git config user.email "v.mayoralv@gmail.com"
         git checkout -b master
-        git pull origin master
+        # git pull origin master
         git add .
         git commit -m "(automatic) Update README.md"
         git branch
