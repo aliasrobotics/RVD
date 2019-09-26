@@ -41,6 +41,7 @@ jobs:
         git config user.name "Víctor Mayoral Vilches"
         # git config user.email $(jq .pusher.email $GITHUB_PAYLOAD)
         git config user.email "v.mayoralv@gmail.com"
+        git checkout -b master
         git add .
         git commit -m "(automatic) Update README.md"
         git branch
