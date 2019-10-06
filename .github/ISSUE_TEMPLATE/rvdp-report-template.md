@@ -15,7 +15,7 @@ about: Template to report a valid robot vulnerability
 | GitHub Account | <required> |
 | Date Reported  | <<required>e.g:YYYY-MM-DD> |
 | Date Updated   | <optional>     |
-| Exploitation vector | <<required>e.g.: Local network> |
+| Attack vector | <<required>e.g.: Local network> |
 
 ## Component
 
