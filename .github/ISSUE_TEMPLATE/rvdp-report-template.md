@@ -17,19 +17,11 @@ about: Template to report a valid robot vulnerability
 | Date Updated   | <optional>     |
 | Exploitation vector | <<required>e.g.: Local network> |
 
-## Weakness or Vulnerability?
-
-* Pick one: 
-    * Weakness: yes/no
-    * Vulnerability: yes/no
- 
-Refer to https://github.com/aliasrobotics/RVD#discussion if you need to gain some understanding on the differences.
-
 ## Component
 
 * Pick one: 
-    * Software: yes/no
-    * Hardware: yes/no
+    * Software component: yes/no
+    * Hardware component: yes/no
     * Robot: yes/no
 
 
