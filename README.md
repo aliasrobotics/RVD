@@ -25,7 +25,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Sun, 06 Oct 2019 16:54:32 GMT*
+*Last updated Mon, 07 Oct 2019 06:39:23 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -42,8 +42,8 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 [~vulns]: https://img.shields.io/badge/vulnerabilities-49-7fe0bb.svg
 [~vulns_open]: https://img.shields.io/badge/vulnerabilities-49-red.svg
 [~vulns_closed]: https://img.shields.io/badge/vulnerabilities-0-green.svg
-[~weaknesses]: https://img.shields.io/badge/weaknesses-250-dbf9a2.svg
-[~weaknesses_open]: https://img.shields.io/badge/weaknesses-228-red.svg
+[~weaknesses]: https://img.shields.io/badge/weaknesses-251-dbf9a2.svg
+[~weaknesses_open]: https://img.shields.io/badge/weaknesses-229-red.svg
 [~weaknesses_closed]: https://img.shields.io/badge/weaknesses-22-green.svg
 [~others]: https://img.shields.io/badge/others-0-dbf9a2.svg
 [~others_open]: https://img.shields.io/badge/others-0-red.svg
@@ -107,7 +107,7 @@ By robot components, we consider both software and hardware robot components.
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Sun, 06 Oct 2019 16:54:32 GMT*
+*Last updated Mon, 07 Oct 2019 06:39:23 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -124,8 +124,8 @@ For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues
 [~vulns_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-0-7fe0bb.svg
 [~vulns_open_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-0-red.svg
 [~vulns_closed_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-0-green.svg
-[~weaknesses_ros2]: https://img.shields.io/badge/ros2_weaknesses-250-dbf9a2.svg
-[~weaknesses_open_ros2]: https://img.shields.io/badge/ros2_weaknesses-228-red.svg
+[~weaknesses_ros2]: https://img.shields.io/badge/ros2_weaknesses-251-dbf9a2.svg
+[~weaknesses_open_ros2]: https://img.shields.io/badge/ros2_weaknesses-229-red.svg
 [~weaknesses_closed_ros2]: https://img.shields.io/badge/ros2_weaknesses-22-green.svg
 [~others_ros2]: https://img.shields.io/badge/ros2_others-0-dbf9a2.svg
 [~others_open_ros2]: https://img.shields.io/badge/ros2_others-0-red.svg
