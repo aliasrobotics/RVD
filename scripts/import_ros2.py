@@ -102,10 +102,10 @@ class RVDImport_ROS2(RVDImport):
             labels.append(version)
             # labels.append("v"+version) # remove the "v" to ensure all sort of types are accepted
         print("\tMaking issue with title '"+title+"'")
-        # print(title)
-        # print(labels)
-        # print(body)
-        self.repo.create_issue(title=title, body=body, labels=labels)
+        print(title)
+        print(labels)
+        print(body)
+        # self.repo.create_issue(title=title, body=body, labels=labels)
 
     @staticmethod
     def make_issue_title(dict_elem):
@@ -211,7 +211,7 @@ class RVDImport_ROS2(RVDImport):
         # Fetch all issue titles, including closed ones
         self.init_issue_names()
         # Discard already existing ones to avoid duplicates
-        self.discard_existing()
+        # self.discard_existing()
         # Add the remaining as issues to the repo
         for elem in self.csv_elements:
             self.make_issue(elem)
