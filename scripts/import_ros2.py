@@ -102,10 +102,10 @@ class RVDImport_ROS2(RVDImport):
             labels.append(version)
             # labels.append("v"+version) # remove the "v" to ensure all sort of types are accepted
         print("\tMaking issue with title '"+title+"'")
-        print(title)
-        print(labels)
-        print(body)
-        # self.repo.create_issue(title=title, body=body, labels=labels)
+        # print(title)
+        # print(labels)
+        # print(body)
+        self.repo.create_issue(title=title, body=body, labels=labels)
 
     @staticmethod
     def make_issue_title(dict_elem):
@@ -149,7 +149,7 @@ class RVDImport_ROS2(RVDImport):
         body += "| Robot component | "+robot_component+" |"+"\n"
         body += "| Package | "+str(dict_elem["package"])+" |"+"\n"
         if commit:
-            if robot_component == "ROS 2":
+            if robot_component == "ros2":
                 body += "| Commit | ["+str(commit)+"](https://github.com/ros2/ros2/tree/"+str(commit)+") |"+"\n"
             elif robot_component == "moveit2":
                 print("Not supported!")
@@ -158,6 +158,7 @@ class RVDImport_ROS2(RVDImport):
                 body += "| Commit | ["+str(commit)+"](https://github.com/ros-planning/navigation2/tree/"+str(commit)+") |"+"\n"
             else:
                 print("Something went wrong.")
+                print("robot_component: "+str(robot_component))
                 sys.exit(1)
                 
         body += "| Vendor  | N/A |"+"\n"
@@ -211,7 +212,7 @@ class RVDImport_ROS2(RVDImport):
         # Fetch all issue titles, including closed ones
         self.init_issue_names()
         # Discard already existing ones to avoid duplicates
-        # self.discard_existing()
+        self.discard_existing()
         # Add the remaining as issues to the repo
         for elem in self.csv_elements:
             self.make_issue(elem)
