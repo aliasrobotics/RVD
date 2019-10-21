@@ -25,7 +25,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Sun, 20 Oct 2019 07:30:15 GMT*
+*Last updated Mon, 21 Oct 2019 07:40:13 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -42,8 +42,8 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 [~vulns]: https://img.shields.io/badge/vulnerabilities-49-7fe0bb.svg
 [~vulns_open]: https://img.shields.io/badge/vulnerabilities-49-red.svg
 [~vulns_closed]: https://img.shields.io/badge/vulnerabilities-0-green.svg
-[~weaknesses]: https://img.shields.io/badge/weaknesses-308-dbf9a2.svg
-[~weaknesses_open]: https://img.shields.io/badge/weaknesses-286-red.svg
+[~weaknesses]: https://img.shields.io/badge/weaknesses-312-dbf9a2.svg
+[~weaknesses_open]: https://img.shields.io/badge/weaknesses-290-red.svg
 [~weaknesses_closed]: https://img.shields.io/badge/weaknesses-22-green.svg
 [~others]: https://img.shields.io/badge/others-0-dbf9a2.svg
 [~others_open]: https://img.shields.io/badge/others-0-red.svg
@@ -107,7 +107,7 @@ By robot components, we consider both software and hardware robot components.
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Sun, 20 Oct 2019 07:30:15 GMT*
+*Last updated Mon, 21 Oct 2019 07:40:13 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -124,8 +124,8 @@ For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues
 [~vulns_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-0-7fe0bb.svg
 [~vulns_open_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-0-red.svg
 [~vulns_closed_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-0-green.svg
-[~weaknesses_ros2]: https://img.shields.io/badge/ros2_weaknesses-308-dbf9a2.svg
-[~weaknesses_open_ros2]: https://img.shields.io/badge/ros2_weaknesses-286-red.svg
+[~weaknesses_ros2]: https://img.shields.io/badge/ros2_weaknesses-312-dbf9a2.svg
+[~weaknesses_open_ros2]: https://img.shields.io/badge/ros2_weaknesses-290-red.svg
 [~weaknesses_closed_ros2]: https://img.shields.io/badge/ros2_weaknesses-22-green.svg
 [~others_ros2]: https://img.shields.io/badge/ros2_others-0-dbf9a2.svg
 [~others_open_ros2]: https://img.shields.io/badge/ros2_others-0-red.svg
@@ -137,12 +137,12 @@ For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues
 
 
 #### ROS 2 flaws by package (only `open` ones)
+[![label: ros2_package_rcl_action][~ros2_package_rcl_action]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rcl_action%22)
 [![label: ros2_package_rcl][~ros2_package_rcl]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rcl%22)
 [![label: ros2_package_message_filters][~ros2_package_message_filters]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+message_filters%22)
 [![label: ros2_package_rclcpp][~ros2_package_rclcpp]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rclcpp%22)
 [![label: ros2_package_tf2_ros][~ros2_package_tf2_ros]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+tf2_ros%22)
 [![label: ros2_package_rclcpp_action][~ros2_package_rclcpp_action]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rclcpp_action%22)
-[![label: ros2_package_rcl_action][~ros2_package_rcl_action]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+rcl_action%22)
 [![label: ros2_package_nav2_util][~ros2_package_nav2_util]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+nav2_util%22)
 [![label: ros2_package_image_transport][~ros2_package_image_transport]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+image_transport%22)
 [![label: ros2_package_nav2_recoveries][~ros2_package_nav2_recoveries]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+nav2_recoveries%22)
@@ -170,12 +170,12 @@ For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues
 [![label: ros2_package_tlsf_cpp][~ros2_package_tlsf_cpp]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+tlsf_cpp%22)
 
 
+[~ros2_package_rcl_action]: https://img.shields.io/badge/rcl_action-23-red.svg
 [~ros2_package_rcl]: https://img.shields.io/badge/rcl-47-red.svg
 [~ros2_package_message_filters]: https://img.shields.io/badge/message_filters-18-red.svg
 [~ros2_package_rclcpp]: https://img.shields.io/badge/rclcpp-22-red.svg
 [~ros2_package_tf2_ros]: https://img.shields.io/badge/tf2_ros-24-red.svg
 [~ros2_package_rclcpp_action]: https://img.shields.io/badge/rclcpp_action-24-red.svg
-[~ros2_package_rcl_action]: https://img.shields.io/badge/rcl_action-19-red.svg
 [~ros2_package_nav2_util]: https://img.shields.io/badge/nav2_util-33-red.svg
 [~ros2_package_image_transport]: https://img.shields.io/badge/image_transport-13-red.svg
 [~ros2_package_nav2_recoveries]: https://img.shields.io/badge/nav2_recoveries-13-red.svg
