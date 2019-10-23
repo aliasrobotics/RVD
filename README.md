@@ -25,7 +25,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Tue, 22 Oct 2019 08:57:40 GMT*
+*Last updated Wed, 23 Oct 2019 10:45:57 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -42,8 +42,8 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 [~vulns]: https://img.shields.io/badge/vulnerabilities-49-7fe0bb.svg
 [~vulns_open]: https://img.shields.io/badge/vulnerabilities-49-red.svg
 [~vulns_closed]: https://img.shields.io/badge/vulnerabilities-0-green.svg
-[~weaknesses]: https://img.shields.io/badge/weaknesses-313-dbf9a2.svg
-[~weaknesses_open]: https://img.shields.io/badge/weaknesses-291-red.svg
+[~weaknesses]: https://img.shields.io/badge/weaknesses-314-dbf9a2.svg
+[~weaknesses_open]: https://img.shields.io/badge/weaknesses-292-red.svg
 [~weaknesses_closed]: https://img.shields.io/badge/weaknesses-22-green.svg
 [~others]: https://img.shields.io/badge/others-0-dbf9a2.svg
 [~others_open]: https://img.shields.io/badge/others-0-red.svg
@@ -107,7 +107,7 @@ By robot components, we consider both software and hardware robot components.
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Tue, 22 Oct 2019 08:57:40 GMT*
+*Last updated Wed, 23 Oct 2019 10:45:57 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
