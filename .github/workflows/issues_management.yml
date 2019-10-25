@@ -1,8 +1,9 @@
-name: RVD_issues
+name: RVD_management
 
 on:
   issues:
-    types: [opened, edited, milestoned, deleted, transferred, pinned, unpinned, closed, reopened, assigned, unassigned, labeled, unlabeled, locked, unlocked, milestoned, demilestoned]
+    types: [opened, edited, closed, labeled, unlabeled]
+    # types: [opened, edited, milestoned, deleted, transferred, pinned, unpinned, closed, reopened, assigned, unassigned, labeled, unlabeled, locked, unlocked, milestoned, demilestoned]
     
 jobs:
   update:
