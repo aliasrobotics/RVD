@@ -1,6 +1,11 @@
 ---
 name: Weakness report template
-about: Template to report a weakness in the Robot Vulnerability Database (RVD). Refer to https://github.com/aliasrobotics/RVD#appendix-a-vulnerabilities-weaknesses-bugs-and-more if you have doubts on which type of flaw you should be reporting.
+about: Template to report a weakness in RVD. See https://bit.ly/2JnamaD if you have
+  doubts on which type of flaw you should be reporting
+title: ''
+labels: weakness
+assignees: ''
+
 ---
 
 # Weakness report
