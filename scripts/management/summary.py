@@ -737,7 +737,7 @@ research and innovation programme under the project ROSIN with the grant agreeme
         :return None
         """
         readme_content = self.generate_readme()
-        readme_file = open("../README.md", "w")  # NOTE, path for README.md hardcoded
+        readme_file = open("../../README.md", "w")  # NOTE, path for README.md hardcoded
         readme_file.write(readme_content)
         readme_file.close()
 
