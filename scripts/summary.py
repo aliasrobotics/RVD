@@ -546,7 +546,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
                 
         :return markdown string
         """
-        markdown = "Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. The meaning of the most relevant labels or statuses is covered below:"  + "\n"
+        markdown = "Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. The meaning of the most relevant labels or statuses is covered below. Refer to the appendices for definitions on the terminology used:"  + "\n"
         
         markdown += "- [![](https://img.shields.io/badge/open-green.svg?style=flat)](#): Flaw that remains active or under research."  + "\n"
         markdown += "- [![](https://img.shields.io/badge/closed-red.svg?style=flat)](#): Flaw that is inactive. Reasons for inactivity relate to mitigations, duplicates, erroneous reports or similar."  + "\n"
@@ -555,6 +555,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
         markdown += "- [![](https://img.shields.io/badge/malformed-440fa8.svg?style=flat)](#): Flaw has a malformed syntax. Refer to the templates for basic guidelines on the right syntax."  + "\n"
         markdown += "- [![](https://img.shields.io/badge/mitigated-aaf9a7.svg?style=flat)](#): Mitigated. A link to the corresponding mitigation is required."  + "\n"
         markdown += "- [![](https://img.shields.io/badge/quality-ddb140.svg?style=flat)](#): Indicates that the bug is a quality one instead of a security flaw."  + "\n"
+        markdown += "- [![](https://img.shields.io/badge/exposure-ccfc2d.svg?style=flat)](#): Indicates that flaw is an exposure."  + "\n"
         markdown += "- [![](https://img.shields.io/badge/weakness-dbf9a2.svg?style=flat)](#): Indicates that flaw is a weakness."  + "\n"
         markdown += "- [![](https://img.shields.io/badge/vulnerability-7fe0bb.svg?style=flat)](#): Indicates that flaw is a vulnerability."  + "\n"        
         markdown += "- [![](https://img.shields.io/badge/severity_critical-ce5b50.svg?style=flat)](#) [![](https://img.shields.io/badge/severity_high-e99695.svg?style=flat)](#) [![](https://img.shields.io/badge/severity_medium-e9cd95.svg?style=flat)](#): Indicates the severity of the vunerability according to RVSS."  + "\n"                
