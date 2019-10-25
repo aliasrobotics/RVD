@@ -19,7 +19,7 @@ Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. T
 - [![](https://img.shields.io/badge/quality-ddb140.svg?style=flat)](#): Indicates that the bug is a quality one instead of a security flaw.
 - [![](https://img.shields.io/badge/weakness-dbf9a2.svg?style=flat)](#): Indicates that flaw is a weakness.
 - [![](https://img.shields.io/badge/vulnerability-7fe0bb.svg?style=flat)](#): Indicates that flaw is a vulnerability.
-- [![](https://img.shields.io/badge/severity_critical-ce5b50.svg?style=flat)](#) [![](https://img.shields.io/badge/severity_high-e99695.svg?style=flat)](#) ![](https://img.shields.io/badge/severity_medium-e9cd95.svg?style=flat)](#): Indicates the severity of the vunerability according to RVSS.
+- [![](https://img.shields.io/badge/severity_critical-ce5b50.svg?style=flat)](#) [![](https://img.shields.io/badge/severity_high-e99695.svg?style=flat)](#) [![](https://img.shields.io/badge/severity_medium-e9cd95.svg?style=flat)](#): Indicates the severity of the vunerability according to RVSS.
 
 ## ToC
 
@@ -42,7 +42,7 @@ Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. T
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Fri, 25 Oct 2019 20:18:34 GMT*
+*Last updated Fri, 25 Oct 2019 21:31:00 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -124,7 +124,7 @@ By robot components, we consider both software and hardware robot components.
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Fri, 25 Oct 2019 20:18:34 GMT*
+*Last updated Fri, 25 Oct 2019 21:31:00 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -255,25 +255,49 @@ By default, new vulnerabilities are reported to manufacturers and/or open source
 ## Appendices
 
 ### Appendix A: Vulnerabilities, weaknesses, bugs and more
-#### Discussion
+#### Research on terminology
 [Commonly](https://en.wikipedia.org/wiki/Software_bug):
-- A **(robot) software bug** is an error, flaw, failure or fault in a computer program or system that causes it to produce an incorrect or unexpected result, or to behave in unintended ways.
+- A **software `bug`** is an error, flaw, failure or fault in a computer program or system that causes it to produce an incorrect or unexpected result, or to behave in unintended ways.
 
 According to [CWE](https://cwe.mitre.org/about/faq.html#A.2):
-- **(robot) software weaknesses** are errors (bugs?) that can lead to software vulnerabilities.
-- **(robot) software vulnerability** is a mistake in software that can be directly used by a hacker to gain access to a system or network.
+- **software `weaknesses`** are errors (bugs) that can lead to software vulnerabilities.
+- **software `vulnerability`** is a mistake in software that can be directly used by a hacker to gain access to a system or network.
+
+Moreover, according to [CVE page](https://cve.mitre.org/about/faqs.html#what_is_vulnerability):
+- A `vulnerability` is a `weakness` in the computational logic (e.g., code) found in software and some hardware components (e.g., firmware) that, when exploited, results in a negative impact to confidentiality, integrity or availability (more [here](https://cve.mitre.org/about/terminology.html)).
+- An `exposure` is a system configuration issue or a mistake in software that allows access to information or capabilities that can be used by a hacker as a stepping-stone into a system or network.
 
 [ISO/IEC 27001](https://www.iso.org/isoiec-27001-information-security.html) defines only vulnerability:
 - **(robot) vulnerability**: weakness of an asset or control that can be exploited by one or more threats
 
-Based on all this, we'll assume that both "weakness" and "bug" refer to the same thing, an error in code that might turn into a "vulnerability" if exploitable. To establish some clear relationship:
+#### Discussion and interpretation 
 
-```
- bugs == weaknesses
- weakness -> vulnerability <-> weakness is exploitable
-```        
+From the definitions above, it seems reasonable to associate use interchangeably `bugs` and `flaws` when referring to security issues. In addition, the word `weakness` seems applicable to any flaw that might turn into a `vulnerability` however it must be noted that (from the text above) a `vulnerability` "must be exploited"). Based on this a clear difference can be established classifiying flaws with potential to be exploitable as `weaknesses` and flaws exploitable as `vulnerabilities`. Ortogonal to this appear `exposures` which refer to misconfigurations that allows attackers to establish an attack vector in a system.
 
-Finally, we consider that a **(robot) flaw** is a generic term to refer too any of the above concepts.
+Based in all of the above, we interpret and make the following assumptions for RVD:
+- unless specified, all `flaws` are "security flaws" (an alternative could be a quality bug)
+- `flaw` and `bug` refer to the same thing and can be used interchangeably
+- `weakness` is a flaw with potential to be exploited (but unconfirmed its exploitability)
+- `vulnerability` is a weakness that is exploitable.
+- `exposure` is a configuration error or mistake in software that *without leading to exploitation*, leaks relevant information that empowers an attacker.
+
+### Appendix B: How does RVD relate to CVE, the CVE List and the NVD?
+
+Some definitions:
+- `Robot Vulnerability Database (RVD)` is a database for robot vulnerabilities and weaknesses that aims to record and categorize flaws that apply to robot and robot components. RVD was created as a community-contributed and open archive of robot security flaws. It was originally created and sponsored by Alias Robotics.
+- `Common Vulnerabilities and Exposures (CVE)` List CVE® is an archive (dictionary according to the official source) of entries—each containing an identification number, a description, and at least one public reference—for publicly known cybersecurity vulnerabilities. CVE contains vulnerabilities and exposures and is sponsored by the U.S. Department of Homeland Security (DHS) Cybersecurity and Infrastructure Security Agency (CISA). It is **not** a database (see [official information](https://cve.mitre.org/about/faqs.html)). CVE List *feeds* vulnerability databases (such as the National Vulnerability Database (NVD)) with its entries and also acts as an aggregator of vulnerabilities and exposures reported at NVD.
+- `U.S. National Vulnerability Database (NVD)` is the U.S. government repository of standards based vulnerability management data. It presents an archive with vulnerabilities, each with their corresponding CVE identifiers. NVD gets fed by the CVE List and then builds upon the information included in CVE Entries to provide enhanced information for each entry such as fix information, severity scores, and impact ratings. 
+
+RVD does **not** aim to replace CVE but to <ins>complement it for the domain of robotics</ins>. RVD aims to become CVE-compatible (see [official guidelines for compatibility](https://cve.mitre.org/compatible/guidelines.html)) by tackling aspects such scope and impact of the flaws (through a proper severity scoring mechanism for robots), information for facilitating mitigation, detailed technical information, etc. For a more detailed discussion, see [this ROS Discourse thread](https://discourse.ros.org/t/introducing-the-robot-vulnerability-database/11105/7?u=vmayoral). 
+
+When compared to other vulnerability databases, RVD aims to differenciate itself by focusing on the following:
+- **robot specific**: RVD aims to focus and capture robot-specific flaws. If a flaw does not end-up applying to a robot or a robot component then it should not be recorded here.
+- **community-oriented**: while RVD is originally sponsored by Alias Robotics, it aims to become community-managed and contributed.
+- **facilitates reproducing robot flaws**: Working with robots is very time consuming. Mitigating a vulnerability or a weakness requires one to first reproduce the flaw. This can be extremely time consuming. Not so much providing the fix itself but ensuring that your environment is appropriate. At RVD, each flaw entry should aim to include a row named as `Module URL`. This should correspond with the link to a Docker image that should allow anyone reproduce the flaw easily.
+- **robot-specific severity scoring**: opposed to CVSS which has strong limitations when applied to robotics, RVD uses RVSS, a robot-specific scoring mechanism.
+
+As part of RVD, we encourage security researchers to file CVE Entries and use official CVE identifiers for their reports and discussions at RVD.
+
 
 ***
 <!--
