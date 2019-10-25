@@ -1,7 +1,6 @@
 ---
 name: Weakness report template
-about: Template to report a weakness in RVD. See https://bit.ly/2JnamaD if you have
-  doubts on which type of flaw you should be reporting
+about: Template to report a weakness in RVD. See https://bit.ly/2JnamaD if in doubt
 title: ''
 labels: weakness
 assignees: ''
