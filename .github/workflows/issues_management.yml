@@ -30,7 +30,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        cd scripts/management
+        cd scripts/
         python3 summary.py
         cd ../
         cat README.md        

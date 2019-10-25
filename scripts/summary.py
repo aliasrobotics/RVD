@@ -523,22 +523,6 @@ class Summary(RVDImport):
             self.vulns_low_moveit2) + "-e9e895.svg" + "\n"
         return markdown
 
-    def to_markdown(self):
-        """
-        Produces a markdown output
-        
-        Inspired by
-        - https://github.com/isaacs/github/issues/305 and
-        - https://shields.io/
-        
-        :return markdown string
-        """
-        markdown = ""
-        markdown += self.to_markdown_general()
-        # markdown += self.to_markdown_ros2()
-        # markdown += self.to_markdown_moveit2()
-        return markdown
-
     @staticmethod
     def static_content_header():
         header = """\
@@ -552,8 +536,40 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 
 **Alias Robotics supports hacker-powered robot security in close collaboration with original robot manufacturers. By no means we encourage or promote the unauthorized tampering with running robotic systems. This can cause serious human harm and material damages.**
 
+## Concepts
+"""
+        return header
+
+    def concepts_to_markdown(self):
+        """
+        Summarizes RVD concepts in a markdown output
+                
+        :return markdown string
+        """
+        markdown = "Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. The meaning of the most relevant labels or statuses is covered below:"  + "\n"
+        
+        markdown += "- ![](https://img.shields.io/badge/open-green.svg?style=flat): Flaw that remains active or under research."  + "\n"
+        markdown += "- ![](https://img.shields.io/badge/closed-red.svg?style=flat): Flaw that is inactive. Reasons for inactivity relate to mitigations, duplicates, erroneous reports or similar."  + "\n"
+        markdown += "- ![](https://img.shields.io/badge/invalid-red.svg?style=flat): Ticket discarded and removed for the overall count. This label flags invalid or failed reports including tests and related."  + "\n"
+        markdown += "- ![](https://img.shields.io/badge/duplicate-cfd3d7.svg?style=flat): Duplicated flaw. Typically, a link to the original ticket is provided."  + "\n"
+        markdown += "- ![](https://img.shields.io/badge/malformed-440fa8.svg?style=flat): Flaw has a malformed syntax. Refer to the templates for basic guidelines on the right syntax."  + "\n"
+        markdown += "- ![](https://img.shields.io/badge/mitigated-aaf9a7.svg?style=flat): Mitigated. A link to the corresponding mitigation is required."  + "\n"
+        markdown += "- ![](https://img.shields.io/badge/quality-ddb140.svg?style=flat): Indicates that the bug is a quality one instead of a security flaw."  + "\n"
+        markdown += "- ![](https://img.shields.io/badge/weakness-dbf9a2.svg?style=flat): Indicates that flaw is a weakness."  + "\n"
+        markdown += "- ![](https://img.shields.io/badge/vulnerability-7fe0bb.svg?style=flat): Indicates that flaw is a vulnerability."  + "\n"        
+        markdown += "- ![](https://img.shields.io/badge/severity_critical-ce5b50.svg?style=flat) ![](https://img.shields.io/badge/severity_high-e99695.svg?style=flat) ![](https://img.shields.io/badge/severity_medium-e9cd95.svg?style=flat): Indicates the severity of the vunerability according to RVSS."  + "\n"                
+        return markdown    
+
+    @staticmethod
+    def static_content_header2():
+        header = """\
+
+## ToC
+
 - [Robot vulnerabilities (and weaknesses)](#robot-vulnerabilities-and-weaknesses)
-	- [General summary](#general-summary)
+	- [Concepts](#concepts)
+    - [Table of contents](#toc)
+    - [General summary](#general-summary)
 	- [ROS 2](#ros-2)
 		- [ROS 2 flaws by package (only `open` ones)](#ros-2-flaws-by-package-only-open-ones)
 - [Disclosure policy](#disclosure-policy)
@@ -572,7 +588,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
         return header
 
     @staticmethod
-    def static_content_header2():
+    def static_content_header3():
         header2 = """\
 
 <details><summary><b>Robot vulnerabilities by robot component</b></summary>
@@ -722,9 +738,16 @@ research and innovation programme under the project ROSIN with the grant agreeme
         :return string
         """
         readme = ""
+        # Introduction and disclaimer
         readme += self.static_content_header()
-        readme += self.to_markdown()
+        # Concepts
+        readme += self.concepts_to_markdown()        
+        # ToC
         readme += self.static_content_header2()
+        # general flaw numbers
+        readme += self.to_markdown_general()
+        readme += self.static_content_header3()
+        # ROS 2 flaw numbers
         readme += self.to_markdown_ros2()
         readme += self.static_content_footer()
         return readme
@@ -737,12 +760,12 @@ research and innovation programme under the project ROSIN with the grant agreeme
         :return None
         """
         readme_content = self.generate_readme()
-        readme_file = open("../../README.md", "w")  # NOTE, path for README.md hardcoded
+        readme_file = open("../README.md", "w")  # NOTE, path for README.md hardcoded
         readme_file.write(readme_content)
         readme_file.close()
 
 
 summary = Summary()
 # print(summary.to_markdown())
-# print(summary.generate_README())
+# print(summary.generate_readme())
 summary.replace_readme()

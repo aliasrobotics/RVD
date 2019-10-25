@@ -8,8 +8,24 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 
 **Alias Robotics supports hacker-powered robot security in close collaboration with original robot manufacturers. By no means we encourage or promote the unauthorized tampering with running robotic systems. This can cause serious human harm and material damages.**
 
+## Concepts
+Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. The meaning of the most relevant labels or statuses is covered below:
+- ![](https://img.shields.io/badge/open-green.svg?style=flat): Flaw that remains active or under research.
+- ![](https://img.shields.io/badge/closed-red.svg?style=flat): Flaw that is inactive. Reasons for inactivity relate to mitigations, duplicates, erroneous reports or similar.
+- ![](https://img.shields.io/badge/invalid-red.svg?style=flat): Ticket discarded and removed for the overall count. This label flags invalid or failed reports including tests and related.
+- ![](https://img.shields.io/badge/duplicate-cfd3d7.svg?style=flat): Duplicated flaw. Typically, a link to the original ticket is provided.
+- ![](https://img.shields.io/badge/mitigated-aaf9a7.svg?style=flat): Mitigated. A link to the corresponding mitigation is required.
+- ![](https://img.shields.io/badge/quality-ddb140.svg?style=flat): Indicates that the bug is a quality one instead of a security flaw.
+- ![](https://img.shields.io/badge/weakness-dbf9a2.svg?style=flat): Indicates that flaw is a weakness.
+- ![](https://img.shields.io/badge/vulnerability-7fe0bb.svg?style=flat): Indicates that flaw is a weakness.
+- ![](https://img.shields.io/badge/severity_critical-ce5b50.svg?style=flat) ![](https://img.shields.io/badge/severity_high-e99695.svg?style=flat) ![](https://img.shields.io/badge/severity_medium-e9cd95.svg?style=flat): Indicates that the severity of the vunerability is critical according to RVSS (9-10 scoring).
+
+## ToC
+
 - [Robot vulnerabilities (and weaknesses)](#robot-vulnerabilities-and-weaknesses)
-	- [General summary](#general-summary)
+	- [Concepts](#concepts)
+    - [Table of contents](#toc)
+    - [General summary](#general-summary)
 	- [ROS 2](#ros-2)
 		- [ROS 2 flaws by package (only `open` ones)](#ros-2-flaws-by-package-only-open-ones)
 - [Disclosure policy](#disclosure-policy)
@@ -25,7 +41,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Wed, 23 Oct 2019 10:45:57 GMT*
+*Last updated Fri, 25 Oct 2019 20:02:45 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -107,7 +123,7 @@ By robot components, we consider both software and hardware robot components.
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Wed, 23 Oct 2019 10:45:57 GMT*
+*Last updated Fri, 25 Oct 2019 20:02:45 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
