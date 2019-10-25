@@ -6,9 +6,7 @@ on:
     
 jobs:
   update:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python 3.7
@@ -31,7 +29,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        cd scripts/
+        cd scripts/management
         python3 summary.py
         cd ../
         cat README.md        

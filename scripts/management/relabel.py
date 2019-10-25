@@ -4,7 +4,7 @@ from time import gmtime, strftime
 import click
 
 """
-TODO: provide description and example
+WIP: Script to relabel reports
 Run:
     TODO
 """
@@ -18,8 +18,8 @@ def relabel_init(package):
     pass
 
               
-def relabel(count, name):
-    """Simple program that greets NAME for a total of COUNT times."""
+def relabel(label1, label2):
+    """WIP: Simple script that relabels from label1 to label2."""
     for x in range(count):
         click.echo('Hello %s!' % name)
 
