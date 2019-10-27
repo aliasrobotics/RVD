@@ -165,7 +165,7 @@ class RVDParser:
         """        
         if self.table_rows:
             for row in self.table_rows:
-                if "attack vector" in row[0].lower():
+                if ("attack vector" in row[0].lower()) or ("exploitation vector" in row[0].lower()):
                     return row[1].strip()
             return None
         return None
