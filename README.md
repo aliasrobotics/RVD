@@ -43,7 +43,7 @@ Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. T
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Sun, 27 Oct 2019 16:16:48 GMT*
+*Last updated Sun, 27 Oct 2019 16:20:31 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -60,12 +60,12 @@ Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. T
 [~vulns]: https://img.shields.io/badge/vulnerabilities-49-7fe0bb.svg
 [~vulns_open]: https://img.shields.io/badge/vulnerabilities-49-red.svg
 [~vulns_closed]: https://img.shields.io/badge/vulnerabilities-0-green.svg
-[~weaknesses]: https://img.shields.io/badge/weaknesses-313-dbf9a2.svg
+[~weaknesses]: https://img.shields.io/badge/weaknesses-314-dbf9a2.svg
 [~weaknesses_open]: https://img.shields.io/badge/weaknesses-292-red.svg
-[~weaknesses_closed]: https://img.shields.io/badge/weaknesses-21-green.svg
-[~others]: https://img.shields.io/badge/others-1-dbf9a2.svg
+[~weaknesses_closed]: https://img.shields.io/badge/weaknesses-22-green.svg
+[~others]: https://img.shields.io/badge/others-0-dbf9a2.svg
 [~others_open]: https://img.shields.io/badge/others-0-red.svg
-[~others_closed]: https://img.shields.io/badge/others-1-green.svg
+[~others_closed]: https://img.shields.io/badge/others-0-green.svg
 [~vulns_critical]: https://img.shields.io/badge/vuln.critical-20-ce5b50.svg
 [~vulns_high]: https://img.shields.io/badge/vuln.high-21-e99695.svg
 [~vulns_medium]: https://img.shields.io/badge/vuln.medium-8-e9cd95.svg
@@ -125,7 +125,7 @@ By robot components, we consider both software and hardware robot components.
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Sun, 27 Oct 2019 16:16:48 GMT*
+*Last updated Sun, 27 Oct 2019 16:20:31 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -142,9 +142,9 @@ For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues
 [~vulns_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-0-7fe0bb.svg
 [~vulns_open_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-0-red.svg
 [~vulns_closed_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-0-green.svg
-[~weaknesses_ros2]: https://img.shields.io/badge/ros2_weaknesses-312-dbf9a2.svg
+[~weaknesses_ros2]: https://img.shields.io/badge/ros2_weaknesses-313-dbf9a2.svg
 [~weaknesses_open_ros2]: https://img.shields.io/badge/ros2_weaknesses-291-red.svg
-[~weaknesses_closed_ros2]: https://img.shields.io/badge/ros2_weaknesses-21-green.svg
+[~weaknesses_closed_ros2]: https://img.shields.io/badge/ros2_weaknesses-22-green.svg
 [~others_ros2]: https://img.shields.io/badge/ros2_others-0-dbf9a2.svg
 [~others_open_ros2]: https://img.shields.io/badge/ros2_others-0-red.svg
 [~others_closed_ros2]: https://img.shields.io/badge/ros2_others-0-green.svg
