@@ -78,6 +78,25 @@ class Malformed(RVDImport):
         """
         # TODO: validate this value
         return True
+
+    def validate_rvss_score(self, rvss_score):
+        """
+        Validate the rvss_score element
+        
+        :return bool
+        """
+        # TODO: validate this value
+        return True
+
+    def validate_rvss_vector(self, rvss_vector):
+        """
+        Validate the rvss_vector element
+        
+        :return bool
+        """
+        # TODO: validate this value
+        return True
+
         
     def validate(self, issue, flaw_type, tab):
         """
