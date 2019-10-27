@@ -27,6 +27,8 @@ class Summary(RVDImport):
         # Closed
         self.issues_closed = []  # stores the name of each one of the issues in the corresponding repository
         self.labels_closed = []  # labels for all issues
+        
+        self.malformed = 0 # number of malformed tickets
 
         ###########################
         # Summary attributes
@@ -303,8 +305,28 @@ class Summary(RVDImport):
             else:
                 self.processed_packages[p] = 1
         
-        # print(self.processed_packages)
+        # Obtain the number of tickets with "malformed" label
+        for l_set in self.labels_open:
+            if 'malformed' in l_set:
+                self.malformed += 1        
 
+    def upper_shields(self):
+        """
+        Produces a first line of small shields providing quick information for
+        RVD maintainers.
+        
+        :return markdown string
+        """
+        markdown = ""
+        # add the shields
+        markdown += "[![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed)"
+        markdown += "[![](https://img.shields.io/badge/open_flaws-"+str(self.open_issues_count)+"-red.svg)](#): Mitigated. A link to the corresponding mitigation is required."  + "\n"        
+        markdown = "\n"
+        
+        # add the source of the shields
+        markdown += "[~upper_shield_malformed]: https://img.shields.io/badge/malformed-440fa8.svg" + str(self.malformed) + "-.svg" + "\n"
+        return markdown        
+        
     def to_markdown_general(self):
         """
         Produces a markdown output for the general table
@@ -554,7 +576,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
         markdown += "- [![](https://img.shields.io/badge/closed-red.svg?style=flat)](#): Flaw that is inactive. Reasons for inactivity relate to mitigations, duplicates, erroneous reports or similar."  + "\n"
         markdown += "- [![](https://img.shields.io/badge/invalid-red.svg?style=flat)](#): Ticket discarded and removed for the overall count. This label flags invalid or failed reports including tests and related."  + "\n"
         markdown += "- [![](https://img.shields.io/badge/duplicate-cfd3d7.svg?style=flat)](#): Duplicated flaw. Typically, a link to the original ticket is provided."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/malformed-440fa8.svg?style=flat)](#): Flaw has a malformed syntax. Refer to the templates for basic guidelines on the right syntax."  + "\n"
+        markdown += "- [![](https://img.shields.io/badge/malformed-440fa8.svg?style=flat)](https://github.com/aliasrobotics/RVD/labels/malformed): Flaw has a malformed syntax. Refer to the templates for basic guidelines on the right syntax."  + "\n"
         markdown += "- [![](https://img.shields.io/badge/mitigated-aaf9a7.svg?style=flat)](#): Mitigated. A link to the corresponding mitigation is required."  + "\n"
         markdown += "- [![](https://img.shields.io/badge/quality-ddb140.svg?style=flat)](#): Indicates that the bug is a quality one instead of a security flaw."  + "\n"
         markdown += "- [![](https://img.shields.io/badge/exposure-ccfc2d.svg?style=flat)](#): Indicates that flaw is an exposure."  + "\n"
@@ -765,6 +787,8 @@ research and innovation programme under the project ROSIN with the grant agreeme
         :return string
         """
         readme = ""
+        # Quick information and input for RVD maintainers
+        readme += self.upper_shields()
         # Introduction and disclaimer
         readme += self.static_content_header()
         # Concepts

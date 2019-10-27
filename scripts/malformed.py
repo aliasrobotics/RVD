@@ -311,7 +311,7 @@ class Malformed(RVDImport):
         print("\n")
         print("Malformed statistics")
         print("--------------------")
-        print("\t- number of malformed flaws: "+str(len(malformed_list))+"/"+str(len(issues)))
+        print("\t- number of malformed flaws: "+str(len(malformed_list))+"/"+str(self.repo.open_issues))
         if len(malformed_list) > 0:
             print("\t- malformed flaws:")
             for flaw in malformed_list:
