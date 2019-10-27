@@ -1,5 +1,7 @@
 """
-Scripts that produces a summary of vulnerabilities and weaknesses
+Scripts that (re-)produces a summary of vulnerabilities and weaknesses
+and dumps it optionally into README.md
+
 Run:
     python3 summary.py
 """

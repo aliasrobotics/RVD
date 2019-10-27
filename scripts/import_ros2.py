@@ -144,6 +144,9 @@ class RVDImport_ROS2(RVDImport):
         #       package,error_name,stack_trace_key,count,sample_stack_trace
         # Let's compose the body of the issue based on that assumption
         body = ""
+        body += "# Weakness report:"+"\n"
+        body += "\n"
+        body += "### Summary table:"+"\n"
         body += "| Input      | Value  |"+"\n"
         body += "|---------|--------|"+"\n"
         body += "| Robot component | "+robot_component+" |"+"\n"
@@ -171,13 +174,13 @@ class RVDImport_ROS2(RVDImport):
         body += "| Date Updated   | "+str(strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())) + " |"+"\n"
         if module_url:
             body += "| Module URL | "+str(module_url) + " |"+"\n"
-        body += "| Exploitation vector | Internal network, robotics framework |"+"\n"
+        body += "| Attack vector | Internal network, robotics framework |"+"\n"
         body += "\n"
         body += "\n"
-        body += "### Description"+"\n"
+        body += "### Description:"+"\n"
         body += "Issue detected while running Google Sanitizers."+"\n"
         body += "\n"
-        body += "### Stack trace"+"\n"
+        body += "### Stack trace:"+"\n"
         body += "```"+"\n"
         body += str(dict_elem["sample_stack_trace"])+"\n"
         body += "```"+"\n"

@@ -9,9 +9,10 @@ assignees: ''
 
 # Weakness report
 
+### Summary table
 | Input      | Value  |
 |---------|--------|
-| Robot (or robot component) name | <ins>`required`</ins> |
+| Robot `OR` Robot component | <ins>`required`</ins> |
 | Vendor  | `optional`  |
 | CVE ID  | `optional`, if exists  |
 | CWE ID  | <ins>`required`</ins>, refer to https://cwe.mitre.org/data/pdf/1000_abstraction_colors.pdf for help  |

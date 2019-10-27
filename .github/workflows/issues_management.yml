@@ -1,12 +1,29 @@
 name: RVD_management
-
 on:
   issues:
     types: [opened, edited, closed, labeled, unlabeled]
     # types: [opened, edited, milestoned, deleted, transferred, pinned, unpinned, closed, reopened, assigned, unassigned, labeled, unlabeled, locked, unlocked, milestoned, demilestoned]
     
 jobs:
-  update:
+  # Reviews all tickets tags and provides feedback on malformed ones
+  malformed:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Launch malformed script
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        cd scripts/
+        pip install -r requirements.txt
+        python3 malformed.py
+    
+  # Re-generates and overwrites README.md using the tickets to generate numbers
+  summary:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
