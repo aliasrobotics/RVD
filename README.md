@@ -1,3 +1,5 @@
+
+[~upper_shield_malformed]: https://img.shields.io/badge/malformed-440fa8.svg341-.svg
 # Robot Vulnerability Database (RVD)
 
 <a href="http://www.aliasrobotics.com"><img src="https://pbs.twimg.com/profile_images/1138735160428548096/px2v9MeF.png" align="left" hspace="8" vspace="2" width="200"></a>
@@ -14,7 +16,7 @@ Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. T
 - [![](https://img.shields.io/badge/closed-red.svg?style=flat)](#): Flaw that is inactive. Reasons for inactivity relate to mitigations, duplicates, erroneous reports or similar.
 - [![](https://img.shields.io/badge/invalid-red.svg?style=flat)](#): Ticket discarded and removed for the overall count. This label flags invalid or failed reports including tests and related.
 - [![](https://img.shields.io/badge/duplicate-cfd3d7.svg?style=flat)](#): Duplicated flaw. Typically, a link to the original ticket is provided.
-- [![](https://img.shields.io/badge/malformed-440fa8.svg?style=flat)](#): Flaw has a malformed syntax. Refer to the templates for basic guidelines on the right syntax.
+- [![](https://img.shields.io/badge/malformed-440fa8.svg?style=flat)](https://github.com/aliasrobotics/RVD/labels/malformed): Flaw has a malformed syntax. Refer to the templates for basic guidelines on the right syntax.
 - [![](https://img.shields.io/badge/mitigated-aaf9a7.svg?style=flat)](#): Mitigated. A link to the corresponding mitigation is required.
 - [![](https://img.shields.io/badge/quality-ddb140.svg?style=flat)](#): Indicates that the bug is a quality one instead of a security flaw.
 - [![](https://img.shields.io/badge/exposure-ccfc2d.svg?style=flat)](#): Indicates that flaw is an exposure.
@@ -43,7 +45,7 @@ Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. T
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Sun, 27 Oct 2019 17:03:22 GMT*
+*Last updated Sun, 27 Oct 2019 17:31:45 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -125,7 +127,7 @@ By robot components, we consider both software and hardware robot components.
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Sun, 27 Oct 2019 17:03:22 GMT*
+*Last updated Sun, 27 Oct 2019 17:31:45 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
