@@ -1,13 +1,13 @@
 ---
-name: Weakness report template
-about: Template to report a weakness in RVD. See https://bit.ly/2JnamaD if in doubt
+name: Exposure report template
+about: Template to report a exposure in RVD. See https://bit.ly/2JnamaD if in doubt
 title: ''
-labels: weakness
+labels: exposure
 assignees: ''
 
 ---
 
-# Weakness report
+# Exposure report
 
 | Input      | Value  |
 |---------|--------|
@@ -20,4 +20,4 @@ assignees: ''
 
 ### Description:
 
-*Please provide a brief description of the weakness and how to reproduce it. Refer to https://github.com/aliasrobotics/RVD#appendix-a-vulnerabilities-weaknesses-bugs-and-more if you need clarifications on the terminology*
+*Please provide a brief description of the exposure and how to reproduce it. Refer to https://github.com/aliasrobotics/RVD#appendix-a-vulnerabilities-weaknesses-bugs-and-more if you need clarifications on the terminology*
