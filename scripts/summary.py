@@ -321,10 +321,10 @@ class Summary(RVDImport):
         # add the shields
         markdown += "[![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed)"
         markdown += "[![](https://img.shields.io/badge/open_flaws-"+str(self.open_issues_count)+"-red.svg)](#): Mitigated. A link to the corresponding mitigation is required."  + "\n"        
-        markdown = "\n"
+        markdown += "\n"
         
         # add the source of the shields
-        markdown += "[~upper_shield_malformed]: https://img.shields.io/badge/malformed-440fa8.svg" + str(self.malformed) + "-.svg" + "\n"
+        markdown += "[~upper_shield_malformed]: https://img.shields.io/badge/malformed-" + str(self.malformed) + "-440fa8.svg" + "\n"
         return markdown        
         
     def to_markdown_general(self):
