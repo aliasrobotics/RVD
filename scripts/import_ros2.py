@@ -1,4 +1,7 @@
 """
+Alias Robotics SL 
+https://aliasrobotics.com
+
 A script to import the output of google sanitizer over ROS 2 into issues
 Usage:
     python3 import_ros2.py <file to process with results> <robot_component> [<version> [<commit>]]
@@ -10,7 +13,7 @@ import requests
 import csv
 import sys
 import os
-from import_base import RVDImport
+from import.import_base import RVDImport
 from time import gmtime, strftime
 from sys import argv
 

@@ -1,13 +1,17 @@
-# from import_base import RVDImport
+"""
+Alias Robotics SL 
+https://aliasrobotics.com
+
+WIP: Script to relabel reports
+Run:
+    TODO
+"""
+
+# from import.import_base import RVDImport
 # from github import Label
 # from time import gmtime, strftime
 # import click
 # 
-# """
-# WIP: Script to relabel reports
-# Run:
-#     TODO
-# """
 # @click.command('remove', help='The person to greet.')
 # # @click.option('--create/--no-create', help='Create .alurityhome file automatically and relaunch configuration',
 #               # default=False)

@@ -1,4 +1,7 @@
 """
+Alias Robotics SL 
+https://aliasrobotics.com
+
 RVD Parser class
 - provides primitives to parse and validate text in the flaws
 

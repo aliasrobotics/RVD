@@ -1,4 +1,7 @@
 """
+Alias Robotics SL 
+https://aliasrobotics.com
+
 Base class for importing stuff
 """
 

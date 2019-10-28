@@ -1,4 +1,7 @@
 """
+Alias Robotics SL 
+https://aliasrobotics.com
+
 Script that parses all tickets in RVD and detects malformed ones.
 
 In case of a malformed ticket, the script acts as follows:
@@ -10,7 +13,7 @@ Run:
     python3 malformed.py
 """
 
-from import_base import RVDImport
+from import.import_base import RVDImport
 from parser.parser import RVDParser
 
 # mandatory for compliance
