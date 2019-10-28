@@ -5,9 +5,9 @@
 
 <a href="http://www.aliasrobotics.com"><img src="https://pbs.twimg.com/profile_images/1138735160428548096/px2v9MeF.png" align="left" hspace="8" vspace="2" width="200"></a>
 
-This repository contains Alias Robotics' Robot Vulnerability and Database (RVD), an attempt to register and record robot vulnerabilities, weaknesses and exposures. 
+This repository contains Alias Robotics' Robot Vulnerability and Database (RVD), an attempt to register and record robot vulnerabilities and weaknesses. 
 
-Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (RVSS)](https://github.com/aliasrobotics/RVSS). For a discussion regarding terminology and the difference between robot vulnerabilities, robot weaknesses or robot exposures refer to [Appendix A](#appendix-a-vulnerabilities-weaknesses-bugs-and-more).
+Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (RVSS)](https://github.com/aliasrobotics/RVSS). For a discussion regarding terminology and the difference between robot vulnerabilities, robot weaknesses or robot bugs refer to [Appendix A](#appendix-a-vulnerabilities-weaknesses-bugs-and-more).
 
 **Alias Robotics supports hacker-powered robot security in close collaboration with original robot manufacturers. By no means we encourage or promote the unauthorized tampering with running robotic systems. This can cause serious human harm and material damages.**
 
@@ -46,7 +46,7 @@ Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. T
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Mon, 28 Oct 2019 10:34:36 GMT*
+*Last updated Mon, 28 Oct 2019 10:44:10 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -128,7 +128,7 @@ By robot components, we consider both software and hardware robot components.
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Mon, 28 Oct 2019 10:34:36 GMT*
+*Last updated Mon, 28 Oct 2019 10:44:10 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -243,11 +243,29 @@ Similar to Google's policy, we want to acknowledge that the deadline can vary in
 
 Alias Robotics reserves the right to bring deadlines forwards or backwards based on extreme circumstances. We remain committed to treating all vendors strictly equally and we expect to be held to the same standard.
 
+## CI/CD setup
+In an attempt to lower the overall effort to maintain the Robot Vulnerability Database, RVD attempts to make active use of Continuous Integration (CI) and Continuous Deployment (CD) techniques through Github Actions. See our [configurations here](.github/workflows). Contributions and new ideas to this section are welcome. Please submit a Pull Request with your proposal or enhancement.
+
+Below we list some of the existing capabilities and some tentative ones:
+- [x] Comparison of stack trace before flaw submission to avoid duplicates (perfomed upstream) [refer to ...](#TODO)
+- [x] Markdown parser that conforms with [RVD templates](.github/ISSUE_TEMPLATE/) [refer to ...](#TODO)
+- [x] Automatic flaw-syntax evaluation (based on parser), tags tickets as `malformed` when applicable [refer to ...](#TODO)
+- [x] Automatic feedback on flaw-syntax, introduced in tickets directly as a comment [refer to ...](#TODO)
+- [ ] Automatic review and cross-reference of duplicated flaws, based on ticket body content and comments
+- [ ] Automatic and periodic review of security advisories "in search" for robot-related vulnerabilities
+- [ ] Automatic and periodic review of NVD "in search" for robot-related vulnerabilities
+- [ ] Automatic and periodic review of CVE List "in search" for robot-related vulnerabilities
+- [ ] CWE ID parser and validation method to conform with official CWE guidelines
+- [ ] Automatic CWE ID validation mechanism (and feedback) in all tickets. Upgrade flaw-syntax evaluation.
+- [ ] RVSS parser and validation to conform with RVSSv1.0 spec.
+- [ ] Automatic RVSS validation mechanism (and feedback) in all tickets. Upgrade flaw-syntax evaluation.
+
+
 ## Contributing, reporting a vulnerability
 
-Vulnerabilities are community-contributed. If you believe you have discovered a vulnerability in a robot or robot component (either software or hardware), obtain public acknowledgement by submitting a vulnerability while providing prove of it. Reports can be submitted in the form of [an issue](https://github.com/aliasrobotics/RVDP/issues/new?template=rvdp-report-template.md).
+Vulnerabilities are community-contributed. If you believe you have discovered a vulnerability in a robot or robot component (either software or hardware), obtain public acknowledgement by submitting a vulnerability while providing prove of it. Reports can be submitted in the form of [an issue](https://github.com/aliasrobotics/RVDP/issues/new?template=vulnerability-template.md).
 
-If you wish to contribute to the RVD repository's content, please note that this document (`README.md`) is generated automatically. Submit the corresponding PRs by looking at the `scripts/` folder.
+If you wish to contribute to the RVD repository's content, please note that this document (`README.md`) is generated automatically. Submit the corresponding PRs by looking at the `scripts/` folder. If you need some inspiration or ideas to contribute, refer to [CI/CD setup](#ci/cd-setup).
 
 ## Contact us or send feedback
 
