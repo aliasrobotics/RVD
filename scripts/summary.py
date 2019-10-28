@@ -701,10 +701,10 @@ Alias Robotics reserves the right to bring deadlines forwards or backwards based
 In an attempt to lower the overall effort to maintain the Robot Vulnerability Database, RVD attempts to make active use of Continuous Integration (CI) and Continuous Deployment (CD) techniques through Github Actions. See our [configurations here](.github/workflows). Contributions and new ideas to this section are welcome. Please submit a Pull Request with your proposal or enhancement.
 
 Below we list some of the existing capabilities and some tentative ones:
-- [x] Comparison of stack trace before flaw submission to avoid duplicates (perfomed upstream) [refer to ...](#TODO)
-- [x] Markdown parser that conforms with [RVD templates](.github/ISSUE_TEMPLATE/) [refer to ...](#TODO)
-- [x] Automatic flaw-syntax evaluation (based on parser), tags tickets as `malformed` when applicable [refer to ...](#TODO)
-- [x] Automatic feedback on flaw-syntax, introduced in tickets directly as a comment [refer to ...](#TODO)
+- [x] Comparison of stack trace before flaw submission to avoid duplicates (perfomed upstream) [refer to import_ros2.py](https://github.com/aliasrobotics/RVD/blob/master/scripts/import_ros2.py#L221)
+- [x] Markdown parser that conforms with [RVD templates](.github/ISSUE_TEMPLATE/) [refer to parser.py](https://github.com/aliasrobotics/RVD/blob/master/scripts/parser/parser.py)
+- [x] Automatic flaw-syntax evaluation (based on parser), tags tickets as `malformed` when applicable [refer to malformed.py#L104-L188](https://github.com/aliasrobotics/RVD/blob/master/scripts/malformed.py#L104-L188)
+- [x] Automatic feedback on flaw-syntax, introduced in tickets directly as a comment [refer to malformed.py#L190-L252](https://github.com/aliasrobotics/RVD/blob/master/scripts/malformed.py#L190-L252)
 - [ ] Automatic review and cross-reference of duplicated flaws, based on ticket body content and comments
 - [ ] Automatic and periodic review of security advisories "in search" for robot-related vulnerabilities
 - [ ] Automatic and periodic review of NVD "in search" for robot-related vulnerabilities
