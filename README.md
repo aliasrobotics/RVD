@@ -46,7 +46,7 @@ Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. T
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Mon, 28 Oct 2019 10:21:39 GMT*
+*Last updated Mon, 28 Oct 2019 10:23:26 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -128,7 +128,7 @@ By robot components, we consider both software and hardware robot components.
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Mon, 28 Oct 2019 10:21:39 GMT*
+*Last updated Mon, 28 Oct 2019 10:23:26 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
