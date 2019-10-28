@@ -13,7 +13,7 @@ Run:
     python3 malformed.py
 """
 
-from import.import_base import RVDImport
+from base.import_base import RVDImport
 from parser.parser import RVDParser
 
 # mandatory for compliance

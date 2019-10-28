@@ -9,7 +9,7 @@ Run:
     python3 summary.py
 """
 
-from import.import_base import RVDImport
+from base.import_base import RVDImport
 from github import Label
 from time import gmtime, strftime
 

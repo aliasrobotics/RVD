@@ -13,7 +13,7 @@ import requests
 import csv
 import sys
 import os
-from import.import_base import RVDImport
+from base.import_base import RVDImport
 from time import gmtime, strftime
 from sys import argv
 

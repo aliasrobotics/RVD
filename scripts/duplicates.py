@@ -8,7 +8,7 @@ Run:
     python3 duplicates.py
 """
 
-from import.import_base import RVDImport
+from base.import_base import RVDImport
 from parser.parser import RVDParser
 
 class Duplicates(RVDImport):    
