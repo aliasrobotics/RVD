@@ -220,7 +220,7 @@ class RVDParser:
         
         :return string
         """
-        if self.description
+        if self.description:
             if self.description[0] != '':
                 return self.description
         
