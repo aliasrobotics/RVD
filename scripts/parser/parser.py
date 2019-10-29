@@ -220,10 +220,11 @@ class RVDParser:
         
         :return string
         """
-        if self.description[0] != '':
-            return self.description
-        else:
-            return None
+        if self.description
+            if self.description[0] != '':
+                return self.description
+        
+        return None
 
     
     # NOTE: Avoid using a generic method like this one and instead
