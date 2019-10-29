@@ -1,6 +1,6 @@
 [![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed)[![](https://img.shields.io/badge/flaws-341-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+)
 
-[~upper_shield_malformed]: https://img.shields.io/badge/malformed-288-440fa8.svg
+[~upper_shield_malformed]: https://img.shields.io/badge/malformed-2-440fa8.svg
 # Robot Vulnerability Database (RVD)
 
 <a href="http://www.aliasrobotics.com"><img src="https://pbs.twimg.com/profile_images/1138735160428548096/px2v9MeF.png" align="left" hspace="8" vspace="2" width="200"></a>
@@ -46,7 +46,7 @@ Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. T
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Mon, 28 Oct 2019 10:54:57 GMT*
+*Last updated Tue, 29 Oct 2019 13:12:28 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -128,7 +128,7 @@ By robot components, we consider both software and hardware robot components.
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Mon, 28 Oct 2019 10:54:57 GMT*
+*Last updated Tue, 29 Oct 2019 13:12:28 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -247,10 +247,10 @@ Alias Robotics reserves the right to bring deadlines forwards or backwards based
 In an attempt to lower the overall effort to maintain the Robot Vulnerability Database, RVD attempts to make active use of Continuous Integration (CI) and Continuous Deployment (CD) techniques through Github Actions. See our [configurations here](.github/workflows). Contributions and new ideas to this section are welcome. Please submit a Pull Request with your proposal or enhancement.
 
 Below we list some of the existing capabilities and some tentative ones:
-- [x] Comparison of stack trace before flaw submission to avoid duplicates (perfomed upstream) [refer to ...](#TODO)
-- [x] Markdown parser that conforms with [RVD templates](.github/ISSUE_TEMPLATE/) [refer to ...](#TODO)
-- [x] Automatic flaw-syntax evaluation (based on parser), tags tickets as `malformed` when applicable [refer to ...](#TODO)
-- [x] Automatic feedback on flaw-syntax, introduced in tickets directly as a comment [refer to ...](#TODO)
+- [x] Comparison of stack trace before flaw submission to avoid duplicates (perfomed upstream) [refer to import_ros2.py](https://github.com/aliasrobotics/RVD/blob/master/scripts/import_ros2.py#L221)
+- [x] Markdown parser that conforms with [RVD templates](.github/ISSUE_TEMPLATE/) [refer to parser.py](https://github.com/aliasrobotics/RVD/blob/master/scripts/parser/parser.py)
+- [x] Automatic flaw-syntax evaluation (based on parser), tags tickets as `malformed` when applicable [refer to malformed.py#L104-L188](https://github.com/aliasrobotics/RVD/blob/master/scripts/malformed.py#L104-L188)
+- [x] Automatic feedback on flaw-syntax, introduced in tickets directly as a comment [refer to malformed.py#L190-L252](https://github.com/aliasrobotics/RVD/blob/master/scripts/malformed.py#L190-L252)
 - [ ] Automatic review and cross-reference of duplicated flaws, based on ticket body content and comments
 - [ ] Automatic and periodic review of security advisories "in search" for robot-related vulnerabilities
 - [ ] Automatic and periodic review of NVD "in search" for robot-related vulnerabilities
