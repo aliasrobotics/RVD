@@ -153,7 +153,7 @@ class RVDParser:
         """        
         if self.table_rows:
             for row in self.table_rows:
-                if "Robot" in row[0].lower():
+                if "robot" in row[0].lower():
                     return row[1].strip()
                 elif "component" in row[0].lower():
                     return row[1].strip()
