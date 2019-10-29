@@ -1,4 +1,4 @@
-[![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed)[![](https://img.shields.io/badge/flaws-341-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+)
+[![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed) [![](https://img.shields.io/badge/flaws-341-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+)
 
 [~upper_shield_malformed]: https://img.shields.io/badge/malformed-40-440fa8.svg
 # Robot Vulnerability Database (RVD)
