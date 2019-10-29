@@ -1,4 +1,4 @@
-[![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed)[![](https://img.shields.io/badge/flaws-341-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+)
+[![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed) [![](https://img.shields.io/badge/flaws-341-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+)
 
 [~upper_shield_malformed]: https://img.shields.io/badge/malformed-40-440fa8.svg
 # Robot Vulnerability Database (RVD)
@@ -46,7 +46,7 @@ Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. T
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Tue, 29 Oct 2019 17:29:16 GMT*
+*Last updated Tue, 29 Oct 2019 17:33:42 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -128,7 +128,7 @@ By robot components, we consider both software and hardware robot components.
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Tue, 29 Oct 2019 17:29:16 GMT*
+*Last updated Tue, 29 Oct 2019 17:33:42 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
