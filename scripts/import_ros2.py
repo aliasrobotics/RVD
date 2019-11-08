@@ -1,5 +1,5 @@
 """
-Alias Robotics SL 
+Alias Robotics SL
 https://aliasrobotics.com
 
 A script to import the output of google sanitizer over ROS 2 into issues
@@ -8,11 +8,8 @@ Usage:
     python3 import_ros2.py '/opt/ros2_ws/sanitizer_report.csv'  'ROS 2'
 """
 
-import json
-import requests
 import csv
 import sys
-import os
 from base.import_base import RVDImport
 from time import gmtime, strftime
 from sys import argv
@@ -108,7 +105,10 @@ class RVDImport_ROS2(RVDImport):
         # print(title)
         # print(labels)
         # print(body)
-        self.repo.create_issue(title=title, body=body, labels=labels)
+        
+        # TODO, uncomment the creation of the issue and disable the print
+        print("ISSUE NOT PUSHED! - Disabled temporarily")
+        # self.repo.create_issue(title=title, body=body, labels=labels)
 
     @staticmethod
     def make_issue_title(dict_elem):
