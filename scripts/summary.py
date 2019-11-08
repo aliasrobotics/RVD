@@ -322,7 +322,7 @@ class Summary(RVDImport):
         """
         markdown = ""
         # add the shields
-        markdown += "[![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed)"
+        markdown += "[![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed) "
         markdown += "[![](https://img.shields.io/badge/flaws-"+str(self.open_issues_count)+"-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+)"  + "\n"        
         markdown += "\n"
         
