@@ -6,7 +6,7 @@ This document presents a taxonomy (classification) for bugs that apply in roboti
 >   https://raw.githubusercontent.com/robust-rosin/robust/60c2902d5069f015027231b4a51096b7b900bcfa/doc/taxonomy-description.txt
 >
 
-Currently, the taxonomy is somewhat ROS-centered but iit <ins>aims to mature beyond ROS and into classifying any robot or robot component's bug</ins>.
+Currently, the taxonomy is somewhat ROS-centered but it <ins>aims to mature beyond ROS and into classifying any robot or robot component's bug</ins>.
 
 Arguably, there's some intersection between quality and security bugs. Several bugs originally reported as quality ones might lead into a security vulnerability. Similarly, originally considered security bugs might turn out unexploitable, and might get later classified as quality ones. For coherence, we'll try to capture a common taxonomy that allows to reflect all types of bugs that apply to robots. Moreover the word `bug` and `flaw` will be used interchangeably. For more details on terminology, refer to https://github.com/aliasrobotics/RVD#appendix-a-vulnerabilities-weaknesses-bugs-and-more.
 
