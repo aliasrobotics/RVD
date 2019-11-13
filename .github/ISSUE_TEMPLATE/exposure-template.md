@@ -7,18 +7,49 @@ assignees: ''
 
 ---
 
-# Exposure report
+Fill in following the example below. If you need further clarifications on any of the items, refer to our [taxonomy](https://github.com/aliasrobotics/RVD/blob/master/docs/TAXONOMY.md) (remove these lines line).
 
-### Summary table
-| Input      | Value  |
-|---------|--------|
-| Robot `OR` Robot component | <ins>`required`</ins> |
-| Vendor  | `optional`  |
-| CVE ID  | `optional`, if exists  |
-| CWE ID  | <ins>`required`</ins>, refer to https://cwe.mitre.org/data/pdf/1000_abstraction_colors.pdf for help  |
-| Module URL | 	`optional`, *link to docker image to reproduce flaw* |
-| Attack vector | <ins>`required`</ins> e.g.: Local network or Physical access |
-
-### Description:
-
-*Please provide a brief description of the exposure and how to reproduce it. Refer to https://github.com/aliasrobotics/RVD#appendix-a-vulnerabilities-weaknesses-bugs-and-more if you need clarifications on the terminology*
+```yaml
+id: N/A (pending)
+title: Defaults lead to information exposure
+type: weakness
+description: Due to a missconfigufation of the defaults, ROS 2 node information is by default shared in plain across the ROS 2 graph.
+cwe: CWE-200 (Information Exposure)
+cve: None
+keywords: ['defaults', 'ROS 2', 'SROS2', 'information disclosure']
+system: ros2
+vendor: Open Robotics
+severity:
+  rvss_score: None
+  rvss_vector: None
+  severity_description: None
+  cvss_score: None
+  cvss_vector: None
+links: ['https://github.com/ros2/sros2/blob/master/sros2/sros2/policy/defaults/dds/governance.xml#L13']
+flaw:
+  phase: runtime-operation
+  specificity: ROS-specific
+  architectural-location: platform code
+  application: security of middleware communications
+  subsystem: communication:ros2:dds:sros2
+  package: turtlebot/turtlebot/turtlebot_bringup | turtlebot/turtlebot/turtlebot_capabilities
+  languages: XML
+  date-detected: N/A (pending)
+  detected-by: Alias Robotics
+  detected-by-method: runtime detection
+  date-reported: N/A (pending)
+  reported-by: Alias Robotics
+  reported-by-relationship: security researcher
+  issue: N/A (pending)
+  reproducibility: always
+  trace: N/A
+  reproduction: None (pending)    	
+  reproduction-image: None (pending)    	
+exploitation:
+  description: None (pending)
+  exploitation-image: None (pending)
+  exploitation-vector: None (pending)
+mitigation:
+  description: None
+  pull-request: None
+```

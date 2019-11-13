@@ -29,8 +29,8 @@ The following sections reason about how a to systematically capture and record a
 	This is a comma-separated list of key words; e.g.,: "xacro, gazebo, urdf, driver"
 
 - **system**:
-	This is an identifier for the system where the flaw applies (e.g., kobuki, motoman, mavros). If it's a confidential system, then just put the value "confidential".
-
+	This is an identifier for the robot system or component where the flaw applies (e.g., kobuki, motoman, mavros). If it's a confidential system, then just put the value "confidential".
+- **vendor**: Vendor of the robot system or component
 - **severity**:
 	- **rvss_score**: Robot Vulnerability Scoring System (RVSS) numerical score ([RVSS paper](https://arxiv.org/pdf/1807.10357.pdf)).
   - **rvss_vector**: RVSS vector used to calculate the score ([RVSS paper](https://arxiv.org/pdf/1807.10357.pdf)).
@@ -171,6 +171,7 @@ cwe: None
 cve: None
 keywords: ['dependencies', 'package', 'manifest', 'build farm']
 system: turtlebot
+vendor: N/A
 severity:
   rvss_score: None
   rvss_vector: None
@@ -219,11 +220,12 @@ Taken from https://github.com/aliasrobotics/RVD/issues/509
 id: 509
 title: tf2_ros, lock-order-inversion
 type: weakness
-description: tf2_ros: lock-order-inversion, eprosima::fastrtps::rtps::Sta...
+description: tf2_ros, lock-order-inversion, eprosima::fastrtps::rtps::Sta...
 cwe: None
 cve: None
 keywords: ['tf2_ros', 'ros2', 'testing']
 system: ros2
+vendor: Open Robotics
 severity:
   rvss_score: None
   rvss_vector: None
@@ -294,6 +296,7 @@ cwe: CWE-307 (Brute Force)
 cve: None
 keywords: ['MARA', 'ros2', 'SSH', 'pentesting']
 system: MARA
+vendor: Acutronic Robotics
 severity:
   rvss_score: 5.3
   rvss_vector: RVSS:1.0/AV:RN/AC:L/PR:N/UI:N/Y:Z/S:U/C:L/I:N/A:N/H:N
@@ -343,6 +346,7 @@ cwe: CWE-200 (Information Exposure)
 cve: None
 keywords: ['defaults', 'ROS 2', 'SROS2', 'information disclosure']
 system: ros2
+vendor: Open Robotics
 severity:
   rvss_score: None
   rvss_vector: None
