@@ -1,0 +1,48 @@
+id: 1
+title: Circular Package Dependencies
+type: weakness
+description: Two packages from Turtlebot declared dependencies on each other, which caused errors in the build farm.
+cwe: None
+cve: None
+keywords: ['dependencies', 'package', 'manifest', 'build farm']
+system: turtlebot
+vendor: N/A
+severity:
+  rvss-score: None
+  rvss-vector: None
+  severity-description: None
+  cvss-score: None
+  cvss-vector: None
+links: ['http://wiki.ros.org/buildfarm']
+flaw:
+  phase: build-time
+  specificity: ROS-specific  
+  architectural-location: application-specific code
+  application: mobile robot
+  subsystem: cognition:ros2
+  package: turtlebot/turtlebot/turtlebot_bringup | turtlebot/turtlebot/turtlebot_capabilities
+  languages: null
+  date-detected: 2015-01-06 (23:43)
+  detected-by: robust project (https://github.com/robust-rosin/robust)
+  detected-by-method: build system
+  date-reported: 2015-01-06 (23:43)
+  reported-by: robust project (https://github.com/robust-rosin/robust)
+  reported-by-relationship: member developer
+  issue: https://github.com/turtlebot/turtlebot/issues/185
+  reproducibility: always
+  trace: ""
+  reproduction: >
+        An issue surfaced when building the Docker image, as it could
+        not find tf2 packages. This was due to the repository being named
+        `geometry_experimental` at the time this issue was reported, and
+        having been renamed to `geometry2` later on. To fix this, the
+        rosinstall file had to be patched manually. Cf. issue
+        https://github.com/robust-rosin/robust/issues/63.
+  reproduction-image: None
+exploitation:
+  description: None
+  exploitation-image: None
+  exploitation-vector: None
+mitigation:
+  description: Fixex through the commit.
+  pull-request: https://github.com/turtlebot/turtlebot/commit/339078942cf67457bc472e07a3e75e9895ebf2f7

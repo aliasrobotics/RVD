@@ -33,7 +33,7 @@ class Duplicates(RVDImport):
         Processes the groups (list[lists]) and uses a heuristic to pick 
         one of the tickets for each group. Such ticket is used as the sink
         for all the rest elements in the group which get closed and referred
-        (comment) to the sink ticket.        
+        (comment) to the sink ticket.
         
         :return None
         """

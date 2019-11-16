@@ -1,3 +1,7 @@
-__pycache__/
 scripts/files/
 *.pyc
+*.egg-info
+build/
+dist/
+venv/
+__pycache__/
