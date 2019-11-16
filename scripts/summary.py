@@ -713,13 +713,18 @@ Below we list some of the existing capabilities and some tentative ones:
 - [ ] Automatic CWE ID validation mechanism (and feedback) in all tickets. Upgrade flaw-syntax evaluation.
 - [ ] RVSS parser and validation to conform with RVSSv1.0 spec.
 - [ ] Automatic RVSS validation mechanism (and feedback) in all tickets. Upgrade flaw-syntax evaluation.
-
+- [ ] schema
+    - [ ] enforce `subsystem` policy
+    - [ ] enforce `id` policy
+    - [ ] `architectural-location` get consistency between `platform code` and `platform-code`. Same for `application-specific`. Also, remove `ROS-specific`.
+    - [ ] `specificity`, enfoce policy and allowed keywords
 
 ## Contributing, reporting a vulnerability
 
 Vulnerabilities are community-contributed. If you believe you have discovered a vulnerability in a robot or robot component (either software or hardware), obtain public acknowledgement by submitting a vulnerability while providing prove of it. Reports can be submitted in the form of [an issue](https://github.com/aliasrobotics/RVDP/issues/new?template=vulnerability-template.md).
 
 If you wish to contribute to the RVD repository's content, please note that this document (`README.md`) is generated automatically. Submit the corresponding PRs by looking at the `scripts/` folder. If you need some inspiration or ideas to contribute, refer to [CI/CD setup](#ci/cd-setup).
+
 
 ## Contact us or send feedback
 

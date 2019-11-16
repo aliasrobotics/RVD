@@ -13,10 +13,10 @@ Database schema
 SCHEMA = {
     'id': {
         'required': True,
-        'type': 'number',
-        # 'nullable': False,
+        'oneof': [{'type': 'string'}, {'type': 'number'}],
+        # 'type': 'number',
         'empty': False,
-        'min': 1,
+        'min': 0,
         # 'max': 100
         'default_setter':
             lambda doc: 0,
@@ -25,7 +25,7 @@ SCHEMA = {
     'title': {
         'required': True,
         'type': 'string',
-        'maxlength': 65,
+        'maxlength': 100,  # extend beyond 65 to cope with a few tickets
     },
     'type': {
         'required': True,
@@ -49,23 +49,33 @@ SCHEMA = {
         # #  fields lacking type definition.
         # 'nullable': True,
         'regex': '^CWE-[0-9]*.*$|^None$',
+        'default_setter':
+            lambda doc: 'None'
     },
     'cve': {
         'required': True,
         'type': 'string',
         'regex': '^CVE-[0-9]*-[0-9]*$|^None$',  # CVE-2019-13585
+        'default_setter':
+            lambda doc: 'None'
     },
     'keywords': {
         'required': True,
-        'type': 'list',
+        'oneof': [{'type': 'string'}, {'type': 'list'}],
+        'default_setter':
+            lambda doc: ''
     },
     'system': {
         'required': True,
         'type': 'string',
+        'default_setter':
+            lambda doc: ''
     },
     'vendor': {
         'required': True,
         'type': 'string',
+        'default_setter':
+            lambda doc: 'None'
     },
     'severity': {
         'required': True,
@@ -101,7 +111,12 @@ SCHEMA = {
     'links': {
         'required': False,
         'oneof': [{'type': 'string'}, {'type': 'list'}],
-        'regex': '^None$',
+        # 'regex': '^None$',
+        'default_setter':
+            lambda doc: 'None',
+    },
+    'bug': {
+        'rename': 'flaw'
     },
     'flaw': {
         'required': True,
@@ -110,7 +125,7 @@ SCHEMA = {
                 'required': True,
                 'type': 'string',
                 'allowed': ['programming-time', 'build-time', 'compile-time',
-                            'deployment-time', 'runtime-initialization',
+                            'deployment-time', 'runtime', 'runtime-initialization',
                             'runtime-operation', 'testing'],
                 'default_setter':
                     lambda doc: 'testing'
@@ -118,35 +133,52 @@ SCHEMA = {
             'specificity': {
                 'required': True,
                 'type': 'string',
-                'allowed': ['general issue', 'robotics specific',
-                            'ROS-specific', 'subject-specific', 'N/A'],
+                # 'allowed': ['general issue', 'robotics specific',
+                #             'ROS-specific', 'subject-specific', 'N/A'],
+                'default_setter':
+                    lambda doc: 'N/A',
             },
             'architectural-location': {
                 'required': True,
                 'type': 'string',
-                'allowed': ['application-specific code',
-                            'platform code', 'third-party'],
+                'allowed': ['application-specific code', 'application-specific',
+                            'platform-code', 'platform code', 'ROS-specific',
+                            'third-party', 'N/A'],
+                'default_setter':
+                    lambda doc: 'N/A',
             },
             'application': {
                 'type': 'string',
                 'required': True,
+                'default_setter':
+                    lambda doc: 'N/A',
             },
             'subsystem': {
                 'type': 'string',
                 'required': True,
                 'regex':
-                    '^(sensing|actuation|communication|cognition|UI|power).*$',
+                    '^(sensing|actuation|communication|cognition|UI|power).*$|^N/A$|.*',
+                    # TODO: modify this value and enforce the subsystem's policies
+                    # '^(sensing|actuation|communication|cognition|UI|power).*$|^N/A$',
+                'default_setter':
+                    lambda doc: 'N/A',
             },
             'package': {
-                'type': 'string',
+                'oneof': [{'type': 'string'}, {'type': 'list'}],
+                # 'type': 'string',
+                'default_setter':
+                    lambda doc: 'N/A',
             },
             'languages': {
                 'required': True,
-                'type': 'string',
-                'allowed': ['python', 'cmake', 'C', 'C++',
-                            'package.xml', 'launch XML',
-                            'msg', 'srv', 'xacro', 'urdf', 'None'],
-                'default': 'None'
+                'oneof': [{'type': 'string'}, {'type': 'list'}],
+                # 'type': 'string',
+                'allowed': ['Python', 'python', 'cmake', 'CMake', 'C', 'C++',
+                            'package.xml', 'launch XML', 'URScript', 'shell',
+                            'msg', 'srv', 'xacro', 'urdf', 'None', 'rosparam YAML',
+                            'XML', 'ASCII STL', 'N/A', 'YAML', 'Package XML'],
+                'default_setter':
+                    lambda doc: 'None'
             },
             'date-detected': {
                 ## TODO: review this and force date check
@@ -154,10 +186,14 @@ SCHEMA = {
                 'type': 'string',
                 'required': True,
                 # 'coerce': 'datecoercer',
+                'default_setter':
+                    lambda doc: ''
             },
             'detected-by': {
                 'type': 'string',
                 'required': True,
+                'default_setter':
+                    lambda doc: ''
             },
             'detected-by-method': {
                 'type': 'string',
@@ -165,59 +201,89 @@ SCHEMA = {
                 'allowed': ['build system', 'compiler',
                             'assertions', 'runtime detection', 'runtime crash'
                             'testing violation', 'testing static',
-                            'testing dynamic'],
+                            'testing dynamic', 'N/A'],
+                'default_setter':
+                    lambda doc: 'N/A'
             },
             'date-reported': {
                 'type': 'string',
                 'required': True,
+                'default_setter':
+                    lambda doc: ''
             },
             'reported-by': {
                 'type': 'string',
                 'required': True,
+                'default_setter':
+                    lambda doc: ''
             },
             'reported-by-relationship': {
                 'type': 'string',
                 'required': True,
                 'allowed': ['guest user', 'contributor',
                             'member developer', 'automatic',
-                            'security researcher', 'N/A', 'None'],
+                            'security researcher', 'N/A'],
+                'default_setter':
+                    lambda doc: 'N/A'
             },
             'issue': {
                 'type': 'string',
+                'default_setter':
+                    lambda doc: '',
             },
             'reproducibility': {
                 'type': 'string',
                 'required': True,
+                'default_setter':
+                    lambda doc: '',
             },
             'trace': {
                 'type': 'string',
+                'required': True,
+                'default_setter':
+                    lambda doc: '',
             },
             'reproduction': {
                 'type': 'string',
                 'required': True,
+                'default_setter':
+                    lambda doc: ''
             },
             'reproduction-image': {
                 'type': 'string',
                 'required': True,
+                'default_setter':
+                    lambda doc: ''
             },
         }
     },
     'exploitation': {
         'required': True,
+        'default_setter':
+            lambda doc: '',
         'schema': {
             'description': {
                 'required': True,
                 'type': 'string',
+                'default_setter':
+                    lambda doc: ''
             },
             'exploitation-image': {
                 'required': True,
                 'type': 'string',
+                'default_setter':
+                    lambda doc: ''
             },
             'exploitation-vector': {
                 'required': True,
                 'type': 'string',
+                'default_setter':
+                    lambda doc: ''
             },
         }
+    },
+    'fix': {
+        'rename': 'mitigation'
     },
     'mitigation': {
         'required': True,
@@ -225,9 +291,15 @@ SCHEMA = {
             'description': {
                 'required': True,
                 'type': 'string',
+                'default_setter':
+                    lambda doc: ''
             },
             'pull-request': {
-                'type': 'string',
+                'oneof': [{'type': 'string'}, {'type': 'number'}],
+                # 'type': 'string',
+                'default_setter':
+                    lambda doc: ''
+                
             },
         }
     },
