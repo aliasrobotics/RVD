@@ -33,10 +33,10 @@ The following sections reason about how a to systematically capture and record a
 - **vendor**: Vendor of the robot system or component
 - **severity**:
 	- **rvss_score**: Robot Vulnerability Scoring System (RVSS) numerical score ([RVSS paper](https://arxiv.org/pdf/1807.10357.pdf)).
-  - **rvss_vector**: RVSS vector used to calculate the score ([RVSS paper](https://arxiv.org/pdf/1807.10357.pdf)).
-  - **severity_description**: None | Low | Medium | High | Critical. One among them. Text description of the severiy. Ranges are described at [RVSS paper](https://arxiv.org/pdf/1807.10357.pdf).
-  - **cvss_score**: CVSS numerical score.
-  - **cvss_vector**: CVSS vector.
+  - **rvss-vector**: RVSS vector used to calculate the score ([RVSS paper](https://arxiv.org/pdf/1807.10357.pdf)).
+  - **severity-description**: None | Low | Medium | High | Critical. One among them. Text description of the severiy. Ranges are described at [RVSS paper](https://arxiv.org/pdf/1807.10357.pdf).
+  - **cvss-score**: CVSS numerical score.
+  - **cvss-vector**: CVSS vector.
 
 - **links**:
 	A list of links to additional information relevant for understanding the bug.
