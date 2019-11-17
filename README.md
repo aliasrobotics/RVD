@@ -1,6 +1,6 @@
 [![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed) [![](https://img.shields.io/badge/flaws-351-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+)
 
-[~upper_shield_malformed]: https://img.shields.io/badge/malformed-40-440fa8.svg
+[~upper_shield_malformed]: https://img.shields.io/badge/malformed-0-440fa8.svg
 # Robot Vulnerability Database (RVD)
 
 <a href="http://www.aliasrobotics.com"><img src="https://pbs.twimg.com/profile_images/1138735160428548096/px2v9MeF.png" align="left" hspace="8" vspace="2" width="200"></a>
@@ -46,7 +46,7 @@ Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. T
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Sun, 17 Nov 2019 20:35:54 GMT*
+*Last updated Sun, 17 Nov 2019 20:40:22 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -66,9 +66,9 @@ Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. T
 [~weaknesses]: https://img.shields.io/badge/weaknesses-473-dbf9a2.svg
 [~weaknesses_open]: https://img.shields.io/badge/weaknesses-302-red.svg
 [~weaknesses_closed]: https://img.shields.io/badge/weaknesses-171-green.svg
-[~others]: https://img.shields.io/badge/others-1-dbf9a2.svg
+[~others]: https://img.shields.io/badge/others-0-dbf9a2.svg
 [~others_open]: https://img.shields.io/badge/others-0-red.svg
-[~others_closed]: https://img.shields.io/badge/others-1-green.svg
+[~others_closed]: https://img.shields.io/badge/others-0-green.svg
 [~vulns_critical]: https://img.shields.io/badge/vuln.critical-20-ce5b50.svg
 [~vulns_high]: https://img.shields.io/badge/vuln.high-21-e99695.svg
 [~vulns_medium]: https://img.shields.io/badge/vuln.medium-8-e9cd95.svg
@@ -128,7 +128,7 @@ By robot components, we consider both software and hardware robot components.
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Sun, 17 Nov 2019 20:35:54 GMT*
+*Last updated Sun, 17 Nov 2019 20:40:22 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
