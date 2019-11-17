@@ -40,7 +40,9 @@ Vulnerability Database...")
 #  ┴─┘┴└─┘ ┴ 
 @main.command("list")
 @click.argument('id', required=False)
-def list(id):
+@click.option('--dump/--no-dump',
+              help='Print the tickets.', default=False,)
+def list(id, dump):
     """List current flaw tickets"""
     importer = Base()
 
@@ -60,6 +62,14 @@ def list(id):
         issues = importer.repo.get_issues(state="open")
         table = [[issue.number, issue.title] for issue in issues]
         print(tabulate(table, headers=["ID", "Title"]))
+        if dump:
+            for issue in issues:
+                cyan("Importing from RVD, issue: " + str(issue))
+                document_raw = issue.body
+                document_raw = document_raw.replace('```yaml\n','').replace('```', '')
+                document = yaml.load(document_raw)
+                flaw = Flaw(document)
+                # print(flaw)
 
 #  ┬  ┬┌─┐┬  ┬┌┬┐┌─┐┌┬┐┌─┐
 #  └┐┌┘├─┤│  │ ││├─┤ │ ├┤ 
