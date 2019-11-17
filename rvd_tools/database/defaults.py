@@ -26,7 +26,7 @@ def default_document():
         'cve': "None",
         'keywords': "",
         'system': "",
-        'vendor': "None",
+        'vendor': None,
         'severity': {
             'rvss-score': 0,
             'rvss-vector': "",

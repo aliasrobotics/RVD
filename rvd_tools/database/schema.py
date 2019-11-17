@@ -74,8 +74,9 @@ SCHEMA = {
     'vendor': {
         'required': True,
         'type': 'string',
+        'nullable': True,
         'default_setter':
-            lambda doc: 'None'
+            lambda doc: None
     },
     'severity': {
         'required': True,

@@ -11,6 +11,7 @@ setup(
         'pyyaml',
         'cerberus',
         'arrow',
+        'mergedeep',
     ],
     url='https://github.com/aliasrobotics/RVD',
     project_urls={

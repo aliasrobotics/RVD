@@ -13,6 +13,7 @@ from cerberus import Validator
 from .utils import red, cyan, green, yellow
 from .database.schema import *
 from .database.defaults import *
+from .database.flaw import *
 # from .database.coercer import *
 from .importer.robust import *
 from .importer.markdown import *
@@ -46,7 +47,6 @@ def list():
     table = [[issue.number, issue.title] for issue in issues]
     print(tabulate(table, headers=["ID", "Title"]))
 
-
 #  ┬  ┬┌─┐┬  ┬┌┬┐┌─┐┌┬┐┌─┐
 #  └┐┌┘├─┤│  │ ││├─┤ │ ├┤ 
 #   └┘ ┴ ┴┴─┘┴─┴┘┴ ┴ ┴ └─┘
@@ -56,11 +56,17 @@ def list():
               help='Print resulting document at the end.', default=False,)
 def validation(filename, dump):
     """Validate the file provided its path"""
-    validate(filename, dump)
+    validate_file(filename, dump)
 
 
-def validate(filename, dump=False):
-    """Auxiliary function to reuse code"""
+def validate_file(filename, dump=False):
+    """
+    Auxiliary function, validate file
+    
+    :return dict representing the YAML document. NOTE that the
+    returned dict hasn't removed any 'additional' key from the original
+    file.
+    """
     validated = False  # reflect whether the overall process suceeded
     cyan("Validating " + str(filename) + "...")
     doc = None
@@ -74,7 +80,6 @@ def validate(filename, dump=False):
         red("File " + str(filename) + " not found")
 
     v = Validator(SCHEMA, allow_unknown=True)  # allow unknown values
-
     if doc:
         # print(MyNormalizer().normalized(doc, SCHEMA))
         if not v.validate(doc, SCHEMA):
@@ -95,24 +100,13 @@ def validate(filename, dump=False):
     #     red("file to validate not processed correctly!")
 
     if dump:
+        print(json.dumps(v.document, indent=4,
+                         default=default))
+        # flaw = Flaw(v.document)
         # print the final document after validations and normalizations
-        print(json.dumps(v.document, indent=4))
+        # print(flaw)
+        # print(flaw.yml())
     return validated, v.document
-
-
-def default(obj):
-    """
-    Auxiliary function to import
-
-    captures those cases where datetime is recognized from the yaml
-    file and translates it using arrow
-    """
-    if isinstance(obj, datetime):
-        # return { '_isoformat': obj.isoformat() }
-        arrow_date = arrow.get(obj)
-        return arrow_date.format('YYYY-MM-DD (HH:mm)')
-        # return str(obj)  # return str instead
-    # return super().default(obj)  # removed since it was causing issues
 
 #  ┬┌┬┐┌─┐┌─┐┬─┐┌┬┐
 #  ││││├─┘│ │├┬┘ │ 
@@ -124,7 +118,12 @@ def default(obj):
 @click.argument('filename', required=False)
 @click.option('--push/--no-push',
               help='Push imported flaws to RVD.', default=False,)
-def fetch(uri, filename, push):
+@click.option('--all/--no-all',
+              help='Import all issues from repository. USED in "overwrite_issue".',
+              default=False,)
+@click.option('--dump/--no-dump',
+              help='Print in stdout results.', default=False,)
+def fetch(uri, filename, push, all, dump):
     """Import flaws to RVD from a variety of sources
 
        rvd import yml <filepath>: imports from a yml file in the filepath
@@ -133,7 +132,11 @@ def fetch(uri, filename, push):
 
        rvd import robust: imports from ROSin's robust project tickets
 
-       rvd import issue <URL>: imports from Github's issue
+       rvd import issue <URL>: imports from RVD's Github issues
+
+       rvd import overwrite_issue <URL>: imports from RVD's OLD format issues
+       and overwrite them with the new format. If --all flag is used, applies
+       changes to all the tickets.
     """
     cyan("Importing...")
     if not uri:
@@ -144,7 +147,8 @@ def fetch(uri, filename, push):
         os.system("mkdir -p /tmp/rvd")
 
         # Check URIs, only selected ones should be accepted
-        # Robust
+        
+        # robust
         #########
         if (uri == "https://github.com/robust-rosin/robust") or (uri == "robust"):
             importer = RobustImporter()
@@ -158,34 +162,58 @@ def fetch(uri, filename, push):
             bugfiles = stdoutdata.split('\n')
             for bug in bugfiles:
                 # normalize and validate the content of the bug
-                validation, document_validated = validate(bug)
-                # document_validated['bugzoo'] = None
+                validation, document_validated = validate_file(bug)
+
+                # drop 'bugzoo' key
                 if 'bugzoo' in document_validated.keys():
                     yellow("Dropping bugzoo key")
                     document_validated.pop('bugzoo')
+                # drop 'time-machine' key
+                if 'time-machine' in document_validated.keys():
+                    yellow("Dropping time-machine key")
+                    document_validated.pop('time-machine')
 
-                # Deal with datetime issues
-                document_final = json.dumps(document_validated, indent=4,
-                                            default=default)
+                print(document_validated)
 
-                # # print resulting document
-                # print(document_final)
+                flaw = Flaw(document_validated)
+                # add relevant keys to flaw using add_field method
+                for key in document_validated['mitigation'].keys():
+                    yellow("Adding to flaw ['mitigation']['" + str(key) + "'] = " + str(document_validated['mitigation'][key]))
+                    flaw.add_field(value=document_validated['mitigation'][key],
+                                   key="mitigation",
+                                   key2=key)
+                if dump:
+                    print(flaw)
+                    # print(flaw.yml())
 
-                # if validation:
-                #     print(json.dumps(document_validated, indent=4,
-                #           default=default))
+                cyan("Validate again after processing...")
+                # validate the resulting document
+                flaw.validate()
 
                 if push:
                     cyan("Pushing results to RVD...")
-                    importer = Base()
-                    # TODO, implement this one
-                    raise NotImplementedError
+                    pusher = Base()
+                    labels = ['quality']
+                    if flaw.vendor:
+                        if flaw.vendor != "N/A":
+                            labels.append(flaw.vendor)
+                    labels.append(flaw.type)
+                    labels.append(flaw.system)
+                    pusher.new_ticket(flaw, labels)
 
-        # Github issue/ticket, URL
-        #  mean to be used from sources like RVD to import tickets
-        #  assummes syntax defined in MarkdownImporter class
+        # issue
         #########
+        #  Github issue/ticket, URL
+        #  mean to be used to fetch tickets form RVD
         elif uri == "issue":
+            raise NotImplementedError
+
+        # overwrite_issue
+        #########
+        #  Github OLD issue/ticket, URL
+        #  mean to be used from sources like old RVD tickets
+        #  assummes syntax defined in MarkdownImporter class
+        elif uri == "overwrite_issue":
             # use filename as URL
             url = filename
             if not url:
@@ -193,65 +221,90 @@ def fetch(uri, filename, push):
                 sys.exit(1)
             else:
                 processed_url = url.split("/")
-                issue_number = int(processed_url[-1])
+
                 repo = processed_url[-3]
                 user = processed_url[-4]
-
                 importer = MarkdownImporter(user, repo)
-                issue = importer.repo.get_issue(issue_number)
-                # parse issue's body
-                importer.parse(issue.body)
-                document = default_document()
-
-                # Define key elements for document
-                # set up id
-                document['id'] = issue.number
-                # set up title
-                document['title'] = issue.title
-                # set up description
-                description_raw = importer.get_description().replace('```', '').replace('###', '')
-                description_raw = description_raw.replace('\r\n\r\n', '')
-                # description_printed = "{}".format(description_raw)
-                # description_printed = "%s" % description_raw
-                # description_printed = description_raw.replace("\r\n", "\\n")
-                document['description'] = description_raw
-
-                # set up type of flaw
-                document['type'] = importer.get_flaw_type()
-                # set up vendor
-                document['vendor'] = importer.get_vendor()
-                # set up system
-                document['system'] = importer.get_robot_or_component()
-                # set up CWE
-                if importer.get_cwe_id():
-                    document['cwe'] = "N/A" if importer.get_cwe_id() == "N/A" else "CWE-" + str(importer.get_cwe_id())
+                
+                issues = None  # put together the issues we should go through
+                if all:
+                    issues = importer.repo.get_issues(state="open")
                 else:
-                    document['cwe'] = "N/A"
-                # set up RVSS score
-                try:
-                    if importer.get_rvss_score():
-                        document['severity']['rvss-score'] = "None" if importer.get_cwe_id() == "N/A" else int(importer.get_rvss_score())
+                    issue_number = int(processed_url[-1])
+                    issues = [importer.repo.get_issue(issue_number)]
+
+                for issue in issues:
+                    cyan("Importing from RVD, issue: " + str(issue))
+                    # parse issue's body
+                    importer.parse(issue.body)
+                    document = default_document()
+
+                    # Define key elements for document
+                    # set up id
+                    document['id'] = issue.number
+                    # set up title
+                    document['title'] = issue.title
+                    # set up description
+                    if importer.get_description():
+                        description_raw = importer.get_description().replace('```', '').replace('###', '')
+                        description_raw = description_raw.replace('\r\n\r\n', '')
+                        # description_printed = "{}".format(description_raw)
+                        # description_printed = "%s" % description_raw
+                        # description_printed = description_raw.replace("\r\n", "\\n")
                     else:
+                        description_raw = ""
+                    document['description'] = description_raw
+
+                    # set up type of flaw
+                    document['type'] = importer.get_flaw_type()
+                    # set up vendor
+                    document['vendor'] = importer.get_vendor()
+                    # set up system
+                    document['system'] = importer.get_robot_or_component()
+                    # set up CWE
+                    if importer.get_cwe_id():
+                        document['cwe'] = "None" if importer.get_cwe_id() == "N/A" else "CWE-" + str(importer.get_cwe_id())
+                    else:
+                        document['cwe'] = "None"
+                    # set up RVSS score
+                    try:
+                        if importer.get_rvss_score():
+                            document['severity']['rvss-score'] = "None" if importer.get_cwe_id() == "N/A" else int(importer.get_rvss_score())
+                        else:
+                            document['severity']['rvss-score'] = "None"
+                    except ValueError:
                         document['severity']['rvss-score'] = "None"
-                except ValueError:
-                    document['severity']['rvss-score'] = "None"
-                except:
-                    document['severity']['rvss-score'] = "None"
-                # set up rvss-vector
-                document['severity']['rvss-vector'] = importer.get_rvss_vector()
-                document['flaw']['trace'] = importer.get_stack_trace()
+                    except:
+                        document['severity']['rvss-score'] = "None"
+                    
+                    # set up rvss-vector
+                    if importer.get_rvss_vector():
+                        document['severity']['rvss-vector'] = importer.get_rvss_vector()
+                    else:
+                        document['severity']['rvss-vector'] = "N/A"
+                    
+                    # set up trace
+                    document['flaw']['trace'] = importer.get_stack_trace()
 
-                # Deal with datetime issues
-                document_final = json.dumps(document, indent=4,
-                                            default=default)
-                print(document_final)
-                if push:
-                    cyan("Pushing results to RVD...")
-                    importer = Base()
-                    # TODO, implement this one
-                    raise NotImplementedError
+                    # # Deal with datetime issues
+                    # document_final = json.dumps(document, indent=4,
+                    #                             default=default)
+                    flaw = Flaw(document)
+                    if dump:
+                        # print(document)
+                        print(flaw)
+                        # print(flaw.yml())
 
-        # YML
+                    # validate the resulting document
+                    flaw.validate()
+
+                    # print(document_final)
+                    if push:
+                        cyan("Pushing results to RVD...")
+                        pusher = Base()
+                        pusher.update_ticket(issue, flaw)
+
+        # yml
         #########
         elif uri == "yml":
             if not filename:
@@ -263,24 +316,31 @@ def fetch(uri, filename, push):
                 if validation:
                     # pprint.pprint(document_validated)
                     cyan("Final result:")
-                    document_final = json.dumps(document_validated, indent=4)
-                    print(document_final)
+                    flaw = Flaw(document)
+
+                    if dump:
+                        print(flaw)
+                        # print(flaw.yml())
+
+                    # validate the resulting document
+                    flaw.validate()
+
                     if push:
                         cyan("Pushing results to RVD...")
-                        importer = Base()
-                        # TODO, implement this one
-                        raise NotImplementedError
+                        pusher = Base()
+                        pusher.new_ticket(flaw, [])
 
         # Default
         #########
         else:
             red("URI: " + str(uri) + " not among the accepted ones")
-            red("try with: yml, robust, url")
+            red("try with: yml, robust, issue, overwrite_issue")
             sys.exit(1)
 
 
 def start():
     main(obj={})
+
 
 if __name__ == '__main__':
     start()
