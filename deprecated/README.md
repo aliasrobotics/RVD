@@ -1,5 +1,8 @@
-# Scripts to maintain RVD
+# DEPRECATED scripts. Do not use! 
 
+Refer to [rvd_tools](../rvd_tools) instead.
+
+## Scripts to maintain RVD
 ### Import issues from sanitizer's result (e.g. ASan/TSan, etc.)
 
 Fetch a token for your account and set it up in an env. variable. E.g.:

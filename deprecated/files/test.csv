@@ -1,0 +1,67 @@
+package,error_name,stack_trace_key,count,sample_stack_trace
+rcl,SEGV on unknown address,rcl_node_fini /opt/ros2_ws/src/ros2/rcl/rcl/src/rcl/node.c:421,1,"    #0 0x7f87c540a4a4 in rcl_node_fini /opt/ros2_ws/src/ros2/rcl/rcl/src/rcl/node.c:421
+    #1 0x564c479e99cc in TestTimerFixture::TearDown() (/opt/ros2_ws/build-tsan/rcl/test/test_timer__rmw_fastrtps_dynamic_cpp+0x419cc)
+    #2 0x564c47a66f77 in void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2447
+    #3 0x564c47a58f21 in void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2483
+    #4 0x564c47a057fd in testing::Test::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2530
+    #5 0x564c47a06b9e in testing::TestInfo::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2703
+    #6 0x564c47a07742 in testing::TestCase::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2825
+    #7 0x564c47a22853 in testing::internal::UnitTestImpl::RunAllTests() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:5216
+    #8 0x564c47a69a2a in bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2447
+    #9 0x564c47a5b1ea in bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2483
+    #10 0x564c47a1f5e7 in testing::UnitTest::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:4824
+    #11 0x564c479f2b36 in RUN_ALL_TESTS() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/include/gtest/gtest.h:2370
+    #12 0x564c479f2a7c in main /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/src/gtest_main.cc:36
+    #13 0x7f87c460cb96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
+    #14 0x564c479c1519 in _start (/opt/ros2_ws/build-tsan/rcl/test/test_timer__rmw_fastrtps_dynamic_cpp+0x19519)"
+rcl_action,SEGV on unknown address,rcl_node_fini /opt/ros2_ws/src/ros2/rcl/rcl/src/rcl/node.c:425,1,"    #0 0x7fb132ae9512 in rcl_node_fini /opt/ros2_ws/src/ros2/rcl/rcl/src/rcl/node.c:425
+    #1 0x55c669438cb0 in TestActionClientBaseFixture::TearDown() (/opt/ros2_ws/build-tsan/rcl_action/test_action_client+0x20cb0)
+    #2 0x55c6694b34cb in void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2447
+    #3 0x55c6694a5475 in void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2483
+    #4 0x55c669451d51 in testing::Test::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2530
+    #5 0x55c6694530f2 in testing::TestInfo::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2703
+    #6 0x55c669453c96 in testing::TestCase::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2825
+    #7 0x55c66946eda7 in testing::internal::UnitTestImpl::RunAllTests() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:5216
+    #8 0x55c6694b5f7e in bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2447
+    #9 0x55c6694a773e in bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2483
+    #10 0x55c66946bb3b in testing::UnitTest::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:4824
+    #11 0x55c66943f08a in RUN_ALL_TESTS() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/include/gtest/gtest.h:2370
+    #12 0x55c66943efd0 in main /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/src/gtest_main.cc:36
+    #13 0x7fb131acab96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
+    #14 0x55c66942fd99 in _start (/opt/ros2_ws/build-tsan/rcl_action/test_action_client+0x17d99)"
+rcl_action,SEGV on unknown address,rcl_node_is_valid_except_context /opt/ros2_ws/src/ros2/rcl/rcl/src/rcl/node.c:463,1,"    #0 0x7ff1f35dfe61 in rcl_node_is_valid_except_context /opt/ros2_ws/src/ros2/rcl/rcl/src/rcl/node.c:463
+    #1 0x7ff1f3845f8d in rcl_action_server_fini /opt/ros2_ws/src/ros2/rcl/rcl_action/src/rcl_action/action_server.c:232
+    #2 0x55c667772f1a in TestActionServer::TearDown() (/opt/ros2_ws/build-tsan/rcl_action/test_action_server+0x41f1a)
+    #3 0x55c6677f85ab in void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2447
+    #4 0x55c6677ea555 in void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2483
+    #5 0x55c667796e43 in testing::Test::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2530
+    #6 0x55c6677981e4 in testing::TestInfo::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2703
+    #7 0x55c667798d88 in testing::TestCase::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2825
+    #8 0x55c6677b3e99 in testing::internal::UnitTestImpl::RunAllTests() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:5216
+    #9 0x55c6677fb05e in bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2447
+    #10 0x55c6677ec81e in bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2483
+    #11 0x55c6677b0c2d in testing::UnitTest::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:4824
+    #12 0x55c66778417c in RUN_ALL_TESTS() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/include/gtest/gtest.h:2370
+    #13 0x55c6677840c2 in main /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/src/gtest_main.cc:36
+    #14 0x7ff1f25c0b96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
+    #15 0x55c66774b8a9 in _start (/opt/ros2_ws/build-tsan/rcl_action/test_action_server+0x1a8a9)"
+rclcpp,SEGV on unknown address,rclcpp::Node::get_node_topics_interface() /opt/ros2_ws/src/ros2/rclcpp/rclcpp/src/rclcpp/node.cpp:431,1,"    #0 0x7f3641f0fd0a in std::__shared_ptr<rclcpp::node_interfaces::NodeTopicsInterface, (__gnu_cxx::_Lock_policy)2>::__shared_ptr(std::__shared_ptr<rclcpp::node_interfaces::NodeTopicsInterface, (__gnu_cxx::_Lock_policy)2> const&) /usr/include/c++/7/bits/shared_ptr_base.h:1121
+    #1 0x7f3641f0fd96 in std::shared_ptr<rclcpp::node_interfaces::NodeTopicsInterface>::shared_ptr(std::shared_ptr<rclcpp::node_interfaces::NodeTopicsInterface> const&) /usr/include/c++/7/bits/shared_ptr.h:119
+    #2 0x7f3641f0e98e in rclcpp::Node::get_node_topics_interface() /opt/ros2_ws/src/ros2/rclcpp/rclcpp/src/rclcpp/node.cpp:431
+    #3 0x55779e2204cc in rclcpp::node_interfaces::NodeTopicsInterface* rclcpp::node_interfaces::detail::get_node_topics_interface_from_pointer<rclcpp::Node*, 0>(rclcpp::Node*) (/opt/ros2_ws/build-tsan/rclcpp/test_node_interfaces__get_node_interfaces+0x254cc)
+    #4 0x55779e2203e1 in rclcpp::node_interfaces::NodeTopicsInterface* rclcpp::node_interfaces::detail::get_node_topics_interface_from_pointer<std::shared_ptr<rclcpp::Node>*, 0>(std::shared_ptr<rclcpp::Node>*) (/opt/ros2_ws/build-tsan/rclcpp/test_node_interfaces__get_node_interfaces+0x253e1)
+    #5 0x55779e21f48e in rclcpp::node_interfaces::NodeTopicsInterface* rclcpp::node_interfaces::get_node_topics_interface<std::shared_ptr<rclcpp::Node>&, 0>(std::shared_ptr<rclcpp::Node>&) (/opt/ros2_ws/build-tsan/rclcpp/test_node_interfaces__get_node_interfaces+0x2448e)
+    #6 0x55779e21ca53 in TestGetNodeInterfaces_rclcpp_node_shared_ptr_Test::TestBody() /opt/ros2_ws/src/ros2/rclcpp/rclcpp/test/node_interfaces/test_get_node_interfaces.cpp:51
+    #7 0x55779e2992b5 in void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2447
+    #8 0x55779e28b1ff in void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2483
+    #9 0x55779e236f2f in testing::Test::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2522
+    #10 0x55779e23835a in testing::TestInfo::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2703
+    #11 0x55779e238efe in testing::TestCase::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2825
+    #12 0x55779e25400f in testing::internal::UnitTestImpl::RunAllTests() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:5216
+    #13 0x55779e29bd68 in bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2447
+    #14 0x55779e28d4c8 in bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:2483
+    #15 0x55779e250da3 in testing::UnitTest::Run() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/./src/gtest.cc:4824
+    #16 0x55779e2242f2 in RUN_ALL_TESTS() /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/include/gtest/gtest.h:2370
+    #17 0x55779e224238 in main /opt/ros2_ws/install-tsan/gtest_vendor/src/gtest_vendor/src/gtest_main.cc:36
+    #18 0x7f3640d09b96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
+    #19 0x55779e21c749 in _start (/opt/ros2_ws/build-tsan/rclcpp/test_node_interfaces__get_node_interfaces+0x21749)"

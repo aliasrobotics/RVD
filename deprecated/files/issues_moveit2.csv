@@ -1,0 +1,161 @@
+package,error_name,stack_trace_key,count,sample_stack_trace
+geometric_shapes,detected memory leaks,MeshBoundingSphere_Mesh1_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:177,1,"    #0 0x7f7600b35458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x55791fd9b1af in MeshBoundingSphere_Mesh1_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:177
+    #2 0x55791fe18a97 in void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #3 0x55791fe0a801 in void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #4 0x55791fdb6529 in testing::Test::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2522
+    #5 0x55791fdb7954 in testing::TestInfo::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2703
+    #6 0x55791fdb84f8 in testing::TestCase::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2825
+    #7 0x55791fdd3609 in testing::internal::UnitTestImpl::RunAllTests() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:5216
+    #8 0x55791fe1b54a in bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #9 0x55791fe0caca in bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #10 0x55791fdd039d in testing::UnitTest::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:4824
+    #11 0x55791fda0da1 in RUN_ALL_TESTS() (/opt/ros2_moveit2_asan/build-asan/geometric_shapes/test/test_bounding_sphere+0x29da1)
+    #12 0x55791fd9d6e1 in main /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:276
+    #13 0x7f75ff7d6b96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)"
+geometric_shapes,detected memory leaks,BoxBoundingSphere_Box1_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:72,1,"    #0 0x7f7600b35458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x55791fd94f75 in BoxBoundingSphere_Box1_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:72
+    #2 0x55791fe18a97 in void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #3 0x55791fe0a801 in void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #4 0x55791fdb6529 in testing::Test::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2522
+    #5 0x55791fdb7954 in testing::TestInfo::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2703
+    #6 0x55791fdb84f8 in testing::TestCase::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2825
+    #7 0x55791fdd3609 in testing::internal::UnitTestImpl::RunAllTests() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:5216
+    #8 0x55791fe1b54a in bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #9 0x55791fe0caca in bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #10 0x55791fdd039d in testing::UnitTest::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:4824
+    #11 0x55791fda0da1 in RUN_ALL_TESTS() (/opt/ros2_moveit2_asan/build-asan/geometric_shapes/test/test_bounding_sphere+0x29da1)
+    #12 0x55791fd9d6e1 in main /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:276
+    #13 0x7f75ff7d6b96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)"
+geometric_shapes,detected memory leaks,BoxBoundingSphere_Box2_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:85,1,"    #0 0x7f7600b35458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x55791fd95baf in BoxBoundingSphere_Box2_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:85
+    #2 0x55791fe18a97 in void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #3 0x55791fe0a801 in void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #4 0x55791fdb6529 in testing::Test::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2522
+    #5 0x55791fdb7954 in testing::TestInfo::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2703
+    #6 0x55791fdb84f8 in testing::TestCase::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2825
+    #7 0x55791fdd3609 in testing::internal::UnitTestImpl::RunAllTests() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:5216
+    #8 0x55791fe1b54a in bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #9 0x55791fe0caca in bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #10 0x55791fdd039d in testing::UnitTest::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:4824
+    #11 0x55791fda0da1 in RUN_ALL_TESTS() (/opt/ros2_moveit2_asan/build-asan/geometric_shapes/test/test_bounding_sphere+0x29da1)
+    #12 0x55791fd9d6e1 in main /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:276
+    #13 0x7f75ff7d6b96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)"
+geometric_shapes,detected memory leaks,CylBoundingSphere_Cyl2_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:111,1,"    #0 0x7f7600b35458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x55791fd97417 in CylBoundingSphere_Cyl2_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:111
+    #2 0x55791fe18a97 in void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #3 0x55791fe0a801 in void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #4 0x55791fdb6529 in testing::Test::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2522
+    #5 0x55791fdb7954 in testing::TestInfo::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2703
+    #6 0x55791fdb84f8 in testing::TestCase::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2825
+    #7 0x55791fdd3609 in testing::internal::UnitTestImpl::RunAllTests() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:5216
+    #8 0x55791fe1b54a in bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #9 0x55791fe0caca in bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #10 0x55791fdd039d in testing::UnitTest::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:4824
+    #11 0x55791fda0da1 in RUN_ALL_TESTS() (/opt/ros2_moveit2_asan/build-asan/geometric_shapes/test/test_bounding_sphere+0x29da1)
+    #12 0x55791fd9d6e1 in main /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:276
+    #13 0x7f75ff7d6b96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)"
+geometric_shapes,detected memory leaks,ConeBoundingSphere_Cone4_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:164,1,"    #0 0x7f7600b35458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x55791fd9a505 in ConeBoundingSphere_Cone4_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:164
+    #2 0x55791fe18a97 in void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #3 0x55791fe0a801 in void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #4 0x55791fdb6529 in testing::Test::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2522
+    #5 0x55791fdb7954 in testing::TestInfo::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2703
+    #6 0x55791fdb84f8 in testing::TestCase::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2825
+    #7 0x55791fdd3609 in testing::internal::UnitTestImpl::RunAllTests() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:5216
+    #8 0x55791fe1b54a in bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #9 0x55791fe0caca in bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #10 0x55791fdd039d in testing::UnitTest::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:4824
+    #11 0x55791fda0da1 in RUN_ALL_TESTS() (/opt/ros2_moveit2_asan/build-asan/geometric_shapes/test/test_bounding_sphere+0x29da1)
+    #12 0x55791fd9d6e1 in main /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:276
+    #13 0x7f75ff7d6b96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)"
+geometric_shapes,detected memory leaks,CylBoundingSphere_Cyl1_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:98,1,"    #0 0x7f7600b35458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x55791fd967e9 in CylBoundingSphere_Cyl1_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:98
+    #2 0x55791fe18a97 in void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #3 0x55791fe0a801 in void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #4 0x55791fdb6529 in testing::Test::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2522
+    #5 0x55791fdb7954 in testing::TestInfo::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2703
+    #6 0x55791fdb84f8 in testing::TestCase::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2825
+    #7 0x55791fdd3609 in testing::internal::UnitTestImpl::RunAllTests() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:5216
+    #8 0x55791fe1b54a in bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #9 0x55791fe0caca in bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #10 0x55791fdd039d in testing::UnitTest::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:4824
+    #11 0x55791fda0da1 in RUN_ALL_TESTS() (/opt/ros2_moveit2_asan/build-asan/geometric_shapes/test/test_bounding_sphere+0x29da1)
+    #12 0x55791fd9d6e1 in main /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:276
+    #13 0x7f75ff7d6b96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)"
+geometric_shapes,detected memory leaks,ConeBoundingSphere_Cone2_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:137,1,"    #0 0x7f7600b35458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x55791fd98c77 in ConeBoundingSphere_Cone2_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:137
+    #2 0x55791fe18a97 in void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #3 0x55791fe0a801 in void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #4 0x55791fdb6529 in testing::Test::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2522
+    #5 0x55791fdb7954 in testing::TestInfo::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2703
+    #6 0x55791fdb84f8 in testing::TestCase::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2825
+    #7 0x55791fdd3609 in testing::internal::UnitTestImpl::RunAllTests() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:5216
+    #8 0x55791fe1b54a in bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #9 0x55791fe0caca in bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #10 0x55791fdd039d in testing::UnitTest::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:4824
+    #11 0x55791fda0da1 in RUN_ALL_TESTS() (/opt/ros2_moveit2_asan/build-asan/geometric_shapes/test/test_bounding_sphere+0x29da1)
+    #12 0x55791fd9d6e1 in main /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:276
+    #13 0x7f75ff7d6b96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)"
+geometric_shapes,detected memory leaks,ConeBoundingSphere_Cone1_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:124,1,"    #0 0x7f7600b35458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x55791fd98045 in ConeBoundingSphere_Cone1_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:124
+    #2 0x55791fe18a97 in void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #3 0x55791fe0a801 in void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #4 0x55791fdb6529 in testing::Test::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2522
+    #5 0x55791fdb7954 in testing::TestInfo::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2703
+    #6 0x55791fdb84f8 in testing::TestCase::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2825
+    #7 0x55791fdd3609 in testing::internal::UnitTestImpl::RunAllTests() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:5216
+    #8 0x55791fe1b54a in bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #9 0x55791fe0caca in bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #10 0x55791fdd039d in testing::UnitTest::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:4824
+    #11 0x55791fda0da1 in RUN_ALL_TESTS() (/opt/ros2_moveit2_asan/build-asan/geometric_shapes/test/test_bounding_sphere+0x29da1)
+    #12 0x55791fd9d6e1 in main /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:276
+    #13 0x7f75ff7d6b96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)"
+geometric_shapes,detected memory leaks,ConeBoundingSphere_Cone3_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:151,1,"    #0 0x7f7600b35458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x55791fd998c9 in ConeBoundingSphere_Cone3_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:151
+    #2 0x55791fe18a97 in void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #3 0x55791fe0a801 in void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #4 0x55791fdb6529 in testing::Test::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2522
+    #5 0x55791fdb7954 in testing::TestInfo::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2703
+    #6 0x55791fdb84f8 in testing::TestCase::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2825
+    #7 0x55791fdd3609 in testing::internal::UnitTestImpl::RunAllTests() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:5216
+    #8 0x55791fe1b54a in bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #9 0x55791fe0caca in bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #10 0x55791fdd039d in testing::UnitTest::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:4824
+    #11 0x55791fda0da1 in RUN_ALL_TESTS() (/opt/ros2_moveit2_asan/build-asan/geometric_shapes/test/test_bounding_sphere+0x29da1)
+    #12 0x55791fd9d6e1 in main /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_bounding_sphere.cpp:276
+    #13 0x7f75ff7d6b96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)"
+geometric_shapes,detected memory leaks,"shapes::createMeshFromVertices(std::vector<Eigen::Matrix<double, 3, 1, 0, 3, 1>, Eigen::aligned_allocator<Eigen::Matrix<double, 3, 1, 0, 3, 1> > > const&, std::vector<unsigned int, std::allocator<unsigned int> > const&) /opt/ros2_moveit2_asan/src/geometric_shapes/src/mesh_operations.cpp:111",8,"    #0 0x7f0dfd0c5458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x7f0dfcd0c6c5 in shapes::createMeshFromVertices(std::vector<Eigen::Matrix<double, 3, 1, 0, 3, 1>, Eigen::aligned_allocator<Eigen::Matrix<double, 3, 1, 0, 3, 1> > > const&, std::vector<unsigned int, std::allocator<unsigned int> > const&) /opt/ros2_moveit2_asan/src/geometric_shapes/src/mesh_operations.cpp:111
+    #2 0x7f0dfcd0ffd7 in shapes::createMeshFromAsset(aiScene const*, Eigen::Matrix<double, 3, 1, 0, 3, 1> const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /opt/ros2_moveit2_asan/src/geometric_shapes/src/mesh_operations.cpp:355
+    #3 0x7f0dfcd0e64c in shapes::createMeshFromBinary(char const*, unsigned long, Eigen::Matrix<double, 3, 1, 0, 3, 1> const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /opt/ros2_moveit2_asan/src/geometric_shapes/src/mesh_operations.cpp:264
+    #4 0x7f0dfcd0e9ca in shapes::createMeshFromResource(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Eigen::Matrix<double, 3, 1, 0, 3, 1> const&) /opt/ros2_moveit2_asan/src/geometric_shapes/src/mesh_operations.cpp:287
+    #5 0x7f0dfcd0dd25 in shapes::createMeshFromResource(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /opt/ros2_moveit2_asan/src/geometric_shapes/src/mesh_operations.cpp:205
+    #6 0x559c33aa7860 in loadMesh /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_create_mesh.cpp:68
+    #7 0x559c33aa7ee8 in CreateMesh_daeYUp_Test::TestBody() /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_create_mesh.cpp:84
+    #8 0x559c33b21e99 in void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #9 0x559c33b13cf7 in void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #10 0x559c33abfba9 in testing::Test::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2522
+    #11 0x559c33ac0fd4 in testing::TestInfo::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2703
+    #12 0x559c33ac1b78 in testing::TestCase::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2825
+    #13 0x559c33adcc89 in testing::internal::UnitTestImpl::RunAllTests() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:5216
+    #14 0x559c33b2494c in bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2447
+    #15 0x559c33b15fc0 in bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:2483
+    #16 0x559c33ad9a1d in testing::UnitTest::Run() /opt/ros/dashing/src/gtest_vendor/./src/gtest.cc:4824
+    #17 0x559c33aaa061 in RUN_ALL_TESTS() (/opt/ros2_moveit2_asan/build-asan/geometric_shapes/test/test_create_mesh+0x1f061)
+    #18 0x559c33aa89e5 in main /opt/ros2_moveit2_asan/src/geometric_shapes/test/test_create_mesh.cpp:115
+    #19 0x7f0dfbf6bb96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)"
+octomap-distribution,detected memory leaks,main /opt/ros2_moveit2_asan/src/octomap/octomap/src/testing/unit_tests.cpp:32,1,"    #0 0x7fdd0e481458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x55ac022bc310 in main /opt/ros2_moveit2_asan/src/octomap/octomap/src/testing/unit_tests.cpp:32
+    #2 0x7fdd0d148b96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)"
+octomap-distribution,detected memory leaks,main /opt/ros2_moveit2_asan/src/octomap/octomap/src/testing/unit_tests.cpp:31,1,"    #0 0x7fdd0e481458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x55ac022bc2f4 in main /opt/ros2_moveit2_asan/src/octomap/octomap/src/testing/unit_tests.cpp:31
+    #2 0x7fdd0d148b96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)"
+octomap-distribution,detected memory leaks,main /opt/ros2_moveit2_asan/src/octomap/octomap/src/testing/test_iterators.cpp:280,1,"    #0 0x7feb41ce4458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x55a5f48aac2a in main /opt/ros2_moveit2_asan/src/octomap/octomap/src/testing/test_iterators.cpp:280
+    #2 0x7feb409abb96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)"
+octomap-distribution,detected memory leaks,"octomap::MapCollection<octomap::MapNode<octomap::OcTree> >::read(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) /opt/ros2_moveit2_asan/src/octomap/octomap/include/octomap/MapCollection.hxx:107",1,"    #0 0x7f388770b458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x56475b8f6425 in octomap::MapCollection<octomap::MapNode<octomap::OcTree> >::read(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) /opt/ros2_moveit2_asan/src/octomap/octomap/include/octomap/MapCollection.hxx:107
+    #2 0x56475b8f2b1f in octomap::MapCollection<octomap::MapNode<octomap::OcTree> >::MapCollection(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) /opt/ros2_moveit2_asan/src/octomap/octomap/include/octomap/MapCollection.hxx:46
+    #3 0x56475b8eee31 in main /opt/ros2_moveit2_asan/src/octomap/octomap/src/testing/test_mapcollection.cpp:53
+    #4 0x7f38863d2b96 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)"
