@@ -173,8 +173,6 @@ def fetch(uri, filename, push, all, dump):
                     yellow("Dropping time-machine key")
                     document_validated.pop('time-machine')
 
-                print(document_validated)
-
                 flaw = Flaw(document_validated)
                 # add relevant keys to flaw using add_field method
                 for key in document_validated['mitigation'].keys():
@@ -199,6 +197,7 @@ def fetch(uri, filename, push, all, dump):
                             labels.append(flaw.vendor)
                     labels.append(flaw.type)
                     labels.append(flaw.system)
+                    labels.append('mitigated')
                     pusher.new_ticket(flaw, labels)
 
         # issue

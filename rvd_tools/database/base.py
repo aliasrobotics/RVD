@@ -55,11 +55,10 @@ class Base:
         # log labels
         print("labels: ", end="")
         gray(labels)
-
-        # # Create the ticket
-        # self.repo.create_issue(title=flaw.title,
-        #                        body=flaw.yml_markdown(),
-        #                        labels=labels)
+        # Create the ticket
+        self.repo.create_issue(title=flaw.title,
+                               body=flaw.yml_markdown(),
+                               labels=labels)
 
     def update_ticket(self, issue, flaw):
         """Push updates to the 'issue' according to 'flaw'"""
@@ -82,9 +81,8 @@ class Base:
         # log labels
         print("labels: ", end="")
         gray(labels)
-
-        # # Push updates
-        # issue.edit(title=issue.title,
-        #            body=flaw.yml_markdown(),
-        #            assignees=issue.assignees,
-        #            labels=labels)
+        # Push updates
+        issue.edit(title=issue.title,
+                   body=flaw.yml_markdown(),
+                   assignees=issue.assignees,
+                   labels=labels)
