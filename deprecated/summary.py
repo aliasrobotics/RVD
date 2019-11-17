@@ -712,6 +712,8 @@ Below we list some of the existing capabilities and some tentative ones:
 - [ ] CWE ID parser and validation method to conform with official CWE guidelines
 - [ ] Automatic CWE ID validation mechanism (and feedback) in all tickets. Upgrade flaw-syntax evaluation.
 - [ ] RVSS parser and validation to conform with RVSSv1.0 spec.
+- [ ] Define some temporal limits for tickets, if it remains without updates longer than the limit, close automatically
+  - [ ] Consider closed issues when checking for duplicates and if collisions appear, re-open and indicate so
 - [ ] Automatic RVSS validation mechanism (and feedback) in all tickets. Upgrade flaw-syntax evaluation.
 - [ ] schema
     - [ ] enforce `subsystem` policy
