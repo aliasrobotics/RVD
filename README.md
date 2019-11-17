@@ -1,4 +1,4 @@
-[![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed) [![](https://img.shields.io/badge/flaws-341-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+)
+[![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed) [![](https://img.shields.io/badge/flaws-351-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+)
 
 [~upper_shield_malformed]: https://img.shields.io/badge/malformed-40-440fa8.svg
 # Robot Vulnerability Database (RVD)
@@ -46,7 +46,7 @@ Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. T
 ## Robot vulnerabilities (and weaknesses)
 
 ### General summary
-*Last updated Sat, 16 Nov 2019 07:22:26 GMT*
+*Last updated Sun, 17 Nov 2019 20:35:54 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -63,9 +63,9 @@ Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. T
 [~vulns]: https://img.shields.io/badge/vulnerabilities-49-7fe0bb.svg
 [~vulns_open]: https://img.shields.io/badge/vulnerabilities-49-red.svg
 [~vulns_closed]: https://img.shields.io/badge/vulnerabilities-0-green.svg
-[~weaknesses]: https://img.shields.io/badge/weaknesses-314-dbf9a2.svg
-[~weaknesses_open]: https://img.shields.io/badge/weaknesses-292-red.svg
-[~weaknesses_closed]: https://img.shields.io/badge/weaknesses-22-green.svg
+[~weaknesses]: https://img.shields.io/badge/weaknesses-473-dbf9a2.svg
+[~weaknesses_open]: https://img.shields.io/badge/weaknesses-302-red.svg
+[~weaknesses_closed]: https://img.shields.io/badge/weaknesses-171-green.svg
 [~others]: https://img.shields.io/badge/others-1-dbf9a2.svg
 [~others_open]: https://img.shields.io/badge/others-0-red.svg
 [~others_closed]: https://img.shields.io/badge/others-1-green.svg
@@ -128,7 +128,7 @@ By robot components, we consider both software and hardware robot components.
 For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.
 
 ### ROS 2
-*Last updated Sat, 16 Nov 2019 07:22:26 GMT*
+*Last updated Sun, 17 Nov 2019 20:35:54 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -259,13 +259,18 @@ Below we list some of the existing capabilities and some tentative ones:
 - [ ] Automatic CWE ID validation mechanism (and feedback) in all tickets. Upgrade flaw-syntax evaluation.
 - [ ] RVSS parser and validation to conform with RVSSv1.0 spec.
 - [ ] Automatic RVSS validation mechanism (and feedback) in all tickets. Upgrade flaw-syntax evaluation.
-
+- [ ] schema
+    - [ ] enforce `subsystem` policy
+    - [ ] enforce `id` policy
+    - [ ] `architectural-location` get consistency between `platform code` and `platform-code`. Same for `application-specific`. Also, remove `ROS-specific`.
+    - [ ] `specificity`, enfoce policy and allowed keywords
 
 ## Contributing, reporting a vulnerability
 
 Vulnerabilities are community-contributed. If you believe you have discovered a vulnerability in a robot or robot component (either software or hardware), obtain public acknowledgement by submitting a vulnerability while providing prove of it. Reports can be submitted in the form of [an issue](https://github.com/aliasrobotics/RVDP/issues/new?template=vulnerability-template.md).
 
-If you wish to contribute to the RVD repository's content, please note that this document (`README.md`) is generated automatically. Submit the corresponding PRs by looking at the `scripts/` folder. If you need some inspiration or ideas to contribute, refer to [CI/CD setup](#ci/cd-setup).
+If you wish to contribute to the RVD repository's content, please note that this document (`README.md`) is generated automatically. Submit the corresponding PRs by looking at the `rvd_tools/` folder. If you need some inspiration or ideas to contribute, refer to [CI/CD setup](#ci/cd-setup).
+
 
 ## Contact us or send feedback
 

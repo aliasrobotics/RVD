@@ -723,7 +723,7 @@ Below we list some of the existing capabilities and some tentative ones:
 
 Vulnerabilities are community-contributed. If you believe you have discovered a vulnerability in a robot or robot component (either software or hardware), obtain public acknowledgement by submitting a vulnerability while providing prove of it. Reports can be submitted in the form of [an issue](https://github.com/aliasrobotics/RVDP/issues/new?template=vulnerability-template.md).
 
-If you wish to contribute to the RVD repository's content, please note that this document (`README.md`) is generated automatically. Submit the corresponding PRs by looking at the `scripts/` folder. If you need some inspiration or ideas to contribute, refer to [CI/CD setup](#ci/cd-setup).
+If you wish to contribute to the RVD repository's content, please note that this document (`README.md`) is generated automatically. Submit the corresponding PRs by looking at the `rvd_tools/` folder. If you need some inspiration or ideas to contribute, refer to [CI/CD setup](#ci/cd-setup).
 
 
 ## Contact us or send feedback
