@@ -26,7 +26,7 @@ The following sections reason about how a to systematically capture and record a
 - **CVE**: CVE identification number (if exists of the bug). The Common Vulnerabilities and Exposures (CVE) List CVE® is an archive (dictionary according to the official source) of entries—each containing an identification number, a description, and at least one public reference—for publicly known cybersecurity vulnerabilities.
 
 - **keywords**:
-	This is a comma-separated list of key words; e.g.,: "xacro, gazebo, urdf, driver"
+	This is a comma-separated list of key words; e.g.,: "xacro, gazebo, urdf, driver". Keywords should ideally match with the labels for each ticket/issue. This will facilitate searches and keeping tickets organized.
 
 - **system**:
 	This is an identifier for the robot system or component where the flaw applies (e.g., kobuki, motoman, mavros). If it's a confidential system, then just put the value "confidential".
@@ -52,6 +52,7 @@ The following fields relate to the manifestation of the bug itself which is also
 	  - `runtime-initialization` (for errors that occur when the software is run and being initialized). (Note that this including both "virtual" simulation and "real" hardware.)
 	  - `runtime-operation` (for errors that occur when the software is run on normal operation after having been initialized). (Note that this including both "virtual" simulation and "real" hardware.)
 	  - `testing`, either static or dynamic testing using whatever means of tools. Includes penetrating testing activites.
+	  - `unknown` (for those cases where it's unclear or unknown)
 
 	- **specificity**:
 		This is an open textual field about how this bug generalizes; whether it is a general software issue applicable to many or most software projects or whether it is a general robotics issue or something completely specific applicable only to the ROS or ROS-I projects. Please pick the most appropriate among the following options:
@@ -61,7 +62,7 @@ The following fields relate to the manifestation of the bug itself which is also
 	  - `subject-specific` (specific to an application, robot or other robot component (other than ROS or ROS-I)).
 	  - `N/A`
 
-	- **architectural location**:
+	- **architectural-location**:
 		 Where did the bug occur? Please pick one of the following two options:
 	   - `application-specific code` (did the bug occur in an application)
 	   - `platform code` (did the bug occur in ROS, ROS-I or other platform/framework)

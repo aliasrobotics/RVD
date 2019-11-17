@@ -127,9 +127,9 @@ SCHEMA = {
                 'type': 'string',
                 'allowed': ['programming-time', 'build-time', 'compile-time',
                             'deployment-time', 'runtime', 'runtime-initialization',
-                            'runtime-operation', 'testing'],
+                            'runtime-operation', 'testing', 'unknown'],
                 'default_setter':
-                    lambda doc: 'testing'
+                    lambda doc: 'unknown'
             },
             'specificity': {
                 'required': True,

@@ -36,7 +36,7 @@ def default_document():
         },
         'links': "",
         'flaw': {
-            'phase': "testing",
+            'phase': "unknown",
             'specificity': "N/A",
             'architectural-location': "N/A",
             'application': "N/A",

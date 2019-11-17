@@ -39,13 +39,27 @@ Vulnerability Database...")
 #  │  │└─┐ │ 
 #  ┴─┘┴└─┘ ┴ 
 @main.command("list")
-def list():
+@click.argument('id', required=False)
+def list(id):
     """List current flaw tickets"""
     importer = Base()
-    cyan("Fetching all open issues from RVD...")
-    issues = importer.repo.get_issues(state="open")
-    table = [[issue.number, issue.title] for issue in issues]
-    print(tabulate(table, headers=["ID", "Title"]))
+
+    if id:  # which is the same as the issue number
+        # Get the issue
+        issue = importer.repo.get_issue(int(id))
+        cyan("Importing from RVD, issue: " + str(issue))
+        document_raw = issue.body
+        document_raw = document_raw.replace('```yaml\n','').replace('```', '')
+        document = yaml.load(document_raw)
+        # print(document)
+
+        flaw = Flaw(document)
+        print(flaw)
+    else:
+        cyan("Listing all open issues from RVD...")
+        issues = importer.repo.get_issues(state="open")
+        table = [[issue.number, issue.title] for issue in issues]
+        print(tabulate(table, headers=["ID", "Title"]))
 
 #  ┬  ┬┌─┐┬  ┬┌┬┐┌─┐┌┬┐┌─┐
 #  └┐┌┘├─┤│  │ ││├─┤ │ ├┤ 
@@ -62,7 +76,7 @@ def validation(filename, dump):
 def validate_file(filename, dump=False):
     """
     Auxiliary function, validate file
-    
+
     :return dict representing the YAML document. NOTE that the
     returned dict hasn't removed any 'additional' key from the original
     file.
@@ -203,9 +217,27 @@ def fetch(uri, filename, push, all, dump):
         # issue
         #########
         #  Github issue/ticket, URL
-        #  mean to be used to fetch tickets form RVD
+        #  dump machine-readable content in a local flaw file
         elif uri == "issue":
-            raise NotImplementedError
+            # use filename as URL
+            url = filename
+            if not url:
+                red("URL not provided")
+                sys.exit(1)
+            else:
+                processed_url = url.split("/")
+
+                repo = processed_url[-3]
+                user = processed_url[-4]
+                issue_number = int(processed_url[-1])
+
+                # Get the issue
+                importer = Base()
+                issue = importer.repo.get_issue(issue_number)
+                cyan("Importing from RVD, issue: " + str(issue))
+
+                # TODO: dump issue.body into a file
+                raise NotImplementedError
 
         # overwrite_issue
         #########
@@ -224,7 +256,7 @@ def fetch(uri, filename, push, all, dump):
                 repo = processed_url[-3]
                 user = processed_url[-4]
                 importer = MarkdownImporter(user, repo)
-                
+
                 issues = None  # put together the issues we should go through
                 if all:
                     issues = importer.repo.get_issues(state="open")
@@ -275,19 +307,59 @@ def fetch(uri, filename, push, all, dump):
                         document['severity']['rvss-score'] = "None"
                     except:
                         document['severity']['rvss-score'] = "None"
-                    
                     # set up rvss-vector
                     if importer.get_rvss_vector():
                         document['severity']['rvss-vector'] = importer.get_rvss_vector()
                     else:
                         document['severity']['rvss-vector'] = "N/A"
-                    
                     # set up trace
                     document['flaw']['trace'] = importer.get_stack_trace()
 
-                    # # Deal with datetime issues
-                    # document_final = json.dumps(document, indent=4,
-                    #                             default=default)
+                    # set up some general information
+                    table = importer.table_rows
+                    labels = [l.name for l in issue.labels]
+                    document['flaw']['issue']= issue.html_url
+                    document['links'] = [issue.html_url]
+                    document['keywords'] = labels
+
+                    # Process importer.table_rows, e.g.:
+                    #    [('Input      ', 'Value  '),
+                    #    ('---------', '--------'),
+                    #    ('Robot component ', 'ros2 '),
+                    #    ('Package ', 'tf2_ros '),
+                    #    ('Commit ', '[30baee82ea95c176b4b0d7ced1d3921820362d9d](https://github.com/ros2/ros2/tree/30baee82ea95c176b4b0d7ced1d3921820362d9d) '),
+                    #    ('Vendor  ', 'N/A '), ('CVE ID  ', 'N/A  '),
+                    #    ('CWE ID  ', 'N/A '), ('RVSS Score  ', 'N/A '),
+                    #    ('RVSS Vector ', 'N/A '),
+                    #    ('GitHub Account ', '@vmayoral '),
+                    #    ('Date Reported  ', 'Mon, 21 Oct 2019 17:38:55 +0000 '),
+                    #    ('Date Updated   ', 'Mon, 21 Oct 2019 17:38:55 +0000 '),
+                    #    ('Module URL ', 'registry.gitlab.com/aliasrobotics/offensive/alurity/ros2/ros2:build-tsan2-commit-b2dca472a35109cece17d3e61b18af5cb9be5772 '),
+                    #    ('Attack vector ', 'Internal network, robotics framework ')]
+                    for key, value in table:
+                        if "Robot" in key:
+                            document['system'] = value.strip()
+                            if value.strip() == "ros2":
+                                document['flaw']['phase'] = "testing"
+                                document['flaw']['subsystem'] = "cognition:ros2"
+                                document['flaw']['reported-by-relationship'] = "automatic"
+                                document['flaw']['detected-by-method'] = "testing dynamic"
+                                document['flaw']['specificity'] = "ROS-specific"
+                                document['flaw']['architectural-location'] = "platform code"
+                                document['flaw']['reported-by'] = "Alias Robotics (http://aliasrobotics.com)"
+                        if "Package" in key:
+                            document['flaw']['package'] = value.strip()
+                        if "Date Reported" in key:
+                            document['flaw']['date-detected'] = value.strip()
+                            document['flaw']['date-reported'] = value.strip()
+                        if "Module URL" in key:
+                            document['flaw']['reproduction-image'] = value.strip()
+                            if value.strip() != '' and value.strip() != 'None':
+                                document['flaw']['reproducibility'] = "always"
+                                document['flaw']['reproduction'] = "Find a\
+    pre-compiled environment in the Docker image below. Reproducing it implies\
+    source the workspace, finding the appropriate test and executing it."
+
                     flaw = Flaw(document)
                     if dump:
                         # print(document)
