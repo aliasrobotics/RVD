@@ -13,5 +13,4 @@ class RobustImporter(Base):
     """ blah """
     def __init__(self):
         super().__init__()  # init class target RVD for pushing imported results
-        print("all good so far")
         pass

@@ -299,7 +299,6 @@ SCHEMA = {
                 # 'type': 'string',
                 'default_setter':
                     lambda doc: ''
-                
             },
         }
     },

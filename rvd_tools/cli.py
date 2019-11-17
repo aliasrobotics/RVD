@@ -12,8 +12,10 @@ import yaml
 from cerberus import Validator
 from .utils import red, cyan, green, yellow
 from .database.schema import *
+from .database.defaults import *
 # from .database.coercer import *
 from .importer.robust import *
+from .importer.markdown import *
 import sys
 import json
 import os
@@ -21,6 +23,7 @@ import subprocess
 import pprint
 from datetime import datetime
 import arrow
+from tabulate import tabulate
 
 #  ┌┬┐┌─┐┬┌┐┌
 #  │││├─┤││││
@@ -28,8 +31,21 @@ import arrow
 @click.group()
 def main():
     """Robot Vulnerability Database (RVD) command line tooling"""
-    green("Starting rvd, the CLI tool for managing the Robot\
-           Vulnerability Database...")
+    cyan("Starting rvd, the CLI tool for managing the Robot \
+Vulnerability Database...")
+
+#  ┬  ┬┌─┐┌┬┐
+#  │  │└─┐ │ 
+#  ┴─┘┴└─┘ ┴ 
+@main.command("list")
+def list():
+    """List current flaw tickets"""
+    importer = Base()
+    cyan("Fetching all open issues from RVD...")
+    issues = importer.repo.get_issues(state="open")
+    table = [[issue.number, issue.title] for issue in issues]
+    print(tabulate(table, headers=["ID", "Title"]))
+
 
 #  ┬  ┬┌─┐┬  ┬┌┬┐┌─┐┌┬┐┌─┐
 #  └┐┌┘├─┤│  │ ││├─┤ │ ├┤ 
@@ -107,7 +123,7 @@ def default(obj):
 @click.argument('uri')
 @click.argument('filename', required=False)
 @click.option('--push/--no-push',
-              help='Push import results to RVD.', default=False,)
+              help='Push imported flaws to RVD.', default=False,)
 def fetch(uri, filename, push):
     """Import flaws to RVD from a variety of sources
 
@@ -116,6 +132,8 @@ def fetch(uri, filename, push):
        then attempts to push it to RVD as a ticket.
 
        rvd import robust: imports from ROSin's robust project tickets
+
+       rvd import issue <URL>: imports from Github's issue
     """
     cyan("Importing...")
     if not uri:
@@ -127,6 +145,7 @@ def fetch(uri, filename, push):
 
         # Check URIs, only selected ones should be accepted
         # Robust
+        #########
         if (uri == "https://github.com/robust-rosin/robust") or (uri == "robust"):
             importer = RobustImporter()
             cyan("Cloning robust project...")
@@ -145,12 +164,95 @@ def fetch(uri, filename, push):
                     yellow("Dropping bugzoo key")
                     document_validated.pop('bugzoo')
 
+                # Deal with datetime issues
+                document_final = json.dumps(document_validated, indent=4,
+                                            default=default)
+
+                # # print resulting document
+                # print(document_final)
+
                 # if validation:
                 #     print(json.dumps(document_validated, indent=4,
                 #           default=default))
-            # print(stdoutdata)
+
+                if push:
+                    cyan("Pushing results to RVD...")
+                    importer = Base()
+                    # TODO, implement this one
+                    raise NotImplementedError
+
+        # Github issue/ticket, URL
+        #  mean to be used from sources like RVD to import tickets
+        #  assummes syntax defined in MarkdownImporter class
+        #########
+        elif uri == "issue":
+            # use filename as URL
+            url = filename
+            if not url:
+                red("URL not provided")
+                sys.exit(1)
+            else:
+                processed_url = url.split("/")
+                issue_number = int(processed_url[-1])
+                repo = processed_url[-3]
+                user = processed_url[-4]
+
+                importer = MarkdownImporter(user, repo)
+                issue = importer.repo.get_issue(issue_number)
+                # parse issue's body
+                importer.parse(issue.body)
+                document = default_document()
+
+                # Define key elements for document
+                # set up id
+                document['id'] = issue.number
+                # set up title
+                document['title'] = issue.title
+                # set up description
+                description_raw = importer.get_description().replace('```', '').replace('###', '')
+                description_raw = description_raw.replace('\r\n\r\n', '')
+                # description_printed = "{}".format(description_raw)
+                # description_printed = "%s" % description_raw
+                # description_printed = description_raw.replace("\r\n", "\\n")
+                document['description'] = description_raw
+
+                # set up type of flaw
+                document['type'] = importer.get_flaw_type()
+                # set up vendor
+                document['vendor'] = importer.get_vendor()
+                # set up system
+                document['system'] = importer.get_robot_or_component()
+                # set up CWE
+                if importer.get_cwe_id():
+                    document['cwe'] = "N/A" if importer.get_cwe_id() == "N/A" else "CWE-" + str(importer.get_cwe_id())
+                else:
+                    document['cwe'] = "N/A"
+                # set up RVSS score
+                try:
+                    if importer.get_rvss_score():
+                        document['severity']['rvss-score'] = "None" if importer.get_cwe_id() == "N/A" else int(importer.get_rvss_score())
+                    else:
+                        document['severity']['rvss-score'] = "None"
+                except ValueError:
+                    document['severity']['rvss-score'] = "None"
+                except:
+                    document['severity']['rvss-score'] = "None"
+                # set up rvss-vector
+                document['severity']['rvss-vector'] = importer.get_rvss_vector()
+                document['flaw']['trace'] = importer.get_stack_trace()
+
+                # Deal with datetime issues
+                document_final = json.dumps(document, indent=4,
+                                            default=default)
+                print(document_final)
+                if push:
+                    cyan("Pushing results to RVD...")
+                    importer = Base()
+                    # TODO, implement this one
+                    raise NotImplementedError
 
         # YML
+        #########
         elif uri == "yml":
             if not filename:
                 red("Filename not provided")
@@ -161,17 +263,19 @@ def fetch(uri, filename, push):
                 if validation:
                     # pprint.pprint(document_validated)
                     cyan("Final result:")
-                    print(json.dumps(document_validated, indent=4))
+                    document_final = json.dumps(document_validated, indent=4)
+                    print(document_final)
                     if push:
-                        cyan("Pushing resutls to RVD...")
+                        cyan("Pushing results to RVD...")
                         importer = Base()
                         # TODO, implement this one
                         raise NotImplementedError
 
         # Default
+        #########
         else:
             red("URI: " + str(uri) + " not among the accepted ones")
-            red("try with: yml, robust")
+            red("try with: yml, robust, url")
             sys.exit(1)
 
 
