@@ -42,7 +42,7 @@ Vulnerability Database...")
 @click.argument('id', required=False)
 @click.option('--dump/--no-dump',
               help='Print the tickets.', default=False,)
-def list(id, dump):
+def listar(id, dump):
     """List current flaw tickets"""
     importer = Base()
 
@@ -171,7 +171,7 @@ def fetch(uri, filename, push, all, dump):
         os.system("mkdir -p /tmp/rvd")
 
         # Check URIs, only selected ones should be accepted
-        
+
         # robust
         #########
         if (uri == "https://github.com/robust-rosin/robust") or (uri == "robust"):
@@ -197,6 +197,10 @@ def fetch(uri, filename, push, all, dump):
                     yellow("Dropping time-machine key")
                     document_validated.pop('time-machine')
 
+                # Make some adjustments, manually
+                document_validated['flaw']['date-reported'] = str(document_validated['flaw']['time-reported'])
+                document_validated['cwe'] = document_validated['classification']
+
                 flaw = Flaw(document_validated)
                 # add relevant keys to flaw using add_field method
                 for key in document_validated['mitigation'].keys():
@@ -204,6 +208,7 @@ def fetch(uri, filename, push, all, dump):
                     flaw.add_field(value=document_validated['mitigation'][key],
                                    key="mitigation",
                                    key2=key)
+
                 if dump:
                     print(flaw)
                     # print(flaw.yml())
@@ -222,7 +227,23 @@ def fetch(uri, filename, push, all, dump):
                     labels.append(flaw.type)
                     labels.append(flaw.system)
                     labels.append('mitigated')
-                    pusher.new_ticket(flaw, labels)
+                    issue = pusher.new_ticket(flaw, labels)
+                    # Update id
+                    flaw.id = issue.number
+
+                    # Update issue and links
+                    if isinstance(flaw.links, list):
+                        links = flaw.links
+                    else:
+                        links = []
+                        if flaw.links.strip() != "":
+                            links.append(flaw.links.strip())
+                    links.append(issue.html_url)
+                    flaw.links = links
+                    flaw.issue = issue.html_url
+
+                    pusher.update_ticket(issue, flaw)
+
 
         # issue
         #########

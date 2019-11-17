@@ -44,7 +44,11 @@ class Base:
         self.repo = self.g.get_repo(self.username+"/"+self.repo_name)
 
     def new_ticket(self, flaw, labels=None):
-        """Make a new ticket/issue reporting a new flaw at RVD"""
+        """
+        Make a new ticket/issue reporting a new flaw at RVD
+
+        :return Issue
+        """
         yellow("New ticket: " + str(flaw.title))
         # log title
         print("title: ", end="")
@@ -56,17 +60,18 @@ class Base:
         print("labels: ", end="")
         gray(labels)
         # Create the ticket
-        self.repo.create_issue(title=flaw.title,
-                               body=flaw.yml_markdown(),
-                               labels=labels)
+        return self.repo.create_issue(title=flaw.title,
+                                      body=flaw.yml_markdown(),
+                                      labels=labels)
 
     def update_ticket(self, issue, flaw):
         """Push updates to the 'issue' according to 'flaw'"""
-        # fetch past labels
+        # # fetch past labels
         labels = [l.name for l in issue.labels]
-        if flaw.vendor:
-            if flaw.vendor != "N/A":
-                labels.append(flaw.vendor)
+
+        # if flaw.vendor:
+        #     if flaw.vendor != "N/A":
+        #         labels.append(flaw.vendor)
 
         yellow("Updating " + str(issue))
         # log title
