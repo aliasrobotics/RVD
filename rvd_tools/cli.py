@@ -51,7 +51,7 @@ def list(id, dump):
         issue = importer.repo.get_issue(int(id))
         cyan("Importing from RVD, issue: " + str(issue))
         document_raw = issue.body
-        document_raw = document_raw.replace('```yaml\n','').replace('```', '')
+        document_raw = document_raw.replace('```yaml','').replace('```', '')
         document = yaml.load(document_raw)
         # print(document)
 
@@ -66,7 +66,7 @@ def list(id, dump):
             for issue in issues:
                 cyan("Importing from RVD, issue: " + str(issue))
                 document_raw = issue.body
-                document_raw = document_raw.replace('```yaml\n','').replace('```', '')
+                document_raw = document_raw.replace('```yaml','').replace('```', '')
                 document = yaml.load(document_raw)
                 flaw = Flaw(document)
                 # print(flaw)
