@@ -12,6 +12,7 @@ setup(
         'cerberus',
         'arrow',
         'mergedeep',
+        'python-gitlab',
     ],
     url='https://github.com/aliasrobotics/RVD',
     project_urls={

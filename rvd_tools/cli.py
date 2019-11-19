@@ -17,6 +17,7 @@ from .database.flaw import *
 # from .database.coercer import *
 from .importer.robust import *
 from .importer.markdown import *
+from .importer.gitlab import *
 import sys
 import json
 import os
@@ -42,7 +43,10 @@ Vulnerability Database...")
 @click.argument('id', required=False)
 @click.option('--dump/--no-dump',
               help='Print the tickets.', default=False,)
-def listar(id, dump):
+@click.option('--private/--no-private',
+              help='Print private RVD tickets.', default=False,)
+@click.option('--label', help='Filter flaws by label.')
+def listar(id, dump, private, label):
     """List current flaw tickets"""
     importer = Base()
 
@@ -58,10 +62,25 @@ def listar(id, dump):
         flaw = Flaw(document)
         print(flaw)
     else:
-        cyan("Listing all open issues from RVD...")
-        issues = importer.repo.get_issues(state="open")
-        table = [[issue.number, issue.title] for issue in issues]
-        print(tabulate(table, headers=["ID", "Title"]))
+        cyan("Listing all open flaws from RVD...")
+        # table = [[issue.number, issue.title] for issue in issues_public]
+        table = importer.get_table(label)
+
+        # Refer to https://python-gitlab.readthedocs.io/en/stable/cli.html
+        #  for configuration of the python-gitlab API. RVD assumes that the
+        #  file ~/.python-gitlab.cfg exists
+        if private:
+            cyan("Listing private flaws in ", end="")
+            yellow("yellow", end="")
+            cyan("...")
+            importer_private = GitlabImporter()
+            table_private = importer_private.get_table(label)
+            print(tabulate(table, headers=["ID", "Title"]))
+            yellow(tabulate(table_private))
+        else:
+            print(tabulate(table, headers=["ID", "Title"]))
+
+
         if dump:
             for issue in issues:
                 cyan("Importing from RVD, issue: " + str(issue))
@@ -225,8 +244,13 @@ def fetch(uri, filename, push, all, dump):
                         if flaw.vendor != "N/A":
                             labels.append(flaw.vendor)
                     labels.append(flaw.type)
-                    labels.append(flaw.system)
+                    if flaw.system == "universal_robot":
+                        flaw.vendor = "Universal Robots"
+                        labels.append("vendor: Universal Robots")
+                    else:
+                        labels.append(flaw.system)
                     labels.append('mitigated')
+                    labels.append("robust")
                     issue = pusher.new_ticket(flaw, labels)
                     # Update id
                     flaw.id = issue.number

@@ -43,6 +43,21 @@ class Base:
         self.repo_name = repo
         self.repo = self.g.get_repo(self.username+"/"+self.repo_name)
 
+    def get_table(self, label):
+        """
+        Returns a tabulate ready table
+        """
+        table = []
+        issues_public = self.repo.get_issues(state="open")
+        for issue in issues_public:
+            if label:
+                labels = [l.name for l in issue.labels]
+                if label in labels:
+                    table.append([issue.number, issue.title])
+            else:
+                table.append([issue.number, issue.title])
+        return table
+
     def new_ticket(self, flaw, labels=None):
         """
         Make a new ticket/issue reporting a new flaw at RVD
