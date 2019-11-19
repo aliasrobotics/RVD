@@ -10,46 +10,56 @@ assignees: ''
 Fill in following the example below. If you need further clarifications on any of the items, refer to our [taxonomy](https://github.com/aliasrobotics/RVD/blob/master/docs/TAXONOMY.md) (remove these lines line).
 
 ```yaml
-id: N/A (pending)
-title: Defaults lead to information exposure
-type: weakness
-description: Due to a missconfigufation of the defaults, ROS 2 node information is by default shared in plain across the ROS 2 graph.
-cwe: CWE-200 (Information Exposure)
-cve: None
-keywords: ['defaults', 'ROS 2', 'SROS2', 'information disclosure']
-system: ros2
-vendor: Open Robotics
+id: 0
+title: "CB3.1 3.4.5-100 hard-coded public credentials for controller"
+type: exposure
+description: "Universal Robots Robot Controllers Version CB 3.1, SW Version 3.4.5-100 utilizes hard-coded credentials that may allow an attacker to reset passwords for the controller."
+cwe: "CWE-798 (Use of Hard-coded Credentials)"
+cve: "CVE-2018-10633"
+keywords: [
+    "Universal Robots",
+    "manipulation",
+    "cobot",
+    "CB 3.1",
+    "CB 3.4.5"
+]
+system: "Universal Robots Robot Controllers CB 3.1 3.4.5-100"
+vendor: "Universal Robots"
 severity:
-  rvss_score: None
-  rvss_vector: None
-  severity_description: None
-  cvss_score: None
-  cvss_vector: None
-links: ['https://github.com/ros2/sros2/blob/master/sros2/sros2/policy/defaults/dds/governance.xml#L13']
+  rvss-score: 0
+  rvss-vector: ""
+  severity-description: "critical"
+  cvss-score: 9.8
+  cvss-vector: "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+links: [
+    'https://nvd.nist.gov/vuln/detail/CVE-2018-10633',
+    'https://www.us-cert.gov/ics/advisories/ICSA-18-191-01',
+    'https://gsec.hitb.org/materials/sg2017/COMMSEC%20D1%20-%20Cesar%20Cerrudo%20and%20Lucas%20Apa%20-%20Hacking%20Robots%20Before%20Skynet.pdf',
+]
 flaw:
-  phase: runtime-operation
-  specificity: ROS-specific
-  architectural-location: platform code
-  application: security of middleware communications
-  subsystem: communication:ros2:dds:sros2
-  package: turtlebot/turtlebot/turtlebot_bringup | turtlebot/turtlebot/turtlebot_capabilities
-  languages: XML
-  date-detected: N/A (pending)
-  detected-by: Alias Robotics
-  detected-by-method: runtime detection
-  date-reported: N/A (pending)
-  reported-by: Alias Robotics
+  phase: testing
+  specificity: subject-specific
+  architectural-location: application-specific code
+  application: manipulator, control box
+  subsystem: cognition:manipulation
+  package: N/A
+  languages: N/A
+  date-detected: 2017-03-01
+  detected-by: Lucas Apa, Cesar Cerrudo (IOActive)
+  detected-by-method: testing violation
+  date-reported: 2018-07-10 (00:00)
+  reported-by: Davide Quarta, Mario Polino, Marcello Pogliani  (Trend Micro), and Stefano Zanero from Politecnico di Milano as well as Federico Maggi
   reported-by-relationship: security researcher
-  issue: N/A (pending)
+  issue: https://github.com/aliasrobotics/RVD/issues/102
   reproducibility: always
   trace: N/A
-  reproduction: None (pending)    	
-  reproduction-image: None (pending)    	
+  reproduction: Not disclosed
+  reproduction-image: Not disclosed
 exploitation:
-  description: None (pending)
-  exploitation-image: None (pending)
-  exploitation-vector: None (pending)
+  description: Not disclosed
+  exploitation-image: Not disclosed
+  exploitation-vector: Not disclosed
 mitigation:
-  description: None
-  pull-request: None
-```
+  description: Not disclosed
+  pull-request: Not disclosed
+  ```
