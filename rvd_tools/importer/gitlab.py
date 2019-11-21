@@ -36,6 +36,12 @@ class GitlabImporter(Base):
     def get_table(self, label):
         """
         Returns a tabulate ready table
+        
+        NOTE: Only open issues are considered for this source of information.
+
+        :param label, tuple with labels, could be more than one
+        :param is, status of the issues (could be "open", "closed" or "all")
+        :return list[list]
         """
         table = []
         project = self.repo.projects.get(15400852)

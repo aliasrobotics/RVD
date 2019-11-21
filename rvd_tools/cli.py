@@ -45,8 +45,9 @@ Vulnerability Database...")
               help='Print the tickets.', default=False,)
 @click.option('--private/--no-private',
               help='Print private RVD tickets.', default=False,)
-@click.option('--label', help='Filter flaws by label.')
-def listar(id, dump, private, label):
+@click.option('--label', help='Filter flaws by label.', multiple=True)
+@click.option('--isoption', help='Filter flaws by status (open, closed, all).')
+def listar(id, dump, private, label, isoption):
     """List current flaw tickets"""
     importer = Base()
 
@@ -64,7 +65,7 @@ def listar(id, dump, private, label):
     else:
         cyan("Listing all open flaws from RVD...")
         # table = [[issue.number, issue.title] for issue in issues_public]
-        table = importer.get_table(label)
+        table = importer.get_table(label, isoption)
 
         # Refer to https://python-gitlab.readthedocs.io/en/stable/cli.html
         #  for configuration of the python-gitlab API. RVD assumes that the

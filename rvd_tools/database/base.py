@@ -43,16 +43,25 @@ class Base:
         self.repo_name = repo
         self.repo = self.g.get_repo(self.username+"/"+self.repo_name)
 
-    def get_table(self, label):
+    def get_table(self, label, isoption="open"):
         """
         Returns a tabulate ready table
+
+        :param label, tuple with labels, could be more than one
+        :param is, status of the issues (could be "open", "closed" or "all")
+        :return list[list]
         """
         table = []
-        issues_public = self.repo.get_issues(state="open")
+        issues_public = self.repo.get_issues(state=isoption)
         for issue in issues_public:
+            all_labels = True  # indicates whether all labels are present
             if label:
                 labels = [l.name for l in issue.labels]
-                if label in labels:
+                for l in label:
+                    if l not in labels or "invalid" in labels:
+                        all_labels = False
+                        break
+                if all_labels:
                     table.append([issue.number, issue.title])
             else:
                 table.append([issue.number, issue.title])
