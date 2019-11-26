@@ -33,7 +33,7 @@ class Duplicates(Base):
             {'field': 'description', 'type': 'String'},
             {'field': 'system', 'type': 'String'},
             {'field': 'vendor', 'type': 'String'},
-            # {'field': 'flaw_date-detected', 'type': 'DateTime'},
+            {'field': 'flaw_date-detected', 'type': 'DateTime'},
             # {'field': 'flaw_date-reported', 'type': 'DateTime'},
         ]
 
@@ -82,6 +82,8 @@ class Duplicates(Base):
         with open(self.settings_file, 'wb+') as sf:
             deduper.writeSettings(sf)
 
+        return deduper
+
     def read_data(self):
         """
         Read data from RVD and return in the corresponding dedupe format,
@@ -109,7 +111,7 @@ class Duplicates(Base):
             # print(str(issue.id), end="")
             # yellow(" into a Flaw...")
             # data_d[int(issue.number)] = flaw.document_duplicates()
-            data_d[int(issue.number)] = flaw.document()
+            data_d[int(issue.number)] = flaw.document_duplicates()
         return data_d
 
     def find_duplicates(self, train):
