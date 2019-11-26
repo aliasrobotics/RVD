@@ -13,7 +13,9 @@ setup(
         'arrow',
         'mergedeep',
         'python-gitlab',
-        'tabulate'
+        'tabulate',
+        'numpy>=1.9',
+        'dedupe',
         # 'pycvesearch',  # needs to be installed manually, see https://github.com/cve-search/PyCVESearch
     ],
     url='https://github.com/aliasrobotics/RVD',

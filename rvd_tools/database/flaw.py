@@ -210,7 +210,7 @@ class Flaw:
     def document(self):
         """
         Return the YAML document of the flaw
-        produce on the fly
+        produced on the fly
 
         :returns dict
         """
@@ -274,8 +274,61 @@ class Flaw:
                 # TODO: check that none of the relevant attributes is being modified
                 document[key] = self.additional_fields[key]
 
-
         return document
+
+
+    def document_duplicates(self):
+        """
+        Return the YAML document of the flaw
+        produced on the fly and thought for
+        de-duplication, which implies data should be
+        serializable.
+
+        :returns dict
+        """
+        # Deal with datetime issues
+        document = {
+            'id': self.id,
+            'title': self.title,
+            'type': self.type,
+            'description': self.description,
+            'cwe': self.cwe,
+            'cve': self.cve,
+            'keywords': self.keywords,
+            'system': self.system,
+            'vendor': self.vendor,
+            'severity_rvss-score': self.rvss_score,
+            'severity_rvss-vector': self.rvss_vector,
+            'severity_severity-description': self.severity_description,
+            'severity_cvss-score': self.cvss_score,
+            'severity_cvss-vector': self.cvss_vector,
+            'links': self.links,
+            'flaw_phase': self.phase,
+            'flaw_specificity': self.specificity,
+            'flaw_architectural-location': self.architectural_location,
+            'flaw_application': self.application,
+            'flaw_subsystem': self.subsystem,
+            'flaw_package': self.package,
+            'flaw_languages': self.languages,
+            'flaw_date-detected': str(self.date_detected),
+            'flaw_detected-by': self.detected_by,
+            'flaw_detected-by-method': self.detected_by_method,
+            'flaw_date-reported': str(self.date_reported),
+            'flaw_reported-by': self.reported_by,
+            'flaw_reported-by-relationship': self.reported_by_relationship,
+            'flaw_issue': self.issue,
+            'flaw_reproducibility': self.reproducibility,
+            'flaw_trace': self.trace,
+            'flaw_reproduction': self.reproduction,
+            'flaw_reproduction-image': self.reproduction_image,
+            'exploitation_description': self.description_exploitation,
+            'exploitation_exploitation-image': self.exploitation_image,
+            'exploitation_exploitation-vector': self.exploitation_vector,
+            'mitigation_description': self.description_mitigation,
+            'mitigation_pull-request': self.pull_request,
+        }
+        return document
+
 
     def validate(self):
         """

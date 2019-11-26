@@ -11,6 +11,7 @@ from github import Github
 import os
 from ..utils import red, gray, yellow
 from .flaw import *
+import yaml
 
 
 class Base:
@@ -42,6 +43,49 @@ class Base:
         self.username = username
         self.repo_name = repo
         self.repo = self.g.get_repo(self.username+"/"+self.repo_name)
+
+    def get_issues_filtered(self):
+        """
+        Import all valid issues (open and close), discarding all those
+        with the `invalid` label
+
+        return list(Issues)
+        """
+        issues = self.repo.get_issues(state="all")
+        filtered_issues = []
+        for issue in issues:
+            labels = [l.name for l in issue.labels]
+            # print(labels)
+            if "invalid" in labels:
+                # yellow("discarding...")
+                continue
+            else:
+                filtered_issues.append(issue)
+        return filtered_issues
+
+    def import_issue(self, id):
+        """
+        Imports an issue from RVD and returns a Flaw instance
+
+        :return Flaw
+        """
+        try:
+            issue = self.repo.get_issue(int(id))
+        except TypeError:
+            red("ERROR: something went wrong with the id: " + str(id))
+            yellow("Should be the issue number")
+
+        document_raw = issue.body
+        document_raw = document_raw.replace('```yaml','').replace('```', '')
+        document = yaml.load(document_raw)
+        # print(document)
+
+        flaw = Flaw(document)
+        yellow("Imported issue ", end="")
+        print(str(id), end="")
+        yellow(" into a Flaw...")
+        # gray(flaw)
+        return flaw
 
     def get_table(self, label, isoption="open"):
         """

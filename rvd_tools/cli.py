@@ -15,6 +15,7 @@ from .database.schema import *
 from .database.defaults import *
 from .database.flaw import *
 from .database.summary import *
+from .database.duplicates import *
 # from .database.coercer import *
 from .importer.robust import *
 from .importer.markdown import *
@@ -92,6 +93,19 @@ def listar(id, dump, private, label, isoption):
                 flaw = Flaw(document)
                 # print(flaw)
 
+#  ┌┬┐┬ ┬┌─┐┬  ┬┌─┐┌─┐┌┬┐┌─┐┌─┐
+#   │││ │├─┘│  ││  ├─┤ │ ├┤ └─┐
+#  ─┴┘└─┘┴  ┴─┘┴└─┘┴ ┴ ┴ └─┘└─┘
+@main.command("duplicates")
+@click.option('--train/--no-train',
+              help='Train the classifiers.', default=False,)
+def duplicates(train):
+    """Searches and tags appropriately duplicates in the database"""
+    cyan("Searching for duplicates...")
+    duplicates = Duplicates()
+    duplicates.find_duplicates(train)
+
+
 #  ┌─┐┬  ┬┌─┐
 #  │  └┐┌┘├┤ 
 #  └─┘ └┘ └─┘
@@ -112,12 +126,12 @@ def cve():
     """
     # cve = CVESearch()
     cyan("Searching for CVEs and CPEs with cve-search ...")
-    from pycvesearch import CVESearch
 
 
 @cve.command("browse")
 @click.argument('vendor')
 def browse(vendor):
+    from pycvesearch import CVESearch
     cve = CVESearch()
     cyan("Browsing for vendor: ", end="")
     print(vendor)
@@ -128,6 +142,7 @@ def browse(vendor):
 @click.argument('vendor')
 @click.argument('product')
 def search(vendor, product):
+    from pycvesearch import CVESearch
     cve = CVESearch()
     cyan("Searching for vendor/product: ", end="")
     print(vendor+"/"+product)
@@ -250,7 +265,7 @@ def fetch(uri, filename, push, all, dump):
     """
     cyan("Importing...")
     if not uri:
-        red("A URL is needed when calling import")
+        red("A URI is needed when calling import")
         sys.exit(1)
     else:
         cyan("Creating folder for the import process...")
@@ -354,12 +369,8 @@ def fetch(uri, filename, push, all, dump):
                 issue_number = int(processed_url[-1])
 
                 # Get the issue
-                importer = Base()
-                issue = importer.repo.get_issue(issue_number)
-                cyan("Importing from RVD, issue: " + str(issue))
-
-                # TODO: dump issue.body into a file
-                raise NotImplementedError
+                importer = Base(username=user, repo=repo)
+                flaw = importer.import_issue(issue_number)
 
         # overwrite_issue
         #########
