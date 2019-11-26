@@ -30,7 +30,7 @@ class Duplicates(Base):
         self.fields = [
             {'field': 'title', 'type': 'String'},
             {'field': 'type', 'type': 'String'},
-            {'field': 'description', 'type': 'String'},
+            # {'field': 'description', 'type': 'String'},
             {'field': 'system', 'type': 'String'},
             {'field': 'vendor', 'type': 'String'},
             {'field': 'flaw_date-detected', 'type': 'DateTime'},
@@ -120,8 +120,8 @@ class Duplicates(Base):
         """
         Find duplicates and print them via stdout
         """
-        data_d = self.read_data()
-        data_evaluation = self.read_data(invalid=False)
+        # data_d = self.read_data()
+        data_d = self.read_data(invalid=False)
 
         if train:
             deduper = self.train(data_d)
@@ -136,11 +136,9 @@ class Duplicates(Base):
 
         cyan("Finding the threshold for data...")
         threshold = deduper.threshold(data_d, recall_weight=1)
-        # threshold = deduper.threshold(data_evaluation, recall_weight=1)
 
         cyan('Clustering...')
-        # clustered_dupes = deduper.match(data_d, threshold)
-        clustered_dupes = deduper.match(data_evaluation, threshold)
+        clustered_dupes = deduper.match(data_d, threshold)
 
         cyan('Number of duplicate sets: ' + str(len(clustered_dupes)))
         for set in clustered_dupes:
