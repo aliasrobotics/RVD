@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Alias Robotics SL
+# Alias Robotics S.L.
 # https://aliasrobotics.com
 
 """
@@ -433,7 +433,7 @@ class Summary(Base):
             markdown += "- [`" + str(label) + "`](https://github.com/aliasrobotics/RVD/labels/" + str(label.replace(" ", "%20").replace(":", "%3A")) + ")" + "\n"
         markdown += "</details>\n"
 
-        markdown += "\n"
+        markdown += "\n\n"
         markdown += "For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+-label%3A%22invalid%22+) of reported robot vulnerabilities.\n"
         markdown += "\n"
 
@@ -606,7 +606,11 @@ This repository contains Alias Robotics' Robot Vulnerability and Database (RVD),
 
 Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (RVSS)](https://github.com/aliasrobotics/RVSS). For a discussion regarding terminology and the difference between robot vulnerabilities, robot bugs or robot bugs refer to [Appendix A](#appendix-a-vulnerabilities-bugs-bugs-and-more).
 
-**Alias Robotics supports hacker-powered robot security in close collaboration with original robot manufacturers. By no means we encourage or promote the unauthorized tampering with running robotic systems. This can cause serious human harm and material damages.**
+**Alias Robotics supports and offers robot cybersecurity activities in close collaboration
+with original robot manufacturers. By no means we encourage or promote the unauthorized 
+tampering with running robotic systems. This can cause serious human harm and material 
+damages.**
+
 """
         return header
 
@@ -619,17 +623,18 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
         markdown = "## Concepts"  + "\n"
         markdown += "Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. The meaning of the most relevant labels or statuses is covered below. Refer to the appendices for definitions on the terminology used:"  + "\n"
 
-        markdown += "- [![](https://img.shields.io/badge/open-green.svg?style=flat)](#): Flaw that remains active or under research."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/closed-red.svg?style=flat)](#): Flaw that is inactive. Reasons for inactivity relate to mitigations, duplicates, erroneous reports or similar."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/invalid-red.svg?style=flat)](#): Ticket discarded and removed for the overall count. This label flags invalid or failed reports including tests and related."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/duplicate-cfd3d7.svg?style=flat)](#): Duplicated flaw. Typically, a link to the original ticket is provided."  + "\n"
+        markdown += "- [![](https://img.shields.io/badge/open-green.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues): Flaw that remains active or under research."  + "\n"
+        markdown += "- [![](https://img.shields.io/badge/closed-red.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aclosed): Flaw that is inactive. Reasons for inactivity relate to mitigations, duplicates, erroneous reports or similar."  + "\n"
+        markdown += "- [![](https://img.shields.io/badge/invalid-red.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Ainvalid+): Ticket discarded and removed for the overall count. This label flags invalid or failed reports including tests and related."  + "\n"
+        markdown += "- [![](https://img.shields.io/badge/duplicate-cfd3d7.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Aduplicate+): Duplicated flaw. Might go in combination with `invalid` but if not, typically, a link to the original ticket is provided."  + "\n"
         markdown += "- [![](https://img.shields.io/badge/malformed-440fa8.svg?style=flat)](https://github.com/aliasrobotics/RVD/labels/malformed): Flaw has a malformed syntax. Refer to the templates for basic guidelines on the right syntax."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/mitigated-aaf9a7.svg?style=flat)](#): Mitigated. A link to the corresponding mitigation is required."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/quality-ddb140.svg?style=flat)](#): Indicates that the bug is a quality one instead of a security flaw."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/exposure-ccfc2d.svg?style=flat)](#): Indicates that flaw is an exposure."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/bug-dbf9a2.svg?style=flat)](#): Indicates that flaw is a bug, a security bug can potentially lead to a vulnerability."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/vulnerability-7fe0bb.svg?style=flat)](#): Indicates that flaw is a vulnerability."  + "\n"        
-        markdown += "- [![](https://img.shields.io/badge/severity_critical-ce5b50.svg?style=flat)](#) [![](https://img.shields.io/badge/severity_high-e99695.svg?style=flat)](#) [![](https://img.shields.io/badge/severity_medium-e9cd95.svg?style=flat)](#): Indicates the severity of the vunerability according to RVSS."  + "\n"
+        markdown += "- [![](https://img.shields.io/badge/mitigated-aaf9a7.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Amitigated+): Mitigated. A link to the corresponding mitigation is required."  + "\n"
+        markdown += "- [![](https://img.shields.io/badge/quality-ddb140.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?q=label%3Aquality): Indicates that the bug is a quality one instead of a security flaw."  + "\n"
+        markdown += "- [![](https://img.shields.io/badge/exposure-ccfc2d.svg?style=flat)](https://github.com/aliasrobotics/RVD/labels/exposure): Indicates that flaw is an exposure."  + "\n"
+        markdown += "- [![](https://img.shields.io/badge/bug-dbf9a2.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Abug+): Indicates \
+that flaw is a bug, a security bug can potentially lead to a vulnerability (*Note that this last part corresponds with the definition of a `weakness`, a bug that may have security implications. However, in an attempt to simplify and for coherence with other databases, bug and weakness terms are used interchangeably*)."  + "\n"
+        markdown += "- [![](https://img.shields.io/badge/vulnerability-7fe0bb.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3Avulnerability): Indicates that flaw is a vulnerability."  + "\n"
+        # markdown += "- [![](https://img.shields.io/badge/severity_critical-ce5b50.svg?style=flat)](#) [![](https://img.shields.io/badge/severity_high-e99695.svg?style=flat)](#) [![](https://img.shields.io/badge/severity_medium-e9cd95.svg?style=flat)](#): Indicates the severity of the vunerability according to RVSS."  + "\n"
         markdown += "\n"
         markdown += "## Sponsored and funded projects"  + "\n"
         return markdown
@@ -655,6 +660,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 		- [Research on terminology](#research-on-terminology)
 		- [Discussion and interpretation](#discussion-and-interpretation)
 	- [Appendix B: How does RVD relate to CVE, the CVE List and the NVD?](#appendix-b-how-does-rvd-relate-to-cve-the-cve-list-and-the-nvd)
+    - [Appendix C: Legal disclaimer](#appendix-c-legal-disclaimer)
 
 """
         return header
@@ -824,6 +830,37 @@ When compared to other vulnerability databases, RVD aims to differenciate itself
 - **robot-specific severity scoring**: opposed to CVSS which has strong limitations when applied to robotics, RVD uses RVSS, a robot-specific scoring mechanism.
 
 As part of RVD, we encourage security researchers to file CVE Entries and use official CVE identifiers for their reports and discussions at RVD.
+
+
+### Appendix C: Legal disclaimer
+
+*ACCESS TO THIS DATABASE (OR PORTIONS THEREOF) AND THE USE OF INFORMATION, MATERIALS, PRODUCTS
+OR SERVICES PROVIDED THROUGH THIS WEB SITE (OR PORTIONS THEREOF), IS NOT INTENDED, AND 
+IS PROHIBITED, WHERE SUCH ACCESS OR USE VIOLATES APPLICABLE LAWS OR REGULATIONS.*
+
+*By using or accessing this database you warrant to Alias Robotics S.L. that you will
+not use this Web site for any purpose that is unlawful or that is prohibited. This product
+is provided with "no warranties, either express or implied." The information contained is
+provided "as-is", with "no guarantee of merchantability. In no event will Alias Robotics S.L. 
+be liable for any incidental, indirect, consequential, punitive or special damages of any kind,
+ or any other damages whatsoever, including, without limitation, those resulting from loss of
+ profit, loss of contracts, loss of reputation, goodwill, data, information, income, anticipated
+ savings or business relationships, whether or not Alias Robotics S.L. has been advised of the 
+ possibility of such damage, arising out of or in connection with the use of this database or 
+ any linked websites."*
+ 
+ 
+ These Terms of Use are made under Spanish law and this database is operated from Vitoria-Gasteiz, Spain. 
+ Access to, or use of, this database site or information, materials, products and/or services 
+ on this site may be prohibited by law in certain countries or jurisdictions. You are responsible for 
+ compliance with any applicable laws of the country from which you are accessing this site. 
+ We make no representation that the information contained herein is appropriate or available
+  for use in any location.
+
+You agree that the courts of Vitoria-Gasteiz, Spain shall have exclusive jurisdiction to 
+resolve any controversy or claim of whatever nature arising out of or relating to use of 
+this site. However, we retain the right to bring legal proceedings in any jurisdiction 
+where we believe that infringement of this agreement is taking place or originating.
 
 
 ***
