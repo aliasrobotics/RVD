@@ -15,6 +15,7 @@ import re
 from ..database.base import Base
 import gitlab
 import os
+from ..utils import red
 
 
 class GitlabImporter(Base):
@@ -23,7 +24,7 @@ class GitlabImporter(Base):
         Imports tickets from Gitlab's private repos
         """
         super().__init__(username, repo)
-        
+
         try:
             self.token = os.environ['GITLAB_TOKEN']
         except KeyError:
@@ -36,7 +37,7 @@ class GitlabImporter(Base):
     def get_table(self, label):
         """
         Returns a tabulate ready table
-        
+
         NOTE: Only open issues are considered for this source of information.
 
         :param label, tuple with labels, could be more than one
