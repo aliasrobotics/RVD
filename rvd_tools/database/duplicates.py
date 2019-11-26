@@ -9,7 +9,7 @@ Class that manages de-duplication of RVD flaws
 
 import dedupe
 from .base import *
-from ..utils import gray, red, green, cyan
+from ..utils import gray, red, green, cyan, yellow
 import sys
 import os
 
@@ -84,7 +84,7 @@ class Duplicates(Base):
 
         return deduper
 
-    def read_data(self):
+    def read_data(self, invalid=True):
         """
         Read data from RVD and return in the corresponding dedupe format,
         dictionary of records, where the key is a unique record ID and
@@ -94,9 +94,11 @@ class Duplicates(Base):
         """
         data_d = {}
         gray("Processing tickets from RVD...")
-        issues_all = self.repo.get_issues(state="all")  # using all tickets, including invalid ones for training
-        # issues_all = self.get_issues_filtered()
-        for issue in issues_all[:100]:
+        if invalid:
+            issues_all = self.repo.get_issues(state="all")  # using all tickets, including invalid ones for training
+        else:
+            issues_all = self.get_issues_filtered()
+        for issue in issues_all[]:
             # NOTE: partially re-implementing Base.import_issue()
             # to avoid calling again the Github API
             document_raw = issue.body
@@ -119,6 +121,7 @@ class Duplicates(Base):
         Find duplicates and print them via stdout
         """
         data_d = self.read_data()
+        data_evaluation = self.read_data(invalid=False)
 
         if train:
             deduper = self.train(data_d)
@@ -133,9 +136,16 @@ class Duplicates(Base):
 
         cyan("Finding the threshold for data...")
         threshold = deduper.threshold(data_d, recall_weight=1)
+        # threshold = deduper.threshold(data_evaluation, recall_weight=1)
 
         cyan('Clustering...')
-        clustered_dupes = deduper.match(data_d, threshold)
+        # clustered_dupes = deduper.match(data_d, threshold)
+        clustered_dupes = deduper.match(data_evaluation, threshold)
 
         cyan('Number of duplicate sets: ' + str(len(clustered_dupes)))
-        print(clustered_dupes)
+        for set in clustered_dupes:
+            yellow("Found a duplicated pair...")
+            ids, values = set
+            for id in ids:
+                # print(id)
+                print(self.repo.get_issue(int(id)))
