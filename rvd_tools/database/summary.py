@@ -604,7 +604,9 @@ class Summary(Base):
 
 This repository contains Alias Robotics' Robot Vulnerability and Database (RVD), an attempt to register and record robot vulnerabilities and bugs. 
 
-Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (RVSS)](https://github.com/aliasrobotics/RVSS). For a discussion regarding terminology and the difference between robot vulnerabilities, robot bugs or robot bugs refer to [Appendix A](#appendix-a-vulnerabilities-bugs-bugs-and-more).
+Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (RVSS)](https://github.com/aliasrobotics/RVSS). 
+For a discussion regarding terminology and the difference between robot vulnerabilities, robot weaknesses, robot bugs or others
+refer to [Appendix A](#appendix-a-vulnerabilities-weaknesses-bugs-and-more).
 
 **Alias Robotics supports and offers robot cybersecurity activities in close collaboration
 with original robot manufacturers. By no means we encourage or promote the unauthorized 
@@ -656,7 +658,7 @@ that flaw is a bug, a security bug can potentially lead to a vulnerability (*Not
 - [Contact us or send feedback](#contact-us-or-send-feedback)
 	- [Automatic pings for manufacturers](#automatic-pings-for-manufacturers)
 - [Appendices](#appendices)
-	- [Appendix A: Vulnerabilities, bugs, bugs and more](#appendix-a-vulnerabilities-bugs-bugs-and-more)
+	- [Appendix A: Vulnerabilities, bugs, bugs and more](#appendix-a-vulnerabilities-weaknesses-bugs-and-more)
 		- [Research on terminology](#research-on-terminology)
 		- [Discussion and interpretation](#discussion-and-interpretation)
 	- [Appendix B: How does RVD relate to CVE, the CVE List and the NVD?](#appendix-b-how-does-rvd-relate-to-cve-the-cve-list-and-the-nvd)
@@ -787,13 +789,13 @@ By default, new vulnerabilities are reported to manufacturers and/or open source
 
 ## Appendices
 
-### Appendix A: Vulnerabilities, bugs, bugs and more
+### Appendix A: Vulnerabilities, weaknesses, bugs and more
 #### Research on terminology
 [Commonly](https://en.wikipedia.org/wiki/Software_bug):
 - A **software `bug`** is an error, flaw, failure or fault in a computer program or system that causes it to produce an incorrect or unexpected result, or to behave in unintended ways.
 
 According to [CWE](https://cwe.mitre.org/about/faq.html#A.2):
-- **software `bugs`** are errors (bugs) that can lead to software vulnerabilities.
+- **software `weaknesses`** are errors (bugs) that can lead to software vulnerabilities.
 - **software `vulnerability`** is a mistake in software that can be directly used by a hacker to gain access to a system or network.
 
 Moreover, according to [CVE page](https://cve.mitre.org/about/faqs.html#what_is_vulnerability):
@@ -805,12 +807,19 @@ Moreover, according to [CVE page](https://cve.mitre.org/about/faqs.html#what_is_
 
 #### Discussion and interpretation
 
-From the definitions above, it seems reasonable to associate use interchangeably `bugs` and `flaws` when referring to security issues. In addition, the word `bug` seems applicable to any flaw that might turn into a `vulnerability` however it must be noted that (from the text above) a `vulnerability` "must be exploited"). Based on this a clear difference can be established classifiying flaws with potential to be exploitable as `bugs` and flaws exploitable as `vulnerabilities`. Ortogonal to this appear `exposures` which refer to misconfigurations that allows attackers to establish an attack vector in a system.
+From the definitions above, it seems reasonable to associate use interchangeably `bugs` and `flaws` when referring to software issues. 
+In addition, the word `weakness` seems applicable to any flaw that might turn into a `vulnerability` however it must be noted that 
+(from the text above) a `vulnerability` "must be exploited"). Based on this a clear difference can be established classifiying 
+flaws with no potential to be exploitable as `bugs` and flaws potentially exploitable as `vulnerabilities`. Ortogonal to this appear 
+`exposures` which refer to misconfigurations that allows attackers to establish an attack vector in a system.
+
+Beyond pure logic, an additional piece of information that comes out of researching other security databases 
+is that most security-oriented databases do not distinguish between bugs (general bugs) and weaknesses (security bugs).
 
 Based in all of the above, we interpret and make the following assumptions for RVD:
-- unless specified, all `flaws` are "security flaws" (an alternative could be a quality bug)
-- `flaw` and `bug` refer to the same thing and can be used interchangeably
-- `bug` is a flaw with potential to be exploited (but unconfirmed its exploitability)
+- unless specified, all `flaws` are "security flaws" (an alternative could be a quality flaw)
+- `flaw`, `bug` and `weakness` refer to the same thing and can be used interchangeably
+- a `bug` is a flaw with potential to be exploited (but unconfirmed exploitability) unless specified with the `quality` label in which case, refers to a general non security-related bug.
 - `vulnerability` is a bug that is exploitable.
 - `exposure` is a configuration error or mistake in software that *without leading to exploitation*, leaks relevant information that empowers an attacker.
 
