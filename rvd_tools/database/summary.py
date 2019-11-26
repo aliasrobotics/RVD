@@ -837,7 +837,7 @@ RVD does **not** aim to replace CVE but to <ins>complement it for the domain of 
 When compared to other vulnerability databases, RVD aims to differenciate itself by focusing on the following:
 - **robot specific**: RVD aims to focus and capture robot-specific flaws. If a flaw does not end-up applying to a robot or a robot component then it should not be recorded here.
 - **community-oriented**: while RVD is originally sponsored by Alias Robotics, it aims to become community-managed and contributed.
-- **facilitates reproducing robot flaws**: Working with robots is very time consuming. Mitigating a vulnerability or a bug requires one to first reproduce the flaw. This can be extremely time consuming. Not so much providing the fix itself but ensuring that your environment is appropriate. At RVD, each flaw entry should aim to include a row named as `Module URL`. This should correspond with the link to a Docker image that should allow anyone reproduce the flaw easily.
+- **facilitates reproducing robot flaws**: Working with robots is very time consuming. Mitigating a vulnerability or a bug requires one to first reproduce the flaw. This can be extremely time consuming. Not so much providing the fix itself but ensuring that your environment is appropriate. At RVD, each flaw entry should aim to include a field named as `reproduction-image`. This should correspond with the link to a Docker image that should allow anyone reproduce the flaw easily.
 - **robot-specific severity scoring**: opposed to CVSS which has strong limitations when applied to robotics, RVD uses RVSS, a robot-specific scoring mechanism.
 
 As part of RVD, we encourage security researchers to file CVE Entries and use official CVE identifiers for their reports and discussions at RVD.
