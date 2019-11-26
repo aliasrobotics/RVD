@@ -27,7 +27,6 @@ import pprint
 from datetime import datetime
 import arrow
 from tabulate import tabulate
-from pycvesearch import CVESearch
 
 #  ┌┬┐┌─┐┬┌┐┌
 #  │││├─┤││││
@@ -113,6 +112,7 @@ def cve():
     """
     # cve = CVESearch()
     cyan("Searching for CVEs and CPEs with cve-search ...")
+    from pycvesearch import CVESearch
 
 
 @cve.command("browse")
