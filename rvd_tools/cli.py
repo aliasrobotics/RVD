@@ -205,8 +205,9 @@ def summary(update):
     """Produce a Markdown summary output of RVD"""
     cyan("Summarizing RVD's content...")
     summary = Summary()
-    # print(summary.generate_readme())  # only debug
-    summary.replace_readme()
+    print(summary.generate_readme())  # only debug
+    if update:
+        summary.replace_readme()
 
 #  ┌─┐┌┬┐┌─┐┌┬┐┬┌─┐┌┬┐┬┌─┐┌─┐
 #  └─┐ │ ├─┤ │ │└─┐ │ ││  └─┐

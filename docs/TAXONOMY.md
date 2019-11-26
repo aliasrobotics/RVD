@@ -16,7 +16,7 @@ The following sections reason about how a to systematically capture and record a
 - **id**: Number of the issue/ticket in RVD.
 - **title**:
 	Concise textual one-line summary of the bug intended for domain non-experts (typically 10 words or 65 chars max).
-- **type**: weakness | vulnerability | exposure. One among them.
+- **type**: bug | weakness | vulnerability | exposure. One among them. `Weakness` is discouraged in future tickets and `bug` should be used instead.
 - **description**:
 	Textual description of the bug (typically 5-10 lines). Try to write this so that a domain non-expert software developer will be able to understand what this bug is about. This often involves writing about the *cause* of the bug (what was the underlying problem and what needed fixing) as well as the *effect* of the bug (how did the bug manifest itself), including whatever else is relevant in order to have a rough idea of the bug. (Flow Scalars (plain) are used to reflect the description.)
 

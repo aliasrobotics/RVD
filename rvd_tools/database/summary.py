@@ -638,6 +638,8 @@ that flaw is a bug, a security bug can potentially lead to a vulnerability (*Not
         markdown += "- [![](https://img.shields.io/badge/vulnerability-7fe0bb.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3Avulnerability): Indicates that flaw is a vulnerability."  + "\n"
         # markdown += "- [![](https://img.shields.io/badge/severity_critical-ce5b50.svg?style=flat)](#) [![](https://img.shields.io/badge/severity_high-e99695.svg?style=flat)](#) [![](https://img.shields.io/badge/severity_medium-e9cd95.svg?style=flat)](#): Indicates the severity of the vunerability according to RVSS."  + "\n"
         markdown += "\n"
+        markdown += "For more including the categorization used for flaws refer to RVD's [taxonomy](docs/TAXONOMY.md)" + "\n"
+        markdown += "\n"
         markdown += "## Sponsored and funded projects"  + "\n"
         return markdown
 

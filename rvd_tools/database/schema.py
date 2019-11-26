@@ -30,9 +30,9 @@ SCHEMA = {
     'type': {
         'required': True,
         'type': 'string',
-        'allowed': ['weakness', 'vulnerability', 'exposure'],
+        'allowed': ['bug', 'weakness', 'vulnerability', 'exposure'],
         'default_setter':
-            lambda doc: 'weakness'
+            lambda doc: 'bug'
     },
     'description': {
         'required': True,
