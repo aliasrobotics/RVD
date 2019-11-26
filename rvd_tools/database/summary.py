@@ -348,11 +348,11 @@ class Summary(Base):
         markdown += "|-------|---------|--------|-----------|" + "\n"
         markdown += "| Vulnerabilities | [![label: vulns_open][~vulns_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+) | \
 [![label: vulns_closed][~vulns_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+) | \
-[![label: vulns][~vulns]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+) |" + "\n"
+[![label: vulns][~vulns]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Avulnerability+-label%3A%22invalid%22+) |" + "\n"
 
         markdown += "| Bugs | [![label: bugs_open][~bugs_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+)  | \
 [![label: bugs_closed][~bugs_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+label%3Abug+-label%3A%22invalid%22) | \
-[![label: bugs][~bugs]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+) |" + "\n"
+[![label: bugs][~bugs]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Abug+-label%3A%22invalid%22+) |" + "\n"
 
         markdown += "| Others |  [![label: others_open][~others_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+) | \
 [![label: others_closed][~others_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+) | \
@@ -457,11 +457,11 @@ class Summary(Base):
         markdown += "|-------|---------|--------|-----------|" + "\n"
         markdown += "| `ROS 2` Vulnerabilities | [![label: vulns_open_ros2][~vulns_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: vulns_closed_ros2][~vulns_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
-[![label: vulns_ros2][~vulns_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |" + "\n"
+[![label: vulns_ros2][~vulns_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |" + "\n"
 
         markdown += "| `ROS 2` Bugs | [![label: bugs_open_ros2][~bugs_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: bugs_closed_ros2][~bugs_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+label%3Abug+-label%3A%22invalid%22+label%3A%22robot+component%3A+ROS2%22+) | \
-[![label: bugs_ros2][~bugs_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |" + "\n"
+[![label: bugs_ros2][~bugs_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |" + "\n"
 
         markdown += "| `ROS 2` Others | [![label: others_open_ros2][~others_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: others_closed_ros2][~others_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+)  | \
@@ -631,7 +631,7 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
         markdown += "- [![](https://img.shields.io/badge/vulnerability-7fe0bb.svg?style=flat)](#): Indicates that flaw is a vulnerability."  + "\n"        
         markdown += "- [![](https://img.shields.io/badge/severity_critical-ce5b50.svg?style=flat)](#) [![](https://img.shields.io/badge/severity_high-e99695.svg?style=flat)](#) [![](https://img.shields.io/badge/severity_medium-e9cd95.svg?style=flat)](#): Indicates the severity of the vunerability according to RVSS."  + "\n"
         markdown += "\n"
-        markdown = "## Sponsored and funded projects"  + "\n"
+        markdown += "## Sponsored and funded projects"  + "\n"
         return markdown
 
     @staticmethod
