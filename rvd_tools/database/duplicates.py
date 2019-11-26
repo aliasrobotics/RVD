@@ -98,7 +98,7 @@ class Duplicates(Base):
             issues_all = self.repo.get_issues(state="all")  # using all tickets, including invalid ones for training
         else:
             issues_all = self.get_issues_filtered()
-        for issue in issues_all[]:
+        for issue in issues_all:
             # NOTE: partially re-implementing Base.import_issue()
             # to avoid calling again the Github API
             document_raw = issue.body
