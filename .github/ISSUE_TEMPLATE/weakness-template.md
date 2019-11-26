@@ -2,7 +2,7 @@
 name: Weakness report template
 about: Template to report a weakness in RVD. See https://bit.ly/2JnamaD if in doubt
 title: ''
-labels: weakness
+labels: weakness, triage
 assignees: ''
 
 ---

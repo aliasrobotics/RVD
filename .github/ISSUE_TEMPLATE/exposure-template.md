@@ -2,7 +2,7 @@
 name: Exposure report template
 about: Template to report a exposure in RVD. See https://bit.ly/2JnamaD if in doubt
 title: ''
-labels: exposure
+labels: exposure, triage
 assignees: ''
 
 ---

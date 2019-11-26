@@ -14,6 +14,7 @@ from .utils import red, cyan, green, yellow
 from .database.schema import *
 from .database.defaults import *
 from .database.flaw import *
+from .database.summary import *
 # from .database.coercer import *
 from .importer.robust import *
 from .importer.markdown import *
@@ -26,6 +27,7 @@ import pprint
 from datetime import datetime
 import arrow
 from tabulate import tabulate
+from pycvesearch import CVESearch
 
 #  ┌┬┐┌─┐┬┌┐┌
 #  │││├─┤││││
@@ -91,6 +93,47 @@ def listar(id, dump, private, label, isoption):
                 flaw = Flaw(document)
                 # print(flaw)
 
+#  ┌─┐┬  ┬┌─┐
+#  │  └┐┌┘├┤ 
+#  └─┘ └┘ └─┘
+@main.group()
+# @main.command("cve")
+def cve():
+    """
+    Search CVEs and CPEs, import them.
+
+    Search in CVE (Common Vulnerabilities and Exposures) and
+    CPE (Common Platform Enumeration)and import them to RVD.
+
+    Makes use of the following:
+    - https://github.com/cve-search/PyCVESearch
+    - (indirectly) https://github.com/cve-search/cve-search
+
+    NOTE: This is the base cve primitive, other commands build from this one
+    """
+    # cve = CVESearch()
+    cyan("Searching for CVEs and CPEs with cve-search ...")
+
+
+@cve.command("browse")
+@click.argument('vendor')
+def browse(vendor):
+    cve = CVESearch()
+    cyan("Browsing for vendor: ", end="")
+    print(vendor)
+    pprint.pprint(cve.browse(vendor))
+
+
+@cve.command("search")
+@click.argument('vendor')
+@click.argument('product')
+def search(vendor, product):
+    cve = CVESearch()
+    cyan("Searching for vendor/product: ", end="")
+    print(vendor+"/"+product)
+    pprint.pprint(cve.search(vendor+"/"+product))
+
+
 #  ┬  ┬┌─┐┬  ┬┌┬┐┌─┐┌┬┐┌─┐
 #  └┐┌┘├─┤│  │ ││├─┤ │ ├┤ 
 #   └┘ ┴ ┴┴─┘┴─┴┘┴ ┴ ┴ └─┘
@@ -151,6 +194,28 @@ def validate_file(filename, dump=False):
         # print(flaw)
         # print(flaw.yml())
     return validated, v.document
+
+#  ┌─┐┬ ┬┌┬┐┌┬┐┌─┐┬─┐┬ ┬
+#  └─┐│ │││││││├─┤├┬┘└┬┘
+#  └─┘└─┘┴ ┴┴ ┴┴ ┴┴└─ ┴ 
+@main.command("summary")
+@click.option('--update/--no-update',
+              help="Update the repo's README'nd file.", default=False,)
+def summary(update):
+    """Produce a Markdown summary output of RVD"""
+    cyan("Summarizing RVD's content...")
+    summary = Summary()
+    # print(summary.generate_readme())  # only debug
+    summary.replace_readme()
+
+#  ┌─┐┌┬┐┌─┐┌┬┐┬┌─┐┌┬┐┬┌─┐┌─┐
+#  └─┐ │ ├─┤ │ │└─┐ │ ││  └─┐
+#  └─┘ ┴ ┴ ┴ ┴ ┴└─┘ ┴ ┴└─┘└─┘
+@main.command("statistics")
+def statistics():
+    """Produce a series of statistics and plots"""
+    cyan("Producing statistics of RVD...")
+
 
 #  ┬┌┬┐┌─┐┌─┐┬─┐┌┬┐
 #  ││││├─┘│ │├┬┘ │ 
