@@ -56,6 +56,24 @@ class Summary(Base):
         self.vulns_medium = 0
         self.vulns_low = 0
 
+        # ROS variables
+        self.nbugs_ros = 0
+        self.nbugs_open_ros = 0
+        self.nbugs_closed_ros = 0
+
+        self.nvulnerabilities_ros = 0
+        self.nvulnerabilities_open_ros = 0
+        self.nvulnerabilities_closed_ros = 0
+
+        self.nothers_ros = 0
+        self.nothers_open_ros = 0
+        self.nothers_closed_ros = 0
+
+        self.vulns_critical_ros = 0
+        self.vulns_high_ros = 0
+        self.vulns_medium_ros = 0
+        self.vulns_low_ros = 0
+
         # ROS 2 variables
         self.nbugs_ros2 = 0
         self.nbugs_open_ros2 = 0
@@ -74,7 +92,7 @@ class Summary(Base):
         self.vulns_medium_ros2 = 0
         self.vulns_low_ros2 = 0
 
-        self.processed_packages = {}  # dict containg "package_name" as keys and "number of issues" as content
+        self.processed_packages_ros2 = {}  # dict containg "package_name" as keys and "number of issues" as content
 
         # MoveIt 2 variables
         self.nbugs_moveit2 = 0
@@ -146,6 +164,8 @@ class Summary(Base):
                 continue
             if "bug" in l_set:
                 self.nbugs += 1
+                if 'robot component: ROS' in l_set:
+                    self.nbugs_ros += 1
                 if 'robot component: ROS2' in l_set:
                     self.nbugs_ros2 += 1
                 if 'robot component: moveit2' in l_set:
@@ -156,6 +176,8 @@ class Summary(Base):
                 continue
             if "bug" in l_set:
                 self.nbugs_open += 1
+                if 'robot component: ROS' in l_set:
+                    self.nbugs_open_ros += 1
                 if 'robot component: ROS2' in l_set:
                     self.nbugs_open_ros2 += 1
                 if 'robot component: moveit2' in l_set:
@@ -166,6 +188,8 @@ class Summary(Base):
                 continue
             if "bug" in l_set:
                 self.nbugs_closed += 1
+                if 'robot component: ROS' in l_set:
+                    self.nbugs_closed_ros += 1
                 if 'robot component: ROS2' in l_set:
                     self.nbugs_closed_ros2 += 1
                 if 'robot component: moveit2' in l_set:
@@ -177,6 +201,8 @@ class Summary(Base):
                 continue
             if "vulnerability" in l_set:
                 self.nvulnerabilities += 1
+                if 'robot component: ROS' in l_set:
+                    self.nvulnerabilities_ros += 1
                 if 'robot component: ROS2' in l_set:
                     self.nvulnerabilities_ros2 += 1
                 if 'robot component: moveit2' in l_set:
@@ -187,6 +213,8 @@ class Summary(Base):
                 continue
             if "vulnerability" in l_set:
                 self.nvulnerabilities_open += 1
+                if 'robot component: ROS' in l_set:
+                    self.nvulnerabilities_open_ros += 1
                 if 'robot component: ROS2' in l_set:
                     self.nvulnerabilities_open_ros2 += 1
                 if 'robot component: moveit2' in l_set:
@@ -197,6 +225,8 @@ class Summary(Base):
                 continue
             if "vulnerability" in l_set:
                 self.nvulnerabilities_closed += 1
+                if 'robot component: ROS' in l_set:
+                    self.nvulnerabilities_closed_ros += 1
                 if 'robot component: ROS2' in l_set:
                     self.nvulnerabilities_closed_ros2 += 1
                 if 'robot component: moveit2' in l_set:
@@ -209,6 +239,8 @@ class Summary(Base):
             if "vulnerability" not in l_set:
                 if "bug" not in l_set:
                     self.nothers += 1
+                    if 'robot component: ROS' in l_set:
+                        self.nothers_ros += 1
                     if 'robot component: ROS2' in l_set:
                         self.nothers_ros2 += 1
                     if 'robot component: moveit2' in l_set:
@@ -220,6 +252,8 @@ class Summary(Base):
             if "vulnerability" not in l_set:
                 if "bug" not in l_set:
                     self.nothers_open += 1
+                    if 'robot component: ROS' in l_set:
+                        self.nothers_open_ros += 1
                     if 'robot component: ROS2' in l_set:
                         self.nothers_open_ros2 += 1
                     if 'robot component: moveit2' in l_set:
@@ -231,6 +265,8 @@ class Summary(Base):
             if "vulnerability" not in l_set:
                 if "bug" not in l_set:
                     self.nothers_closed += 1
+                    if 'robot component: ROS' in l_set:
+                        self.nothers_closed_ros += 1
                     if 'robot component: ROS2' in l_set:
                         self.nothers_closed_ros2 += 1
                     if 'robot component: moveit2' in l_set:
@@ -243,6 +279,8 @@ class Summary(Base):
             if "vulnerability" in l_set:
                 if "severity: critical" in l_set:
                     self.vulns_critical += 1
+                    if 'robot component: ROS' in l_set:
+                        self.vulns_critical_ros += 1
                     if 'robot component: ROS2' in l_set:
                         self.vulns_critical_ros2 += 1
                     if 'robot component: moveit2' in l_set:
@@ -254,6 +292,8 @@ class Summary(Base):
             if "vulnerability" in l_set:
                 if "severity: high" in l_set:
                     self.vulns_high += 1
+                    if 'robot component: ROS' in l_set:
+                        self.vulns_high_ros += 1
                     if 'robot component: ROS2' in l_set:
                         self.vulns_high_ros2 += 1
                     if 'robot component: moveit2' in l_set:
@@ -265,6 +305,8 @@ class Summary(Base):
             if "vulnerability" in l_set:
                 if "severity: medium" in l_set:
                     self.vulns_medium += 1
+                    if 'robot component: ROS' in l_set:
+                        self.vulns_medium_ros += 1
                     if 'robot component: ROS2' in l_set:
                         self.vulns_medium_ros2 += 1
                     if 'robot component: moveit2' in l_set:
@@ -276,37 +318,12 @@ class Summary(Base):
             if "vulnerability" in l_set:
                 if "severity: low" in l_set:
                     self.vulns_low += 1
+                    if 'robot component: ROS' in l_set:
+                        self.vulns_low_ros += 1
                     if 'robot component: ROS2' in l_set:
                         self.vulns_low_ros2 += 1
                     if 'robot component: moveit2' in l_set:
                         self.vulns_low_moveit2 += 1
-
-        #######################
-        # ROS-specific packages
-        #######################
-        # Process per package issue
-        # NOTE: only open issues are taken into account
-        packages = []
-        for l_set in self.labels_open:
-            if 'invalid' in l_set:
-                continue
-            if 'robot component: ROS2' in l_set:
-                filtered_package = [i for i in l_set if "package: " in i]
-                if filtered_package != []:
-                    package = filtered_package[0].replace("package: ","")
-                    # print("package: "+package)
-                    packages.append(package)
-                else:
-                    yellow("l_set that has ROS2 component includes NO package. Current labels: ", end="")
-                    print(str(l_set))
-
-        # now process all the packages
-        # self.processed_packages is a dict containg "package_name" as keys and "number of issues" as content        
-        for p in packages:
-            if p in self.processed_packages.keys():
-                self.processed_packages[p] += 1
-            else:
-                self.processed_packages[p] = 1
 
         # Obtain the number of tickets with "malformed" label
         for l_set in self.labels_open:
@@ -327,10 +344,10 @@ class Summary(Base):
         """
         markdown = ""
         # add the shields
-        markdown += "[![](https://img.shields.io/badge/vulnerabilities-"+str(self.self.nvulnerabilities_open)+"-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+label%3Avulnerability+)"  + "\n"
+        markdown += "[![](https://img.shields.io/badge/vulnerabilities-"+str(self.nvulnerabilities_open)+"-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+label%3Avulnerability+)"  + "\n"
         markdown += "[![](https://img.shields.io/badge/bugs-"+str(self.nbugs_open)+"-f7b6b2.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+label%3Abug+)"  + "\n"
         markdown += "[![](https://img.shields.io/badge/malformed-"+str(self.malformed)+"-440fa8.svg)](https://github.com/aliasrobotics/RVD/labels/malformed)"  + "\n"
-        markdown += "[![](https://img.shields.io/badge/malformed-"+str(self.triage)+"-ffe89e.svg)](https://github.com/aliasrobotics/RVD/labels/triage)"  + "\n"
+        markdown += "[![](https://img.shields.io/badge/triage-"+str(self.triage)+"-ffe89e.svg)](https://github.com/aliasrobotics/RVD/labels/triage)"  + "\n"
         # markdown += "[![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed) "  # it can also be written this way, spliting it
         markdown += "\n"
 
@@ -446,6 +463,93 @@ class Summary(Base):
 
         return markdown
 
+    def to_markdown_ros(self):
+        """
+        Produces a markdown output for ROS (1)
+
+        Inspired by
+        - https://github.com/isaacs/github/issues/305 and
+        - https://shields.io/
+
+        :return markdown string
+        """
+        markdown = ""
+        markdown += "### ROS" + "\n"
+        markdown += "*Last updated " + str(strftime("%a, %d %b %Y %H:%M:%S", gmtime())) + " GMT*\n"
+        markdown += "" + "\n"
+        markdown += "|       | Open      | Closed  |    All |" + "\n"
+        markdown += "|-------|---------|--------|-----------|" + "\n"
+        markdown += "| `ROS` Vulnerabilities | [![label: vulns_open_ros][~vulns_open_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+) | \
+[![label: vulns_closed_ros][~vulns_closed_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+) | \
+[![label: vulns_ros][~vulns_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+) |" + "\n"
+
+        markdown += "| `ROS` Bugs | [![label: bugs_open_ros][~bugs_open_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+) | \
+[![label: bugs_closed_ros][~bugs_closed_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+label%3Abug+-label%3A%22invalid%22+label%3A%22robot+component%3A+ROS%22+) | \
+[![label: bugs_ros][~bugs_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+) |" + "\n"
+
+        markdown += "| `ROS` Others | [![label: others_open_ros][~others_open_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+) | \
+[![label: others_closed_ros][~others_closed_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+)  | \
+[![label: others_ros][~others_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+) |" + "\n"
+        markdown += "\n"
+        markdown += "\n"
+
+        # Summary of vulnerabilities (only open issues considered)
+        markdown += "|       |       |           |          |          |" + "\n"
+        markdown += "|-------|---------|---------|----------|----------|" + "\n"
+        markdown += "| `ROS` Vulnerabilities (open) | [![label: vulns_critical_ros][~vulns_critical_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+critical%22+label%3A%22robot%20component%3A%20ROS%22+) | \
+[![label: vulns_high_ros][~vulns_high_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+high%22+label%3A%22robot%20component%3A%20ROS%22+) | \
+[![label: vulns_medium_ros][~vulns_medium_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+medium%22+label%3A%22robot%20component%3A%20ROS%22+) | \
+[![label: vulns_low_ros][~vulns_low_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+low%22+label%3A%22robot%20component%3A%20ROS%22+) |" + "\n"
+        markdown += "\n"
+        markdown += "\n"
+
+        # ros labels
+        markdown += "[~vulns_ros]: https://img.shields.io/badge/ros_vulnerabilities-" + str(
+            self.nvulnerabilities_ros) + "-7fe0bb.svg" + "\n"
+        markdown += "[~vulns_open_ros]: https://img.shields.io/badge/ros_vulnerabilities-" + str(
+            self.nvulnerabilities_open_ros) + "-red.svg" + "\n"
+        markdown += "[~vulns_closed_ros]: https://img.shields.io/badge/ros_vulnerabilities-" + str(
+            self.nvulnerabilities_closed_ros) + "-green.svg" + "\n"
+        markdown += "[~bugs_ros]: https://img.shields.io/badge/ros_bugs-" + str(
+            self.nbugs_ros) + "-dbf9a2.svg" + "\n"
+        markdown += "[~bugs_open_ros]: https://img.shields.io/badge/ros_bugs-" + str(
+            self.nbugs_open_ros) + "-red.svg" + "\n"
+        markdown += "[~bugs_closed_ros]: https://img.shields.io/badge/ros_bugs-" + str(
+            self.nbugs_closed_ros) + "-green.svg" + "\n"
+        markdown += "[~others_ros]: https://img.shields.io/badge/ros_others-" + str(
+            self.nothers_ros) + "-dbf9a2.svg" + "\n"
+        markdown += "[~others_open_ros]: https://img.shields.io/badge/ros_others-" + str(
+            self.nothers_open_ros) + "-red.svg" + "\n"
+        markdown += "[~others_closed_ros]: https://img.shields.io/badge/ros_others-" + str(
+            self.nothers_closed_ros) + "-green.svg" + "\n"
+        markdown += "[~vulns_critical_ros]: https://img.shields.io/badge/ros_vuln.critical-" + str(
+            self.vulns_critical_ros) + "-ce5b50.svg" + "\n"
+        markdown += "[~vulns_high_ros]: https://img.shields.io/badge/ros_vuln.high-" + str(
+            self.vulns_high_ros) + "-e99695.svg" + "\n"
+        markdown += "[~vulns_medium_ros]: https://img.shields.io/badge/ros_vuln.medium-" + str(
+            self.vulns_medium_ros) + "-e9cd95.svg" + "\n"
+        markdown += "[~vulns_low_ros]: https://img.shields.io/badge/ros_vuln.low-" + str(
+            self.vulns_low_ros) + "-e9e895.svg" + "\n"
+
+        # get some space for readability
+        markdown += "\n\n"
+
+        # markdown += "#### ROS 2 flaws by package (only `open` ones)" + "\n"
+        # for key in self.processed_packages.keys():
+        #     markdown += "[![label: ros2_package_"+str(key)+"][~ros2_package_"+str(key)+"]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+"+str(key)+"%22)"  + "\n"
+        #
+        # # get some space for readability
+        # markdown += "\n\n"
+        #
+        # # Now add the corresponding source code for the labels
+        # for key in self.processed_packages.keys():
+        #     markdown += "[~ros2_package_"+str(key)+"]: https://img.shields.io/badge/"+str(key.replace("-","_"))+"-" + str(
+        #         self.processed_packages[key]) + "-red.svg" + "\n"
+        #
+        # # get some space for readability
+        # markdown += "\n\n"
+        return markdown
+
     def to_markdown_ros2(self):
         """
         Produces a markdown output for ROS 2
@@ -517,17 +621,45 @@ class Summary(Base):
         # get some space for readability
         markdown += "\n\n"
 
+        #######################
+        # ROS 2-specific packages
+        #######################
+        # Process per package issue
+        # NOTE: only open issues are taken into account
+        packages = []
+        for l_set in self.labels_open:
+            if 'invalid' in l_set:
+                continue
+            if 'robot component: ROS2' in l_set:
+                filtered_package = [i for i in l_set if "package: " in i]
+                if filtered_package != []:
+                    package = filtered_package[0].replace("package: ","")
+                    # print("package: "+package)
+                    packages.append(package)
+                else:
+                    yellow("l_set that has ROS2 component includes NO package. Current labels: ", end="")
+                    print(str(l_set))
+
+        # now process all the packages
+        # self.processed_packages_ros2 is a dict containg "package_name" as keys and "number of issues" as content
+        for p in packages:
+            if p in self.processed_packages_ros2.keys():
+                self.processed_packages_ros2[p] += 1
+            else:
+                self.processed_packages_ros2[p] = 1
+
+
         markdown += "#### ROS 2 flaws by package (only `open` ones)" + "\n"
-        for key in self.processed_packages.keys():
+        for key in self.processed_packages_ros2.keys():
             markdown += "[![label: ros2_package_"+str(key)+"][~ros2_package_"+str(key)+"]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+"+str(key)+"%22)"  + "\n"
 
         # get some space for readability
         markdown += "\n\n"
 
         # Now add the corresponding source code for the labels
-        for key in self.processed_packages.keys():
+        for key in self.processed_packages_ros2.keys():
             markdown += "[~ros2_package_"+str(key)+"]: https://img.shields.io/badge/"+str(key.replace("-","_"))+"-" + str(
-                self.processed_packages[key]) + "-red.svg" + "\n"
+                self.processed_packages_ros2[key]) + "-red.svg" + "\n"
 
         # get some space for readability
         markdown += "\n\n"
@@ -929,6 +1061,7 @@ research and innovation programme under the project ROSIN with the grant agreeme
         readme += self.concepts_to_markdown()
 
         # Sponsored projects, ROS, ROS 2 flaw numbers
+        readme += self.to_markdown_ros()
         readme += self.to_markdown_ros2()
 
         # Rest of it
