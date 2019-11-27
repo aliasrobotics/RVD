@@ -48,9 +48,17 @@ def magenta(text, end="\n"):
     print('\033[35m', text, '\033[0m', sep='', end = end)
 
 
+def inline_magenta(text):
+    return '\033[35m%s\033[0m' % text
+
+
 def cyan(text, end="\n"):
     print('\033[36m', text, '\033[0m', sep='', end = end)
 
 
 def gray(text, end="\n"):
     print('\033[90m', text, '\033[0m', sep='', end = end)
+
+
+def inline_gray(text):
+    return '\033[90m%s\033[0m' % text

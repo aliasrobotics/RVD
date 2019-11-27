@@ -28,8 +28,8 @@ class Duplicates(Base):
 
         # Define the fields dedupe will pay attention to
         self.fields = [
-            # {'field': 'title', 'type': 'String', 'crf': True},
-            {'field': 'title', 'type': 'String'},
+            {'field': 'title', 'type': 'String', 'crf': True},
+            # {'field': 'title', 'type': 'String'},
             {'field': 'type', 'type': 'String'},
             {'field': 'cwe', 'type': 'String'},
             {'field': 'description', 'type': 'String', 'has missing': True},
@@ -126,7 +126,7 @@ class Duplicates(Base):
                 continue
         return data_d
 
-    def find_duplicates(self, train):
+    def find_duplicates(self, train, push):
         """
         Find duplicates and print them via stdout
         """
@@ -166,8 +166,8 @@ class Duplicates(Base):
                 else:
                     # Indicate that this issue is duplicated
                     yellow("Marking " + str(id) + " as duplicate, referencing to: " + str(primary_issue))
-                    duplicate_text = "- <ins>DUPLICATE</ins>: Tagging this ticket as duplicate. Referencing to  #" + str(primary_issue.number) + "\n"
-                    issue.create_comment(duplicate_text)
-
-                    # labeling
-                    issue.add_to_labels("duplicate")
+                    if push:
+                        duplicate_text = "- <ins>DUPLICATE</ins>: Tagging this ticket as duplicate. Referencing to  #" + str(primary_issue.number) + "\n"
+                        issue.create_comment(duplicate_text)
+                        # labeling
+                        issue.add_to_labels("duplicate")

@@ -10,7 +10,7 @@ Entry point for the rvd CLI tool.
 import click
 import yaml
 from cerberus import Validator
-from .utils import red, cyan, green, yellow
+from .utils import red, cyan, green, yellow, inline_magenta, inline_gray
 from .database.schema import *
 from .database.defaults import *
 from .database.flaw import *
@@ -28,6 +28,8 @@ import pprint
 from datetime import datetime
 import arrow
 from tabulate import tabulate
+import qprompt
+import ast
 
 #  ┌┬┐┌─┐┬┌┐┌
 #  │││├─┤││││
@@ -83,7 +85,6 @@ def listar(id, dump, private, label, isoption):
         else:
             print(tabulate(table, headers=["ID", "Title"]))
 
-
         if dump:
             for issue in issues:
                 cyan("Importing from RVD, issue: " + str(issue))
@@ -93,29 +94,167 @@ def listar(id, dump, private, label, isoption):
                 flaw = Flaw(document)
                 # print(flaw)
 
+
+#  ┌─┐┌┬┐┬┌┬┐
+#  ├┤  │││ │ 
+#  └─┘─┴┘┴ ┴
+def ticket_menu(id, flaw):
+    """
+    Print the ticket and the menu
+
+    :return choice
+    """
+    cyan("Editing ticket: ", end="")
+    print(str(id))
+    # print(flaw)
+    menu = qprompt.Menu()
+    menu.add("e", "Edit")
+    menu.add("p", "Previous")
+    menu.add("n", "Next")
+    menu.add("s", "Save")
+    menu.add("q", "Quit")
+    return menu.show()
+
+
+def edition_menu(flaw):
+    """
+    Edit the flaw and return it with the corresponding changes
+
+    :return Flaw
+    """
+    # print(flaw)
+    choice = qprompt.ask_str(inline_yellow("Enter property to edit with '_' \
+to separate subfields. Some examples include \
+'title', 'flaw_phase' or 'severity_rvss-score'\n"))
+    new_flaw = None
+    try:
+        # differentiate options and edit value
+        if len(choice.split("_")) == 1:
+            current_value = flaw.document()[choice]
+            new_value = qprompt.ask_str("Current value is: '" + inline_magenta(str(current_value)) + "'\n")
+            new_document = flaw.document()
+            new_document[choice] = new_value
+        else:
+            current_value = flaw.document()[choice.split("_")[0]][choice.split("_")[1]]
+            new_value = qprompt.ask_str("Current value is: '" + inline_magenta(str(current_value)) + "'\n")
+            new_document = flaw.document()
+            new_document[choice.split("_")[0]][choice.split("_")[1]] = new_value
+        validated, errors = validate_document(new_document)
+        new_flaw = Flaw(new_document)
+        return new_flaw
+    except KeyError:
+        yellow("Warning, subfield not found, no change applied")
+        return flaw
+
+
+def edit_function(id, subsequent, flaw=None):
+    """
+    Function that triggers the ticket edition logic, returns the last flaw edited
+
+    Runs validation checks and reports accordingly on each edition iteration.
+
+    :param id, ticket's ID
+    :param subsequent bool, subsequent ticket editions
+    :param: flaw, use existing flaw rather than creating a new one
+    :return Flaw
+    """
+    importer = Base()
+
+    # aiming to return flaw, not update it
+    if not subsequent:
+        # contruct flaw if not passed as a parameter
+        if not flaw:
+            flaw = importer.import_issue(id)
+
+        continue_editing = True
+        while continue_editing:
+            print(flaw)
+            # construct flaw
+            menu = qprompt.Menu()
+            menu.add("e", "Edit")
+            menu.add("q", "Quit")
+            choice = menu.show()
+
+            if choice == 'e':
+                new_flaw = edition_menu(flaw)
+                flaw = new_flaw
+            else:
+                continue_editing = False
+        return flaw
+
+    # automatically updates tickets when stepping over them ("n" or "p")
+    else:
+        continue_editing = subsequent  # variable that captures
+                                       # subsequent editions
+        flaw = importer.import_issue(id)
+        # continue editing if applies
+        while continue_editing:
+            # construct flaw
+            print(flaw)
+            choice = ticket_menu(id, flaw)
+            if choice == 'e':
+                new_flaw = edition_menu(flaw)
+                flaw = new_flaw
+            elif choice == "n":
+                importer.update_ticket(importer.repo.get_issue(int(id)), flaw)
+                continue_editing = True
+                id = int(id) + 1
+                flaw = importer.import_issue(id)
+                # TODO: consider overflow
+            elif choice == "p":
+                importer.update_ticket(importer.repo.get_issue(int(id)), flaw)
+                continue_editing = True
+                id = int(id) - 1
+                if id < 1:
+                    yellow("Reached first ticket")
+                    sys.exit(0)
+                flaw = importer.import_issue(id)
+            elif choice == "s":
+                importer.update_ticket(importer.repo.get_issue(int(id)), flaw)
+            else:
+                continue_editing = False
+        return flaw
+
+
+@main.command("edit")
+@click.argument('id', required=True)
+@click.option('--subsequent/--no-subsequent',
+              help='Continue editing subsequently.', default=True,)
+def edit(id, subsequent):
+    """
+    Edits selected (and iteratively all subsequent) tickets within the database
+    """
+    edit_function(id, subsequent)
+
 #  ┌┬┐┬ ┬┌─┐┬  ┬┌─┐┌─┐┌┬┐┌─┐┌─┐
 #   │││ │├─┘│  ││  ├─┤ │ ├┤ └─┐
 #  ─┴┘└─┘┴  ┴─┘┴└─┘┴ ┴ ┴ └─┘└─┘
 @main.command("duplicates")
 @click.option('--train/--no-train',
               help='Train the classifiers.', default=False,)
-def duplicates(train):
+@click.option('--push/--no-push',
+              help='Push feedback.', default=False,)
+def duplicates(train, push):
     """
     Searches and tags appropriately duplicates in the database
+    Make use of dedupe library for it.
 
     NOTE: operates only over "open" issues.
     """
     cyan("Searching for duplicates...")
     duplicates = Duplicates()
-    duplicates.find_duplicates(train)
+    duplicates.find_duplicates(train, push)
 
 
 #  ┌─┐┬  ┬┌─┐
 #  │  └┐┌┘├┤ 
 #  └─┘ └┘ └─┘
-@main.group()
-# @main.command("cve")
-def cve():
+# @main.group()
+@click.option('--vendor', default=None, help='Vendor to research.')
+@click.option('--product', default=None, help='Product to research.')
+@click.option('--push/--no-push', default=False, help='Push to RVD in a new ticket.')
+@main.command("cve")
+def cve(vendor, product, push):
     """
     Search CVEs and CPEs, import them.
 
@@ -125,32 +264,89 @@ def cve():
     Makes use of the following:
     - https://github.com/cve-search/PyCVESearch
     - (indirectly) https://github.com/cve-search/cve-search
-
-    NOTE: This is the base cve primitive, other commands build from this one
     """
     # cve = CVESearch()
     cyan("Searching for CVEs and CPEs with cve-search ...")
-
-
-@cve.command("browse")
-@click.argument('vendor')
-def browse(vendor):
     from pycvesearch import CVESearch
-    cve = CVESearch()
-    cyan("Browsing for vendor: ", end="")
-    print(vendor)
-    pprint.pprint(cve.browse(vendor))
+    if vendor and product:
+        cve = CVESearch()
+        cyan("Searching for vendor/product: ", end="")
+        print(vendor+"/"+product)
+        results = cve.search(vendor+"/"+product)
+        # Start producing flaws in here
+        for result in results['results']:
+            # pprint.pprint(result)
+            document = default_document()  # get the default document
+            # Add relevant elements to the document
+            document['title'] = result['summary'][-65:]
+            document['description'] = result['summary']
+            document['cve'] = result['id']
+            document['cwe'] = result['cwe']
+            document['severity']['cvss-vector'] = "CVSS:3.0/" + str(result['cvss-vector'])
+            document['severity']['cvss-score'] = result['cvss']
+            document['links'] = result['references']
+            document['flaw']['reported-by'] = result['assigner']
+            document['flaw']['date-reported'] = arrow.get(result['Published']).format('YYYY-MM-DD')
 
+            # Create a flaw out of the document
+            flaw = Flaw(document)
+            new_flaw = edit_function(0, subsequent=False, flaw=flaw)
+            print(new_flaw)
 
-@cve.command("search")
-@click.argument('vendor')
-@click.argument('product')
-def search(vendor, product):
-    from pycvesearch import CVESearch
-    cve = CVESearch()
-    cyan("Searching for vendor/product: ", end="")
-    print(vendor+"/"+product)
-    pprint.pprint(cve.search(vendor+"/"+product))
+            if push:
+                pusher = Base()  # instantiate the class to push changes
+                labels = ['vulnerability']
+                new_keywords = ast.literal_eval(new_flaw.keywords)
+                for l in new_keywords:
+                    labels.append(l)
+
+                issue = pusher.new_ticket(new_flaw, labels)
+                # Update id
+                new_flaw.id = issue.number
+
+                # Update issue and links
+                if isinstance(new_flaw.links, list):
+                    links = new_flaw.links
+                else:
+                    links = []
+                    if new_flaw.links.strip() != "":
+                        links.append(new_flaw.links.strip())
+                links.append(issue.html_url)
+                new_flaw.links = links
+                new_flaw.issue = issue.html_url
+                pusher.update_ticket(issue, new_flaw)
+
+    elif vendor:
+        cve = CVESearch()
+        cyan("Browsing for vendor: ", end="")
+        print(vendor)
+        pprint.pprint(cve.browse(vendor))
+    elif product:
+        red("Error, vendor is required")
+        sys.exit(1)
+    else:
+        red("Error, vendor or vendor and product required")
+        sys.exit(1)
+
+# @cve.command("browse")
+# @click.argument('vendor')
+# def browse(vendor):
+#     from pycvesearch import CVESearch
+#     cve = CVESearch()
+#     cyan("Browsing for vendor: ", end="")
+#     print(vendor)
+#     pprint.pprint(cve.browse(vendor))
+#
+#
+# @cve.command("search")
+# @click.argument('vendor')
+# @click.argument('product')
+# def search(vendor, product):
+#     from pycvesearch import CVESearch
+#     cve = CVESearch()
+#     cyan("Searching for vendor/product: ", end="")
+#     print(vendor+"/"+product)
+#     pprint.pprint(cve.search(vendor+"/"+product))
 
 
 #  ┬  ┬┌─┐┬  ┬┌┬┐┌─┐┌┬┐┌─┐
@@ -163,6 +359,29 @@ def search(vendor, product):
 def validation(filename, dump):
     """Validate the file provided its path"""
     validate_file(filename, dump)
+
+
+def validate_document(document):
+    """
+    Validate document passed as parameter and returns feedback on it.
+
+    :return (valid, dict) where:
+        - valid is a boolean that expresses the result of the operation
+        - dict is a dictionary containing the errors
+    """
+    validated = False  # reflect whether the overall process suceeded
+    v = Validator(SCHEMA, allow_unknown=True)  # allow unknown values
+    if document:
+        if not v.validate(document, SCHEMA):
+            # print(v.errors)
+            for key in v.errors.keys():
+                print("\t" + str(key) + ": ", end='')
+                red("not valid", end='')
+                print(': ' + str(v.errors[key]))
+        else:
+            green("Validated successfully!")
+            validated = True
+    return (validated, v.errors)
 
 
 def validate_file(filename, dump=False):

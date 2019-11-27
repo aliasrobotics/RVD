@@ -144,7 +144,7 @@ class Base:
         yellow("Updating " + str(issue))
         # log title
         print("title: ", end="")
-        gray(issue.title)
+        gray(flaw.title)
         # log body
         print("body: ", end="")
         gray(flaw.yml_markdown())
@@ -155,7 +155,7 @@ class Base:
         print("labels: ", end="")
         gray(labels)
         # Push updates
-        issue.edit(title=issue.title,
+        issue.edit(title=flaw.title,
                    body=flaw.yml_markdown(),
                    assignees=issue.assignees,
                    labels=labels)

@@ -20,7 +20,7 @@ def default_document():
     document = {
         'id': 1,
         'title': "",
-        'type': "weakness",
+        'type': "bug",
         'description': "",
         'cwe': "None",
         'cve': "None",
