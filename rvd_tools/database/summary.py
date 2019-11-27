@@ -30,6 +30,7 @@ class Summary(Base):
         self.labels_closed = []  # labels for all issues
 
         self.malformed = 0  # number of malformed tickets
+        self.triage = 0  # number of tickets requiring triage
 
         ###########################
         # Summary attributes
@@ -312,6 +313,11 @@ class Summary(Base):
             if 'malformed' in l_set:
                 self.malformed += 1
 
+        # Obtain the number of tickets that require triage among the open ones
+        for l_set in self.labels_open:
+            if 'triage' in l_set:
+                self.triage += 1
+
     def upper_shields(self):
         """
         Produces a first line of small shields providing quick information for
@@ -321,9 +327,10 @@ class Summary(Base):
         """
         markdown = ""
         # add the shields
-        markdown += "[![](https://img.shields.io/badge/vulnerabilities-"+str(self.nvulnerabilities)+"-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+label%3Avulnerability+)"  + "\n"
-        markdown += "[![](https://img.shields.io/badge/bugs-"+str(self.nbugs)+"-f7b6b2.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+label%3Abug+)"  + "\n"
+        markdown += "[![](https://img.shields.io/badge/vulnerabilities-"+str(self.self.nvulnerabilities_open)+"-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+label%3Avulnerability+)"  + "\n"
+        markdown += "[![](https://img.shields.io/badge/bugs-"+str(self.nbugs_open)+"-f7b6b2.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+label%3Abug+)"  + "\n"
         markdown += "[![](https://img.shields.io/badge/malformed-"+str(self.malformed)+"-440fa8.svg)](https://github.com/aliasrobotics/RVD/labels/malformed)"  + "\n"
+        markdown += "[![](https://img.shields.io/badge/malformed-"+str(self.triage)+"-ffe89e.svg)](https://github.com/aliasrobotics/RVD/labels/triage)"  + "\n"
         # markdown += "[![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed) "  # it can also be written this way, spliting it
         markdown += "\n"
 
