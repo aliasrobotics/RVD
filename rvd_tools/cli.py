@@ -16,6 +16,8 @@ from .database.defaults import *
 from .database.flaw import *
 from .database.summary import *
 from .database.duplicates import *
+from .database.vulners import *
+from .database.edit import *
 # from .database.coercer import *
 from .importer.robust import *
 from .importer.markdown import *
@@ -50,7 +52,7 @@ Vulnerability Database...")
 @click.option('--private/--no-private',
               help='Print private RVD tickets.', default=False,)
 @click.option('--label', help='Filter flaws by label.', multiple=True)
-@click.option('--isoption', help='Filter flaws by status (open, closed, all).')
+@click.option('--isoption', help='Filter flaws by status (open, closed, all).', default="open")
 def listar(id, dump, private, label, isoption):
     """List current flaw tickets"""
     importer = Base()
@@ -94,131 +96,9 @@ def listar(id, dump, private, label, isoption):
                 flaw = Flaw(document)
                 # print(flaw)
 
-
 #  ┌─┐┌┬┐┬┌┬┐
 #  ├┤  │││ │ 
 #  └─┘─┴┘┴ ┴
-def ticket_menu(id, flaw):
-    """
-    Print the ticket and the menu
-
-    :return choice
-    """
-    cyan("Editing ticket: ", end="")
-    print(str(id))
-    # print(flaw)
-    menu = qprompt.Menu()
-    menu.add("e", "Edit")
-    menu.add("p", "Previous")
-    menu.add("n", "Next")
-    menu.add("s", "Save")
-    menu.add("q", "Quit")
-    return menu.show()
-
-
-def edition_menu(flaw):
-    """
-    Edit the flaw and return it with the corresponding changes
-
-    :return Flaw
-    """
-    # print(flaw)
-    choice = qprompt.ask_str(inline_yellow("Enter property to edit with '_' \
-to separate subfields. Some examples include \
-'title', 'flaw_phase' or 'severity_rvss-score'\n"))
-    new_flaw = None
-    try:
-        # differentiate options and edit value
-        if len(choice.split("_")) == 1:
-            current_value = flaw.document()[choice]
-            new_value = qprompt.ask_str("Current value is: '" + inline_magenta(str(current_value)) + "'\n")
-            new_document = flaw.document()
-            new_document[choice] = new_value
-        else:
-            current_value = flaw.document()[choice.split("_")[0]][choice.split("_")[1]]
-            new_value = qprompt.ask_str("Current value is: '" + inline_magenta(str(current_value)) + "'\n")
-            new_document = flaw.document()
-            new_document[choice.split("_")[0]][choice.split("_")[1]] = new_value
-        validated, errors = validate_document(new_document)
-        new_flaw = Flaw(new_document)
-        return new_flaw
-    except KeyError:
-        yellow("Warning, subfield not found, no change applied")
-        return flaw
-
-
-def edit_function(id, subsequent, flaw=None):
-    """
-    Function that triggers the ticket edition logic, returns the last flaw edited
-
-    Runs validation checks and reports accordingly on each edition iteration.
-
-    :param id, ticket's ID
-    :param subsequent bool, subsequent ticket editions
-    :param: flaw, use existing flaw rather than creating a new one
-    :return Flaw
-    """
-    importer = Base()
-
-    # aiming to return flaw, not update it
-    if not subsequent:
-        # contruct flaw if not passed as a parameter
-        if not flaw:
-            flaw = importer.import_issue(id)
-
-        continue_editing = True
-        while continue_editing:
-            print(flaw)
-            # construct flaw
-            menu = qprompt.Menu()
-            menu.add("e", "Edit")
-            menu.add("s", "Skip")
-            menu.add("q", "Quit")
-            choice = menu.show()
-
-            if choice == 'e':
-                new_flaw = edition_menu(flaw)
-                flaw = new_flaw
-            elif choice == 's':  # skip and return None
-                return None
-            else:
-                continue_editing = False
-        return flaw
-
-    # automatically updates tickets when stepping over them ("n" or "p")
-    else:
-        continue_editing = subsequent  # variable that captures
-                                       # subsequent editions
-        flaw = importer.import_issue(id)
-        # continue editing if applies
-        while continue_editing:
-            # construct flaw
-            print(flaw)
-            choice = ticket_menu(id, flaw)
-            if choice == 'e':
-                new_flaw = edition_menu(flaw)
-                flaw = new_flaw
-            elif choice == "n":
-                importer.update_ticket(importer.repo.get_issue(int(id)), flaw)
-                continue_editing = True
-                id = int(id) + 1
-                flaw = importer.import_issue(id)
-                # TODO: consider overflow
-            elif choice == "p":
-                importer.update_ticket(importer.repo.get_issue(int(id)), flaw)
-                continue_editing = True
-                id = int(id) - 1
-                if id < 1:
-                    yellow("Reached first ticket")
-                    sys.exit(0)
-                flaw = importer.import_issue(id)
-            elif choice == "s":
-                importer.update_ticket(importer.repo.get_issue(int(id)), flaw)
-            else:
-                continue_editing = False
-        return flaw
-
-
 @main.command("edit")
 @click.argument('id', required=True)
 @click.option('--subsequent/--no-subsequent',
@@ -248,6 +128,37 @@ def duplicates(train, push):
     duplicates = Duplicates()
     duplicates.find_duplicates(train, push)
 
+#  ┬  ┬┬ ┬┬  ┌┐┌┌─┐┬─┐┌─┐
+#  └┐┌┘│ ││  │││├┤ ├┬┘└─┐
+#   └┘ └─┘┴─┘┘└┘└─┘┴└─└─┘
+# @main.command("vulners")
+@main.group("vulners")
+def vulners():
+    """
+    Makes use of Vulners' database.
+
+    See https://github.com/vulnersCom/api#functions-and-methods
+    for more.
+    """
+    cyan("Using vulners database...")
+
+
+@vulners.command("cve")
+@click.argument('query', required=True)
+@click.option('--push/--no-push',
+              help='Push feedback.', default=False,)
+def cve_vulners(query, push):
+    vulners = Vulners()
+    vulners.cve(query, push)
+
+
+@vulners.command("search")
+@click.argument('query', required=True)
+@click.option('--push/--no-push',
+              help='Push feedback.', default=False,)
+def search_vulners(query, push):
+    vulners = Vulners()
+    vulners.search(query, push)
 
 #  ┌─┐┬  ┬┌─┐
 #  │  └┐┌┘├┤ 
@@ -260,7 +171,7 @@ def duplicates(train, push):
 @main.command("cve")
 def cve(all, vendor, product, push):
     """
-    Search CVEs and CPEs, import them.
+    Search CVEs and CPEs from cve-search enabled DB, import them.
 
     Search in CVE (Common Vulnerabilities and Exposures) and
     CPE (Common Platform Enumeration)and import them to RVD.
@@ -285,6 +196,7 @@ def cve(all, vendor, product, push):
                     document = default_document()  # get the default document
                     # Add relevant elements to the document
                     document['title'] = result['summary'][:65]
+                    document['type'] = "vulnerability"
                     document['description'] = result['summary']
                     document['cve'] = result['id']
                     document['cwe'] = result['cwe']
