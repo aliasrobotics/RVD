@@ -154,6 +154,20 @@ class Duplicates(Base):
         for set in clustered_dupes:
             yellow("Found a duplicated pair...")
             ids, values = set
+            primary_issue = None  # reflects the primary ticket in a set of
+                                  # duplicates all the duplicates should point
+                                  # to this one
             for id in ids:
                 # print(id)
-                print(self.repo.get_issue(int(id)))
+                issue = self.repo.get_issue(int(id))
+                # print(issue)
+                if primary_issue is None:
+                    primary_issue = issue
+                else:
+                    # Indicate that this issue is duplicated
+                    yellow("Marking " + str(id) + " as duplicate, referencing to: " + str(primary_issue))
+                    duplicate_text = "- <ins>DUPLICATE</ins>: Tagging this ticket as duplicate. Referencing to  #" + str(primary_issue.number) + "\n"
+                    issue.create_comment(duplicate_text)
+
+                    # labeling
+                    issue.add_to_labels("duplicate")
