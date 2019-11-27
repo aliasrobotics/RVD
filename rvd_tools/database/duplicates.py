@@ -28,12 +28,16 @@ class Duplicates(Base):
 
         # Define the fields dedupe will pay attention to
         self.fields = [
+            # {'field': 'title', 'type': 'String', 'crf': True},
             {'field': 'title', 'type': 'String'},
             {'field': 'type', 'type': 'String'},
-            # {'field': 'description', 'type': 'String'},
-            {'field': 'system', 'type': 'String'},
-            {'field': 'vendor', 'type': 'String'},
-            {'field': 'flaw_date-detected', 'type': 'DateTime'},
+            {'field': 'cwe', 'type': 'String'},
+            {'field': 'description', 'type': 'String', 'has missing': True},
+            {'field': 'cve', 'type': 'String'},
+            # {'field': 'cwe', 'type': 'String', 'crf': True},
+            # {'field': 'system', 'type': 'String'},
+            # {'field': 'vendor', 'type': 'String'},
+            # {'field': 'flaw_date-detected', 'type': 'String'},
             # {'field': 'flaw_date-reported', 'type': 'DateTime'},
         ]
 
@@ -95,7 +99,7 @@ class Duplicates(Base):
         data_d = {}
         gray("Processing tickets from RVD...")
         if invalid:
-            issues_all = self.repo.get_issues(state="all")  # using all tickets, including invalid ones for training
+            issues_all = self.repo.get_issues(state="open")  # using all tickets, including invalid ones for training
         else:
             issues_all = self.get_issues_filtered()
         for issue in issues_all:
@@ -105,15 +109,21 @@ class Duplicates(Base):
             document_raw = document_raw.replace('```yaml','').replace('```', '')
             document = yaml.load(document_raw)
 
-            flaw = Flaw(document)
-            # print(document)
-            # print(flaw)
+            try:
+                flaw = Flaw(document)
 
-            # yellow("Imported issue ", end="")
-            # print(str(issue.id), end="")
-            # yellow(" into a Flaw...")
-            # data_d[int(issue.number)] = flaw.document_duplicates()
-            data_d[int(issue.number)] = flaw.document_duplicates()
+                # print(document)
+                # print(flaw)
+
+                # yellow("Imported issue ", end="")
+                # print(str(issue.id), end="")
+                # yellow(" into a Flaw...")
+                # data_d[int(issue.number)] = flaw.document_duplicates()
+                data_d[int(issue.number)] = flaw.document_duplicates()
+            except TypeError:
+                # likely the document wasn't properly formed, report about it and continue
+                yellow("Warning: issue " + str(issue.number) + " not processed due to an error")
+                continue
         return data_d
 
     def find_duplicates(self, train):

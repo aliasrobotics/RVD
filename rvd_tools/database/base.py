@@ -51,7 +51,7 @@ class Base:
 
         return list(Issues)
         """
-        issues = self.repo.get_issues(state="all")
+        issues = self.repo.get_issues(state="open")
         filtered_issues = []
         for issue in issues:
             labels = [l.name for l in issue.labels]

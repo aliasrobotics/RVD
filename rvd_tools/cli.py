@@ -100,7 +100,11 @@ def listar(id, dump, private, label, isoption):
 @click.option('--train/--no-train',
               help='Train the classifiers.', default=False,)
 def duplicates(train):
-    """Searches and tags appropriately duplicates in the database"""
+    """
+    Searches and tags appropriately duplicates in the database
+
+    NOTE: operates only over "open" issues.
+    """
     cyan("Searching for duplicates...")
     duplicates = Duplicates()
     duplicates.find_duplicates(train)

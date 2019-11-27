@@ -291,7 +291,7 @@ class Flaw:
             'id': self.id,
             'title': self.title,
             'type': self.type,
-            'description': self.description,
+            'description': self.description if self.description != "" else None,
             'cwe': self.cwe,
             'cve': self.cve,
             'keywords': self.keywords,
