@@ -172,12 +172,15 @@ def edit_function(id, subsequent, flaw=None):
             # construct flaw
             menu = qprompt.Menu()
             menu.add("e", "Edit")
+            menu.add("s", "Skip")
             menu.add("q", "Quit")
             choice = menu.show()
 
             if choice == 'e':
                 new_flaw = edition_menu(flaw)
                 flaw = new_flaw
+            elif choice == 's':  # skip and return None
+                return None
             else:
                 continue_editing = False
         return flaw
@@ -250,11 +253,12 @@ def duplicates(train, push):
 #  │  └┐┌┘├┤ 
 #  └─┘ └┘ └─┘
 # @main.group()
+@click.option('--all/--no-all', default=False, help='Automatically import all flaws for a given vendor.')
 @click.option('--vendor', default=None, help='Vendor to research.')
 @click.option('--product', default=None, help='Product to research.')
 @click.option('--push/--no-push', default=False, help='Push to RVD in a new ticket.')
 @main.command("cve")
-def cve(vendor, product, push):
+def cve(all, vendor, product, push):
     """
     Search CVEs and CPEs, import them.
 
@@ -268,6 +272,68 @@ def cve(vendor, product, push):
     # cve = CVESearch()
     cyan("Searching for CVEs and CPEs with cve-search ...")
     from pycvesearch import CVESearch
+    if all:
+        if vendor:
+            cve = CVESearch()
+            vendor_flaws = cve.browse(vendor)
+            products = vendor_flaws['product']
+            for product in products:
+                results = cve.search(vendor+"/"+product)
+                # Start producing flaws in here
+                for result in results['results']:
+                    # pprint.pprint(result)
+                    document = default_document()  # get the default document
+                    # Add relevant elements to the document
+                    document['title'] = result['summary'][:65]
+                    document['description'] = result['summary']
+                    document['cve'] = result['id']
+                    document['cwe'] = result['cwe']
+                    document['severity']['cvss-vector'] = "CVSS:3.0/" + str(result['cvss-vector'])
+                    document['severity']['cvss-score'] = result['cvss']
+                    document['links'] = result['references']
+                    document['flaw']['reported-by'] = result['assigner']
+                    document['flaw']['date-reported'] = arrow.get(result['Published']).format('YYYY-MM-DD')
+
+                    # Create a flaw out of the document
+                    flaw = Flaw(document)
+                    # new_flaw = edit_function(0, subsequent=False, flaw=flaw)
+                    new_flaw = flaw
+
+                    if new_flaw:
+                        print(new_flaw)
+                    else:
+                        continue
+
+                    if push:
+                        pusher = Base()  # instantiate the class to push changes
+                        labels = ['vulnerability']
+                        vendor_label = "vendor: " + str(vendor)
+                        labels.append(vendor_label)
+                        # new_keywords = ast.literal_eval(new_flaw.keywords)
+                        # for l in new_keywords:
+                        #     labels.append(l)
+
+                        issue = pusher.new_ticket(new_flaw, labels)
+                        # Update id
+                        new_flaw.id = issue.number
+
+                        # Update issue and links
+                        if isinstance(new_flaw.links, list):
+                            links = new_flaw.links
+                        else:
+                            links = []
+                            if new_flaw.links.strip() != "":
+                                links.append(new_flaw.links.strip())
+                        links.append(issue.html_url)
+                        new_flaw.links = links
+                        new_flaw.issue = issue.html_url
+                        pusher.update_ticket(issue, new_flaw)
+
+        else:
+            red("Error, vendor is required with --all")
+            sys.exit(1)
+        return
+
     if vendor and product:
         cve = CVESearch()
         cyan("Searching for vendor/product: ", end="")
@@ -278,7 +344,7 @@ def cve(vendor, product, push):
             # pprint.pprint(result)
             document = default_document()  # get the default document
             # Add relevant elements to the document
-            document['title'] = result['summary'][-65:]
+            document['title'] = result['summary'][:65]
             document['description'] = result['summary']
             document['cve'] = result['id']
             document['cwe'] = result['cwe']
@@ -291,7 +357,11 @@ def cve(vendor, product, push):
             # Create a flaw out of the document
             flaw = Flaw(document)
             new_flaw = edit_function(0, subsequent=False, flaw=flaw)
-            print(new_flaw)
+
+            if new_flaw:
+                print(new_flaw)
+            else:
+                continue
 
             if push:
                 pusher = Base()  # instantiate the class to push changes
