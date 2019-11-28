@@ -12,7 +12,9 @@ from .base import *
 from ..utils import gray, red, green, cyan, yellow
 import sys
 import os
-
+import yaml
+from .flaw import *
+import pprint
 
 class Duplicates(Base):
     """
@@ -28,11 +30,11 @@ class Duplicates(Base):
 
         # Define the fields dedupe will pay attention to
         self.fields = [
-            {'field': 'title', 'type': 'String', 'crf': True},
-            # {'field': 'title', 'type': 'String'},
-            {'field': 'type', 'type': 'String'},
-            {'field': 'cwe', 'type': 'String'},
-            {'field': 'description', 'type': 'String', 'has missing': True},
+            # {'field': 'title', 'type': 'String', 'crf': True},
+            {'field': 'title', 'type': 'String'},
+            # {'field': 'type', 'type': 'String'},
+            # {'field': 'cwe', 'type': 'String'},
+            # {'field': 'description', 'type': 'String', 'has missing': True},
             {'field': 'cve', 'type': 'String'},
             # {'field': 'cwe', 'type': 'String', 'crf': True},
             # {'field': 'system', 'type': 'String'},
@@ -88,7 +90,7 @@ class Duplicates(Base):
 
         return deduper
 
-    def read_data(self, invalid=True):
+    def read_data(self, label, invalid=True):
         """
         Read data from RVD and return in the corresponding dedupe format,
         dictionary of records, where the key is a unique record ID and
@@ -102,36 +104,47 @@ class Duplicates(Base):
             issues_all = self.repo.get_issues(state="open")  # using all tickets, including invalid ones for training
         else:
             issues_all = self.get_issues_filtered()
+
         for issue in issues_all:
-            # NOTE: partially re-implementing Base.import_issue()
-            # to avoid calling again the Github API
-            document_raw = issue.body
-            document_raw = document_raw.replace('```yaml','').replace('```', '')
-            document = yaml.load(document_raw)
+            # review label
+            all_labels = True  # indicates whether all labels are present
+            if label:
+                labels = [l.name for l in issue.labels]
+                for l in label:
+                    if l not in labels or "invalid" in labels:
+                        all_labels = False
 
-            try:
-                flaw = Flaw(document)
+            if all_labels:
+                # NOTE: partially re-implementing Base.import_issue()
+                # to avoid calling again the Github API
+                document_raw = issue.body
+                document_raw = document_raw.replace('```yaml','').replace('```', '')
+                document = yaml.load(document_raw)
 
-                # print(document)
-                # print(flaw)
+                try:
+                    flaw = Flaw(document)
 
-                # yellow("Imported issue ", end="")
-                # print(str(issue.id), end="")
-                # yellow(" into a Flaw...")
-                # data_d[int(issue.number)] = flaw.document_duplicates()
-                data_d[int(issue.number)] = flaw.document_duplicates()
-            except TypeError:
-                # likely the document wasn't properly formed, report about it and continue
-                yellow("Warning: issue " + str(issue.number) + " not processed due to an error")
-                continue
+                    # print(document)
+                    # print(flaw)
+
+                    # yellow("Imported issue ", end="")
+                    # print(str(issue.id), end="")
+                    # yellow(" into a Flaw...")
+                    # data_d[int(issue.number)] = flaw.document_duplicates()
+                    data_d[int(issue.number)] = flaw.document_duplicates()
+                except TypeError:
+                    # likely the document wasn't properly formed, report about it and continue
+                    yellow("Warning: issue " + str(issue.number) + " not processed due to an error")
+                    continue
         return data_d
 
-    def find_duplicates(self, train, push):
+    def find_duplicates(self, train, push, label):
         """
         Find duplicates and print them via stdout
         """
         # data_d = self.read_data()
-        data_d = self.read_data(invalid=False)
+        data_d = self.read_data(label, invalid=False)
+        # pprint.pprint(data_d)
 
         if train:
             deduper = self.train(data_d)

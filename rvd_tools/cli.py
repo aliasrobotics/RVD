@@ -117,7 +117,8 @@ def edit(id, subsequent):
               help='Train the classifiers.', default=False,)
 @click.option('--push/--no-push',
               help='Push feedback.', default=False,)
-def duplicates(train, push):
+@click.option('--label', help='Filter flaws by label.', multiple=True)
+def duplicates(train, push, label):
     """
     Searches and tags appropriately duplicates in the database
     Make use of dedupe library for it.
@@ -126,7 +127,7 @@ def duplicates(train, push):
     """
     cyan("Searching for duplicates...")
     duplicates = Duplicates()
-    duplicates.find_duplicates(train, push)
+    duplicates.find_duplicates(train, push, label)
 
 #  ┬  ┬┬ ┬┬  ┌┐┌┌─┐┬─┐┌─┐
 #  └┐┌┘│ ││  │││├┤ ├┬┘└─┐
