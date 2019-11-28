@@ -22,6 +22,7 @@ from .database.edit import *
 from .importer.robust import *
 from .importer.markdown import *
 from .importer.gitlab import *
+from .statistics.statistics import *
 import sys
 import json
 import os
@@ -95,6 +96,18 @@ def listar(id, dump, private, label, isoption):
                 document = yaml.load(document_raw)
                 flaw = Flaw(document)
                 # print(flaw)
+
+#  ┌─┐┌┬┐┌─┐┌┬┐┬┌─┐┌┬┐┬┌─┐┌─┐
+#  └─┐ │ ├─┤ │ │└─┐ │ ││  └─┐
+#  └─┘ ┴ ┴ ┴ ┴ ┴└─┘ ┴ ┴└─┘└─┘
+@main.command("statistics")
+def statistics():
+    """
+    Produce some statistics and plots from RVD
+    """
+    cyan("Generating statistics...")
+    statistics = Statistics()
+    statistics.statistics_vulnerabilities_historic()
 
 #  ┌─┐┌┬┐┬┌┬┐
 #  ├┤  │││ │ 
@@ -406,15 +419,6 @@ def summary(update):
     print(summary.generate_readme())  # only debug
     if update:
         summary.replace_readme()
-
-#  ┌─┐┌┬┐┌─┐┌┬┐┬┌─┐┌┬┐┬┌─┐┌─┐
-#  └─┐ │ ├─┤ │ │└─┐ │ ││  └─┐
-#  └─┘ ┴ ┴ ┴ ┴ ┴└─┘ ┴ ┴└─┘└─┘
-@main.command("statistics")
-def statistics():
-    """Produce a series of statistics and plots"""
-    cyan("Producing statistics of RVD...")
-
 
 #  ┬┌┬┐┌─┐┌─┐┬─┐┌┬┐
 #  ││││├─┘│ │├┬┘ │ 

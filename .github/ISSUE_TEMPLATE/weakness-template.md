@@ -1,6 +1,6 @@
 ---
-name: Weakness report template
-about: Template to report a weakness in RVD. See https://bit.ly/2JnamaD if in doubt
+name: Bug report template
+about: Template to report a bug in RVD. See https://bit.ly/2JnamaD if in doubt
 title: ''
 labels: weakness, triage
 assignees: ''
@@ -13,7 +13,7 @@ Fill in following the example below. If you need further clarifications on any o
 {
     "id": 508,
     "title": "rcl_action: data race, eprosima::fastrtps::rtps::Participant...",
-    "type": "weakness",
+    "type": "bug",
     "description": "Issue detected while running Google Sanitizers.\n\n ",
     "cwe": "None",
     "cve": "None",

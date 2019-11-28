@@ -63,17 +63,18 @@ class Base:
                 filtered_issues.append(issue)
         return filtered_issues
 
-    def import_issue(self, id):
+    def import_issue(self, id, issue=None, debug=True):
         """
         Imports an issue from RVD and returns a Flaw instance
 
         :return Flaw
         """
-        try:
-            issue = self.repo.get_issue(int(id))
-        except TypeError:
-            red("ERROR: something went wrong with the id: " + str(id))
-            yellow("Should be the issue number")
+        if not issue:
+            try:
+                issue = self.repo.get_issue(int(id))
+            except TypeError:
+                red("ERROR: something went wrong with the id: " + str(id))
+                yellow("Should be the issue number")
 
         document_raw = issue.body
         document_raw = document_raw.replace('```yaml','').replace('```', '')
@@ -81,9 +82,10 @@ class Base:
         # print(document)
 
         flaw = Flaw(document)
-        yellow("Imported issue ", end="")
-        print(str(id), end="")
-        yellow(" into a Flaw...")
+        if debug:
+            yellow("Imported issue ", end="")
+            print(str(id), end="")
+            yellow(" into a Flaw...")
         # gray(flaw)
         return flaw
 
