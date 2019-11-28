@@ -8,7 +8,7 @@ Functions and primitives for editing the database
 """
 
 from .base import *
-from ..utils import gray, red, green, cyan, yellow
+from ..utils import gray, red, green, cyan, yellow, inline_magenta, validate_document
 import qprompt
 import ast
 

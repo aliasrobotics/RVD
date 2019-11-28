@@ -76,8 +76,8 @@ class Vulners:
 
             # Create a flaw out of the document
             flaw = Flaw(document)
-            # new_flaw = edit_function(0, subsequent=False, flaw=flaw)
-            new_flaw = flaw
+            new_flaw = edit_function(0, subsequent=False, flaw=flaw)
+            # new_flaw = flaw
 
             if new_flaw:
                 print(new_flaw)
@@ -90,9 +90,9 @@ class Vulners:
                 labels = ['vulnerability']
                 vendor_label = "vendor: " + str(query)
                 labels.append(vendor_label)
-                # new_keywords = ast.literal_eval(new_flaw.keywords)
-                # for l in new_keywords:
-                #     labels.append(l)
+                new_keywords = ast.literal_eval(new_flaw.keywords)
+                for l in new_keywords:
+                    labels.append(l)
 
                 # Push ticket
                 issue = pusher.new_ticket(new_flaw, labels)

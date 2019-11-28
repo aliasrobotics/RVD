@@ -7,6 +7,9 @@
 Utility functions
 """
 
+from cerberus import Validator
+from .database.schema import *
+
 
 def black(text, end="\n"):
     print('\033[30m', text, '\033[0m', sep='', end = end)
@@ -62,3 +65,26 @@ def gray(text, end="\n"):
 
 def inline_gray(text):
     return '\033[90m%s\033[0m' % text
+
+
+def validate_document(document):
+    """
+    Validate document passed as parameter and returns feedback on it.
+
+    :return (valid, dict) where:
+        - valid is a boolean that expresses the result of the operation
+        - dict is a dictionary containing the errors
+    """
+    validated = False  # reflect whether the overall process suceeded
+    v = Validator(SCHEMA, allow_unknown=True)  # allow unknown values
+    if document:
+        if not v.validate(document, SCHEMA):
+            # print(v.errors)
+            for key in v.errors.keys():
+                print("\t" + str(key) + ": ", end='')
+                red("not valid", end='')
+                print(': ' + str(v.errors[key]))
+        else:
+            green("Validated successfully!")
+            validated = True
+    return (validated, v.errors)
