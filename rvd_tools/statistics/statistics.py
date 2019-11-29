@@ -12,6 +12,7 @@ NOTE: Should be specialized by other subclasses that add functionality
 from ..database.base import Base
 from ..utils import gray, red, green, cyan, yellow
 import sys
+from tabulate import tabulate
 
 
 class Statistics(Base):
@@ -85,9 +86,10 @@ class Statistics(Base):
         """Produce statististics on the historic discovery and report
         of robot vulnerabilities"""
         cyan("Produce statististics on the historic discovery of flaws...")
+        table = None
         if label:  # account for only filtered tickets
             cyan("Using label: " + str(label))
-            importer = Base()
+            # importer = Base()
             filtered = []
             if isoption == "all":
                 issues = self.issues
@@ -112,20 +114,33 @@ class Statistics(Base):
                 if all_labels:
                     filtered.append(issue)
 
-            self.historic(filtered)
+            table = self.historic(filtered)
 
         else:
             cyan("Using all vulnerabilities...")
             # Consider all tickets, open and close
-            self.historic(self.vulnerabilities)
+            table = self.historic(self.vulnerabilities)
+
+        if table:
+            print(tabulate(table, headers=["ID", "Date reported",
+                                           "vendor", "CVE"]))
 
     def historic(self, issues):
         """
-        Compile a table with historic data
+        Compile a table with historic data.
+
+        Items in the table (in this order):
+        - ID
+        - date reported
+        - vendor
+        - CVE
 
         :returns table [[]]
         """
+        return_table = []
         for issue in issues:
             flaw = self.import_issue(issue.number, issue=issue, debug=False)
-            print(flaw.date_reported)
-            print(flaw.vendor)
+            return_table.append([flaw.id, flaw.date_reported, flaw.vendor, flaw.cve])
+            # print(flaw.date_reported)
+            # print(flaw.vendor)
+        return return_table
