@@ -8,7 +8,7 @@ Functions and primitives for editing the database
 """
 
 from .base import *
-from ..utils import gray, red, green, cyan, yellow, inline_magenta, validate_document
+from ..utils import gray, red, green, cyan, yellow, inline_magenta, inline_green, validate_document
 import qprompt
 import ast
 import sys
@@ -24,6 +24,25 @@ def ticket_menu(id, flaw):
     print(str(id))
     # print(flaw)
     menu = qprompt.Menu()
+    menu.add("e", "Edit")
+    menu.add("p", "Previous")
+    menu.add("n", "Next")
+    menu.add("s", "Save")
+    menu.add("q", "Quit")
+    return menu.show()
+
+def ticket_menu_vendor(id, flaw):
+    """
+    Print the ticket and the menu with special options for vendor
+    management.
+
+    :return choice
+    """
+    cyan("Editing ticket: ", end="")
+    print(str(id))
+    # print(flaw)
+    menu = qprompt.Menu()
+    menu.add("vendor", inline_magenta("Assign vendor from 'vendor' label"))
     menu.add("e", "Edit")
     menu.add("p", "Previous")
     menu.add("n", "Next")
@@ -128,12 +147,27 @@ def edit_function(id, subsequent, label, flaw=None, isoption="all"):
                 while continue_editing:
                     # print flaw
                     print(flaw)
-                    choice = ticket_menu(issue.number, flaw)
+                    choice = ticket_menu_vendor(issue.number, flaw)
                     if choice == 'e':
                         new_flaw = edition_menu(flaw)
                         flaw = new_flaw
+                    elif choice == "vendor":
+                        cyan("Assigning vendor from 'vendor' label...")
+                        labels = [l.name for l in issue.labels]
+                        vendor_label = None
+                        for l in labels:
+                            if "vendor:" in l:
+                                vendor_label = l
+                                break
+                        if vendor_label:
+                            flaw.vendor = vendor_label.split(":")[1].strip()
+                            importer.update_ticket(importer.repo.get_issue(int(issue.number)), flaw)
+                            continue_editing = True
+                        else:
+                            yellow("No vendor label found, no action performed")
                     elif choice == "n":
-                        importer.update_ticket(importer.repo.get_issue(int(issue.number)), flaw)
+                        # temporarily disabling this to skip faster
+                        # importer.update_ticket(importer.repo.get_issue(int(issue.number)), flaw)
                         continue_editing = False
                     elif choice == "p":
                         yellow("Sorry, this option is not available when filtering by label")
