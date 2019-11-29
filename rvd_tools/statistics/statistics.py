@@ -13,6 +13,7 @@ from ..database.base import Base
 from ..utils import gray, red, green, cyan, yellow
 import sys
 from tabulate import tabulate
+import pprint
 
 
 class Statistics(Base):
@@ -123,7 +124,7 @@ class Statistics(Base):
 
         if table:
             print(tabulate(table, headers=["ID", "Date reported",
-                                           "vendor", "CVE", "CVSS"]))
+                                           "vendor", "CVE", "CVSS", "RVSS"]))
 
     def historic(self, issues):
         """
@@ -135,6 +136,7 @@ class Statistics(Base):
         - vendor
         - CVE
         - CVSS
+        - RVSS
 
         :returns table [[]]
         """
@@ -142,7 +144,7 @@ class Statistics(Base):
         for issue in issues:
             flaw = self.import_issue(issue.number, issue=issue, debug=False)
             return_table.append([flaw.id, flaw.date_reported, flaw.vendor,
-                                 flaw.cve, flaw.cvss_score])
+                                 flaw.cve, flaw.cvss_score, flaw.rvss_score])
             # print(flaw.date_reported)
             # print(flaw.vendor)
         return return_table
@@ -162,5 +164,10 @@ class Statistics(Base):
 
         # Create a dict that organizes vulns by vendor
         dict_vulnerabilities = {}
-        # for vuln in vulnerabilities_flaws
-                
+        for vuln in vulnerabilities_flaws:
+            if vuln.vendor in dict_vulnerabilities.keys():
+                dict_vulnerabilities[vuln.vendor].append(vuln.cvss_score)
+            else:
+                dict_vulnerabilities[vuln.vendor] = [vuln.cvss_score]
+
+        pprint.pprint(dict_vulnerabilities)
