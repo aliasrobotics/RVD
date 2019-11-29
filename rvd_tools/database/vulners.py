@@ -76,7 +76,7 @@ class Vulners:
 
             # Create a flaw out of the document
             flaw = Flaw(document)
-            new_flaw = edit_function(0, subsequent=False, flaw=flaw)
+            new_flaw = edit_function(0, False, None, flaw=flaw)
             # new_flaw = flaw
 
             if new_flaw:

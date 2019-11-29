@@ -101,26 +101,28 @@ def listar(id, dump, private, label, isoption):
 #  └─┐ │ ├─┤ │ │└─┐ │ ││  └─┐
 #  └─┘ ┴ ┴ ┴ ┴ ┴└─┘ ┴ ┴└─┘└─┘
 @main.command("statistics")
-def statistics():
+@click.option('--label', help='Filter flaws by label.', multiple=True)
+def statistics(label):
     """
     Produce some statistics and plots from RVD
     """
     cyan("Generating statistics...")
     statistics = Statistics()
-    statistics.statistics_vulnerabilities_historic()
+    statistics.statistics_vulnerabilities_historic(label)
 
 #  ┌─┐┌┬┐┬┌┬┐
 #  ├┤  │││ │ 
 #  └─┘─┴┘┴ ┴
 @main.command("edit")
-@click.argument('id', required=True)
+@click.argument('id', required=False)
 @click.option('--subsequent/--no-subsequent',
               help='Continue editing subsequently.', default=True,)
-def edit(id, subsequent):
+@click.option('--label', help='Filter flaws by label.', multiple=True)
+def edit(id, subsequent, label):
     """
     Edits selected (and iteratively all subsequent) tickets within the database
     """
-    edit_function(id, subsequent)
+    edit_function(id, subsequent, label)
 
 #  ┌┬┐┬ ┬┌─┐┬  ┬┌─┐┌─┐┌┬┐┌─┐┌─┐
 #   │││ │├─┘│  ││  ├─┤ │ ├┤ └─┐
@@ -282,7 +284,7 @@ def cve(all, vendor, product, push):
 
             # Create a flaw out of the document
             flaw = Flaw(document)
-            new_flaw = edit_function(0, subsequent=False, flaw=flaw)
+            new_flaw = edit_function(0, subsequent=False, label=None, flaw=flaw)
 
             if new_flaw:
                 print(new_flaw)

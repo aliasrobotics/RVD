@@ -11,6 +11,7 @@ from .base import *
 from ..utils import gray, red, green, cyan, yellow, inline_magenta, validate_document
 import qprompt
 import ast
+import sys
 
 
 def ticket_menu(id, flaw):
@@ -62,7 +63,7 @@ to separate subfields. Some examples include \
         return flaw
 
 
-def edit_function(id, subsequent, flaw=None):
+def edit_function(id, subsequent, label, flaw=None, isoption="all"):
     """
     Function that triggers the ticket edition logic, returns the last flaw edited
 
@@ -71,6 +72,7 @@ def edit_function(id, subsequent, flaw=None):
     :param id, ticket's ID
     :param subsequent bool, subsequent ticket editions
     :param: flaw, use existing flaw rather than creating a new one
+    :param
     :return Flaw
     """
     importer = Base()
@@ -79,7 +81,11 @@ def edit_function(id, subsequent, flaw=None):
     if not subsequent:
         # contruct flaw if not passed as a parameter
         if not flaw:
-            flaw = importer.import_issue(id)
+            if id:
+                flaw = importer.import_issue(id)
+            else:
+                red("Error, no ID provided in single edition (no subsequent) mode")
+                sys.exit(1)
 
         continue_editing = True
         while continue_editing:
@@ -102,33 +108,73 @@ def edit_function(id, subsequent, flaw=None):
 
     # automatically updates tickets when stepping over them ("n" or "p")
     else:
-        continue_editing = subsequent  # variable that captures
-                                       # subsequent editions
-        flaw = importer.import_issue(id)
-        # continue editing if applies
-        while continue_editing:
-            # construct flaw
-            print(flaw)
-            choice = ticket_menu(id, flaw)
-            if choice == 'e':
-                new_flaw = edition_menu(flaw)
-                flaw = new_flaw
-            elif choice == "n":
-                importer.update_ticket(importer.repo.get_issue(int(id)), flaw)
-                continue_editing = True
-                id = int(id) + 1
-                flaw = importer.import_issue(id)
-                # TODO: consider overflow
-            elif choice == "p":
-                importer.update_ticket(importer.repo.get_issue(int(id)), flaw)
-                continue_editing = True
-                id = int(id) - 1
-                if id < 1:
-                    yellow("Reached first ticket")
-                    sys.exit(0)
-                flaw = importer.import_issue(id)
-            elif choice == "s":
-                importer.update_ticket(importer.repo.get_issue(int(id)), flaw)
-            else:
-                continue_editing = False
-        return flaw
+        if label:  # account for only filtered tickets
+            filtered = []
+            issues = importer.repo.get_issues(state=isoption)
+            for issue in issues:
+                all_labels = True  # indicates whether all labels are present
+                labels = [l.name for l in issue.labels]
+                for l in label:
+                    if l not in labels or "invalid" in labels or "duplicate" in labels:
+                        all_labels = False
+                        break
+                if all_labels:
+                    filtered.append(issue)
+
+            for issue in filtered:
+                continue_editing = subsequent
+                flaw = importer.import_issue(issue.number)  # construct flaw
+                # continue editing if applies
+                while continue_editing:
+                    # print flaw
+                    print(flaw)
+                    choice = ticket_menu(issue.number, flaw)
+                    if choice == 'e':
+                        new_flaw = edition_menu(flaw)
+                        flaw = new_flaw
+                    elif choice == "n":
+                        importer.update_ticket(importer.repo.get_issue(int(issue.number)), flaw)
+                        continue_editing = False
+                    elif choice == "p":
+                        yellow("Sorry, this option is not available when filtering by label")
+                    elif choice == "s":
+                        importer.update_ticket(importer.repo.get_issue(int(issue.number)), flaw)
+                    else:
+                        sys.exit(0)
+            return flaw
+
+        else:  # if no labels have been provided
+            if not id:
+                red("Error, no ID provided")
+                sys.exit(1)
+
+            continue_editing = subsequent  # variable that captures
+                                           # subsequent editions
+            flaw = importer.import_issue(id)
+            # continue editing if applies
+            while continue_editing:
+                # construct flaw
+                print(flaw)
+                choice = ticket_menu(id, flaw)
+                if choice == 'e':
+                    new_flaw = edition_menu(flaw)
+                    flaw = new_flaw
+                elif choice == "n":
+                    importer.update_ticket(importer.repo.get_issue(int(id)), flaw)
+                    continue_editing = True
+                    id = int(id) + 1
+                    flaw = importer.import_issue(id)
+                    # TODO: consider overflow
+                elif choice == "p":
+                    importer.update_ticket(importer.repo.get_issue(int(id)), flaw)
+                    continue_editing = True
+                    id = int(id) - 1
+                    if id < 1:
+                        yellow("Reached first ticket")
+                        sys.exit(0)
+                    flaw = importer.import_issue(id)
+                elif choice == "s":
+                    importer.update_ticket(importer.repo.get_issue(int(id)), flaw)
+                else:
+                    continue_editing = False
+            return flaw
