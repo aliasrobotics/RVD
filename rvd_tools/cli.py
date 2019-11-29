@@ -100,16 +100,38 @@ def listar(id, dump, private, label, isoption):
 #  ┌─┐┌┬┐┌─┐┌┬┐┬┌─┐┌┬┐┬┌─┐┌─┐
 #  └─┐ │ ├─┤ │ │└─┐ │ ││  └─┐
 #  └─┘ ┴ ┴ ┴ ┴ ┴└─┘ ┴ ┴└─┘└─┘
-@main.command("statistics")
-@click.option('--label', help='Filter flaws by label.', multiple=True)
-def statistics(label):
+@main.group("statistics")
+def statistics():
     """
     Produce some statistics and plots from RVD
     """
     cyan("Generating statistics...")
+
+
+@statistics.command("general")
+@click.option('--label', help='Filter flaws by label.', multiple=True)
+def statistics_general(label):
     statistics = Statistics()
     statistics.statistics_vulnerabilities_historic(label)
     # statistics.cvss_score_distribution(label)
+
+
+@statistics.command("distribution")
+@click.option('--label', help='Filter flaws by label.', multiple=True)
+def statistics_distribution(label):
+    """ An averaged scoring distribution per vendor"""
+    statistics = Statistics()
+    # statistics.statistics_vulnerabilities_historic(label)
+    statistics.cvss_score_distribution(label)
+
+
+@statistics.command("vendor_vulnerabilities")
+@click.option('--label', help='Filter flaws by label.', multiple=True)
+def statistics_vendor_vulnerabilities(label):
+    """ # Vulnerabilities per vendor"""
+    statistics = Statistics()
+    # statistics.statistics_vulnerabilities_historic(label)
+    statistics.vendor_vulnerabilities(label)
 
 #  ┌─┐┌┬┐┬┌┬┐
 #  ├┤  │││ │ 
