@@ -123,7 +123,7 @@ class Statistics(Base):
 
         if table:
             print(tabulate(table, headers=["ID", "Date reported",
-                                           "vendor", "CVE"]))
+                                           "vendor", "CVE", "CVSS"]))
 
     def historic(self, issues):
         """
@@ -134,13 +134,33 @@ class Statistics(Base):
         - date reported
         - vendor
         - CVE
+        - CVSS
 
         :returns table [[]]
         """
         return_table = []
         for issue in issues:
             flaw = self.import_issue(issue.number, issue=issue, debug=False)
-            return_table.append([flaw.id, flaw.date_reported, flaw.vendor, flaw.cve])
+            return_table.append([flaw.id, flaw.date_reported, flaw.vendor,
+                                 flaw.cve, flaw.cvss_score])
             # print(flaw.date_reported)
             # print(flaw.vendor)
         return return_table
+
+    def cvss_score_distribution(self, label, isoption="all"):
+        """
+        Generates an averaged score distribution for all tickets,
+        unless a label is provided (which would filter tickets)
+
+        Produces a plot.
+
+        :return None
+        """
+        vulnerabilities_flaws = []  # flaw objects, simplify processing
+        for vulnerability in self.vulnerabilities:
+            vulnerabilities_flaws.append(self.import_issue(vulnerability.number,issue=vulnerability, debug=False))
+
+        # Create a dict that organizes vulns by vendor
+        dict_vulnerabilities = {}
+        # for vuln in vulnerabilities_flaws
+                

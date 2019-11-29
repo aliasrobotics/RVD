@@ -109,6 +109,7 @@ def statistics(label):
     cyan("Generating statistics...")
     statistics = Statistics()
     statistics.statistics_vulnerabilities_historic(label)
+    # statistics.cvss_score_distribution(label)
 
 #  ┌─┐┌┬┐┬┌┬┐
 #  ├┤  │││ │ 
