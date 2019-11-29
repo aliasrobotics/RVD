@@ -43,6 +43,7 @@ def ticket_menu_vendor(id, flaw):
     # print(flaw)
     menu = qprompt.Menu()
     menu.add("vendor", inline_magenta("Assign vendor from 'vendor' label"))
+    menu.add("vulnerability", inline_magenta("Assign 'vulnerability' as type"))
     menu.add("e", "Edit")
     menu.add("p", "Previous")
     menu.add("n", "Next")
@@ -165,6 +166,11 @@ def edit_function(id, subsequent, label, flaw=None, isoption="all"):
                             continue_editing = True
                         else:
                             yellow("No vendor label found, no action performed")
+                    elif choice == "vulnerability":
+                        cyan("Assigning 'vulnerability' as type...")
+                        flaw.type = "vulnerability"
+                        importer.update_ticket(importer.repo.get_issue(int(issue.number)), flaw)
+                        continue_editing = True
                     elif choice == "n":
                         # temporarily disabling this to skip faster
                         # importer.update_ticket(importer.repo.get_issue(int(issue.number)), flaw)
