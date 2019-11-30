@@ -128,6 +128,51 @@ class Statistics(Base):
             print(tabulate(table, headers=["ID", "Date reported",
                                            "vendor", "CVE", "CVSS", "RVSS"]))
 
+    def cvss_vs_rvss(self, label, isoption="all"):
+        """Produce statististics on the scoring of vulns while comparing
+        two mechanims, CVSS and RVSS"""
+        cyan("Produce RVSS and CVSS comparisons...")
+        table = None
+        if label:  # account for only filtered tickets
+            cyan("Using label: " + str(label))
+            # importer = Base()
+            filtered = []
+            if isoption == "all":
+                issues = self.issues
+            elif isoption == "open":
+                issues = self.issues_open
+            elif isoption == "closed":
+                issues = self.issues_closed
+            else:
+                red("Error, not recognized isoption: " + str(isoption))
+                sys.exit(1)
+
+            # fetch the from attributes itself, see above
+            # issues = importer.repo.get_issues(state=isoption)
+            for issue in issues:
+                all_labels = True  # indicates whether all labels are present
+                labels = [l.name for l in issue.labels]
+                for l in label:
+                    # if l not in labels or "invalid" in labels or "duplicate" in labels:
+                    if l not in labels:
+                        all_labels = False
+                        break
+                if all_labels:
+                    filtered.append(issue)
+
+            print(table)
+            table = self.historic(filtered)
+
+        else:
+            cyan("Using all vulnerabilities...")
+            # Consider all tickets, open and close
+            table = self.historic(self.vulnerabilities)
+
+        if table:
+            print(tabulate(table, headers=["ID", "Date reported",
+                                           "vendor", "CVE", "CVSS", "RVSS"]))
+
+
     def historic(self, issues):
         """
         Compile a table with historic data.
@@ -233,11 +278,11 @@ class Statistics(Base):
         for vuln in vulnerabilities_flaws:
             score = vuln.cvss_score
             if score == 0:
-                score = 10  # asign by default a max. score to those non triaged
-                # score = 0  # asign by default a min score to those non triaged
+                # score = 10  # asign by default a max. score to those non triaged
+                score = 0  # asign by default a min score to those non triaged
             if score == "N/A":
-                score = 10
-                # score = 0
+                # score = 10
+                score = 0
 
             if vuln.vendor.strip() in dict_vulnerabilities.keys():
                 dict_vulnerabilities[vuln.vendor.strip()].append(score)

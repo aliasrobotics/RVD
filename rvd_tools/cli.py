@@ -113,7 +113,14 @@ def statistics():
 def statistics_general(label):
     statistics = Statistics()
     statistics.statistics_vulnerabilities_historic(label)
-    # statistics.cvss_score_distribution(label)
+
+
+# UNFINISHED
+@statistics.command("scoring")
+@click.option('--label', help='Filter flaws by label.', multiple=True)
+def statistics_scoring(label):
+    statistics = Statistics()
+    statistics.cvss_vs_rvss(label)
 
 
 @statistics.command("distribution")
@@ -121,7 +128,6 @@ def statistics_general(label):
 def statistics_distribution(label):
     """ An averaged scoring distribution per vendor"""
     statistics = Statistics()
-    # statistics.statistics_vulnerabilities_historic(label)
     statistics.cvss_score_distribution(label)
 
 
@@ -130,7 +136,6 @@ def statistics_distribution(label):
 def statistics_vendor_vulnerabilities(label):
     """ # Vulnerabilities per vendor"""
     statistics = Statistics()
-    # statistics.statistics_vulnerabilities_historic(label)
     statistics.vendor_vulnerabilities(label)
 
 #  ┌─┐┌┬┐┬┌┬┐
