@@ -14,7 +14,7 @@ setup(
         'mergedeep',
         'python-gitlab',
         'tabulate',
-        'numpy>=4.1.1',
+        'numpy',
         'dedupe',
         'qprompt',
         'vulners',
