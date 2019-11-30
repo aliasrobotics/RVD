@@ -162,6 +162,8 @@ class Summary(Base):
         for l_set in self.labels:
             if "invalid" in l_set:
                 continue
+            if "duplicate" in l_set:
+                continue
             if "bug" in l_set:
                 self.nbugs += 1
                 if 'robot component: ROS' in l_set:
@@ -174,6 +176,8 @@ class Summary(Base):
         for l_set in self.labels_open:
             if "invalid" in l_set:
                 continue
+            if "duplicate" in l_set:
+                continue
             if "bug" in l_set:
                 self.nbugs_open += 1
                 if 'robot component: ROS' in l_set:
@@ -185,6 +189,8 @@ class Summary(Base):
 
         for l_set in self.labels_closed:
             if "invalid" in l_set:
+                continue
+            if "duplicate" in l_set:
                 continue
             if "bug" in l_set:
                 self.nbugs_closed += 1
@@ -199,6 +205,8 @@ class Summary(Base):
         for l_set in self.labels:
             if "invalid" in l_set:
                 continue
+            if "duplicate" in l_set:
+                continue
             if "vulnerability" in l_set:
                 self.nvulnerabilities += 1
                 if 'robot component: ROS' in l_set:
@@ -211,6 +219,8 @@ class Summary(Base):
         for l_set in self.labels_open:
             if "invalid" in l_set:
                 continue
+            if "duplicate" in l_set:
+                continue
             if "vulnerability" in l_set:
                 self.nvulnerabilities_open += 1
                 if 'robot component: ROS' in l_set:
@@ -222,6 +232,8 @@ class Summary(Base):
 
         for l_set in self.labels_closed:
             if "invalid" in l_set:
+                continue
+            if "duplicate" in l_set:
                 continue
             if "vulnerability" in l_set:
                 self.nvulnerabilities_closed += 1
@@ -236,6 +248,8 @@ class Summary(Base):
         for l_set in self.labels:
             if "invalid" in l_set:
                 continue
+            if "duplicate" in l_set:
+                continue
             if "vulnerability" not in l_set:
                 if "bug" not in l_set:
                     self.nothers += 1
@@ -249,6 +263,8 @@ class Summary(Base):
         for l_set in self.labels_open:
             if "invalid" in l_set:
                 continue
+            if "duplicate" in l_set:
+                continue
             if "vulnerability" not in l_set:
                 if "bug" not in l_set:
                     self.nothers_open += 1
@@ -261,6 +277,8 @@ class Summary(Base):
 
         for l_set in self.labels_closed:
             if "invalid" in l_set:
+                continue
+            if "duplicate" in l_set:
                 continue
             if "vulnerability" not in l_set:
                 if "bug" not in l_set:
@@ -276,6 +294,8 @@ class Summary(Base):
         for l_set in self.labels_open:
             if "invalid" in l_set:
                 continue
+            if "duplicate" in l_set:
+                continue
             if "vulnerability" in l_set:
                 if "severity: critical" in l_set:
                     self.vulns_critical += 1
@@ -288,6 +308,8 @@ class Summary(Base):
 
         for l_set in self.labels_open:
             if "invalid" in l_set:
+                continue
+            if "duplicate" in l_set:
                 continue
             if "vulnerability" in l_set:
                 if "severity: high" in l_set:
@@ -302,6 +324,8 @@ class Summary(Base):
         for l_set in self.labels_open:
             if "invalid" in l_set:
                 continue
+            if "duplicate" in l_set:
+                continue
             if "vulnerability" in l_set:
                 if "severity: medium" in l_set:
                     self.vulns_medium += 1
@@ -314,6 +338,8 @@ class Summary(Base):
 
         for l_set in self.labels_open:
             if "invalid" in l_set:
+                continue
+            if "duplicate" in l_set:
                 continue
             if "vulnerability" in l_set:
                 if "severity: low" in l_set:
@@ -371,7 +397,7 @@ class Summary(Base):
         markdown += "|       | Open      | Closed  |    All |" + "\n"
         markdown += "|-------|---------|--------|-----------|" + "\n"
         markdown += "| Vulnerabilities | [![label: vulns_open][~vulns_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+) | \
-[![label: vulns_closed][~vulns_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+) | \
+[![label: vulns_closed][~vulns_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+) | \
 [![label: vulns][~vulns]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+) |" + "\n"
 
         markdown += "| Bugs | [![label: bugs_open][~bugs_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+-label%3A%22duplicate%22+)  | \
@@ -379,7 +405,7 @@ class Summary(Base):
 [![label: bugs][~bugs]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Abug+-label%3A%22invalid%22+-label%3A%22duplicate%22+) |" + "\n"
 
         markdown += "| Others |  [![label: others_open][~others_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+) | \
-[![label: others_closed][~others_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+) | \
+[![label: others_closed][~others_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+) | \
  [![label: others][~others]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+)|" + "\n"
         markdown += "\n"
         markdown += "\n"
@@ -480,7 +506,7 @@ class Summary(Base):
         markdown += "|       | Open      | Closed  |    All |" + "\n"
         markdown += "|-------|---------|--------|-----------|" + "\n"
         markdown += "| `ROS` Vulnerabilities | [![label: vulns_open_ros][~vulns_open_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
-[![label: vulns_closed_ros][~vulns_closed_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
+[![label: vulns_closed_ros][~vulns_closed_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
 [![label: vulns_ros][~vulns_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) |" + "\n"
 
         markdown += "| `ROS` Bugs | [![label: bugs_open_ros][~bugs_open_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
@@ -488,8 +514,8 @@ class Summary(Base):
 [![label: bugs_ros][~bugs_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) |" + "\n"
 
         markdown += "| `ROS` Others | [![label: others_open_ros][~others_open_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
-[![label: others_closed_ros][~others_closed_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+)  | \
-[![label: others_ros][~others_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) |" + "\n"
+[![label: others_closed_ros][~others_closed_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+)  | \
+[![label: others_ros][~others_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) |" + "\n"
         markdown += "\n"
         markdown += "\n"
 
@@ -567,7 +593,7 @@ class Summary(Base):
         markdown += "|       | Open      | Closed  |    All |" + "\n"
         markdown += "|-------|---------|--------|-----------|" + "\n"
         markdown += "| `ROS 2` Vulnerabilities | [![label: vulns_open_ros2][~vulns_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
-[![label: vulns_closed_ros2][~vulns_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
+[![label: vulns_closed_ros2][~vulns_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
 [![label: vulns_ros2][~vulns_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) |" + "\n"
 
         markdown += "| `ROS 2` Bugs | [![label: bugs_open_ros2][~bugs_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
@@ -575,8 +601,8 @@ class Summary(Base):
 [![label: bugs_ros2][~bugs_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) |" + "\n"
 
         markdown += "| `ROS 2` Others | [![label: others_open_ros2][~others_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
-[![label: others_closed_ros2][~others_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+)  | \
-[![label: others_ros2][~others_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) |" + "\n"
+[![label: others_closed_ros2][~others_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+)  | \
+[![label: others_ros2][~others_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) |" + "\n"
         markdown += "\n"
         markdown += "\n"
 
