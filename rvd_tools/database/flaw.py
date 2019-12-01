@@ -12,7 +12,7 @@ from datetime import datetime
 import arrow
 from .schema import SCHEMA
 from cerberus import Validator
-from mergedeep import merge
+# from mergedeep import merge
 
 
 def default(obj):
@@ -95,7 +95,7 @@ class Flaw:
         # mitigation
         self.description_mitigation = document['mitigation']['description']
         self.pull_request = document['mitigation']['pull-request']
-        
+
         # additional values
         self.additional_fields = {}
 
