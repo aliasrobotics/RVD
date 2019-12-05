@@ -55,9 +55,13 @@ class GitlabImporter(Base):
         if not 'ready' in labels:
             yellow("Importing a ticket that's not 'ready' just yet")
             sys.exit(1)
-        labels.remove("flaw")
-        labels.remove('Offensive team')
-        labels.remove('ready')
+
+        if "flaw" in labels:
+            labels.remove("flaw")
+        if "Offensive team" in labels:
+            labels.remove('Offensive team')
+        if "ready" in labels:
+            labels.remove('ready')
         return flaw, labels
 
     def get_table(self, label):

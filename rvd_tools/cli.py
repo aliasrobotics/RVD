@@ -501,6 +501,10 @@ def fetch_gitlab(id, push, all, dump, disclose, update):
         cyan("Importing from private gitlab feed...")
         importer_private = GitlabImporter()
         flaw, labels = importer_private.get_flaw(id)
+
+        # Define disclosure date
+        flaw.date_reported = arrow.utcnow().format('YYYY-MM-DD')
+        
         if not disclose:
             # Remove sensitive information from the ticket
             flaw.trace = "Not disclosed"
@@ -534,7 +538,10 @@ def fetch_gitlab(id, push, all, dump, disclose, update):
             pusher.update_ticket(issue, flaw)
 
         if update:
-            raise NotImplementedError
+            importer = Base()
+            issue = importer.repo.get_issue(int(update))
+            flaw.issue = issue.html_url  # this bit is not in the gitlab ticket
+            importer.update_ticket(issue, flaw)  # labels are fetched from issue
 
 
 @fetch.command("robust")
