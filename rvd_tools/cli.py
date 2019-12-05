@@ -37,6 +37,7 @@ import ast
 #  ┌┬┐┌─┐┬┌┐┌
 #  │││├─┤││││
 #  ┴ ┴┴ ┴┴┘└┘
+# http://patorjk.com/software/taag/#p=display&c=bash&f=Calvin%20S&t=main
 @click.group()
 def main():
     """Robot Vulnerability Database (RVD) command line tooling"""
@@ -64,7 +65,7 @@ def listar(id, dump, private, label, isoption):
         cyan("Importing from RVD, issue: " + str(issue))
         document_raw = issue.body
         document_raw = document_raw.replace('```yaml','').replace('```', '')
-        document = yaml.load(document_raw)
+        document = yaml.load(document_raw, Loader=yaml.FullLoader)
         # print(document)
 
         flaw = Flaw(document)
@@ -93,9 +94,14 @@ def listar(id, dump, private, label, isoption):
                 cyan("Importing from RVD, issue: " + str(issue))
                 document_raw = issue.body
                 document_raw = document_raw.replace('```yaml','').replace('```', '')
-                document = yaml.load(document_raw)
+                document = yaml.load(document_raw, Loader=yaml.FullLoader)
                 flaw = Flaw(document)
                 # print(flaw)
+
+#  ┬─┐┌─┐┌─┐┌─┐┬─┐┌┬┐
+#  ├┬┘├┤ ├─┘│ │├┬┘ │ 
+#  ┴└─└─┘┴  └─┘┴└─ ┴ 
+
 
 #  ┌─┐┌┬┐┌─┐┌┬┐┬┌─┐┌┬┐┬┌─┐┌─┐
 #  └─┐ │ ├─┤ │ │└─┐ │ ││  └─┐
@@ -401,7 +407,7 @@ def validate_file(filename, dump=False):
     try:
         with open(click.format_filename(filename), 'r') as stream:
             try:
-                doc = yaml.load(stream)
+                doc = yaml.load(stream, Loader=yaml.FullLoader)
             except yaml.YAMLError as exception:
                 raise exception
     except FileNotFoundError:
@@ -454,10 +460,6 @@ def summary(update):
 #  ││││├─┘│ │├┬┘ │ 
 #  ┴┴ ┴┴  └─┘┴└─ ┴ 
 @main.group("import")
-# @main.command("import")
-# @click.option('--url', default=None, help='Base URL\
-#               from where to import flaws.')
-# @click.argument('uri')
 def fetch():
     """Import flaws to RVD from a variety of sources"""
     cyan("Importing...")
@@ -469,13 +471,80 @@ def fetch():
     os.system("mkdir -p /tmp/rvd")
 
 
+@fetch.command("gitlab")
+@click.argument('id', required=True)
+@click.option('--push/--no-push',
+              help='Push imported flaws to RVD.',
+              default=False,)
+@click.option(
+    '--all/--no-all',
+    help='Import all issues from repository. USED in "overwrite_issue".',
+    default=False,)
+@click.option(
+    '--dump/--no-dump',
+    help='Print in stdout results.',
+    default=False,)
+@click.option(
+    '--disclose/--no-disclose',
+    help='Disclose sensitive aspects of the ticket".',
+    default=False,)
+@click.option(
+    '--update',
+    help='Update previously (fully) undisclosed ticket".',)
+def fetch_gitlab(id, push, all, dump, disclose, update):
+    """
+    Import ticket from private gitlab feed
+    """
+    if all:
+        raise NotImplementedError
+    else:
+        cyan("Importing from private gitlab feed...")
+        importer_private = GitlabImporter()
+        flaw, labels = importer_private.get_flaw(id)
+        if not disclose:
+            # Remove sensitive information from the ticket
+            flaw.trace = "Not disclosed"
+            flaw.reproduction = "Not disclosed"
+            flaw.reproduction_image = "Not disclosed"
+            flaw.description_exploitation = "Not disclosed"
+            flaw.exploitation_image = "Not disclosed"
+            flaw.exploitation_vector = "Not disclosed"
+            flaw.description_mitigation = "Not disclosed"
+            flaw.pull_request = "Not disclosed"
+
+        print(flaw)
+        # print(labels)
+
+        if push:
+            cyan("Pushing results to RVD...")
+            pusher = Base()
+            issue = pusher.new_ticket(flaw, labels)
+            # Update id
+            flaw.id = issue.number
+            # Update issue and links
+            if isinstance(flaw.links, list):
+                links = flaw.links
+            else:
+                links = []
+                if flaw.links.strip() != "":
+                    links.append(flaw.links.strip())
+            links.append(issue.html_url)
+            flaw.links = links
+            flaw.issue = issue.html_url
+            pusher.update_ticket(issue, flaw)
+
+        if update:
+            raise NotImplementedError
+
+
 @fetch.command("robust")
 @click.argument('filename', required=False)
 @click.option('--push/--no-push',
               help='Push imported flaws to RVD.', default=False,)
-@click.option('--all/--no-all',
-              help='Import all issues from repository. USED in "overwrite_issue".',
-              default=False,)
+@click.option(
+    '--all/--no-all',
+    help='Import all issues from repository. USED in "overwrite_issue".',
+    default=False,)
 @click.option('--dump/--no-dump',
               help='Print in stdout results.', default=False,)
 def fetch_robust(filename, push, all, dump):

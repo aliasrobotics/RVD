@@ -16,10 +16,14 @@ from ..database.base import Base
 import gitlab
 import os
 from ..utils import red
+from ..database.flaw import Flaw
+import yaml
+from ..utils import yellow
+import sys
 
 
 class GitlabImporter(Base):
-    def __init__(self, username="aliasrobotics", repo="RVD"):
+    def __init__(self, username="aliasrobotics", repo="RVD", project=15400852):
         """
         Imports tickets from Gitlab's private repos
         """
@@ -33,6 +37,28 @@ class GitlabImporter(Base):
 
         # Initialize Gitlab's object
         self.repo = gitlab.Gitlab('https://gitlab.com', private_token=self.token)
+        self.project = project
+
+    def get_flaw(self, id):
+        """
+        Returns a flaw instance populated from the ticket with id number
+
+        :param id, id number of the ticket
+        :return Flaw
+        """
+        project = self.repo.projects.get(self.project)
+        issue = project.issues.get(id)
+        document_raw = issue.attributes['description'].replace('```yaml','').replace('```', '')
+        document = yaml.load(document_raw, Loader=yaml.FullLoader)
+        flaw = Flaw(document)
+        labels = issue.attributes['labels']
+        if not 'ready' in labels:
+            yellow("Importing a ticket that's not 'ready' just yet")
+            sys.exit(1)
+        labels.remove("flaw")
+        labels.remove('Offensive team')
+        labels.remove('ready')
+        return flaw, labels
 
     def get_table(self, label):
         """
@@ -45,7 +71,7 @@ class GitlabImporter(Base):
         :return list[list]
         """
         table = []
-        project = self.repo.projects.get(15400852)
+        project = self.repo.projects.get(self.project)
         issues = project.issues.list()
         for issue in issues:
             if 'flaw' in issue.attributes['labels']:
