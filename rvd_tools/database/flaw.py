@@ -162,7 +162,7 @@ class Flaw:
                 if key == "exploitation":
                     for key2 in self.additional_fields[key].keys():
                         return_str += "\t" + inline_yellow(key2) + ": " + str(self.additional_fields[key][key2]) + "\n"
-        
+
         # mitigation
         return_str += inline_green("mitigation") + "\n"
         return_str += "\t" + inline_blue("description") + ": " + str(self.description_mitigation) + "\n"
@@ -353,11 +353,11 @@ class Flaw:
             green("Validated successfully!")
             validated = True
         return validated
-        
+
     def add_field(self, value, key, key2=None):
         """
         Add field to the flaw
-        
+
         Used for importing resources that might have additional values
         """
         if key2:

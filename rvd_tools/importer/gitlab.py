@@ -52,7 +52,14 @@ class GitlabImporter(Base):
                 # print(issue.attributes['title'])
                 # print(issue.attributes.keys())
                 if label:
-                    if label in issue.attributes['labels']:
+                    all_labels = True
+                    for l in label:
+                        if l in issue.attributes['labels']:
+                            continue
+                        else:
+                            all_labels = False
+                    if all_labels:
+                        # print(issue.attributes['title'])
                         row = [0, issue.attributes['title']]
                         table.append(row)
                 else:

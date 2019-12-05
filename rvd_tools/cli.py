@@ -453,10 +453,23 @@ def summary(update):
 #  ┬┌┬┐┌─┐┌─┐┬─┐┌┬┐
 #  ││││├─┘│ │├┬┘ │ 
 #  ┴┴ ┴┴  └─┘┴└─ ┴ 
-@main.command("import")
+@main.group("import")
+# @main.command("import")
 # @click.option('--url', default=None, help='Base URL\
 #               from where to import flaws.')
-@click.argument('uri')
+# @click.argument('uri')
+def fetch():
+    """Import flaws to RVD from a variety of sources"""
+    cyan("Importing...")
+    # if not uri:
+    #     red("A URI is needed when calling import")
+    #     sys.exit(1)
+    # else:
+    cyan("Creating folder for the import process...")
+    os.system("mkdir -p /tmp/rvd")
+
+
+@fetch.command("robust")
 @click.argument('filename', required=False)
 @click.option('--push/--no-push',
               help='Push imported flaws to RVD.', default=False,)
@@ -465,298 +478,301 @@ def summary(update):
               default=False,)
 @click.option('--dump/--no-dump',
               help='Print in stdout results.', default=False,)
-def fetch(uri, filename, push, all, dump):
-    """Import flaws to RVD from a variety of sources
-
-       rvd import yml <filepath>: imports from a yml file in the filepath
-       provided, validates the file yml content against the database schema and
-       then attempts to push it to RVD as a ticket.
-
-       rvd import robust: imports from ROSin's robust project tickets
-
-       rvd import issue <URL>: imports from RVD's Github issues
-
-       rvd import overwrite_issue <URL>: imports from RVD's OLD format issues
-       and overwrite them with the new format. If --all flag is used, applies
-       changes to all the tickets.
+def fetch_robust(filename, push, all, dump):
     """
-    cyan("Importing...")
-    if not uri:
-        red("A URI is needed when calling import")
+    Import tickets from robust project
+    """
+    importer = RobustImporter()
+    cyan("Cloning robust project...")
+    os.system("cd /tmp/rvd && git clone\
+               https://github.com/robust-rosin/robust")
+    # os.system("du -a /tmp/rvd/robust | grep\
+    #           '\.bug$' | awk '{print $2}'")
+    stdoutdata = subprocess.getoutput("\
+        du -a /tmp/rvd/robust | grep '\.bug$' | awk '{print $2}'")
+    bugfiles = stdoutdata.split('\n')
+    for bug in bugfiles:
+        # normalize and validate the content of the bug
+        validation, document_validated = validate_file(bug)
+
+        # drop 'bugzoo' key
+        if 'bugzoo' in document_validated.keys():
+            yellow("Dropping bugzoo key")
+            document_validated.pop('bugzoo')
+        # drop 'time-machine' key
+        if 'time-machine' in document_validated.keys():
+            yellow("Dropping time-machine key")
+            document_validated.pop('time-machine')
+
+        # Make some adjustments, manually
+        document_validated['flaw']['date-reported'] = str(document_validated['flaw']['time-reported'])
+        document_validated['cwe'] = document_validated['classification']
+
+        flaw = Flaw(document_validated)
+        # add relevant keys to flaw using add_field method
+        for key in document_validated['mitigation'].keys():
+            yellow("Adding to flaw ['mitigation']['" + str(key) + "'] = " + str(document_validated['mitigation'][key]))
+            flaw.add_field(value=document_validated['mitigation'][key],
+                           key="mitigation",
+                           key2=key)
+
+        if dump:
+            print(flaw)
+            # print(flaw.yml())
+
+        cyan("Validate again after processing...")
+        # validate the resulting document
+        flaw.validate()
+
+        if push:
+            cyan("Pushing results to RVD...")
+            pusher = Base()
+            labels = ['quality']
+            if flaw.vendor:
+                if flaw.vendor != "N/A":
+                    labels.append(flaw.vendor)
+            labels.append(flaw.type)
+            if flaw.system == "universal_robot":
+                flaw.vendor = "Universal Robots"
+                labels.append("vendor: Universal Robots")
+            else:
+                labels.append(flaw.system)
+            labels.append('mitigated')
+            labels.append("robust")
+            issue = pusher.new_ticket(flaw, labels)
+            # Update id
+            flaw.id = issue.number
+
+            # Update issue and links
+            if isinstance(flaw.links, list):
+                links = flaw.links
+            else:
+                links = []
+                if flaw.links.strip() != "":
+                    links.append(flaw.links.strip())
+            links.append(issue.html_url)
+            flaw.links = links
+            flaw.issue = issue.html_url
+
+            pusher.update_ticket(issue, flaw)
+
+
+# @fetch.command("issue")
+# @click.argument('filename', required=False)
+# @click.option('--push/--no-push',
+#               help='Push imported flaws to RVD.', default=False,)
+# @click.option('--all/--no-all',
+#               help='Import all issues from repository. USED in "overwrite_issue".',
+#               default=False,)
+# @click.option('--dump/--no-dump',
+#               help='Print in stdout results.', default=False,)
+# def fetch_issue(filename, push, all, dump):
+#     """
+#     Import from
+#     """
+#     url = filename
+#     if not url:
+#         red("URL not provided")
+#         sys.exit(1)
+#     else:
+#         processed_url = url.split("/")
+#
+#         repo = processed_url[-3]
+#         user = processed_url[-4]
+#         issue_number = int(processed_url[-1])
+#
+#         # Get the issue
+#         importer = Base(username=user, repo=repo)
+#         flaw = importer.import_issue(issue_number)
+#         raise NotImplementedError
+
+
+@fetch.command("overwrite")
+@click.argument('filename', required=False)
+@click.option('--push/--no-push',
+              help='Push imported flaws to RVD.', default=False,)
+@click.option('--all/--no-all',
+              help='Import all issues from repository. USED in "overwrite_issue".',
+              default=False,)
+@click.option('--dump/--no-dump',
+              help='Print in stdout results.', default=False,)
+def fetch_overwrite(filename, push, all, dump):
+    """
+    Overwrite a series of Github tickets with new content.
+
+    rvd import overwrite <URL>: imports from RVD's OLD format issues
+    and overwrite them with the new format. If --all flag is used, applies
+    changes to all the tickets.
+
+    """
+    # use filename as URL
+    url = filename
+    if not url:
+        red("URL not provided")
         sys.exit(1)
     else:
-        cyan("Creating folder for the import process...")
-        os.system("mkdir -p /tmp/rvd")
+        processed_url = url.split("/")
 
-        # Check URIs, only selected ones should be accepted
+        repo = processed_url[-3]
+        user = processed_url[-4]
+        importer = MarkdownImporter(user, repo)
 
-        # robust
-        #########
-        if (uri == "https://github.com/robust-rosin/robust") or (uri == "robust"):
-            importer = RobustImporter()
-            cyan("Cloning robust project...")
-            os.system("cd /tmp/rvd && git clone\
-                       https://github.com/robust-rosin/robust")
-            # os.system("du -a /tmp/rvd/robust | grep\
-            #           '\.bug$' | awk '{print $2}'")
-            stdoutdata = subprocess.getoutput("\
-                du -a /tmp/rvd/robust | grep '\.bug$' | awk '{print $2}'")
-            bugfiles = stdoutdata.split('\n')
-            for bug in bugfiles:
-                # normalize and validate the content of the bug
-                validation, document_validated = validate_file(bug)
-
-                # drop 'bugzoo' key
-                if 'bugzoo' in document_validated.keys():
-                    yellow("Dropping bugzoo key")
-                    document_validated.pop('bugzoo')
-                # drop 'time-machine' key
-                if 'time-machine' in document_validated.keys():
-                    yellow("Dropping time-machine key")
-                    document_validated.pop('time-machine')
-
-                # Make some adjustments, manually
-                document_validated['flaw']['date-reported'] = str(document_validated['flaw']['time-reported'])
-                document_validated['cwe'] = document_validated['classification']
-
-                flaw = Flaw(document_validated)
-                # add relevant keys to flaw using add_field method
-                for key in document_validated['mitigation'].keys():
-                    yellow("Adding to flaw ['mitigation']['" + str(key) + "'] = " + str(document_validated['mitigation'][key]))
-                    flaw.add_field(value=document_validated['mitigation'][key],
-                                   key="mitigation",
-                                   key2=key)
-
-                if dump:
-                    print(flaw)
-                    # print(flaw.yml())
-
-                cyan("Validate again after processing...")
-                # validate the resulting document
-                flaw.validate()
-
-                if push:
-                    cyan("Pushing results to RVD...")
-                    pusher = Base()
-                    labels = ['quality']
-                    if flaw.vendor:
-                        if flaw.vendor != "N/A":
-                            labels.append(flaw.vendor)
-                    labels.append(flaw.type)
-                    if flaw.system == "universal_robot":
-                        flaw.vendor = "Universal Robots"
-                        labels.append("vendor: Universal Robots")
-                    else:
-                        labels.append(flaw.system)
-                    labels.append('mitigated')
-                    labels.append("robust")
-                    issue = pusher.new_ticket(flaw, labels)
-                    # Update id
-                    flaw.id = issue.number
-
-                    # Update issue and links
-                    if isinstance(flaw.links, list):
-                        links = flaw.links
-                    else:
-                        links = []
-                        if flaw.links.strip() != "":
-                            links.append(flaw.links.strip())
-                    links.append(issue.html_url)
-                    flaw.links = links
-                    flaw.issue = issue.html_url
-
-                    pusher.update_ticket(issue, flaw)
-
-
-        # issue
-        #########
-        #  Github issue/ticket, URL
-        #  dump machine-readable content in a local flaw file
-        elif uri == "issue":
-            # use filename as URL
-            url = filename
-            if not url:
-                red("URL not provided")
-                sys.exit(1)
-            else:
-                processed_url = url.split("/")
-
-                repo = processed_url[-3]
-                user = processed_url[-4]
-                issue_number = int(processed_url[-1])
-
-                # Get the issue
-                importer = Base(username=user, repo=repo)
-                flaw = importer.import_issue(issue_number)
-
-        # overwrite_issue
-        #########
-        #  Github OLD issue/ticket, URL
-        #  mean to be used from sources like old RVD tickets
-        #  assummes syntax defined in MarkdownImporter class
-        elif uri == "overwrite_issue":
-            # use filename as URL
-            url = filename
-            if not url:
-                red("URL not provided")
-                sys.exit(1)
-            else:
-                processed_url = url.split("/")
-
-                repo = processed_url[-3]
-                user = processed_url[-4]
-                importer = MarkdownImporter(user, repo)
-
-                issues = None  # put together the issues we should go through
-                if all:
-                    issues = importer.repo.get_issues(state="open")
-                else:
-                    issue_number = int(processed_url[-1])
-                    issues = [importer.repo.get_issue(issue_number)]
-
-                for issue in issues:
-                    cyan("Importing from RVD, issue: " + str(issue))
-                    # parse issue's body
-                    importer.parse(issue.body)
-                    document = default_document()
-
-                    # Define key elements for document
-                    # set up id
-                    document['id'] = issue.number
-                    # set up title
-                    document['title'] = issue.title
-                    # set up description
-                    if importer.get_description():
-                        description_raw = importer.get_description().replace('```', '').replace('###', '')
-                        description_raw = description_raw.replace('\r\n\r\n', '')
-                        # description_printed = "{}".format(description_raw)
-                        # description_printed = "%s" % description_raw
-                        # description_printed = description_raw.replace("\r\n", "\\n")
-                    else:
-                        description_raw = ""
-                    document['description'] = description_raw
-
-                    # set up type of flaw
-                    document['type'] = importer.get_flaw_type()
-                    # set up vendor
-                    document['vendor'] = importer.get_vendor()
-                    # set up system
-                    document['system'] = importer.get_robot_or_component()
-                    # set up CWE
-                    if importer.get_cwe_id():
-                        document['cwe'] = "None" if importer.get_cwe_id() == "N/A" else "CWE-" + str(importer.get_cwe_id())
-                    else:
-                        document['cwe'] = "None"
-                    # set up RVSS score
-                    try:
-                        if importer.get_rvss_score():
-                            document['severity']['rvss-score'] = "None" if importer.get_cwe_id() == "N/A" else int(importer.get_rvss_score())
-                        else:
-                            document['severity']['rvss-score'] = "None"
-                    except ValueError:
-                        document['severity']['rvss-score'] = "None"
-                    except:
-                        document['severity']['rvss-score'] = "None"
-                    # set up rvss-vector
-                    if importer.get_rvss_vector():
-                        document['severity']['rvss-vector'] = importer.get_rvss_vector()
-                    else:
-                        document['severity']['rvss-vector'] = "N/A"
-                    # set up trace
-                    document['flaw']['trace'] = importer.get_stack_trace()
-
-                    # set up some general information
-                    table = importer.table_rows
-                    labels = [l.name for l in issue.labels]
-                    document['flaw']['issue']= issue.html_url
-                    document['links'] = [issue.html_url]
-                    document['keywords'] = labels
-
-                    # Process importer.table_rows, e.g.:
-                    #    [('Input      ', 'Value  '),
-                    #    ('---------', '--------'),
-                    #    ('Robot component ', 'ros2 '),
-                    #    ('Package ', 'tf2_ros '),
-                    #    ('Commit ', '[30baee82ea95c176b4b0d7ced1d3921820362d9d](https://github.com/ros2/ros2/tree/30baee82ea95c176b4b0d7ced1d3921820362d9d) '),
-                    #    ('Vendor  ', 'N/A '), ('CVE ID  ', 'N/A  '),
-                    #    ('CWE ID  ', 'N/A '), ('RVSS Score  ', 'N/A '),
-                    #    ('RVSS Vector ', 'N/A '),
-                    #    ('GitHub Account ', '@vmayoral '),
-                    #    ('Date Reported  ', 'Mon, 21 Oct 2019 17:38:55 +0000 '),
-                    #    ('Date Updated   ', 'Mon, 21 Oct 2019 17:38:55 +0000 '),
-                    #    ('Module URL ', 'registry.gitlab.com/aliasrobotics/offensive/alurity/ros2/ros2:build-tsan2-commit-b2dca472a35109cece17d3e61b18af5cb9be5772 '),
-                    #    ('Attack vector ', 'Internal network, robotics framework ')]
-                    for key, value in table:
-                        if "Robot" in key:
-                            document['system'] = value.strip()
-                            if value.strip() == "ros2":
-                                document['flaw']['phase'] = "testing"
-                                document['flaw']['subsystem'] = "cognition:ros2"
-                                document['flaw']['reported-by-relationship'] = "automatic"
-                                document['flaw']['detected-by-method'] = "testing dynamic"
-                                document['flaw']['specificity'] = "ROS-specific"
-                                document['flaw']['architectural-location'] = "platform code"
-                                document['flaw']['reported-by'] = "Alias Robotics (http://aliasrobotics.com)"
-                        if "Package" in key:
-                            document['flaw']['package'] = value.strip()
-                        if "Date Reported" in key:
-                            document['flaw']['date-detected'] = value.strip()
-                            document['flaw']['date-reported'] = value.strip()
-                        if "Module URL" in key:
-                            document['flaw']['reproduction-image'] = value.strip()
-                            if value.strip() != '' and value.strip() != 'None':
-                                document['flaw']['reproducibility'] = "always"
-                                document['flaw']['reproduction'] = "Find a\
-    pre-compiled environment in the Docker image below. Reproducing it implies\
-    source the workspace, finding the appropriate test and executing it."
-
-                    flaw = Flaw(document)
-                    if dump:
-                        # print(document)
-                        print(flaw)
-                        # print(flaw.yml())
-
-                    # validate the resulting document
-                    flaw.validate()
-
-                    # print(document_final)
-                    if push:
-                        cyan("Pushing results to RVD...")
-                        pusher = Base()
-                        pusher.update_ticket(issue, flaw)
-
-        # yml
-        #########
-        elif uri == "yml":
-            if not filename:
-                red("Filename not provided")
-                sys.exit(1)
-            else:
-                cyan("Importing from yaml file: " + str(filename))
-                validation, document_validated = validate(filename)
-                if validation:
-                    # pprint.pprint(document_validated)
-                    cyan("Final result:")
-                    flaw = Flaw(document)
-
-                    if dump:
-                        print(flaw)
-                        # print(flaw.yml())
-
-                    # validate the resulting document
-                    flaw.validate()
-
-                    if push:
-                        cyan("Pushing results to RVD...")
-                        pusher = Base()
-                        pusher.new_ticket(flaw, [])
-
-        # Default
-        #########
+        issues = None  # put together the issues we should go through
+        if all:
+            issues = importer.repo.get_issues(state="open")
         else:
-            red("URI: " + str(uri) + " not among the accepted ones")
-            red("try with: yml, robust, issue, overwrite_issue")
-            sys.exit(1)
+            issue_number = int(processed_url[-1])
+            issues = [importer.repo.get_issue(issue_number)]
+
+        for issue in issues:
+            cyan("Importing from RVD, issue: " + str(issue))
+            # parse issue's body
+            importer.parse(issue.body)
+            document = default_document()
+
+            # Define key elements for document
+            # set up id
+            document['id'] = issue.number
+            # set up title
+            document['title'] = issue.title
+            # set up description
+            if importer.get_description():
+                description_raw = importer.get_description().replace('```', '').replace('###', '')
+                description_raw = description_raw.replace('\r\n\r\n', '')
+                # description_printed = "{}".format(description_raw)
+                # description_printed = "%s" % description_raw
+                # description_printed = description_raw.replace("\r\n", "\\n")
+            else:
+                description_raw = ""
+            document['description'] = description_raw
+
+            # set up type of flaw
+            document['type'] = importer.get_flaw_type()
+            # set up vendor
+            document['vendor'] = importer.get_vendor()
+            # set up system
+            document['system'] = importer.get_robot_or_component()
+            # set up CWE
+            if importer.get_cwe_id():
+                document['cwe'] = "None" if importer.get_cwe_id() == "N/A" else "CWE-" + str(importer.get_cwe_id())
+            else:
+                document['cwe'] = "None"
+            # set up RVSS score
+            try:
+                if importer.get_rvss_score():
+                    document['severity']['rvss-score'] = "None" if importer.get_cwe_id() == "N/A" else int(importer.get_rvss_score())
+                else:
+                    document['severity']['rvss-score'] = "None"
+            except ValueError:
+                document['severity']['rvss-score'] = "None"
+            except:
+                document['severity']['rvss-score'] = "None"
+            # set up rvss-vector
+            if importer.get_rvss_vector():
+                document['severity']['rvss-vector'] = importer.get_rvss_vector()
+            else:
+                document['severity']['rvss-vector'] = "N/A"
+            # set up trace
+            document['flaw']['trace'] = importer.get_stack_trace()
+
+            # set up some general information
+            table = importer.table_rows
+            labels = [l.name for l in issue.labels]
+            document['flaw']['issue']= issue.html_url
+            document['links'] = [issue.html_url]
+            document['keywords'] = labels
+
+            # Process importer.table_rows, e.g.:
+            #    [('Input      ', 'Value  '),
+            #    ('---------', '--------'),
+            #    ('Robot component ', 'ros2 '),
+            #    ('Package ', 'tf2_ros '),
+            #    ('Commit ', '[30baee82ea95c176b4b0d7ced1d3921820362d9d](https://github.com/ros2/ros2/tree/30baee82ea95c176b4b0d7ced1d3921820362d9d) '),
+            #    ('Vendor  ', 'N/A '), ('CVE ID  ', 'N/A  '),
+            #    ('CWE ID  ', 'N/A '), ('RVSS Score  ', 'N/A '),
+            #    ('RVSS Vector ', 'N/A '),
+            #    ('GitHub Account ', '@vmayoral '),
+            #    ('Date Reported  ', 'Mon, 21 Oct 2019 17:38:55 +0000 '),
+            #    ('Date Updated   ', 'Mon, 21 Oct 2019 17:38:55 +0000 '),
+            #    ('Module URL ', 'registry.gitlab.com/aliasrobotics/offensive/alurity/ros2/ros2:build-tsan2-commit-b2dca472a35109cece17d3e61b18af5cb9be5772 '),
+            #    ('Attack vector ', 'Internal network, robotics framework ')]
+            for key, value in table:
+                if "Robot" in key:
+                    document['system'] = value.strip()
+                    if value.strip() == "ros2":
+                        document['flaw']['phase'] = "testing"
+                        document['flaw']['subsystem'] = "cognition:ros2"
+                        document['flaw']['reported-by-relationship'] = "automatic"
+                        document['flaw']['detected-by-method'] = "testing dynamic"
+                        document['flaw']['specificity'] = "ROS-specific"
+                        document['flaw']['architectural-location'] = "platform code"
+                        document['flaw']['reported-by'] = "Alias Robotics (http://aliasrobotics.com)"
+                if "Package" in key:
+                    document['flaw']['package'] = value.strip()
+                if "Date Reported" in key:
+                    document['flaw']['date-detected'] = value.strip()
+                    document['flaw']['date-reported'] = value.strip()
+                if "Module URL" in key:
+                    document['flaw']['reproduction-image'] = value.strip()
+                    if value.strip() != '' and value.strip() != 'None':
+                        document['flaw']['reproducibility'] = "always"
+                        document['flaw']['reproduction'] = "Find a\
+pre-compiled environment in the Docker image below. Reproducing it implies\
+source the workspace, finding the appropriate test and executing it."
+
+            flaw = Flaw(document)
+            if dump:
+                # print(document)
+                print(flaw)
+                # print(flaw.yml())
+
+            # validate the resulting document
+            flaw.validate()
+
+            # print(document_final)
+            if push:
+                cyan("Pushing results to RVD...")
+                pusher = Base()
+                pusher.update_ticket(issue, flaw)
+
+
+@fetch.command("yml")
+@click.argument('filename', required=False)
+@click.option('--push/--no-push',
+              help='Push imported flaws to RVD.', default=False,)
+@click.option('--all/--no-all',
+              help='Import all issues from repository. USED in "overwrite_issue".',
+              default=False,)
+@click.option('--dump/--no-dump',
+              help='Print in stdout results.', default=False,)
+def fetch_yml(filename, push, all, dump):
+    """
+   rvd import yml <filepath> imports from a yml file in the filepath
+   provided, validates the file yml content against the database schema and
+   then attempts to push it to RVD as a ticket if the right flags are used
+    """
+    if not filename:
+        red("Filename not provided")
+        sys.exit(1)
+    else:
+        cyan("Importing from yaml file: " + str(filename))
+        validation, document_validated = validate(filename)
+        if validation:
+            # pprint.pprint(document_validated)
+            cyan("Final result:")
+            flaw = Flaw(document)
+
+            if dump:
+                print(flaw)
+                # print(flaw.yml())
+
+            # validate the resulting document
+            flaw.validate()
+
+            if push:
+                cyan("Pushing results to RVD...")
+                pusher = Base()
+                pusher.new_ticket(flaw, [])
 
 
 def start():
