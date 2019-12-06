@@ -556,7 +556,8 @@ def fetch_gitlab(id, push, all, dump, disclose, update):
             importer = Base()
             issue = importer.repo.get_issue(int(update))
             flaw.issue = issue.html_url  # this bit is not in the gitlab ticket
-            importer.update_ticket(issue, flaw)  # labels are fetched from issue
+            flaw.id = issue.number  # Update id
+            importer.update_ticket(issue, flaw)  # labels fetched from issue
 
 
 @fetch.command("robust")
