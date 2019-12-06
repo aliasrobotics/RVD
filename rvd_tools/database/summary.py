@@ -666,28 +666,28 @@ class Summary(Base):
                     yellow("l_set that has ROS2 component includes NO package. Current labels: ", end="")
                     print(str(l_set))
 
-        # now process all the packages
-        # self.processed_packages_ros2 is a dict containg "package_name" as keys and "number of issues" as content
-        for p in packages:
-            if p in self.processed_packages_ros2.keys():
-                self.processed_packages_ros2[p] += 1
-            else:
-                self.processed_packages_ros2[p] = 1
-
-
-        markdown += "#### ROS 2 flaws by package (only `open` ones)" + "\n"
-        for key in self.processed_packages_ros2.keys():
-            markdown += "[![label: ros2_package_"+str(key)+"][~ros2_package_"+str(key)+"]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+"+str(key)+"%22+-label%3A%22duplicate%22+)"  + "\n"
-
-        # get some space for readability
-        markdown += "\n\n"
-
-        # Now add the corresponding source code for the labels
-        for key in self.processed_packages_ros2.keys():
-            markdown += "[~ros2_package_"+str(key)+"]: https://img.shields.io/badge/"+str(key.replace("-","_"))+"-" + str(
-                self.processed_packages_ros2[key]) + "-red.svg" + "\n"
-
-        # get some space for readability
+        # # now process all the packages
+        # # self.processed_packages_ros2 is a dict containg "package_name" as keys and "number of issues" as content
+        # for p in packages:
+        #     if p in self.processed_packages_ros2.keys():
+        #         self.processed_packages_ros2[p] += 1
+        #     else:
+        #         self.processed_packages_ros2[p] = 1
+        # 
+        # 
+        # markdown += "#### ROS 2 flaws by package (only `open` ones)" + "\n"
+        # for key in self.processed_packages_ros2.keys():
+        #     markdown += "[![label: ros2_package_"+str(key)+"][~ros2_package_"+str(key)+"]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+"+str(key)+"%22+-label%3A%22duplicate%22+)"  + "\n"
+        # 
+        # # get some space for readability
+        # markdown += "\n\n"
+        # 
+        # # Now add the corresponding source code for the labels
+        # for key in self.processed_packages_ros2.keys():
+        #     markdown += "[~ros2_package_"+str(key)+"]: https://img.shields.io/badge/"+str(key.replace("-","_"))+"-" + str(
+        #         self.processed_packages_ros2[key]) + "-red.svg" + "\n"
+        # 
+        # # get some space for readability
         markdown += "\n\n"
         return markdown
 

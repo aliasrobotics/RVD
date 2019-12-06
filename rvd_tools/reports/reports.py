@@ -69,7 +69,7 @@ class Report:
         # Create the Makefile
         cyan("Creating Makefile...")
         makefile_path = temp_dir + "/Makefile"
-        makefile_content = "SOURCE_FILE := " + str(id) + ".md" + "\n"
+        makefile_content = "SOURCE_FILE := " + str(arrow.utcnow().format('YYYYMMDD')) + str(id) + ".md" + "\n"
         makefile_content += "OUT_FILE := " + str(id) + "_report" + "\n"
         makefile_content += makefile
         makefile_file = open(makefile_path, 'w+')
