@@ -187,6 +187,133 @@ class Flaw:
 
         return return_str
 
+    def markdown(self):
+        """
+        Return the markdown representation of the flaw
+
+        Thought for generating reports, mainly PDF-based
+        """
+        # pylint: disable = line-too-long
+        return_str = ''
+        return_str += '# Vulnerability advisory: ' + str(self.title) + "\n"
+        return_str += '## General' + "\n"
+        return_str += str(self.description) + "\n"
+        return_str += "\n"
+        return_str += '| Item | Value |' + "\n"
+        return_str += '| ---- | ----- |' + "\n"
+        return_str += "| RVD ID |" + str(self.id) + "|" + "\n"
+        return_str += "| title |" + str(self.title) + "|" + "\n"
+        return_str += "| type |" + str(self.type) + "|" + "\n"
+        return_str += "| cwe |" + str(self.cwe) + "|" + "\n"
+        return_str += "| cve |" + str(self.cve) + "|" + "\n"
+        return_str += "| keywords |" + str(self.keywords) + "|" + "\n"
+        return_str += "| vendor |" + str(self.vendor) + "|" + "\n"
+
+        return_str += "\n"
+        # return_str += "\newpage"
+        
+        # severity
+        return_str += '## Severity' + "\n"
+        return_str += "\n"
+        return_str += '| Item | Value |' + "\n"
+        return_str += '| ---- | ----- |' + "\n"
+        return_str += "| rvss-score | " + str(self.rvss_score) + " |" + "\n"
+        return_str += "| rvss-vector | " + str(self.rvss_vector) + " |" + "\n"
+        return_str += "| severity-description | " + str(self.severity_description) + " |" + "\n"
+        return_str += "| cvss-score | " + str(self.cvss_score) + " |" + "\n"
+        return_str += "| cvss-vector | " + str(self.cvss_vector) + " |" + "\n"
+
+        # return_str += "\n"
+        return_str += "\\newpage"
+
+        # flaw
+        return_str += '## The flaw' + "\n"
+        return_str += 'This section describes de flaw in more detail and \
+captures relevant elements of it. For full understanding of the \
+taxonomy used for its categorization, refer to \
+[our taxonomy](https://github.com/aliasrobotics/RVD/blob/master/docs/TAXONOMY.md)'  + "\n"
+        return_str += "\n"
+        return_str += '| Item | Value |' + "\n"
+        return_str += '| ---- | ----- |' + "\n"
+        return_str += "| phase | " + str(self.phase) + " |" + "\n"
+        return_str += "| specificity | " + str(self.specificity) + " |" + "\n"
+        return_str += "| architectural-location | " + str(self.architectural_location) + " |" + "\n"
+        return_str += "| application | " + str(self.application) + " |" + "\n"
+        return_str += "| subsystem | " + str(self.subsystem) + " |" + "\n"
+        return_str += "| package | " + str(self.package) + " |" + "\n"
+        return_str += "| languages | " + str(self.languages) + " |" + "\n"
+        return_str += "| date-detected | " + str(self.date_detected) + " |" + "\n"
+        return_str += "| detected-by | " + str(self.detected_by) + " |" + "\n"
+        return_str += "| detected-by-method | " + str(self.detected_by_method) + " |" + "\n"
+        return_str += "| date-reported | " + str(arrow.utcnow().format('YYYY-MM-DD')) + " |" + "\n"
+        return_str += "| reported-by | " + str(self.reported_by) + " |" + "\n"
+        return_str += "| reported-by-relationship | " + str(self.reported_by_relationship) + " |" + "\n"
+        return_str += "| issue | " + str(self.issue) + " |" + "\n"
+        return_str += "| links | " + str(self.links) + " |" + "\n"
+        return_str += "| reproducibility | " + str(self.reproducibility) + " |" + "\n"
+        return_str += "| trace | " + str(self.trace) + " |" + "\n"
+        return_str += "| reproduction | " + str(self.reproduction) + " |" + "\n"
+        return_str += "| reproduction-image | " + str(self.reproduction_image) + " |" + "\n"
+
+        # additional_fields - flaw
+        for key in self.additional_fields.keys():
+            if isinstance(self.additional_fields[key], dict):
+                if key == "flaw":
+                    for key2 in self.additional_fields[key].keys():
+                        return_str +="| " + (key2) + " | " + str(self.additional_fields[key][key2]) + " | " + "\n"
+
+        return_str += "\\newpage" + "\n"
+
+        # exploitation
+        return_str += '## Exploitation' + "\n"
+        return_str += "\n"
+        return_str += '| Item | Value |' + "\n"
+        return_str += '| ---- | ----- |' + "\n"
+        return_str += "| description | " + str(self.description_exploitation) + "|" + "\n"
+        return_str += "| exploitation-image | " + str(self.exploitation_image) + "|" + "\n"
+        return_str += "| exploitation-vector | " + str(self.exploitation_vector) + "|" + "\n"
+        # additional_fields - exploitation
+        for key in self.additional_fields.keys():
+            if isinstance(self.additional_fields[key], dict):
+                if key == "exploitation":
+                    for key2 in self.additional_fields[key].keys():
+                        return_str +="| " + (key2) + " | " + str(self.additional_fields[key][key2]) + " | " + "\n"
+
+        return_str += "\\newpage" + "\n"
+
+        # mitigation
+        return_str += '## Mitigation' + "\n"
+        return_str += "\n"
+        return_str += '| Item | Value |' + "\n"
+        return_str += '| ---- | ----- |' + "\n"
+        return_str += "| description | " + str(self.description_mitigation) + "|" + "\n"
+        return_str += "| pull-request | " + str(self.pull_request) + "|" + "\n"
+        # additional_fields - mitigation
+        for key in self.additional_fields.keys():
+            if isinstance(self.additional_fields[key], dict):
+                if key == "mitigation":
+                    for key2 in self.additional_fields[key].keys():
+                        return_str +="| " + (key2) + " | " + str(self.additional_fields[key][key2]) + " | " + "\n"
+
+        return_str += "\n"
+
+        # # additional_fields (others)
+        # return_str += '## Mitigation' + "\n"
+        # return_str += "\n"
+        # return_str += '| Item | Value |' + "\n"
+        # return_str += '| ---- | ----- |' + "\n"
+        # for key in self.additional_fields.keys():
+        #     if key in ['mitigation', 'exploitation', 'flaw']:  # the ones contemplated above with additional_fields
+        #         continue
+        #     if isinstance(self.additional_fields[key], dict):
+        #         for key2 in self.additional_fields[key].keys():
+        #             return_str +="| " + (key2) + " | " + str(self.additional_fields[key][key2]) + " | " + "\n"
+        #     else:
+        #         return_str +="| " + (key2) + " | " + str(self.additional_fields[key]) + " | " + "\n"
+        # return_str += "\n"
+        
+        return return_str
+
     def yml(self):
         """
         Produce YAML machine readable format

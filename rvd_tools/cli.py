@@ -23,6 +23,7 @@ from .importer.robust import *
 from .importer.markdown import *
 from .importer.gitlab import *
 from .statistics.statistics import *
+from .reports.reports import *
 import sys
 import json
 import os
@@ -101,6 +102,17 @@ def listar(id, dump, private, label, isoption):
 #  ┬─┐┌─┐┌─┐┌─┐┬─┐┌┬┐
 #  ├┬┘├┤ ├─┘│ │├┬┘ │ 
 #  ┴└─└─┘┴  └─┘┴└─ ┴ 
+@main.command("report")
+@click.argument('id', required=True)
+def report(id):
+    """
+    Generates a PDF report for the given ID under /tmp/rvd/reports/
+    """
+    cyan("Generating a PDF report for ID: ", end="")
+    print(id, end="")
+    cyan(" ...")
+    report = Report()
+    report.from_gitlab(id)
 
 
 #  ┌─┐┌┬┐┌─┐┌┬┐┬┌─┐┌┬┐┬┌─┐┌─┐
@@ -496,6 +508,9 @@ def fetch_gitlab(id, push, all, dump, disclose, update):
     Import ticket from private gitlab feed
     """
     if all:
+        # simply push all the tickets that have the "ready" label
+        # importer_private = GitlabImporter()
+        # importer_private.get_ready_flaws(labels)  # TODO, add labels argument
         raise NotImplementedError
     else:
         cyan("Importing from private gitlab feed...")
@@ -504,7 +519,7 @@ def fetch_gitlab(id, push, all, dump, disclose, update):
 
         # Define disclosure date
         flaw.date_reported = arrow.utcnow().format('YYYY-MM-DD')
-        
+
         if not disclose:
             # Remove sensitive information from the ticket
             flaw.trace = "Not disclosed"

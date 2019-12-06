@@ -64,6 +64,15 @@ class GitlabImporter(Base):
             labels.remove('ready')
         return flaw, labels
 
+    def get_ready_flaws(self, labels):
+        """
+        Get all the tickets that include 'labels' and that have
+        the 'ready' label
+
+        :return [Flaw], list of Flaws
+        """
+        raise NotImplementedError
+
     def get_table(self, label):
         """
         Returns a tabulate ready table
