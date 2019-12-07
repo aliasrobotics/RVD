@@ -32,7 +32,7 @@ class GitlabImporter(Base):
         try:
             self.token = os.environ['GITLAB_TOKEN']
         except KeyError:
-            red("ERROR, make sure that you've GITLAB_TOKEN exported")
+            red("ERROR, make sure that you've GITLAB_TOKEN exported...")
             exit(1)
 
         # Initialize Gitlab's object
