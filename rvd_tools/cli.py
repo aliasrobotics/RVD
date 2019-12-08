@@ -147,6 +147,18 @@ def statistics_scoring(label):
     statistics.cvss_vs_rvss(label)
 
 
+@statistics.command("zero")
+@click.option('--label', help='Filter flaws by label.', multiple=True)
+@click.option('--nolabel', help='Filter flaws by those who which do not\
+ include label.', multiple=True)
+def statistics_zero_vs_mitigated(label, nolabel):
+    """
+    Plots 0-days vs mitigated flaws, among the filtered ones
+    """
+    statistics = Statistics()
+    statistics.zero_vs_mitigated(label, nolabel)
+
+
 @statistics.command("mitigation_timing")
 @click.option('--label', help='Filter flaws by label.', multiple=True)
 @click.option('--nolabel', help='Filter flaws by those who which do not\

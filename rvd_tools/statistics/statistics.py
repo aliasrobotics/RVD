@@ -174,6 +174,252 @@ class Statistics(Base):
             print(tabulate(table, headers=["ID", "Date reported",
                                            "vendor", "CVE", "CVSS", "RVSS"]))
 
+    def zero_vs_mitigated(self, label, nolabel):
+        """
+        Plots 0-days vs mitigated flaws, among the filtered ones
+        """
+        issues = self.vulnerabilities  # select all possible tickets
+        zero_days = []
+        mitigated = []
+        if label:  # account for only filtered tickets
+            cyan("Using label: " + str(label))
+            cyan("Using nolabel: " + str(nolabel))
+            filtered = []
+            # fetch the from attributes itself, see above
+            for issue in issues:
+                all_labels = True  # indicates whether all labels are present
+                labels = [l.name for l in issue.labels]
+                for l in label:
+                    # if l not in labels or "invalid" in labels or "duplicate" in labels:
+                    if l not in labels:
+                        all_labels = False
+                        break
+                for l in nolabel:
+                    # id l in labels, we don't want it
+                    if l in labels:
+                        all_labels = False
+                        break
+                if all_labels:
+                    filtered.append(issue)
+            issues = filtered
+        else:
+            cyan("Using all vulnerabilities...")
+        
+        # Calculate time difference for each ticket - in days
+        for issue in issues:
+            # vulnerability = self.import_issue(issue.number, issue=issue)
+            print("Issue " + str(issue.number) + " state: " + str(issue.state))
+            if issue.state == "open":
+                zero_days.append(issue)
+            else:
+                mitigated.append(issue)
+        
+        yellow("0-days: " + str(len(zero_days)))
+        yellow("Mitigated: " + str(len(mitigated)))
+        
+        # Plot
+        # animals = ['ROS', 'ROS 2', 'Universal Robots']
+        animals = [str(label)]
+        
+        fig = go.Figure(data=[
+            go.Bar(name='0-days', x=animals, y=[len(zero_days)]),
+            go.Bar(name='Mitigated', x=animals, y=[len(mitigated)])
+        ])
+        # Change the bar mode
+        fig.update_layout(barmode='group')
+        fig.show()
+
+        # issues_nonfiltered = self.vulnerabilities
+        # issues = self.vulnerabilities  # select all possible tickets
+        # 
+        # # ROS
+        # zero_days_ROS = []
+        # mitigated_ROS = []
+        # labels_ROS = ["robot component: ROS"]
+        # nolabels_ROS = []
+        # if labels_ROS:  # account for only filtered tickets
+        #     cyan("Using labels_ROS: " + str(labels_ROS))
+        #     cyan("Using nolabel: " + str(nolabel))
+        #     filtered = []
+        #     # fetch the from attributes itself, see above
+        #     for issue in issues_nonfiltered:
+        #         all_labels = True  # indicates whether all labels are present
+        #         labels = [l.name for l in issue.labels]
+        #         for l in labels_ROS:
+        #             # if l not in labels or "invalid" in labels or "duplicate" in labels:
+        #             if l not in labels:
+        #                 all_labels = False
+        #                 break
+        #         for l in nolabels_ROS:
+        #             # id l in labels, we don't want it
+        #             if l in labels:
+        #                 all_labels = False
+        #                 break
+        #         if all_labels:
+        #             filtered.append(issue)
+        #     issues = filtered
+        # else:
+        #     cyan("Using all vulnerabilities...")
+        # 
+        # # Calculate time difference for each ticket - in days
+        # for issue in issues:
+        #     # vulnerability = self.import_issue(issue.number, issue=issue)
+        #     print("Issue " + str(issue.number) + " state: " + str(issue.state))
+        #     if issue.state == "open":
+        #         zero_days_ROS.append(issue)
+        #     else:
+        #         mitigated_ROS.append(issue)
+        # 
+        # yellow("0-days: " + str(len(zero_days_ROS)))
+        # yellow("Mitigated: " + str(len(mitigated_ROS)))
+        # 
+        # # ROS2
+        # zero_days_ROS2 = []
+        # mitigated_ROS2 = []
+        # labels_ROS2 = ["robot component: ROS2"]
+        # nolabels_ROS2 = []
+        # if labels_ROS2:  # account for only filtered tickets
+        #     cyan("Using labels_ROS2: " + str(labels_ROS2))
+        #     cyan("Using nolabel: " + str(nolabel))
+        #     filtered = []
+        #     # fetch the from attributes itself, see above
+        #     for issue in issues_nonfiltered:
+        #         all_labels = True  # indicates whether all labels are present
+        #         labels = [l.name for l in issue.labels]
+        #         for l in labels_ROS2:
+        #             # if l not in labels or "invalid" in labels or "duplicate" in labels:
+        #             if l not in labels:
+        #                 all_labels = False
+        #                 break
+        #         for l in nolabels_ROS2:
+        #             # id l in labels, we don't want it
+        #             if l in labels:
+        #                 all_labels = False
+        #                 break
+        #         if all_labels:
+        #             filtered.append(issue)
+        #     issues = filtered
+        # else:
+        #     cyan("Using all vulnerabilities...")
+        # 
+        # # Calculate time difference for each ticket - in days
+        # for issue in issues:
+        #     # vulnerability = self.import_issue(issue.number, issue=issue)
+        #     print("Issue " + str(issue.number) + " state: " + str(issue.state))
+        #     if issue.state == "open":
+        #         zero_days_ROS2.append(issue)
+        #     else:
+        #         mitigated_ROS2.append(issue)
+        # 
+        # yellow("0-days: " + str(len(zero_days_ROS2)))
+        # yellow("Mitigated: " + str(len(mitigated_ROS2)))
+        # 
+        # # UR
+        # zero_days_UR = []
+        # mitigated_UR = []
+        # labels_UR = ["vendor: Universal Robots"]
+        # nolabels_UR = []
+        # if labels_UR:  # account for only filtered tickets
+        #     cyan("Using labels_UR: " + str(labels_UR))
+        #     cyan("Using nolabel: " + str(nolabel))
+        #     filtered = []
+        #     # fetch the from attributes itself, see above
+        #     for issue in issues_nonfiltered:
+        #         all_labels = True  # indicates whether all labels are present
+        #         labels = [l.name for l in issue.labels]
+        #         for l in labels_UR:
+        #             # if l not in labels or "invalid" in labels or "duplicate" in labels:
+        #             if l not in labels:
+        #                 all_labels = False
+        #                 break
+        #         for l in nolabels_UR:
+        #             # id l in labels, we don't want it
+        #             if l in labels:
+        #                 all_labels = False
+        #                 break
+        #         if all_labels:
+        #             filtered.append(issue)
+        #     issues = filtered
+        # else:
+        #     cyan("Using all vulnerabilities...")
+        # 
+        # # Calculate time difference for each ticket - in days
+        # for issue in issues:
+        #     # vulnerability = self.import_issue(issue.number, issue=issue)
+        #     print("Issue " + str(issue.number) + " state: " + str(issue.state))
+        #     if issue.state == "open":
+        #         zero_days_UR.append(issue)
+        #     else:
+        #         mitigated_UR.append(issue)
+        # 
+        # yellow("0-days: " + str(len(zero_days_UR)))
+        # yellow("Mitigated: " + str(len(mitigated_UR)))
+        # 
+        # # ABB
+        # zero_days_ABB = []
+        # mitigated_ABB = []
+        # labels_ABB = ["vendor: ABB"]
+        # nolabels_ABB = ["triage"]
+        # if labels_ABB:  # account for only filtered tickets
+        #     cyan("Using labels_ABB: " + str(labels_ABB))
+        #     cyan("Using nolabel: " + str(nolabel))
+        #     filtered = []
+        #     # fetch the from attributes itself, see above
+        #     for issue in issues_nonfiltered:
+        #         all_labels = True  # indicates whether all labels are present
+        #         labels = [l.name for l in issue.labels]
+        #         for l in labels_ABB:
+        #             # if l not in labels or "invalid" in labels or "duplicate" in labels:
+        #             if l not in labels:
+        #                 all_labels = False
+        #                 break
+        #         for l in nolabels_ABB:
+        #             # id l in labels, we don't want it
+        #             if l in labels:
+        #                 all_labels = False
+        #                 break
+        #         if all_labels:
+        #             filtered.append(issue)
+        #     issues = filtered
+        # else:
+        #     cyan("Using all vulnerabilities...")
+        # 
+        # # Calculate time difference for each ticket - in days
+        # for issue in issues:
+        #     # vulnerability = self.import_issue(issue.number, issue=issue)
+        #     print("Issue " + str(issue.number) + " state: " + str(issue.state))
+        #     if issue.state == "open":
+        #         zero_days_ABB.append(issue)
+        #     else:
+        #         mitigated_ABB.append(issue)
+        # 
+        # yellow("0-days: " + str(len(zero_days_ABB)))
+        # yellow("Mitigated: " + str(len(mitigated_ABB)))
+        # 
+        # ########
+        # # Plot
+        # ########
+        # animals = ['ROS', 'ROS 2', 'Universal Robots', "ABB"]
+        # # animals = [str(label)]
+        # 
+        # fig = go.Figure(data=[
+        #     go.Bar(name='0-days', x=animals, y=[
+        #         len(zero_days_ROS),
+        #         len(zero_days_ROS2),
+        #         len(zero_days_UR),
+        #         len(zero_days_ABB)
+        #     ]),
+        #     go.Bar(name='Mitigated', x=animals, y=[
+        #         len(mitigated_ROS),
+        #         len(mitigated_ROS2),
+        #         len(mitigated_UR),
+        #         len(mitigated_ABB)
+        #     ])
+        # ])
+        # # Change the bar mode
+        # fig.update_layout(barmode='group')
+        # fig.show()
+
     def mitigation_timing(self, label, nolabel):
         """
         Creates a plot showing the time to mitigation for the selected tickets
