@@ -95,6 +95,10 @@ class Flaw:
         # mitigation
         self.description_mitigation = document['mitigation']['description']
         self.pull_request = document['mitigation']['pull-request']
+        if 'date-mitigation' in document['mitigation'].keys():
+            self.date_mitigation = document['mitigation']['date-mitigation']
+        else:
+            self.date_mitigation = None
 
         # additional values
         self.additional_fields = {}
@@ -167,6 +171,8 @@ class Flaw:
         return_str += inline_green("mitigation") + "\n"
         return_str += "\t" + inline_blue("description") + ": " + str(self.description_mitigation) + "\n"
         return_str += "\t" + inline_blue("pull-request") + ": " + str(self.pull_request) + "\n"
+        if self.date_mitigation:
+            return_str += "\t" + inline_blue("date-mitigation") + ": " + str(self.date_mitigation) + "\n"
         # additional_fields - mitigation
         for key in self.additional_fields.keys():
             if isinstance(self.additional_fields[key], dict):
@@ -388,6 +394,7 @@ taxonomy used for its categorization, refer to \
             'mitigation': {
                     'description': self.description_mitigation,
                     'pull-request': self.pull_request,
+                    'date-mitigation': self.date_mitigation,
             },
         }
 

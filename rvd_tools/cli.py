@@ -129,16 +129,37 @@ def statistics():
 @statistics.command("general")
 @click.option('--label', help='Filter flaws by label.', multiple=True)
 def statistics_general(label):
+    """
+    Creates a table with some general information per flaw
+    """
     statistics = Statistics()
     statistics.statistics_vulnerabilities_historic(label)
 
 
 # UNFINISHED
-@statistics.command("scoring")
+@statistics.command("scoring_comparison")
 @click.option('--label', help='Filter flaws by label.', multiple=True)
 def statistics_scoring(label):
+    """
+    Compares CVSS and RVSS for selected tickets
+    """
     statistics = Statistics()
     statistics.cvss_vs_rvss(label)
+
+
+@statistics.command("mitigation_timing")
+@click.option('--label', help='Filter flaws by label.', multiple=True)
+@click.option('--nolabel', help='Filter flaws by those who which do not\
+ include label.', multiple=True)
+def statistics_mitigation_timing(label, nolabel):
+    """
+    Creates a plot showing the time to mitigation for the selected tickets.
+
+    If no mitigation date is provided (or if it's ""), it's assumed it's not
+    mitigated just yet.
+    """
+    statistics = Statistics()
+    statistics.mitigation_timing(label, nolabel)
 
 
 @statistics.command("distribution")

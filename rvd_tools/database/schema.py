@@ -301,6 +301,12 @@ SCHEMA = {
                 'default_setter':
                     lambda doc: ''
             },
+            'date-mitigation': {
+                'required': False,
+                'type': 'string',
+                'default_setter':
+                    lambda doc: ''
+            },
         }
     },
 }

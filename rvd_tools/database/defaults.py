@@ -63,6 +63,7 @@ def default_document():
         'mitigation': {
             'description': "",
             'pull-request': "",
+            'date-mitigation': "",
         },
     }
 

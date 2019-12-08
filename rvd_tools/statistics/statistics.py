@@ -15,7 +15,9 @@ import sys
 from tabulate import tabulate
 import pprint
 from plotly import graph_objs as go
+# import plotly.graph_objects as go
 import numpy
+import arrow
 
 
 class Statistics(Base):
@@ -172,6 +174,412 @@ class Statistics(Base):
             print(tabulate(table, headers=["ID", "Date reported",
                                            "vendor", "CVE", "CVSS", "RVSS"]))
 
+    def mitigation_timing(self, label, nolabel):
+        """
+        Creates a plot showing the time to mitigation for the selected tickets
+        via label (labels).
+
+        :param label tuple()
+        :return None
+        """
+        cyan("Produce plot with time required to mitigate each flaw...")
+
+        issues = self.vulnerabilities  # select all possible tickets
+        time_difference = []  # in days
+        if label:  # account for only filtered tickets
+            cyan("Using label: " + str(label))
+            # importer = Base()
+            filtered = []
+
+            # fetch the from attributes itself, see above
+            for issue in issues:
+                all_labels = True  # indicates whether all labels are present
+                labels = [l.name for l in issue.labels]
+                for l in label:
+                    # if l not in labels or "invalid" in labels or "duplicate" in labels:
+                    if l not in labels:
+                        all_labels = False
+                        break
+                for l in nolabel:
+                    # id l in labels, we don't want it
+                    if l in labels:
+                        all_labels = False
+                        break
+                if all_labels:
+                    filtered.append(issue)
+            issues = filtered
+        else:
+            cyan("Using all vulnerabilities...")
+
+        # Calculate time difference for each ticket - in days
+        for issue in issues:
+            vulnerability = self.import_issue(issue.number, issue=issue)
+            # favour selection of earliest date (date_detected)
+            if vulnerability.date_detected == "" or vulnerability.date_detected is None:
+                if vulnerability.date_reported == "" or vulnerability.date_reported is None:
+                    # report error in dates
+                    red("Error, both date_detected and date_reported seem \
+                    wrong in " + str(vulnerability))
+                    sys.exit(1)
+                else:
+                    initial_date = arrow.get(vulnerability.date_reported, ['YYYY-MM-DD'])
+            else:
+                initial_date = arrow.get(vulnerability.date_detected, ['YYYY-MM-DD'])
+
+            # select mitigation date
+            if vulnerability.date_mitigation:
+                mitigation_date = arrow.get(vulnerability.date_mitigation, ['YYYY-MM-DD'])
+            else:
+                mitigation_date = arrow.now()  # default to now for statistics
+
+            yellow("Mitigation time for " + str(vulnerability.id) + ": ", end="")
+            print(str((mitigation_date - initial_date).days))
+            time_difference.append(int((mitigation_date - initial_date).days))
+
+        ############
+        # Create plot
+        ############
+
+        # x_data = ['Carmelo Anthony']
+        x_data = [str(label)]
+
+        y0 = time_difference
+
+        # y_data = [y0, y1, y2, y3, y4, y5]
+        y_data = [y0]
+
+        # colors = ['rgba(93, 164, 214, 0.5)', 'rgba(255, 144, 14, 0.5)',
+        #           'rgba(44, 160, 101, 0.5)', 'rgba(255, 65, 54, 0.5)',
+        #           'rgba(207, 114, 255, 0.5)', 'rgba(127, 96, 0, 0.5)']
+        colors = ['rgba(93, 164, 214, 0.5)']
+
+        fig = go.Figure()
+
+        for xd, yd, cls in zip(x_data, y_data, colors):
+            fig.add_trace(go.Box(
+                    y=yd,
+                    name=xd,
+                    boxpoints='all',
+                    jitter=0.5,
+                    whiskerwidth=0.2,
+                    fillcolor=cls,
+                    marker_size=2,
+                    line_width=1)
+                )
+
+        fig.update_layout(
+            title='Time to mitigation (in days), robot vulnerabilities',
+            yaxis=dict(
+                autorange=True,
+                showgrid=False,
+                zeroline=True,
+                gridcolor='rgb(255, 255, 255)',
+                gridwidth=1,
+                zerolinecolor='rgb(255, 255, 255)',
+                zerolinewidth=2,
+            ),
+            margin=dict(
+                l=40,
+                r=30,
+                b=80,
+                t=100,
+            ),
+            paper_bgcolor='rgb(243, 243, 243)',
+            plot_bgcolor='rgb(243, 243, 243)',
+            showlegend=False
+        )
+        fig.show()
+
+        # issues_nonfiltered = self.vulnerabilities
+        # issues = self.vulnerabilities  # select all possible tickets
+        #
+        # # ROS
+        # time_difference_ROS = []  # in days
+        # labels_ROS = ["robot component: ROS"]
+        # if labels_ROS:  # account for only filtered tickets
+        #     cyan("Using labels_ROS: " + str(labels_ROS))
+        #     # importer = Base()
+        #     filtered = []
+        #
+        #     # fetch the from attributes itself, see above
+        #     for issue in issues_nonfiltered:
+        #         all_labels = True  # indicates whether all labels are present
+        #         labels = [l.name for l in issue.labels]
+        #         for l in labels_ROS:
+        #             # if l not in labels or "invalid" in labels or "duplicate" in labels:
+        #             if l not in labels:
+        #                 all_labels = False
+        #                 break
+        #         # for l in nolabel:
+        #         #     # id l in labels, we don't want it
+        #         #     if l in labels:
+        #         #         all_labels = False
+        #         #         break
+        #         if all_labels:
+        #             filtered.append(issue)
+        #     issues = filtered
+        # else:
+        #     cyan("Using all vulnerabilities...")
+        # 
+        # # Calculate time difference for each ticket - in days
+        # for issue in issues:
+        #     vulnerability = self.import_issue(issue.number, issue=issue)
+        #     # favour selection of earliest date (date_detected)
+        #     if vulnerability.date_detected == "" or vulnerability.date_detected is None:
+        #         if vulnerability.date_reported == "" or vulnerability.date_reported is None:
+        #             # report error in dates
+        #             red("Error, both date_detected and date_reported seem \
+        #             wrong in " + str(vulnerability))
+        #             sys.exit(1)
+        #         else:
+        #             initial_date = arrow.get(vulnerability.date_reported, ['YYYY-MM-DD'])
+        #     else:
+        #         initial_date = arrow.get(vulnerability.date_detected, ['YYYY-MM-DD'])
+        # 
+        #     # select mitigation date
+        #     if vulnerability.date_mitigation:
+        #         mitigation_date = arrow.get(vulnerability.date_mitigation, ['YYYY-MM-DD'])
+        #     else:
+        #         mitigation_date = arrow.now()  # default to now for statistics
+        # 
+        #     yellow("Mitigation time for " + str(vulnerability.id) + ": ", end="")
+        #     # print(str((mitigation_date - initial_date).days))
+        #     time_difference_ROS.append(int((mitigation_date - initial_date).days))
+        # 
+        # # ROS2
+        # time_difference_ROS2 = []  # in days
+        # labels_ROS2 = ["robot component: ROS2"]
+        # if labels_ROS2:  # account for only filtered tickets
+        #     cyan("Using labels_ROS2: " + str(labels_ROS2))
+        #     # importer = Base()
+        #     filtered = []
+        # 
+        #     # fetch the from attributes itself, see above
+        #     for issue in issues_nonfiltered:
+        #         all_labels = True  # indicates whether all labels are present
+        #         labels = [l.name for l in issue.labels]
+        #         for l in labels_ROS2:
+        #             # if l not in labels or "invalid" in labels or "duplicate" in labels:
+        #             if l not in labels:
+        #                 all_labels = False
+        #                 break
+        #         # for l in nolabel:
+        #         #     # id l in labels, we don't want it
+        #         #     if l in labels:
+        #         #         all_labels = False
+        #         #         break
+        #         if all_labels:
+        #             filtered.append(issue)
+        #     issues = filtered
+        # else:
+        #     cyan("Using all vulnerabilities...")
+        # 
+        # # Calculate time difference for each ticket - in days
+        # for issue in issues:
+        #     vulnerability = self.import_issue(issue.number, issue=issue)
+        #     # favour selection of earliest date (date_detected)
+        #     if vulnerability.date_detected == "" or vulnerability.date_detected is None:
+        #         if vulnerability.date_reported == "" or vulnerability.date_reported is None:
+        #             # report error in dates
+        #             red("Error, both date_detected and date_reported seem \
+        #             wrong in " + str(vulnerability))
+        #             sys.exit(1)
+        #         else:
+        #             initial_date = arrow.get(vulnerability.date_reported, ['YYYY-MM-DD'])
+        #     else:
+        #         initial_date = arrow.get(vulnerability.date_detected, ['YYYY-MM-DD'])
+        # 
+        #     # select mitigation date
+        #     if vulnerability.date_mitigation:
+        #         mitigation_date = arrow.get(vulnerability.date_mitigation, ['YYYY-MM-DD'])
+        #     else:
+        #         mitigation_date = arrow.now()  # default to now for statistics
+        # 
+        #     yellow("Mitigation time for " + str(vulnerability.id) + ": ", end="")
+        #     # print(str((mitigation_date - initial_date).days))
+        #     time_difference_ROS2.append(int((mitigation_date - initial_date).days))
+        # 
+        # # UR
+        # time_difference_UR = []  # in days
+        # labels_UR = ["vendor: Universal Robots"]
+        # if labels_UR:  # account for only filtered tickets
+        #     cyan("Using labels_UR: " + str(labels_UR))
+        #     # importer = Base()
+        #     filtered = []
+        # 
+        #     # fetch the from attributes itself, see above
+        #     for issue in issues_nonfiltered:
+        #         all_labels = True  # indicates whether all labels are present
+        #         labels = [l.name for l in issue.labels]
+        #         for l in labels_UR:
+        #             # if l not in labels or "invalid" in labels or "duplicate" in labels:
+        #             if l not in labels:
+        #                 all_labels = False
+        #                 break
+        #         # for l in nolabel:
+        #         #     # id l in labels, we don't want it
+        #         #     if l in labels:
+        #         #         all_labels = False
+        #         #         break
+        #         if all_labels:
+        #             filtered.append(issue)
+        #     issues = filtered
+        # else:
+        #     cyan("Using all vulnerabilities...")
+        # 
+        # # Calculate time difference for each ticket - in days
+        # for issue in issues:
+        #     vulnerability = self.import_issue(issue.number, issue=issue)
+        #     # favour selection of earliest date (date_detected)
+        #     if vulnerability.date_detected == "" or vulnerability.date_detected is None:
+        #         if vulnerability.date_reported == "" or vulnerability.date_reported is None:
+        #             # report error in dates
+        #             red("Error, both date_detected and date_reported seem \
+        #             wrong in " + str(vulnerability))
+        #             sys.exit(1)
+        #         else:
+        #             initial_date = arrow.get(vulnerability.date_reported, ['YYYY-MM-DD'])
+        #     else:
+        #         initial_date = arrow.get(str(vulnerability.date_detected), ['YYYY-MM-DD'])
+        # 
+        #     # select mitigation date
+        #     if vulnerability.date_mitigation:
+        #         mitigation_date = arrow.get(vulnerability.date_mitigation, ['YYYY-MM-DD'])
+        #     else:
+        #         mitigation_date = arrow.now()  # default to now for statistics
+        # 
+        #     yellow("Mitigation time for " + str(vulnerability.id) + ": ", end="")
+        #     print(str((mitigation_date - initial_date).days))
+        #     time_difference_UR.append(int((mitigation_date - initial_date).days))
+        # 
+        # # ABB
+        # time_difference_ABB = []  # in days
+        # labels_ABB = ["vendor: ABB"]
+        # if labels_ABB:  # account for only filtered tickets
+        #     cyan("Using labels_ABB: " + str(labels_ABB))
+        #     # importer = Base()
+        #     filtered = []
+        # 
+        #     # fetch the from attributes itself, see above
+        #     for issue in issues_nonfiltered:
+        #         all_labels = True  # indicates whether all labels are present
+        #         labels = [l.name for l in issue.labels]
+        #         for l in labels_ABB:
+        #             # if l not in labels or "invalid" in labels or "duplicate" in labels:
+        #             if l not in labels:
+        #                 all_labels = False
+        #                 break
+        #         for l in nolabel:
+        #             # id l in labels, we don't want it
+        #             if l in labels:
+        #                 all_labels = False
+        #                 break
+        #         if all_labels:
+        #             filtered.append(issue)
+        #     issues = filtered
+        # else:
+        #     cyan("Using all vulnerabilities...")
+        # 
+        # # Calculate time difference for each ticket - in days
+        # for issue in issues:
+        #     vulnerability = self.import_issue(issue.number, issue=issue)
+        #     # favour selection of earliest date (date_detected)
+        #     if vulnerability.date_detected == "" or vulnerability.date_detected is None:
+        #         if vulnerability.date_reported == "" or vulnerability.date_reported is None:
+        #             # report error in dates
+        #             red("Error, both date_detected and date_reported seem \
+        #             wrong in " + str(vulnerability))
+        #             sys.exit(1)
+        #         else:
+        #             initial_date = arrow.get(vulnerability.date_reported, ['YYYY-MM-DD'])
+        #     else:
+        #         initial_date = arrow.get(str(vulnerability.date_detected), ['YYYY-MM-DD'])
+        # 
+        #     # select mitigation date
+        #     if vulnerability.date_mitigation:
+        #         mitigation_date = arrow.get(vulnerability.date_mitigation, ['YYYY-MM-DD'])
+        #     else:
+        #         mitigation_date = arrow.now()  # default to now for statistics
+        # 
+        #     yellow("Mitigation time for " + str(vulnerability.id) + ": ", end="")
+        #     print(str((mitigation_date - initial_date).days))
+        #     # print(mitigation_date)
+        #     # print(initial_date)
+        #     time_difference_ABB.append(int((mitigation_date - initial_date).days))
+        # 
+        # ############
+        # # Create plot
+        # ############
+        # 
+        # # x_data = ['Carmelo Anthony']
+        # x_data = ["ROS", "ROS2", "Universal Robots", "ABB"]
+        # 
+        # y0 = time_difference_ROS
+        # y1 = time_difference_ROS2
+        # y2 = time_difference_UR
+        # y3 = time_difference_ABB
+        # 
+        # # y_data = [y0, y1, y2, y3, y4, y5]
+        # y_data = [y0, y1, y2, y3]
+        # 
+        # # colors = ['rgba(93, 164, 214, 0.5)', 'rgba(255, 144, 14, 0.5)',
+        # #           'rgba(44, 160, 101, 0.5)', 'rgba(255, 65, 54, 0.5)',
+        # #           'rgba(207, 114, 255, 0.5)', 'rgba(127, 96, 0, 0.5)']
+        # colors = ['rgba(93, 164, 214, 0.5)', 'rgba(255, 144, 14, 0.5)',
+        #           'rgba(44, 160, 101, 0.5)', 'rgba(255, 65, 54, 0.5)']
+        # 
+        # fig = go.Figure()
+        # 
+        # for xd, yd, cls in zip(x_data, y_data, colors):
+        #     fig.add_trace(go.Box(
+        #             y=yd,
+        #             name=xd,
+        #             boxpoints='all',
+        #             jitter=0.5,
+        #             whiskerwidth=0.2,
+        #             fillcolor=cls,
+        #             marker_size=5,
+        #             line_width=1)
+        #         )
+        # 
+        # # fig.add_shape(
+        # #         # Line Horizontal
+        # #         go.layout.Shape(
+        # #             type="line",
+        # #             y0=365,
+        # #             # x0=0,
+        # #             # x1=5,
+        # #             y1=365,
+        # #             line=dict(
+        # #                 color="LightSeaGreen",
+        # #                 width=3,
+        # #                 dash="dashdot",
+        # #             ),
+        # #         )
+        # # )
+        # 
+        # fig.update_layout(
+        #     title='Time until mitigation (in days), robot vulnerabilities',
+        #     yaxis=dict(
+        #         autorange=True,
+        #         showgrid=False,
+        #         zeroline=True,
+        #         gridcolor='rgb(255, 255, 255)',
+        #         gridwidth=1,
+        #         zerolinecolor='rgb(255, 255, 255)',
+        #         zerolinewidth=2,
+        #     ),
+        #     margin=dict(
+        #         l=40,
+        #         r=30,
+        #         b=80,
+        #         t=100,
+        #     ),
+        #     # paper_bgcolor='rgb(243, 243, 243)',
+        #     # plot_bgcolor='rgb(243, 243, 243)',
+        #     showlegend=True
+        # )
+        # fig.show()
 
     def historic(self, issues):
         """
@@ -253,9 +661,6 @@ class Statistics(Base):
         fig.update_layout(barmode='stack',
                           xaxis={'categoryorder': 'category ascending'})
         fig.show()
-
-
-
 
     def cvss_score_distribution(self, label, isoption="all"):
         """
