@@ -19,7 +19,8 @@ setup(
         'qprompt',
         'vulners',
         'plotly',
-        'python-dateutil==2.7.3'
+        'python-dateutil==2.7.3',
+        'bs4',
         # 'pycvesearch',  # needs to be installed manually, see https://github.com/cve-search/PyCVESearch
     ],
     url='https://github.com/aliasrobotics/RVD',

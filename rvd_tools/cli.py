@@ -147,6 +147,19 @@ def statistics_scoring(label):
     statistics.cvss_vs_rvss(label)
 
 
+# UNFINISHED
+@statistics.command("public_private")
+@click.option('--label', help='Filter flaws by label.', multiple=True)
+@click.option('--nolabel', help='Filter flaws by those who which do not\
+ include label.', multiple=True)
+def statistics_public_private(label, nolabel):
+    """
+    Plots public vs private flaws given a set of filters through labels
+    """
+    statistics = Statistics()
+    statistics.public_private(label, nolabel)
+
+
 @statistics.command("zero")
 @click.option('--label', help='Filter flaws by label.', multiple=True)
 @click.option('--nolabel', help='Filter flaws by those who which do not\
@@ -157,6 +170,18 @@ def statistics_zero_vs_mitigated(label, nolabel):
     """
     statistics = Statistics()
     statistics.zero_vs_mitigated(label, nolabel)
+
+
+@statistics.command("cwe")
+@click.option('--label', help='Filter flaws by label.', multiple=True)
+@click.option('--nolabel', help='Filter flaws by those who which do not\
+ include label.', multiple=True)
+def statistics_cwe(label, nolabel):
+    """
+    Plots flaw CWEs grouped by value among the filtered ones
+    """
+    statistics = Statistics()
+    statistics.cwe(label, nolabel)
 
 
 @statistics.command("mitigation_timing")
