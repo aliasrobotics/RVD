@@ -1,10 +1,9 @@
-# Taxonomy of bugs
+# Taxonomy of flaws
 
-This document presents a taxonomy (classification) for bugs that apply in robotics and that is used within RVD. Content is heavily inspired by previous work related to quality:
+This document presents a taxonomy (classification) for security flaws that apply in robotics and that is used within RVD. Content is heavily inspired by:
 
-> Based on the original work of Claus Brabrand & Andrzej Wasowski (April 3, 2017, version 1.3 )
->   https://raw.githubusercontent.com/robust-rosin/robust/60c2902d5069f015027231b4a51096b7b900bcfa/doc/taxonomy-description.txt
->
+- previous work related to quality in robotics Claus Brabrand & Andrzej Wasowski (April 3, 2017, version 1.3 ) https://raw.githubusercontent.com/robust-rosin/robust/60c2902d5069f015027231b4a51096b7b900bcfa/doc/taxonomy-description.txt
+- the [CVE ID JSON format version 4.0](https://github.com/CVEProject/automation-working-group/blob/master/cve_json_schema/DRAFT-JSON-file-format-v4.md).
 
 Currently, the taxonomy is somewhat ROS-centered but it <ins>aims to mature beyond ROS and into classifying any robot or robot component's bug</ins>.
 
