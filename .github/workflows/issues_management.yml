@@ -1,7 +1,8 @@
 name: RVD_management
 on:
   issues:
-    types: [labeled, unlabeled]
+    types: [opened, edited, closed]
+    # types: [labeled, unlabeled]
     # types: [opened, edited, closed, labeled, unlabeled]
     # types: [opened, edited, milestoned, deleted, transferred, pinned, unpinned, closed, reopened, assigned, unassigned, labeled, unlabeled, locked, unlocked, milestoned, demilestoned]
 
@@ -46,13 +47,13 @@ jobs:
         pwd
     - name: Build RVD summary
       env:
-        GITHUB_TOKEN: ${{ secrets.RVD_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |        
         pip3 install .
         rvd summary --update
     - name: Commit changes
       env:
-        GITHUB_TOKEN: ${{ secrets.RVD_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         # git config user.name $(jq .pusher.username $GITHUB_PAYLOAD)
         git config user.name "Alias Robotics"
@@ -65,7 +66,7 @@ jobs:
         git branch
     - name: Push changes
       env:
-        GITHUB_TOKEN: ${{ secrets.RVD_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo "Pushing upstream"
         git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" master
