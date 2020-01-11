@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='rvd-tools',
-    version='0.3',
+    version='0.4',
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
@@ -33,7 +33,7 @@ setup(
     description='Toolset for RVD',
     long_description='''
     Set of tools and scripts to maintain, process and submit
-    flaws in the the Robot Vulnerability Database (RVD)
+    flaws in the the Robot Vulnerability Database (RVD).
     ''',
     keywords=['RVD', 'vulnerability', 'security', 'tools', 'ics'],
     entry_points={

@@ -89,6 +89,30 @@ class Base:
         # gray(flaw)
         return flaw
 
+    def import_issues_labels(self, label, isoption="open"):
+        """
+        Returns a list of issues
+
+        :param label, tuple with labels, could be more than one
+        :param is, status of the issues (could be "open", "closed" or "all")
+        :return list[Issue]
+        """
+        issue_list = []
+        issues_public = self.repo.get_issues(state=isoption)
+        for issue in issues_public:
+            all_labels = True  # indicates whether all labels are present
+            if label:
+                labels = [l.name for l in issue.labels]
+                for l in label:
+                    if l not in labels or "invalid" in labels:
+                        all_labels = False
+                        break
+                if all_labels:
+                    issue_list.append(issue)
+            else:
+                issue_list.append(issue)
+        return issue_list
+
     def get_table(self, label, isoption="open"):
         """
         Returns a tabulate ready table

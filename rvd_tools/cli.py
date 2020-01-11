@@ -91,13 +91,14 @@ def listar(id, dump, private, label, isoption):
             print(tabulate(table, headers=["ID", "Title"]))
 
         if dump:
+            issues = importer.import_issues_labels(label, isoption)
             for issue in issues:
                 cyan("Importing from RVD, issue: " + str(issue))
                 document_raw = issue.body
                 document_raw = document_raw.replace('```yaml','').replace('```', '')
                 document = yaml.load(document_raw, Loader=yaml.FullLoader)
                 flaw = Flaw(document)
-                # print(flaw)
+                print(flaw)
 
 #  ┬─┐┌─┐┌─┐┌─┐┬─┐┌┬┐
 #  ├┬┘├┤ ├─┘│ │├┬┘ │ 
