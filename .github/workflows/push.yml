@@ -42,18 +42,18 @@ jobs:
         pwd
     - name: Build RVD summary
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.RVD_TOKEN }}
       run: |        
         pip3 install .
         rvd summary --update
     - name: Commit changes
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.RVD_TOKEN }}
       run: |
         # git config user.name $(jq .pusher.username $GITHUB_PAYLOAD)
-        git config user.name "Víctor Mayoral Vilches"
+        git config user.name "Alias Robotics"
         # git config user.email $(jq .pusher.email $GITHUB_PAYLOAD)
-        git config user.email "v.mayoralv@gmail.com"
+        git config user.email "contact@aliasrobotics.com"
         git checkout -b master
         # git pull origin master
         git add .
@@ -61,7 +61,7 @@ jobs:
         git branch
     - name: Push changes
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.RVD_TOKEN }}
       run: |
         echo "Pushing upstream"
         git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" master
