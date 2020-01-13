@@ -871,7 +871,7 @@ Below we list some of the existing capabilities (some **deprecated** in the curr
 - [x] Definition of a formal schema for RVD coherent to the taxonomy and inspired by prior work
 - [x] Automatic re-generation of README.md as summary
 - [x] Development of CLI toolset to manage RVD
-- [ ] Include ID in the title of the ticket as "RVD#ID: ..."
+- [x] Include ID in the title of the ticket as "RVD#ID: ..."
 - [ ] Automatic review of database in-search for duplicates
 - [ ] Automatic review of database in-search for malformed tickets, tag them appropriately
     - [ ] Automatic feedback on malformations
