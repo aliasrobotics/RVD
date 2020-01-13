@@ -527,6 +527,32 @@ def summary(update):
     if update:
         summary.replace_readme()
 
+
+#  ┌─┐┌┬┐┬ ┬┌─┐┬─┐
+#  │ │ │ ├─┤├┤ ├┬┘
+#  └─┘ ┴ ┴ ┴└─┘┴└─
+@main.command("other")
+@click.option('--title/--no-title',
+              help="Update each ticket's title and ensure it starts with \
+              RVD#number", default=False,)
+def other(title):
+    """Manage 'other' topics. See options for more."""
+    cyan("Other actions for RVD...")
+    importer = Base()
+    if title:
+        # Fetch all tickets, iterate over them and update each with a
+        # title that includes RVD#<ticket-number>
+        issues_all = importer.get_issues_filtered()
+        for issue in issues_all:
+            # Get the flaw that corresponds with the issue
+            flaw = importer.import_issue(0, issue, debug=False)
+            if flaw.title[:4] != "RVD#":  # already has the syntax
+                new_title = "RVD#" + str(issue.number) + ": " + flaw.title
+                flaw.title = new_title
+                # print(flaw)
+                importer.update_ticket(issue, flaw)  # labels fetched from issue
+
+
 #  ┬┌┬┐┌─┐┌─┐┬─┐┌┬┐
 #  ││││├─┘│ │├┬┘ │ 
 #  ┴┴ ┴┴  └─┘┴└─ ┴ 

@@ -1,73 +1,73 @@
-name: RVD_management
-on:
-  issues:
-    types: [opened, edited, closed]
-    # types: [labeled, unlabeled]
-    # types: [opened, edited, closed, labeled, unlabeled]
-    # types: [opened, edited, milestoned, deleted, transferred, pinned, unpinned, closed, reopened, assigned, unassigned, labeled, unlabeled, locked, unlocked, milestoned, demilestoned]
-
-jobs:
-  # # Reviews all tickets tags and provides feedback on malformed ones
-  # malformed:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v1
-  #   - name: Set up Python 3.7
-  #     uses: actions/setup-python@v1
-  #     with:
-  #       python-version: 3.7
-  #   - name: Launch malformed script
-  #     env:
-  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #     run: |
-  #       cd scripts/
-  #       pip install -r requirements.txt
-  #       python3 malformed.py
-
-  # Re-generates and overwrites README.md using the tickets to generate numbers
-  summary:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.7
-    - name: Lint with flake8
-      run: |
-        pip install flake8
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: explore around
-      run: |
-        ls -l
-        du -a
-        pwd
-    - name: Build RVD summary
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |        
-        pip3 install .
-        rvd summary --update
-    - name: Commit changes
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        # git config user.name $(jq .pusher.username $GITHUB_PAYLOAD)
-        git config user.name "Alias Robotics"
-        # git config user.email $(jq .pusher.email $GITHUB_PAYLOAD)
-        git config user.email "contact@aliasrobotics.com"
-        git checkout -b master
-        # git pull origin master
-        git add .
-        git commit -m "(automatic) Update README.md"
-        git branch
-    - name: Push changes
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        echo "Pushing upstream"
-        git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" master
-        # git push -u origin master
+# name: RVD_management
+# on:
+#   issues:
+#     types: [opened, edited, closed]
+#     # types: [labeled, unlabeled]
+#     # types: [opened, edited, closed, labeled, unlabeled]
+#     # types: [opened, edited, milestoned, deleted, transferred, pinned, unpinned, closed, reopened, assigned, unassigned, labeled, unlabeled, locked, unlocked, milestoned, demilestoned]
+# 
+# jobs:
+#   # # Reviews all tickets tags and provides feedback on malformed ones
+#   # malformed:
+#   #   runs-on: ubuntu-latest
+#   #   steps:
+#   #   - uses: actions/checkout@v1
+#   #   - name: Set up Python 3.7
+#   #     uses: actions/setup-python@v1
+#   #     with:
+#   #       python-version: 3.7
+#   #   - name: Launch malformed script
+#   #     env:
+#   #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#   #     run: |
+#   #       cd scripts/
+#   #       pip install -r requirements.txt
+#   #       python3 malformed.py
+# 
+#   # Re-generates and overwrites README.md using the tickets to generate numbers
+#   summary:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v1
+#     - name: Set up Python 3.7
+#       uses: actions/setup-python@v1
+#       with:
+#         python-version: 3.7
+#     - name: Lint with flake8
+#       run: |
+#         pip install flake8
+#         # stop the build if there are Python syntax errors or undefined names
+#         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+#         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+#         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+#     - name: explore around
+#       run: |
+#         ls -l
+#         du -a
+#         pwd
+#     - name: Build RVD summary
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       run: |        
+#         pip3 install .
+#         rvd summary --update
+#     - name: Commit changes
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       run: |
+#         # git config user.name $(jq .pusher.username $GITHUB_PAYLOAD)
+#         git config user.name "Alias Robotics"
+#         # git config user.email $(jq .pusher.email $GITHUB_PAYLOAD)
+#         git config user.email "contact@aliasrobotics.com"
+#         git checkout -b master
+#         # git pull origin master
+#         git add .
+#         git commit -m "(automatic) Update README.md"
+#         git branch
+#     - name: Push changes
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       run: |
+#         echo "Pushing upstream"
+#         git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" master
+#         # git push -u origin master

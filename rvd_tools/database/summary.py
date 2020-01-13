@@ -861,39 +861,39 @@ In an attempt to lower the overall effort to maintain the Robot Vulnerability Da
 
 Below we list some of the existing capabilities (some **deprecated** in the current setup) and some tentative ones for future versions:
 #### **Alpha** (< `0.5`)
-    - [x] Comparison of stack trace before flaw submission to avoid duplicates (perfomed upstream) [**deprecated**, modern versions of the database include more information of relevance than solely the stack trace on each ticket]
-    - [x] Markdown parser that conforms with RVD templates [**deprecated**, moved to YAML format]
-    - [x] Automatic flaw-syntax evaluation (based on parser), tags tickets as `malformed` when applicable [**deprecated**, syntax changed]
-    - [x] Automatic feedback on flaw-syntax, introduced in tickets directly as a comment [**deprecated**, syntax changed]
+- [x] Comparison of stack trace before flaw submission to avoid duplicates (perfomed upstream) [**deprecated**, modern versions of the database include more information of relevance than solely the stack trace on each ticket]
+- [x] Markdown parser that conforms with RVD templates [**deprecated**, moved to YAML format]
+- [x] Automatic flaw-syntax evaluation (based on parser), tags tickets as `malformed` when applicable [**deprecated**, syntax changed]
+- [x] Automatic feedback on flaw-syntax, introduced in tickets directly as a comment [**deprecated**, syntax changed]
 
 #### **Beta** (>= `0.5`)
-    - [x] Discussion on a more formal taxonomy to apply when categorizing flaws (see [docs/TAXONOMY.md](docs/TAXONOMY.md))
-    - [x] Definition of a formal schema for RVD coherent to the taxonomy and inspired by prior work
-    - [x] Automatic re-generation of README.md as summary
-    - [x] Development of CLI toolset to manage RVD
-    - [ ] Include ID in the title of the ticket as "RVD#ID: ..."
-    - [ ] Automatic review of database in-search for duplicates
-    - [ ] Automatic review of database in-search for malformed tickets, tag them appropriately
-        - [ ] Automatic feedback on malformations
-        - [ ] Notify when ticket is malformed and skip it (instead of throwing an error as of now)
-        - [ ] Consider restrictions on title ("RVD#ID: ...")
-    - [ ] Develop capabilities to output CVE JSON-compatible tickets
+- [x] Discussion on a more formal taxonomy to apply when categorizing flaws (see [docs/TAXONOMY.md](docs/TAXONOMY.md))
+- [x] Definition of a formal schema for RVD coherent to the taxonomy and inspired by prior work
+- [x] Automatic re-generation of README.md as summary
+- [x] Development of CLI toolset to manage RVD
+- [ ] Include ID in the title of the ticket as "RVD#ID: ..."
+- [ ] Automatic review of database in-search for duplicates
+- [ ] Automatic review of database in-search for malformed tickets, tag them appropriately
+    - [ ] Automatic feedback on malformations
+    - [ ] Notify when ticket is malformed and skip it (instead of throwing an error as of now)
+    - [ ] Consider restrictions on title ("RVD#ID: ...")
+- [ ] Develop capabilities to output CVE JSON-compatible tickets
 
 #### **1.x** (>= `1.0`) and future
-    - [ ] Automatic and periodic review of security advisories "in search" for robot-related vulnerabilities
-    - [ ] Automatic and periodic review of NVD "in search" for robot-related vulnerabilities
-    - [ ] Automatic and periodic review of CVE List "in search" for robot-related vulnerabilities
-    - [ ] CWE ID parser and validation method to conform with official CWE guidelines
-    - [ ] Automatic CWE ID validation mechanism (and feedback) in all tickets. Upgrade flaw-syntax evaluation.
-    - [ ] RVSS parser and validation to conform with RVSSv1.0 spec.
-    - [ ] Define some temporal limits for tickets, if it remains without updates longer than the limit, close automatically
-      - [ ] Consider closed issues when checking for duplicates and if collisions appear, re-open and indicate so
-    - [ ] Automatic RVSS validation mechanism (and feedback) in all tickets. Upgrade flaw-syntax evaluation.
-    - [ ] schema
-        - [ ] enforce `subsystem` policy
-        - [ ] enforce `id` policy
-        - [ ] `architectural-location` get consistency between `platform code` and `platform-code`. Same for `application-specific`. Also, remove `ROS-specific`.
-        - [ ] `specificity`, enfoce policy and allowed keywords
+- [ ] Automatic and periodic review of security advisories "in search" for robot-related vulnerabilities
+- [ ] Automatic and periodic review of NVD "in search" for robot-related vulnerabilities
+- [ ] Automatic and periodic review of CVE List "in search" for robot-related vulnerabilities
+- [ ] CWE ID parser and validation method to conform with official CWE guidelines
+- [ ] Automatic CWE ID validation mechanism (and feedback) in all tickets. Upgrade flaw-syntax evaluation.
+- [ ] RVSS parser and validation to conform with RVSSv1.0 spec.
+- [ ] Define some temporal limits for tickets, if it remains without updates longer than the limit, close automatically
+  - [ ] Consider closed issues when checking for duplicates and if collisions appear, re-open and indicate so
+- [ ] Automatic RVSS validation mechanism (and feedback) in all tickets. Upgrade flaw-syntax evaluation.
+- [ ] schema
+    - [ ] enforce `subsystem` policy
+    - [ ] enforce `id` policy
+    - [ ] `architectural-location` get consistency between `platform code` and `platform-code`. Same for `application-specific`. Also, remove `ROS-specific`.
+    - [ ] `specificity`, enfoce policy and allowed keywords
 
 ## Contributing, reporting a vulnerability
 
