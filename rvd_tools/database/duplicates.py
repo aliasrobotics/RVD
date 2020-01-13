@@ -32,10 +32,10 @@ class Duplicates(Base):
         self.fields = [
             # {'field': 'title', 'type': 'String', 'crf': True},
             {'field': 'title', 'type': 'String'},
-            # {'field': 'type', 'type': 'String'},
+            {'field': 'type', 'type': 'String'},
             # {'field': 'cwe', 'type': 'String'},
             # {'field': 'description', 'type': 'String', 'has missing': True},
-            {'field': 'cve', 'type': 'String'},
+            # {'field': 'cve', 'type': 'String'},
             # {'field': 'cwe', 'type': 'String', 'crf': True},
             # {'field': 'system', 'type': 'String'},
             # {'field': 'vendor', 'type': 'String'},
@@ -184,3 +184,4 @@ class Duplicates(Base):
                         issue.create_comment(duplicate_text)
                         # labeling
                         issue.add_to_labels("duplicate")
+                        issue.add_to_labels("triage")
