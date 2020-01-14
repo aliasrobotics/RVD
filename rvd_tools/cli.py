@@ -360,6 +360,9 @@ def cve(all, vendor, product, push):
                         links.append(issue.html_url)
                         new_flaw.links = links
                         new_flaw.issue = issue.html_url
+                        if flaw.title[:4] != "RVD#":  # already has the syntax
+                            new_title = "RVD#" + str(issue.number) + ": " + flaw.title
+                            flaw.title = new_title
                         pusher.update_ticket(issue, new_flaw)
 
         else:
@@ -417,6 +420,9 @@ def cve(all, vendor, product, push):
                 links.append(issue.html_url)
                 new_flaw.links = links
                 new_flaw.issue = issue.html_url
+                if flaw.title[:4] != "RVD#":  # already has the syntax
+                    new_title = "RVD#" + str(issue.number) + ": " + flaw.title
+                    flaw.title = new_title
                 pusher.update_ticket(issue, new_flaw)
 
     elif vendor:
@@ -549,7 +555,9 @@ def other(title):
             if flaw.title[:4] != "RVD#":  # already has the syntax
                 new_title = "RVD#" + str(issue.number) + ": " + flaw.title
                 flaw.title = new_title
-                # print(flaw)
+                if flaw.title[:4] != "RVD#":  # already has the syntax
+                    new_title = "RVD#" + str(issue.number) + ": " + flaw.title
+                    flaw.title = new_title
                 importer.update_ticket(issue, flaw)  # labels fetched from issue
 
 
@@ -635,6 +643,9 @@ def fetch_gitlab(id, push, all, dump, disclose, update):
             links.append(issue.html_url)
             flaw.links = links
             flaw.issue = issue.html_url
+            if flaw.title[:4] != "RVD#":  # already has the syntax
+                new_title = "RVD#" + str(issue.number) + ": " + flaw.title
+                flaw.title = new_title
             pusher.update_ticket(issue, flaw)
 
         if update:
@@ -642,6 +653,9 @@ def fetch_gitlab(id, push, all, dump, disclose, update):
             issue = importer.repo.get_issue(int(update))
             flaw.issue = issue.html_url  # this bit is not in the gitlab ticket
             flaw.id = issue.number  # Update id
+            if flaw.title[:4] != "RVD#":  # already has the syntax
+                new_title = "RVD#" + str(issue.number) + ": " + flaw.title
+                flaw.title = new_title
             importer.update_ticket(issue, flaw)  # labels fetched from issue
 
 
@@ -730,7 +744,9 @@ def fetch_robust(filename, push, all, dump):
             links.append(issue.html_url)
             flaw.links = links
             flaw.issue = issue.html_url
-
+            if flaw.title[:4] != "RVD#":  # already has the syntax
+                new_title = "RVD#" + str(issue.number) + ": " + flaw.title
+                flaw.title = new_title
             pusher.update_ticket(issue, flaw)
 
 
@@ -910,6 +926,9 @@ source the workspace, finding the appropriate test and executing it."
             if push:
                 cyan("Pushing results to RVD...")
                 pusher = Base()
+                if flaw.title[:4] != "RVD#":  # already has the syntax
+                    new_title = "RVD#" + str(issue.number) + ": " + flaw.title
+                    flaw.title = new_title
                 pusher.update_ticket(issue, flaw)
 
 
