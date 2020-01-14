@@ -101,15 +101,22 @@ class Duplicates(Base):
         data_d = {}
         gray("Processing tickets from RVD...")
         if invalid:
-            issues_all = self.repo.get_issues(state="open")  # using all tickets, including invalid ones for training
+            issues_all = self.repo.get_issues(state="all")  # using all tickets, including invalid ones for training
         else:
             issues_all = self.get_issues_filtered()
 
         for issue in issues_all:
-            # review label
+            print("Scanning..." + str(issue))
+
+            # check for PRs and skip them, should be labeled with "contribution"
+            labels = [l.name for l in issue.labels]
+            if "contribution" in labels:
+                print("Found a PR, skipping it")
+                continue
+
+            # review labels
             all_labels = True  # indicates whether all labels are present
             if label:
-                labels = [l.name for l in issue.labels]
                 for l in label:
                     if l not in labels or "invalid" in labels:
                         all_labels = False
@@ -185,3 +192,44 @@ class Duplicates(Base):
                         # labeling
                         issue.add_to_labels("duplicate")
                         issue.add_to_labels("triage")
+
+    def is_duplicate(self, flaw):
+        """
+        Checks whether the flaw passes as parameter is a duplicate or not
+        Uses training information already available in training data folder.
+
+        NOTE: should be called from the RVD respository directory.
+
+        :param flaw, Flaw
+        :return bool
+        """
+        data_d = self.read_data(None, invalid=False)  # data dict
+        # pprint.pprint(data_d)
+
+        # Append the flaw to the data dictonary with the ID 0
+        data_d[0] = flaw.document_duplicates()
+        # pprint.pprint(data_d)
+
+        if os.path.exists(self.settings_file):
+            print('reading from', self.settings_file)
+            with open(self.settings_file, 'rb') as f:
+                deduper = dedupe.StaticDedupe(f)
+        else:
+            red("Error: settings file does not exist, stoping")
+            sys.exit(1)
+
+        cyan("Finding the threshold for data...")
+        threshold = deduper.threshold(data_d, recall_weight=1)
+
+        cyan('Clustering...')
+        clustered_dupes = deduper.match(data_d, threshold)
+        # pprint.pprint(clustered_dupes)
+
+        # If ID 0 (corresponds with flaw passed as arg) is in there, is_duplicate
+        for set in clustered_dupes:
+            ids, values = set
+            for id in ids:
+                # print(id)
+                if int(id) == 0:
+                    return True
+        return False

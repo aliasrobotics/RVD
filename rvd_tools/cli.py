@@ -238,7 +238,9 @@ def edit(id, subsequent, label):
 @click.option('--push/--no-push',
               help='Push feedback.', default=False,)
 @click.option('--label', help='Filter flaws by label.', multiple=True)
-def duplicates(train, push, label):
+@click.option('--test/--no-test',
+              help='Test that validation works.', default=False,)
+def duplicates(train, push, label, test):
     """
     Searches and tags appropriately duplicates in the database
     Make use of dedupe library for it.
@@ -247,7 +249,18 @@ def duplicates(train, push, label):
     """
     cyan("Searching for duplicates...")
     duplicates = Duplicates()
-    duplicates.find_duplicates(train, push, label)
+    if test:
+        # Fetch a given ticket and check for duplicates in the db
+        importer = Base()
+        issue = importer.repo.get_issue(int(996))  # use existing flaw
+        document_raw = issue.body
+        document_raw = document_raw.replace('```yaml','').replace('```', '')
+        document = yaml.load(document_raw, Loader=yaml.FullLoader)
+        # document = default_document()  # get the default document
+        flaw = Flaw(document)
+        print(duplicates.is_duplicate(flaw))
+    else:
+        duplicates.find_duplicates(train, push, label)
 
 #  ┬  ┬┬ ┬┬  ┌┐┌┌─┐┬─┐┌─┐
 #  └┐┌┘│ ││  │││├┤ ├┬┘└─┐
