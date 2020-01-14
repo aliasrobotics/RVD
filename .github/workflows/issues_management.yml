@@ -24,21 +24,21 @@ jobs:
   #       pip install -r requirements.txt
   #       python3 malformed.py
 
-  # Check for duplicates and mark them accordingly
-  duplicates:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.7
-    - name: Install RVD tools and searh for duplicates
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |        
-        pip3 install .
-        rvd duplicates --push
+  # # Check for duplicates and mark them accordingly
+  # duplicates:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v1
+  #   - name: Set up Python 3.7
+  #     uses: actions/setup-python@v1
+  #     with:
+  #       python-version: 3.7
+  #   - name: Install RVD tools and searh for duplicates
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     run: |        
+  #       pip3 install .
+  #       rvd duplicates --push
 
   # Re-generates and overwrites README.md using the tickets to generate numbers
   summary:
