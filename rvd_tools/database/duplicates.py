@@ -31,7 +31,7 @@ class Duplicates(Base):
         # Define the fields dedupe will pay attention to
         self.fields = [
             # {'field': 'title', 'type': 'String', 'crf': True},
-            {'field': 'title', 'type': 'String'},
+            # {'field': 'title', 'type': 'String'},
             {'field': 'type', 'type': 'String'},
             # {'field': 'cwe', 'type': 'String'},
             {'field': 'description', 'type': 'String', 'has missing': True},
