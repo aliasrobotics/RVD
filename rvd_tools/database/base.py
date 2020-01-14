@@ -44,14 +44,14 @@ class Base:
         self.repo_name = repo
         self.repo = self.g.get_repo(self.username+"/"+self.repo_name)
 
-    def get_issues_filtered(self):
+    def get_issues_filtered(self, state="open"):
         """
         Import all valid issues (open and close), discarding all those
         with the `invalid` label
 
         return list(Issues)
         """
-        issues = self.repo.get_issues(state="open")
+        issues = self.repo.get_issues(state=state)
         filtered_issues = []
         for issue in issues:
             labels = [l.name for l in issue.labels]

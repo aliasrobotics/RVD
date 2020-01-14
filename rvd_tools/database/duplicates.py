@@ -104,7 +104,7 @@ class Duplicates(Base):
         if invalid:
             issues_all = self.repo.get_issues(state="all")  # using all tickets, including invalid ones for training
         else:
-            issues_all = self.get_issues_filtered()
+            issues_all = self.get_issues_filtered(state="all")
 
         for issue in issues_all:
             print("Scanning..." + str(issue))
@@ -112,8 +112,14 @@ class Duplicates(Base):
             # check for PRs and skip them, should be labeled with "contribution"
             labels = [l.name for l in issue.labels]
             if "contribution" in labels:
-                print("Found a PR, skipping it")
+                gray("Found a PR, skipping it")
                 continue
+
+            # # This can't be enabled because if it was to be, training and
+            # # evaluation will not match
+            # if "duplicate" in labels:
+            #     gray("Found duplicate, skipping it")
+            #     continue
 
             # review labels
             all_labels = True  # indicates whether all labels are present
@@ -181,6 +187,13 @@ class Duplicates(Base):
             for id in ids:
                 # print(id)
                 issue = self.repo.get_issue(int(id))
+
+                # if duplicate in issue, do nothing
+                labels = [l.name for l in issue.labels]
+                if "duplicate" in labels:
+                    gray(str(id) + " already duplicate, skipping it")
+                    continue
+
                 # print(issue)
                 if primary_issue is None:
                     primary_issue = issue
