@@ -252,7 +252,7 @@ def duplicates(train, push, label, test):
     if test:
         # Fetch a given ticket and check for duplicates in the db
         importer = Base()
-        issue = importer.repo.get_issue(int(996))  # use existing flaw
+        issue = importer.repo.get_issue(int(999))  # use existing flaw
         document_raw = issue.body
         document_raw = document_raw.replace('```yaml','').replace('```', '')
         document = yaml.load(document_raw, Loader=yaml.FullLoader)
