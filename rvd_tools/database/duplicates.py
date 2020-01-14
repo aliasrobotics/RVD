@@ -223,7 +223,7 @@ class Duplicates(Base):
 
         cyan('Clustering...')
         clustered_dupes = deduper.match(data_d, threshold)
-        # pprint.pprint(clustered_dupes)
+        pprint.pprint(clustered_dupes)  # debug purposes
 
         # If ID 0 (corresponds with flaw passed as arg) is in there, is_duplicate
         for set in clustered_dupes:
