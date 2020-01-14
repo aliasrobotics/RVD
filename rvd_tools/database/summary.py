@@ -882,7 +882,7 @@ Below we list some of the existing capabilities (some **deprecated** in the curr
 - [x] Automatic re-generation of README.md as summary
 - [x] Development of CLI toolset to manage RVD
 - [x] Include ID in the title of the ticket as "RVD#ID: ..."
-- [ ] Automatic review of database in-search for duplicates
+- [x] Automatic review of database in-search for duplicates
 - [ ] Automatic review of database in-search for malformed tickets, tag them appropriately
     - [ ] Automatic feedback on malformations
     - [ ] Notify when ticket is malformed and skip it (instead of throwing an error as of now)
