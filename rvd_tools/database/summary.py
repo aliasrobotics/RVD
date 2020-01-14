@@ -31,6 +31,7 @@ class Summary(Base):
 
         self.malformed = 0  # number of malformed tickets
         self.triage = 0  # number of tickets requiring triage
+        self.duplicates = 0  # number of tickets that are duplicates
 
         ###########################
         # Summary attributes
@@ -361,6 +362,14 @@ class Summary(Base):
             if 'triage' in l_set:
                 self.triage += 1
 
+        # Obtain the number of tickets that are open and duplicates
+        #  only "open" ones are considered because the filtering hides by
+        #  default the closed ones however they can also be previwed by
+        #  the user if desired
+        for l_set in self.labels_open:
+            if 'duplicate' in l_set:
+                self.duplicates += 1
+
     def upper_shields(self):
         """
         Produces a first line of small shields providing quick information for
@@ -374,6 +383,7 @@ class Summary(Base):
         markdown += "[![](https://img.shields.io/badge/bugs-"+str(self.nbugs_open)+"-f7b6b2.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+label%3Abug+)"  + "\n"
         markdown += "[![](https://img.shields.io/badge/malformed-"+str(self.malformed)+"-440fa8.svg)](https://github.com/aliasrobotics/RVD/labels/malformed)"  + "\n"
         markdown += "[![](https://img.shields.io/badge/triage-"+str(self.triage)+"-ffe89e.svg)](https://github.com/aliasrobotics/RVD/labels/triage)"  + "\n"
+        markdown += "[![](https://img.shields.io/badge/duplicates-"+str(self.duplicates)+"-cfd3d7.svg)](https://github.com/aliasrobotics/RVD/labels/duplicate)"  + "\n"
         # markdown += "[![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed) "  # it can also be written this way, spliting it
         markdown += "\n"
 
