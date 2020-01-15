@@ -133,7 +133,7 @@ class Duplicates(Base):
                 # to avoid calling again the Github API
                 document_raw = issue.body
                 document_raw = document_raw.replace('```yaml','').replace('```', '')
-                document = yaml.load(document_raw)
+                document = yaml.load(document_raw, Loader=yaml.FullLoader)
 
                 try:
                     flaw = Flaw(document)
