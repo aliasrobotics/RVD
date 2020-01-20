@@ -75,6 +75,10 @@ class Base:
             except TypeError:
                 red("ERROR: something went wrong with the id: " + str(id))
                 yellow("Should be the issue number")
+            except:
+                red("ERROR: something went wrong with the id: " + str(id))
+                yellow("Maybe you reached the end?")
+                sys.exit(1)
 
         document_raw = issue.body
         document_raw = document_raw.replace('```yaml','').replace('```', '')
