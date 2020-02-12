@@ -6,7 +6,7 @@
 
 # Robot Vulnerability Database (RVD)
 
-<a href="http://www.aliasrobotics.com"><img src="https://pbs.twimg.com/profile_images/1138735160428548096/px2v9MeF.png" align="left" hspace="8" vspace="2" width="200"></a>
+<a href="http://www.aliasrobotics.com"><img src="https://www.massrobotics.org/wp-content/uploads/2019/01/Alias-logo.png" align="left" hspace="8" vspace="2" width="200"></a>
 
 This repository contains the Robot Vulnerability and Database (RVD), an attempt to register and record robot vulnerabilities and bugs.
 
