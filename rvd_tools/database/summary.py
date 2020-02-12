@@ -683,20 +683,20 @@ class Summary(Base):
         #         self.processed_packages_ros2[p] += 1
         #     else:
         #         self.processed_packages_ros2[p] = 1
-        # 
-        # 
+        #
+        #
         # markdown += "#### ROS 2 flaws by package (only `open` ones)" + "\n"
         # for key in self.processed_packages_ros2.keys():
         #     markdown += "[![label: ros2_package_"+str(key)+"][~ros2_package_"+str(key)+"]](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3A%22package%3A+"+str(key)+"%22+-label%3A%22duplicate%22+)"  + "\n"
-        # 
+        #
         # # get some space for readability
         # markdown += "\n\n"
-        # 
+        #
         # # Now add the corresponding source code for the labels
         # for key in self.processed_packages_ros2.keys():
         #     markdown += "[~ros2_package_"+str(key)+"]: https://img.shields.io/badge/"+str(key.replace("-","_"))+"-" + str(
         #         self.processed_packages_ros2[key]) + "-red.svg" + "\n"
-        # 
+        #
         # # get some space for readability
         markdown += "\n\n"
         return markdown
@@ -775,17 +775,17 @@ class Summary(Base):
         header = """\
 # Robot Vulnerability Database (RVD)
 
-<a href="http://www.aliasrobotics.com"><img src="https://pbs.twimg.com/profile_images/1138735160428548096/px2v9MeF.png" align="left" hspace="8" vspace="2" width="200"></a>
+<a href="http://www.aliasrobotics.com"><img src="https://www.massrobotics.org/wp-content/uploads/2019/01/Alias-logo.png" align="left" hspace="8" vspace="2" width="200"></a>
 
 This repository contains the Robot Vulnerability and Database (RVD), an attempt to register and record robot vulnerabilities and bugs.
 
-Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (RVSS)](https://github.com/aliasrobotics/RVSS). 
+Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (RVSS)](https://github.com/aliasrobotics/RVSS).
 For a discussion regarding terminology and the difference between robot vulnerabilities, robot weaknesses, robot bugs or others
 refer to [Appendix A](#appendix-a-vulnerabilities-weaknesses-bugs-and-more).
 
 **As main contributor, Alias Robotics supports and offers robot cybersecurity activities in close collaboration
-with original robot manufacturers. By no means Alias encourages or promote the unauthorized 
-tampering with running robotic systems. This can cause serious human harm and material 
+with original robot manufacturers. By no means Alias encourages or promote the unauthorized
+tampering with running robotic systems. This can cause serious human harm and material
 damages.**
 
 """
@@ -939,13 +939,13 @@ Moreover, according to [CVE page](https://cve.mitre.org/about/faqs.html#what_is_
 
 #### Discussion and interpretation
 
-From the definitions above, it seems reasonable to associate use interchangeably `bugs` and `flaws` when referring to software issues. 
-In addition, the word `weakness` seems applicable to any flaw that might turn into a `vulnerability` however it must be noted that 
-(from the text above) a `vulnerability` "must be exploited"). Based on this a clear difference can be established classifiying 
-flaws with no potential to be exploitable as `bugs` and flaws potentially exploitable as `vulnerabilities`. Ortogonal to this appear 
+From the definitions above, it seems reasonable to associate use interchangeably `bugs` and `flaws` when referring to software issues.
+In addition, the word `weakness` seems applicable to any flaw that might turn into a `vulnerability` however it must be noted that
+(from the text above) a `vulnerability` "must be exploited"). Based on this a clear difference can be established classifiying
+flaws with no potential to be exploitable as `bugs` and flaws potentially exploitable as `vulnerabilities`. Ortogonal to this appear
 `exposures` which refer to misconfigurations that allows attackers to establish an attack vector in a system.
 
-Beyond pure logic, an additional piece of information that comes out of researching other security databases 
+Beyond pure logic, an additional piece of information that comes out of researching other security databases
 is that most security-oriented databases do not distinguish between bugs (general bugs) and weaknesses (security bugs).
 
 Based in all of the above, we interpret and make the following assumptions for RVD:
@@ -960,9 +960,9 @@ Based in all of the above, we interpret and make the following assumptions for R
 Some definitions:
 - `Robot Vulnerability Database (RVD)` is a database for robot vulnerabilities and bugs that aims to record and categorize flaws that apply to robot and robot components. RVD was created as a community-contributed and open archive of robot security flaws. It was originally created and sponsored by Alias Robotics.
 - `Common Vulnerabilities and Exposures (CVE)` List CVE® is an archive (dictionary according to the official source) of entries—each containing an identification number, a description, and at least one public reference—for publicly known cybersecurity vulnerabilities. CVE contains vulnerabilities and exposures and is sponsored by the U.S. Department of Homeland Security (DHS) Cybersecurity and Infrastructure Security Agency (CISA). It is **not** a database (see [official information](https://cve.mitre.org/about/faqs.html)). CVE List *feeds* vulnerability databases (such as the National Vulnerability Database (NVD)) with its entries and also acts as an aggregator of vulnerabilities and exposures reported at NVD.
-- `U.S. National Vulnerability Database (NVD)` is the U.S. government repository of standards based vulnerability management data. It presents an archive with vulnerabilities, each with their corresponding CVE identifiers. NVD gets fed by the CVE List and then builds upon the information included in CVE Entries to provide enhanced information for each entry such as fix information, severity scores, and impact ratings. 
+- `U.S. National Vulnerability Database (NVD)` is the U.S. government repository of standards based vulnerability management data. It presents an archive with vulnerabilities, each with their corresponding CVE identifiers. NVD gets fed by the CVE List and then builds upon the information included in CVE Entries to provide enhanced information for each entry such as fix information, severity scores, and impact ratings.
 
-RVD does **not** aim to replace CVE but to <ins>complement it for the domain of robotics</ins>. RVD aims to become CVE-compatible (see [official guidelines for compatibility](https://cve.mitre.org/compatible/guidelines.html)) by tackling aspects such scope and impact of the flaws (through a proper severity scoring mechanism for robots), information for facilitating mitigation, detailed technical information, etc. For a more detailed discussion, see [this ROS Discourse thread](https://discourse.ros.org/t/introducing-the-robot-vulnerability-database/11105/7?u=vmayoral). 
+RVD does **not** aim to replace CVE but to <ins>complement it for the domain of robotics</ins>. RVD aims to become CVE-compatible (see [official guidelines for compatibility](https://cve.mitre.org/compatible/guidelines.html)) by tackling aspects such scope and impact of the flaws (through a proper severity scoring mechanism for robots), information for facilitating mitigation, detailed technical information, etc. For a more detailed discussion, see [this ROS Discourse thread](https://discourse.ros.org/t/introducing-the-robot-vulnerability-database/11105/7?u=vmayoral).
 
 When compared to other vulnerability databases, RVD aims to differenciate itself by focusing on the following:
 - **robot specific**: RVD aims to focus and capture robot-specific flaws. If a flaw does not end-up applying to a robot or a robot component then it should not be recorded here.
@@ -976,31 +976,31 @@ As part of RVD, we encourage security researchers to file CVE Entries and use of
 ### Appendix C: Legal disclaimer
 
 *ACCESS TO THIS DATABASE (OR PORTIONS THEREOF) AND THE USE OF INFORMATION, MATERIALS, PRODUCTS
-OR SERVICES PROVIDED THROUGH THIS WEB SITE (OR PORTIONS THEREOF), IS NOT INTENDED, AND 
+OR SERVICES PROVIDED THROUGH THIS WEB SITE (OR PORTIONS THEREOF), IS NOT INTENDED, AND
 IS PROHIBITED, WHERE SUCH ACCESS OR USE VIOLATES APPLICABLE LAWS OR REGULATIONS.*
 
 *By using or accessing this database you warrant to Alias Robotics S.L. that you will
 not use this Web site for any purpose that is unlawful or that is prohibited. This product
 is provided with "no warranties, either express or implied." The information contained is
-provided "as-is", with "no guarantee of merchantability. In no event will Alias Robotics S.L. 
+provided "as-is", with "no guarantee of merchantability. In no event will Alias Robotics S.L.
 be liable for any incidental, indirect, consequential, punitive or special damages of any kind,
  or any other damages whatsoever, including, without limitation, those resulting from loss of
  profit, loss of contracts, loss of reputation, goodwill, data, information, income, anticipated
- savings or business relationships, whether or not Alias Robotics S.L. has been advised of the 
- possibility of such damage, arising out of or in connection with the use of this database or 
+ savings or business relationships, whether or not Alias Robotics S.L. has been advised of the
+ possibility of such damage, arising out of or in connection with the use of this database or
  any linked websites."*
- 
- 
- These Terms of Use are made under Spanish law and this database is operated from Vitoria-Gasteiz, Spain. 
- Access to, or use of, this database site or information, materials, products and/or services 
- on this site may be prohibited by law in certain countries or jurisdictions. You are responsible for 
- compliance with any applicable laws of the country from which you are accessing this site. 
+
+
+ These Terms of Use are made under Spanish law and this database is operated from Vitoria-Gasteiz, Spain.
+ Access to, or use of, this database site or information, materials, products and/or services
+ on this site may be prohibited by law in certain countries or jurisdictions. You are responsible for
+ compliance with any applicable laws of the country from which you are accessing this site.
  We make no representation that the information contained herein is appropriate or available
   for use in any location.
 
-You agree that the courts of Vitoria-Gasteiz, Spain shall have exclusive jurisdiction to 
-resolve any controversy or claim of whatever nature arising out of or relating to use of 
-this site. However, we retain the right to bring legal proceedings in any jurisdiction 
+You agree that the courts of Vitoria-Gasteiz, Spain shall have exclusive jurisdiction to
+resolve any controversy or claim of whatever nature arising out of or relating to use of
+this site. However, we retain the right to bring legal proceedings in any jurisdiction
 where we believe that infringement of this agreement is taking place or originating.
 
 
