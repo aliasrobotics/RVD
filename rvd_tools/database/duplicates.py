@@ -131,24 +131,29 @@ class Duplicates(Base):
             if all_labels:
                 # NOTE: partially re-implementing Base.import_issue()
                 # to avoid calling again the Github API
-                document_raw = issue.body
-                document_raw = document_raw.replace('```yaml','').replace('```', '')
-                document = yaml.load(document_raw)
-
                 try:
-                    flaw = Flaw(document)
+                    document_raw = issue.body
+                    document_raw = document_raw.replace('```yaml','').replace('```', '')
+                    document = yaml.load(document_raw)
 
-                    # print(document)
-                    # print(flaw)
+                    try:
+                        flaw = Flaw(document)
 
-                    # yellow("Imported issue ", end="")
-                    # print(str(issue.id), end="")
-                    # yellow(" into a Flaw...")
-                    # data_d[int(issue.number)] = flaw.document_duplicates()
-                    data_d[int(issue.number)] = flaw.document_duplicates()
-                except TypeError:
-                    # likely the document wasn't properly formed, report about it and continue
-                    yellow("Warning: issue " + str(issue.number) + " not processed due to an error")
+                        # print(document)
+                        # print(flaw)
+
+                        # yellow("Imported issue ", end="")
+                        # print(str(issue.id), end="")
+                        # yellow(" into a Flaw...")
+                        # data_d[int(issue.number)] = flaw.document_duplicates()
+                        data_d[int(issue.number)] = flaw.document_duplicates()
+                    except TypeError:
+                        # likely the document wasn't properly formed, report about it and continue
+                        yellow("Warning: issue " + str(issue.number) + " not processed due to an error")
+                        continue
+
+                except yaml.parser.ParserError:
+                    print(f"{issue.number} is not has no correct yaml format")
                     continue
         return data_d
 

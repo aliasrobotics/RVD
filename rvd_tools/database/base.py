@@ -86,12 +86,13 @@ class Base:
         # print(document)
 
         flaw = Flaw(document)
+
         if debug:
             yellow("Imported issue ", end="")
             print(str(id), end="")
             yellow(" into a Flaw...")
-        # gray(flaw)
-        return flaw
+            # gray(flaw)
+            return flaw
 
     def import_issues_labels(self, label, isoption="open"):
         """

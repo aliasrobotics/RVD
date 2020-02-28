@@ -46,8 +46,8 @@ def main():
 Vulnerability Database...")
 
 #  ┬  ┬┌─┐┌┬┐
-#  │  │└─┐ │ 
-#  ┴─┘┴└─┘ ┴ 
+#  │  │└─┐ │
+#  ┴─┘┴└─┘ ┴
 @main.command("list")
 @click.argument('id', required=False)
 @click.option('--dump/--no-dump',
@@ -66,11 +66,16 @@ def listar(id, dump, private, label, isoption):
         cyan("Importing from RVD, issue: " + str(issue))
         document_raw = issue.body
         document_raw = document_raw.replace('```yaml','').replace('```', '')
-        document = yaml.load(document_raw, Loader=yaml.FullLoader)
-        # print(document)
+        try:
+            document = yaml.load(document_raw, Loader=yaml.FullLoader)
+            # print(document)
 
-        flaw = Flaw(document)
-        print(flaw)
+            flaw = Flaw(document)
+            print(flaw)
+        except yaml.scanner.ScannerError:
+            print("Not in yaml format please review")
+
+
     else:
         cyan("Listing all open flaws from RVD...")
         # table = [[issue.number, issue.title] for issue in issues_public]
@@ -101,8 +106,8 @@ def listar(id, dump, private, label, isoption):
                 print(flaw)
 
 #  ┬─┐┌─┐┌─┐┌─┐┬─┐┌┬┐
-#  ├┬┘├┤ ├─┘│ │├┬┘ │ 
-#  ┴└─└─┘┴  └─┘┴└─ ┴ 
+#  ├┬┘├┤ ├─┘│ │├┬┘ │
+#  ┴└─└─┘┴  └─┘┴└─ ┴
 @main.command("report")
 @click.argument('id', required=True)
 def report(id):
@@ -216,7 +221,7 @@ def statistics_vendor_vulnerabilities(label):
     statistics.vendor_vulnerabilities(label)
 
 #  ┌─┐┌┬┐┬┌┬┐
-#  ├┤  │││ │ 
+#  ├┤  │││ │
 #  └─┘─┴┘┴ ┴
 @main.command("edit")
 @click.argument('id', required=False)
@@ -295,7 +300,7 @@ def search_vulners(query, push):
     vulners.search(query, push)
 
 #  ┌─┐┬  ┬┌─┐
-#  │  └┐┌┘├┤ 
+#  │  └┐┌┘├┤
 #  └─┘ └┘ └─┘
 # @main.group()
 @click.option('--all/--no-all', default=False, help='Automatically import all flaws for a given vendor.')
@@ -472,7 +477,7 @@ def cve(all, vendor, product, push):
 
 
 #  ┬  ┬┌─┐┬  ┬┌┬┐┌─┐┌┬┐┌─┐
-#  └┐┌┘├─┤│  │ ││├─┤ │ ├┤ 
+#  └┐┌┘├─┤│  │ ││├─┤ │ ├┤
 #   └┘ ┴ ┴┴─┘┴─┴┘┴ ┴ ┴ └─┘
 @main.command("validate")
 @click.argument('filename', type=click.Path(exists=True))
@@ -534,7 +539,7 @@ def validate_file(filename, dump=False):
 
 #  ┌─┐┬ ┬┌┬┐┌┬┐┌─┐┬─┐┬ ┬
 #  └─┐│ │││││││├─┤├┬┘└┬┘
-#  └─┘└─┘┴ ┴┴ ┴┴ ┴┴└─ ┴ 
+#  └─┘└─┘┴ ┴┴ ┴┴ ┴┴└─ ┴
 @main.command("summary")
 @click.option('--update/--no-update',
               help="Update the repo's README'nd file.", default=False,)
@@ -575,8 +580,8 @@ def other(title):
 
 
 #  ┬┌┬┐┌─┐┌─┐┬─┐┌┬┐
-#  ││││├─┘│ │├┬┘ │ 
-#  ┴┴ ┴┴  └─┘┴└─ ┴ 
+#  ││││├─┘│ │├┬┘ │
+#  ┴┴ ┴┴  └─┘┴└─ ┴
 @main.group("import")
 def fetch():
     """Import flaws to RVD from a variety of sources"""
