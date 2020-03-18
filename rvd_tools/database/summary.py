@@ -777,6 +777,8 @@ class Summary(Base):
 
 <a href="http://www.aliasrobotics.com"><img src="https://www.massrobotics.org/wp-content/uploads/2019/01/Alias-logo.png" align="left" hspace="8" vspace="2" width="200"></a>
 
+[![Article](https://img.shields.io/badge/article-arxiv%3A1912.11299-red.svg)](https://arxiv.org/pdf/1912.11299.pdf)
+
 This repository contains the Robot Vulnerability and Database (RVD), an attempt to register and record robot vulnerabilities and bugs.
 
 Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (RVSS)](https://github.com/aliasrobotics/RVSS).
