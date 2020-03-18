@@ -921,6 +921,18 @@ Feel free to contact us if you have any requests of feedaback at **contact[at]al
 ### Automatic pings for manufacturers
 By default, new vulnerabilities are reported to manufacturers and/or open source projects however other flaws aren't. Alias Robotics can inform manufacturers directly when bugs are reported. If you're interested in this service, contact **contact[at]aliasrobotics[dot]com**.
 
+### Cite our work
+
+```
+@article{vilches2019introducing,
+  title={Introducing the robot vulnerability database (rvd)},
+  author={Mayoral-Vilches, V{\'\i}ctor and Juan, Lander Usategui San and Dieber, Bernhard and Carbajo, Unai Ayucar and Gil-Uriarte, Endika},
+  journal={arXiv preprint arXiv:1912.11299},
+  year={2019}
+}
+
+```
+
 ## Appendices
 
 ### Appendix A: Vulnerabilities, weaknesses, bugs and more
