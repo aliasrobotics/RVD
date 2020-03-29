@@ -23,6 +23,9 @@ setup(
         'vulners',
         'xmltodict',
         'pprint',
+        'pygithub',
+        'retrying',
+        'dedupe',
         # 'pycvesearch',  # needs to be installed manually, see https://github.com/cve-search/PyCVESearch
     ],
     url='https://github.com/aliasrobotics/RVD',
