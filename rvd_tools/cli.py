@@ -54,45 +54,63 @@ Vulnerability Database...")
               help='Print the tickets.', default=False,)
 @click.option('--private/--no-private',
               help='Print private RVD tickets.', default=False,)
+@click.option('--onlyprivate/--no-onlyprivate',
+              help='Print only private RVD tickets.', default=False,)
 @click.option('--label', help='Filter flaws by label.', multiple=True)
 @click.option('--isoption', help='Filter flaws by status (open, closed, all).', default="open")
-def listar(id, dump, private, label, isoption):
+def listar(id, dump, private, onlyprivate, label, isoption):
     """List current flaw tickets"""
     importer = Base()
 
     if id:  # which is the same as the issue number
-        # Get the issue
-        issue = importer.repo.get_issue(int(id))
-        cyan("Importing from RVD, issue: " + str(issue))
-        document_raw = issue.body
-        document_raw = document_raw.replace('```yaml','').replace('```', '')
-        try:
-            document = yaml.load(document_raw, Loader=yaml.FullLoader)
-            # print(document)
-
-            flaw = Flaw(document)
+        if private:
+            importer_private = GitlabImporter()
+            flaw, labels = importer_private.get_flaw(id)
             print(flaw)
-        except yaml.scanner.ScannerError:
-            print("Not in yaml format please review")
+            # cyan("Importing from RVD private, issue: " + str(flaw))
+        else:
+            # Get the issue
+            issue = importer.repo.get_issue(int(id))
+            cyan("Importing from RVD, issue: " + str(issue))
+            document_raw = issue.body
+            document_raw = document_raw.replace('```yaml','').replace('```', '')
+            try:
+                document = yaml.load(document_raw, Loader=yaml.FullLoader)
+                # print(document)
+
+                flaw = Flaw(document)
+                print(flaw)
+            except yaml.scanner.ScannerError:
+                print("Not in yaml format please review")
 
 
     else:
-        cyan("Listing all open flaws from RVD...")
         # table = [[issue.number, issue.title] for issue in issues_public]
-        table = importer.get_table(label, isoption)
+        # table = importer.get_table(label, isoption)
 
         # Refer to https://python-gitlab.readthedocs.io/en/stable/cli.html
         #  for configuration of the python-gitlab API. RVD assumes that the
         #  file ~/.python-gitlab.cfg exists
-        if private:
+        if onlyprivate:
             cyan("Listing private flaws in ", end="")
             yellow("yellow", end="")
             cyan("...")
             importer_private = GitlabImporter()
             table_private = importer_private.get_table(label)
+            yellow(tabulate(table_private))
+        elif private:
+            cyan("Listing all open flaws from RVD...")
+            cyan("Listing private flaws in ", end="")
+            yellow("yellow", end="")
+            cyan("...")
+            importer_private = GitlabImporter()
+            table_private = importer_private.get_table(label)
+            table = importer.get_table(label, isoption)
             print(tabulate(table, headers=["ID", "Title"]))
             yellow(tabulate(table_private))
         else:
+            cyan("Listing all open flaws from RVD...")
+            table = importer.get_table(label, isoption)
             print(tabulate(table, headers=["ID", "Title"]))
 
         if dump:

@@ -75,9 +75,11 @@ class GitlabImporter(Base):
 
     def get_table(self, label):
         """
-        Returns a tabulate ready table
+        Returns a tabulate ready table with elements
+        [RVDid (0), private ID, title]
 
-        NOTE: Only open issues are considered for this source of information.
+        NOTE: RVD id of all private tickets is 0 by convention.
+        NOTE2: Only open issues are considered for this source of information.
 
         :param label, tuple with labels, could be more than one
         :param is, status of the issues (could be "open", "closed" or "all")
@@ -85,10 +87,17 @@ class GitlabImporter(Base):
         """
         table = []
         project = self.repo.projects.get(self.project)
-        issues = project.issues.list()
+        issues = project.issues.list(state='opened', all=True)
+
         for issue in issues:
+            # print(issue.attributes['title'])
+            # print(issue.attributes['iid'])
+            # print(issue.attributes['state'])
+            # print(issue.attributes['labels'])
+
+            # only consider if the `flaw` label is in there
             if 'flaw' in issue.attributes['labels']:
-                # print(issue.attributes['title'])
+                # yellow(issue.attributes['title'])
                 # print(issue.attributes.keys())
                 if label:
                     all_labels = True
@@ -99,10 +108,10 @@ class GitlabImporter(Base):
                             all_labels = False
                     if all_labels:
                         # print(issue.attributes['title'])
-                        row = [0, issue.attributes['title']]
+                        row = [0, issue.attributes['iid'], issue.attributes['title']]
                         table.append(row)
                 else:
-                    row = [0, issue.attributes['title']]
+                    row = [0, issue.attributes['iid'], issue.attributes['title']]
                     table.append(row)
 
         return table
