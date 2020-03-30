@@ -646,53 +646,57 @@ def fetch_gitlab(id, push, all, dump, disclose, update):
         importer_private = GitlabImporter()
         flaw, labels = importer_private.get_flaw(id)
 
-        # Define disclosure date
-        flaw.date_reported = arrow.utcnow().format('YYYY-MM-DD')
+        if "ready" in labels:
+            # Define disclosure date
+            flaw.date_reported = arrow.utcnow().format('YYYY-MM-DD')
 
-        if not disclose:
-            # Remove sensitive information from the ticket
-            flaw.trace = "Not disclosed"
-            flaw.reproduction = "Not disclosed"
-            flaw.reproduction_image = "Not disclosed"
-            flaw.description_exploitation = "Not disclosed"
-            flaw.exploitation_image = "Not disclosed"
-            flaw.exploitation_vector = "Not disclosed"
-            flaw.description_mitigation = "Not disclosed"
-            flaw.pull_request = "Not disclosed"
+            if not disclose:
+                # Remove sensitive information from the ticket
+                flaw.trace = "Not disclosed"
+                flaw.reproduction = "Not disclosed"
+                flaw.reproduction_image = "Not disclosed"
+                flaw.description_exploitation = "Not disclosed"
+                flaw.exploitation_image = "Not disclosed"
+                flaw.exploitation_vector = "Not disclosed"
+                flaw.description_mitigation = "Not disclosed"
+                flaw.pull_request = "Not disclosed"
 
-        print(flaw)
-        # print(labels)
+            print(flaw)
+            # print(labels)
 
-        if push:
-            cyan("Pushing results to RVD...")
-            pusher = Base()
-            issue = pusher.new_ticket(flaw, labels)
-            # Update id
-            flaw.id = issue.number
-            # Update issue and links
-            if isinstance(flaw.links, list):
-                links = flaw.links
-            else:
-                links = []
-                if flaw.links.strip() != "":
-                    links.append(flaw.links.strip())
-            links.append(issue.html_url)
-            flaw.links = links
-            flaw.issue = issue.html_url
-            if flaw.title[:4] != "RVD#":  # already has the syntax
-                new_title = "RVD#" + str(issue.number) + ": " + flaw.title
-                flaw.title = new_title
-            pusher.update_ticket(issue, flaw)
+            if push:
+                cyan("Pushing results to RVD...")
+                pusher = Base()
+                issue = pusher.new_ticket(flaw, labels)
+                # Update id
+                flaw.id = issue.number
+                # Update issue and links
+                if isinstance(flaw.links, list):
+                    links = flaw.links
+                else:
+                    links = []
+                    if flaw.links.strip() != "":
+                        links.append(flaw.links.strip())
+                links.append(issue.html_url)
+                flaw.links = links
+                flaw.issue = issue.html_url
+                if flaw.title[:4] != "RVD#":  # already has the syntax
+                    new_title = "RVD#" + str(issue.number) + ": " + flaw.title
+                    flaw.title = new_title
+                pusher.update_ticket(issue, flaw)
 
-        if update:
-            importer = Base()
-            issue = importer.repo.get_issue(int(update))
-            flaw.issue = issue.html_url  # this bit is not in the gitlab ticket
-            flaw.id = issue.number  # Update id
-            if flaw.title[:4] != "RVD#":  # already has the syntax
-                new_title = "RVD#" + str(issue.number) + ": " + flaw.title
-                flaw.title = new_title
-            importer.update_ticket(issue, flaw)  # labels fetched from issue
+            if update:
+                importer = Base()
+                issue = importer.repo.get_issue(int(update))
+                flaw.issue = issue.html_url  # this bit is not in the gitlab ticket
+                flaw.id = issue.number  # Update id
+                if flaw.title[:4] != "RVD#":  # already has the syntax
+                    new_title = "RVD#" + str(issue.number) + ": " + flaw.title
+                    flaw.title = new_title
+                importer.update_ticket(issue, flaw)  # labels fetched from issue
+        else:
+            yellow("Importing a ticket that's not 'ready' just yet, make sure the ticket has 'ready' label.")
+
 
 
 @fetch.command("robust")
