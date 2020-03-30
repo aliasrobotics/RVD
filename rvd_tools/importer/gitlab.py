@@ -53,7 +53,7 @@ class GitlabImporter(Base):
         flaw = Flaw(document)
         labels = issue.attributes['labels']
         if not 'ready' in labels:
-            yellow("Importing a ticket that's not 'ready' just yet")
+            yellow("Importing a ticket that's not 'ready' just yet, make sure the ticket has 'ready' label.")
             sys.exit(1)
 
         if "flaw" in labels:
