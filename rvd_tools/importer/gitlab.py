@@ -52,9 +52,9 @@ class GitlabImporter(Base):
         document = yaml.load(document_raw, Loader=yaml.FullLoader)
         flaw = Flaw(document)
         labels = issue.attributes['labels']
-        if not 'ready' in labels:
-            yellow("Importing a ticket that's not 'ready' just yet, make sure the ticket has 'ready' label.")
-            sys.exit(1)
+        # if not 'ready' in labels:
+        #     yellow("Importing a ticket that's not 'ready' just yet, make sure the ticket has 'ready' label.")
+        #     sys.exit(1)
 
         if "flaw" in labels:
             labels.remove("flaw")
