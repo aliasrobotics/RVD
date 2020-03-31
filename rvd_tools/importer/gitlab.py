@@ -39,7 +39,7 @@ class GitlabImporter(Base):
         self.repo = gitlab.Gitlab('https://gitlab.com', private_token=self.token)
         self.project = project
 
-    def get_flaw(self, id):
+    def get_flaw(self, id, importar=False):
         """
         Returns a flaw instance populated from the ticket with id number
 
@@ -52,9 +52,10 @@ class GitlabImporter(Base):
         document = yaml.load(document_raw, Loader=yaml.FullLoader)
         flaw = Flaw(document)
         labels = issue.attributes['labels']
-        # if not 'ready' in labels:
-        #     yellow("Importing a ticket that's not 'ready' just yet, make sure the ticket has 'ready' label.")
-        #     sys.exit(1)
+
+        if not 'ready' in labels and importar:
+            yellow("Importing a ticket that's not 'ready' just yet, make sure the ticket has 'ready' label.")
+            sys.exit(1)
 
         if "flaw" in labels:
             labels.remove("flaw")
