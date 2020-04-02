@@ -92,7 +92,7 @@ class Base:
             print(str(id), end="")
             yellow(" into a Flaw...")
             # gray(flaw)
-            return flaw
+        return flaw
 
     def import_issues_labels(self, label, isoption="open"):
         """

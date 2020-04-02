@@ -1215,7 +1215,7 @@ class Statistics(Base):
         #     issues = filtered
         # else:
         #     cyan("Using all vulnerabilities...")
-        # 
+        #
         # # Calculate time difference for each ticket - in days
         # for issue in issues:
         #     # vulnerability = self.import_issue(issue.number, issue=issue)
@@ -1225,14 +1225,14 @@ class Statistics(Base):
         #         zero_days.append(issue)
         #     else:
         #         mitigated.append(issue)
-        # 
+        #
         # yellow("0-days: " + str(len(zero_days)))
         # yellow("Mitigated: " + str(len(mitigated)))
-        # 
+        #
         # # Plot
         # # animals = ['ROS', 'ROS 2', 'Universal Robots']
         # animals = [str(label)]
-        # 
+        #
         # fig = go.Figure(data=[
         #     go.Bar(name='0-days', x=animals, y=[len(zero_days)]),
         #     go.Bar(name='Mitigated', x=animals, y=[len(mitigated)])
@@ -1581,7 +1581,7 @@ class Statistics(Base):
         #     issues = filtered
         # else:
         #     cyan("Using all vulnerabilities...")
-        # 
+        #
         # # Calculate time difference for each ticket - in days
         # for issue in issues:
         #     vulnerability = self.import_issue(issue.number, issue=issue)
@@ -1596,17 +1596,17 @@ class Statistics(Base):
         #             initial_date = arrow.get(vulnerability.date_reported, ['YYYY-MM-DD'])
         #     else:
         #         initial_date = arrow.get(vulnerability.date_detected, ['YYYY-MM-DD'])
-        # 
+        #
         #     # select mitigation date
         #     if vulnerability.date_mitigation:
         #         mitigation_date = arrow.get(vulnerability.date_mitigation, ['YYYY-MM-DD'])
         #     else:
         #         mitigation_date = arrow.now()  # default to now for statistics
-        # 
+        #
         #     yellow("Mitigation time for " + str(vulnerability.id) + ": ", end="")
         #     # print(str((mitigation_date - initial_date).days))
         #     time_difference_ROS.append(int((mitigation_date - initial_date).days))
-        # 
+        #
         # # ROS2
         # time_difference_ROS2 = []  # in days
         # labels_ROS2 = ["robot component: ROS2"]
@@ -1614,7 +1614,7 @@ class Statistics(Base):
         #     cyan("Using labels_ROS2: " + str(labels_ROS2))
         #     # importer = Base()
         #     filtered = []
-        # 
+        #
         #     # fetch the from attributes itself, see above
         #     for issue in issues_nonfiltered:
         #         all_labels = True  # indicates whether all labels are present
@@ -1634,7 +1634,7 @@ class Statistics(Base):
         #     issues = filtered
         # else:
         #     cyan("Using all vulnerabilities...")
-        # 
+        #
         # # Calculate time difference for each ticket - in days
         # for issue in issues:
         #     vulnerability = self.import_issue(issue.number, issue=issue)
@@ -1649,17 +1649,17 @@ class Statistics(Base):
         #             initial_date = arrow.get(vulnerability.date_reported, ['YYYY-MM-DD'])
         #     else:
         #         initial_date = arrow.get(vulnerability.date_detected, ['YYYY-MM-DD'])
-        # 
+        #
         #     # select mitigation date
         #     if vulnerability.date_mitigation:
         #         mitigation_date = arrow.get(vulnerability.date_mitigation, ['YYYY-MM-DD'])
         #     else:
         #         mitigation_date = arrow.now()  # default to now for statistics
-        # 
+        #
         #     yellow("Mitigation time for " + str(vulnerability.id) + ": ", end="")
         #     # print(str((mitigation_date - initial_date).days))
         #     time_difference_ROS2.append(int((mitigation_date - initial_date).days))
-        # 
+        #
         # # UR
         # time_difference_UR = []  # in days
         # labels_UR = ["vendor: Universal Robots"]
@@ -1667,7 +1667,7 @@ class Statistics(Base):
         #     cyan("Using labels_UR: " + str(labels_UR))
         #     # importer = Base()
         #     filtered = []
-        # 
+        #
         #     # fetch the from attributes itself, see above
         #     for issue in issues_nonfiltered:
         #         all_labels = True  # indicates whether all labels are present
@@ -1687,7 +1687,7 @@ class Statistics(Base):
         #     issues = filtered
         # else:
         #     cyan("Using all vulnerabilities...")
-        # 
+        #
         # # Calculate time difference for each ticket - in days
         # for issue in issues:
         #     vulnerability = self.import_issue(issue.number, issue=issue)
@@ -1702,17 +1702,17 @@ class Statistics(Base):
         #             initial_date = arrow.get(vulnerability.date_reported, ['YYYY-MM-DD'])
         #     else:
         #         initial_date = arrow.get(str(vulnerability.date_detected), ['YYYY-MM-DD'])
-        # 
+        #
         #     # select mitigation date
         #     if vulnerability.date_mitigation:
         #         mitigation_date = arrow.get(vulnerability.date_mitigation, ['YYYY-MM-DD'])
         #     else:
         #         mitigation_date = arrow.now()  # default to now for statistics
-        # 
+        #
         #     yellow("Mitigation time for " + str(vulnerability.id) + ": ", end="")
         #     print(str((mitigation_date - initial_date).days))
         #     time_difference_UR.append(int((mitigation_date - initial_date).days))
-        # 
+        #
         # # ABB
         # time_difference_ABB = []  # in days
         # labels_ABB = ["vendor: ABB"]
@@ -1720,7 +1720,7 @@ class Statistics(Base):
         #     cyan("Using labels_ABB: " + str(labels_ABB))
         #     # importer = Base()
         #     filtered = []
-        # 
+        #
         #     # fetch the from attributes itself, see above
         #     for issue in issues_nonfiltered:
         #         all_labels = True  # indicates whether all labels are present
@@ -1740,7 +1740,7 @@ class Statistics(Base):
         #     issues = filtered
         # else:
         #     cyan("Using all vulnerabilities...")
-        # 
+        #
         # # Calculate time difference for each ticket - in days
         # for issue in issues:
         #     vulnerability = self.import_issue(issue.number, issue=issue)
@@ -1755,42 +1755,42 @@ class Statistics(Base):
         #             initial_date = arrow.get(vulnerability.date_reported, ['YYYY-MM-DD'])
         #     else:
         #         initial_date = arrow.get(str(vulnerability.date_detected), ['YYYY-MM-DD'])
-        # 
+        #
         #     # select mitigation date
         #     if vulnerability.date_mitigation:
         #         mitigation_date = arrow.get(vulnerability.date_mitigation, ['YYYY-MM-DD'])
         #     else:
         #         mitigation_date = arrow.now()  # default to now for statistics
-        # 
+        #
         #     yellow("Mitigation time for " + str(vulnerability.id) + ": ", end="")
         #     print(str((mitigation_date - initial_date).days))
         #     # print(mitigation_date)
         #     # print(initial_date)
         #     time_difference_ABB.append(int((mitigation_date - initial_date).days))
-        # 
+        #
         # ############
         # # Create plot
         # ############
-        # 
+        #
         # # x_data = ['Carmelo Anthony']
         # x_data = ["ROS", "ROS2", "Universal Robots", "ABB"]
-        # 
+        #
         # y0 = time_difference_ROS
         # y1 = time_difference_ROS2
         # y2 = time_difference_UR
         # y3 = time_difference_ABB
-        # 
+        #
         # # y_data = [y0, y1, y2, y3, y4, y5]
         # y_data = [y0, y1, y2, y3]
-        # 
+        #
         # # colors = ['rgba(93, 164, 214, 0.5)', 'rgba(255, 144, 14, 0.5)',
         # #           'rgba(44, 160, 101, 0.5)', 'rgba(255, 65, 54, 0.5)',
         # #           'rgba(207, 114, 255, 0.5)', 'rgba(127, 96, 0, 0.5)']
         # colors = ['rgba(93, 164, 214, 0.5)', 'rgba(255, 144, 14, 0.5)',
         #           'rgba(44, 160, 101, 0.5)', 'rgba(255, 65, 54, 0.5)']
-        # 
+        #
         # fig = go.Figure()
-        # 
+        #
         # for xd, yd, cls in zip(x_data, y_data, colors):
         #     fig.add_trace(go.Box(
         #             y=yd,
@@ -1802,7 +1802,7 @@ class Statistics(Base):
         #             marker_size=5,
         #             line_width=1)
         #         )
-        # 
+        #
         # # fig.add_shape(
         # #         # Line Horizontal
         # #         go.layout.Shape(
@@ -1818,7 +1818,7 @@ class Statistics(Base):
         # #             ),
         # #         )
         # # )
-        # 
+        #
         # fig.update_layout(
         #     title='Time until mitigation (in days), robot vulnerabilities',
         #     yaxis=dict(
@@ -1894,10 +1894,14 @@ class Statistics(Base):
                 score = 10
                 # score = 0
 
-            if vuln.vendor.strip() in dict_vulnerabilities.keys():
-                dict_vulnerabilities[vuln.vendor.strip()].append(score)
+            dict_vulnerabilities["None"] = []
+            if vuln.vendor:
+                if vuln.vendor.strip() in dict_vulnerabilities.keys():
+                    dict_vulnerabilities[vuln.vendor.strip()].append(score)
+                else:
+                    dict_vulnerabilities[vuln.vendor.strip()] = [score]
             else:
-                dict_vulnerabilities[vuln.vendor.strip()] = [score]
+                dict_vulnerabilities["None"].append(score)
 
         # pprint.pprint(dict_vulnerabilities)
 
@@ -1934,14 +1938,18 @@ class Statistics(Base):
         """
         vulnerabilities_flaws = []  # flaw objects, simplify processing
         for vulnerability in self.vulnerabilities:
-            vulnerabilities_flaws.append(
-                self.import_issue(vulnerability.number,
-                                  issue=vulnerability, debug=False))
+            vuln = self.import_issue(vulnerability.number,
+                              issue=vulnerability, debug=False)
+            vulnerabilities_flaws.append(vuln)
 
         # Create a dict that organizes vulns by vendor
         dict_vulnerabilities = {}
         vulnerabilities_averaged = {}
         for vuln in vulnerabilities_flaws:
+            if not vuln:
+                # continue
+                red("Vuln fetched in None")
+                sys.exit(1)
             score = vuln.cvss_score
             if score == 0:
                 # score = 10  # asign by default a max. score to those non triaged
@@ -1950,11 +1958,27 @@ class Statistics(Base):
                 # score = 10
                 score = 0
 
-            if vuln.vendor.strip() in dict_vulnerabilities.keys():
-                dict_vulnerabilities[vuln.vendor.strip()].append(score)
+            # if vuln.vendor and vuln.vendor.strip() in dict_vulnerabilities.keys():
+            #     dict_vulnerabilities[vuln.vendor.strip()].append(score)
+            # else:
+            #     if vuln.vendor:
+            #         yellow("Creating new vendor group: " + str(vuln.vendor.strip()))
+            #         dict_vulnerabilities[vuln.vendor.strip()] = [score]
+            #     else:
+            #         yellow("Adding to vendor group: None (" + str(vuln.id) + ")")
+            #         dict_vulnerabilities["None"] = [score]
+
+            dict_vulnerabilities["None"] = []
+            if vuln.vendor:
+                if vuln.vendor.strip() in dict_vulnerabilities.keys():
+                    dict_vulnerabilities[vuln.vendor.strip()].append(score)
+                else:
+                    yellow("Creating new vendor group: " + str(vuln.vendor.strip()))
+                    dict_vulnerabilities[vuln.vendor.strip()] = [score]
             else:
-                yellow("Creating new vendor group: " + str(vuln.vendor.strip()))
-                dict_vulnerabilities[vuln.vendor.strip()] = [score]
+                red("Adding to vendor group None (" + str(vuln.id) + ")")
+                dict_vulnerabilities["None"].append(score)
+
 
         pprint.pprint(dict_vulnerabilities)
 
