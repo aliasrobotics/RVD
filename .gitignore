@@ -6,3 +6,5 @@ dist/
 venv/
 __pycache__/
 .database/
+*/.DS_Store
+.DS_Store

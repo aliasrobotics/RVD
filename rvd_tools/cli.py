@@ -321,12 +321,45 @@ def search_vulners(query, push):
 #  │  └┐┌┘├┤
 #  └─┘ └┘ └─┘
 # @main.group()
+@main.group("cve")
+def cve():
+    """
+    Makes use of Vulners' database.
+
+    See https://github.com/vulnersCom/api#functions-and-methods
+    for more.
+    """
+    cyan("Using CVE tools...")
+
+@click.option('--version', default=4, help='Version of CVE JSON.')
+@cve.command("export")
+def cve_export(version):
+    """
+    Export an RVD ticket to CVE JSON
+    """
+    cyan("Exporting an RVD ticket into CVE JSON format...")
+    red("TODO: Not implemented")
+    sys.exit(1)
+
+def cve_validate_string():
+    pass # TODO
+
+@click.option('--version', default=4, help='Version of CVE JSON.')
+@cve.command("validate")
+def cve_validate(version):
+    """
+    Validate a CVE JSON file
+    """
+    cyan("Validating a CVE JSON file...")
+    red("TODO: Not implemented")
+    sys.exit(1)
+
 @click.option('--all/--no-all', default=False, help='Automatically import all flaws for a given vendor.')
 @click.option('--vendor', default=None, help='Vendor to research.')
 @click.option('--product', default=None, help='Product to research.')
 @click.option('--push/--no-push', default=False, help='Push to RVD in a new ticket.')
-@main.command("cve")
-def cve(all, vendor, product, push):
+@cve.command("search")
+def cve_search(all, vendor, product, push):
     """
     Search CVEs and CPEs from cve-search enabled DB, import them.
 
