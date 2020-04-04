@@ -151,10 +151,12 @@ git fetch cvelist; git checkout -b "
             + " cvelist/master; \
 cp "
             + str(file_path)
-            + " $(du -a | grep  CVE-2020-10266 | grep -v .git | awk '{print $2}');\
+            + " $(du -a | grep "
+            + str(next_identifier)
+            + " | grep -v .git | awk '{print $2}');\
 git add .; git commit -m 'Assign "
             + str(next_identifier)
-            + "'; git push -u origin "
+            + "'; git push -uf origin "
             + str(next_identifier)
         )
 
