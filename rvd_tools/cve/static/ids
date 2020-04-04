@@ -2,7 +2,7 @@
 ~CVE-2019-19626 https://github.com/aliasrobotics/RVD/issues/1408
 ~CVE-2019-19627 https://github.com/aliasrobotics/RVD/issues/926
 ~CVE-2020-10264 https://github.com/aliasrobotics/RVD/issues/1444
-CVE-2020-10265
+~CVE-2020-10265 https://github.com/aliasrobotics/RVD/issues/1443
 CVE-2020-10266
 CVE-2020-10267
 CVE-2020-10268

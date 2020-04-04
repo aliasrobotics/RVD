@@ -382,13 +382,16 @@ def cve():
 @click.option(
     "--dump/--no-dump", default=False, help="Print resulting file.",
 )
+@click.option(
+    "--push/--no-push", default=False, help="Push to a branch.",
+)
 @cve.command("export")
-def cve_export(number, version, mode, private, dump):
+def cve_export(number, version, mode, private, dump, push):
     """
     Export an RVD ticket to CVE JSON
     """
     cyan("Exporting an RVD ticket into CVE JSON format...")
-    cve_export_file(number, version, mode, private, dump)
+    cve_export_file(number, version, mode, private, dump, push)
 
 
 @click.option("--version", default=4, help="Version of CVE JSON.")

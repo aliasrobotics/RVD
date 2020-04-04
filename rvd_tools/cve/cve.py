@@ -89,7 +89,7 @@ automation-working-group/master/cve_json_schema/CVE_JSON_4.0_min_reserved.schema
             sys.stderr.write(str(error.message) + "\n")
 
 
-def cve_export_file(number, version, mode, private, dump):
+def cve_export_file(number, version, mode, private, dump, push):
     """
     Export ticket number to CVE JSON format.
 
@@ -130,13 +130,34 @@ def cve_export_file(number, version, mode, private, dump):
     )
     green("Successfully exported to /tmp/cve/" + str(next_identifier) + ".json")
 
+    # dump in stdout
+    file_path = "/tmp/cve/" + str(next_identifier) + ".json"
     if dump:
-        file = open("/tmp/cve/" + str(next_identifier) + ".json", "r")
+        file = open(file_path, "r")
         print(file.read())
         file.close()
 
+    # validate
     cyan("Validating the file...")
-    cve_jsonvalidation("/tmp/cve/" + str(next_identifier) + ".json", version)
+    cve_jsonvalidation(file_path, version)
+
+    # push
+    if push:
+        os.system(
+            "cd /tmp/; git clone https://github.com/vmayoral/cvelist;\
+cd cvelist; git remote add cvelist https://github.com/CVEProject/cvelist; \
+git fetch cvelist; git checkout -b "
+            + str(next_identifier)
+            + " cvelist/master; \
+cp "
+            + str(file_path)
+            + " $(du -a | grep  CVE-2020-10266 | grep -v .git | awk '{print $2}');\
+git add .; git commit -m 'Assign "
+            + str(next_identifier)
+            + "'; git push -u origin "
+            + str(next_identifier)
+        )
+
     cyan("Things left to do:")
     yellow("\t - Edit ids file and indicate it appropriately!")
-    yellow("\t - Submit a PRs to cvelist")
+    # yellow("\t - Submit a PRs to cvelist")

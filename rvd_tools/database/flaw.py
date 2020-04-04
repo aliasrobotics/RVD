@@ -874,23 +874,23 @@ taxonomy used for its categorization, refer to \
 
             # references
             file.write('    "references": {\n')
-            file.write('    "reference_data": [\n')
-            file.write("    {\n")
-            file.write(
-                '    "name": "https://www.universal-robots.com/how-tos-and-faqs/how-to/ur-how-tos/real-time-data-exchange-rtde-guide/",\n'
-            )
-            file.write('    "refsource": "CONFIRM",\n')
-            file.write(
-                '    "url": "https://www.universal-robots.com/how-tos-and-faqs/how-to/ur-how-tos/real-time-data-exchange-rtde-guide/"\n'
-            )
-            file.write("    }\n")
-            file.write("    ]\n")
-            file.write("    },    \n")
+            for i in range(len(self.links)):
+                file.write('    "reference_data": [\n')
+                file.write("    {\n")
+                file.write('    "name": "' + str(self.links[i]) + '",\n')
+                file.write('    "refsource": "CONFIRM",\n')
+                file.write('    "url": "' + str(self.links[i]) + '"\n')
+                file.write("    }\n")
+                if i == (len(self.links) - 1):
+                    file.write("    ]\n")
+                else:
+                    file.write("    ],\n")
+            file.write("    },\n")
 
             # source
             file.write('    "source": {\n')
             file.write('        "defect": [\n')
-            file.write('            "RVD#1444"\n')
+            file.write('            "RVD#' + str(self.id) + '"\n')
             file.write("        ],\n")
             file.write('        "discovery": "EXTERNAL"\n')
             file.write("    }\n")
