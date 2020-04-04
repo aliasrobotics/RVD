@@ -716,7 +716,7 @@ taxonomy used for its categorization, refer to \
         else:
             self.additional_fields[key] = value
 
-    def export_to_cve(self, filepath, version, mode):
+    def export_to_cve(self, filepath, version, mode, next_identifier):
         """
         Export flaw (self) to CVE JSON format in filepath
 
@@ -730,9 +730,6 @@ taxonomy used for its categorization, refer to \
 
         if version == 4:
             file = open(filepath, "w")
-            #########
-            # TODO: review in the future this hand implementation
-            #########
             file.write("{\n")
             # CVE_data_meta
             file.write('    "CVE_data_meta": {\n')
@@ -742,7 +739,7 @@ taxonomy used for its categorization, refer to \
                 + str(arrow.utcnow().format("YYYY-MM-DDTHH:mm:ss ZZ"))
                 + '",\n'
             )
-            file.write('        "ID": "' + str(self.cve) + '",\n')
+            file.write('        "ID": "' + str(next_identifier) + '",\n')
             file.write('        "STATE": "PUBLIC",\n')
             file.write('        "TITLE": "' + str(self.title) + '"\n')
             file.write("    },\n")

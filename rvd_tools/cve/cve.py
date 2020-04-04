@@ -125,7 +125,9 @@ def cve_export_file(number, version, mode, private, dump):
 
     # Ensure that the detination exists
     os.system("mkdir -p /tmp/cve")
-    flaw.export_to_cve("/tmp/cve/" + str(next_identifier) + ".json", version, mode)
+    flaw.export_to_cve(
+        "/tmp/cve/" + str(next_identifier) + ".json", version, mode, next_identifier
+    )
     green("Successfully exported to /tmp/cve/" + str(next_identifier) + ".json")
 
     if dump:

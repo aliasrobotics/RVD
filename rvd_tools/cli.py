@@ -394,7 +394,7 @@ def cve_export(number, version, mode, private, dump):
 @click.option("--version", default=4, help="Version of CVE JSON.")
 @click.option("--file", help="JSON file to validate.")
 @cve.command("validate")
-def cve_validate(version, file, number):
+def cve_validate(version, file):
     """
     Validate a CVE JSON file
 
