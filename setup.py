@@ -2,9 +2,9 @@ from setuptools import setup, find_packages
 
 setup(
     name='rvd-tools',
-    version='0.8',
+    version='0.9',
     packages=find_packages(),
-    include_package_data=True,
+    include_package_data=True,  # this requires a MANIFEST.in
     install_requires=[
         'arrow',
         'bs4',
@@ -35,10 +35,11 @@ setup(
     license='GPLv3',
     author='Alias Robotics',
     author_email='contact@aliasrobotics.com',
-    description='Toolset for RVD',
+    description='Toolset for the Robot Vulnerability Database (RVD)',
     long_description='''
-    Set of tools and scripts to maintain, process and submit
-    flaws in the the Robot Vulnerability Database (RVD).
+    The Robot Vulnerability Database or RVD for short is an archive of
+    robot vulnerabilities and bugs. This Python 3 package provides a set of tools to
+    manage, operate and automate RVD.'
     ''',
     keywords=['RVD', 'vulnerability', 'security', 'tools', 'ics'],
     entry_points={

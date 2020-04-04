@@ -18,10 +18,12 @@ from .database.summary import *
 from .database.duplicates import *
 from .database.vulners import *
 from .database.edit import *
+
 # from .database.coercer import *
 from .importer.robust import *
 from .importer.markdown import *
 from .importer.gitlab import *
+from .cve.cve import *
 from .statistics.statistics import *
 from .reports.reports import *
 import sys
@@ -42,22 +44,32 @@ import ast
 @click.group()
 def main():
     """Robot Vulnerability Database (RVD) command line tooling"""
-    cyan("Starting rvd, the CLI tool for managing the Robot \
-Vulnerability Database...")
+    cyan(
+        "Starting rvd, the CLI tool for managing the Robot \
+Vulnerability Database..."
+    )
+
 
 #  ┬  ┬┌─┐┌┬┐
 #  │  │└─┐ │
 #  ┴─┘┴└─┘ ┴
 @main.command("list")
-@click.argument('id', required=False)
-@click.option('--dump/--no-dump',
-              help='Print the tickets.', default=False,)
-@click.option('--private/--no-private',
-              help='Print private RVD tickets.', default=False,)
-@click.option('--onlyprivate/--no-onlyprivate',
-              help='Print only private RVD tickets.', default=False,)
-@click.option('--label', help='Filter flaws by label.', multiple=True)
-@click.option('--isoption', help='Filter flaws by status (open, closed, all).', default="open")
+@click.argument("id", required=False)
+@click.option(
+    "--dump/--no-dump", help="Print the tickets.", default=False,
+)
+@click.option(
+    "--private/--no-private", help="Print private RVD tickets.", default=False,
+)
+@click.option(
+    "--onlyprivate/--no-onlyprivate",
+    help="Print only private RVD tickets.",
+    default=False,
+)
+@click.option("--label", help="Filter flaws by label.", multiple=True)
+@click.option(
+    "--isoption", help="Filter flaws by status (open, closed, all).", default="open"
+)
 def listar(id, dump, private, onlyprivate, label, isoption):
     """List current flaw tickets"""
     importer = Base()
@@ -73,7 +85,7 @@ def listar(id, dump, private, onlyprivate, label, isoption):
             issue = importer.repo.get_issue(int(id))
             cyan("Importing from RVD, issue: " + str(issue))
             document_raw = issue.body
-            document_raw = document_raw.replace('```yaml','').replace('```', '')
+            document_raw = document_raw.replace("```yaml", "").replace("```", "")
             try:
                 document = yaml.load(document_raw, Loader=yaml.FullLoader)
                 # print(document)
@@ -82,7 +94,6 @@ def listar(id, dump, private, onlyprivate, label, isoption):
                 print(flaw)
             except yaml.scanner.ScannerError:
                 print("Not in yaml format please review")
-
 
     else:
         # table = [[issue.number, issue.title] for issue in issues_public]
@@ -118,16 +129,17 @@ def listar(id, dump, private, onlyprivate, label, isoption):
             for issue in issues:
                 cyan("Importing from RVD, issue: " + str(issue))
                 document_raw = issue.body
-                document_raw = document_raw.replace('```yaml','').replace('```', '')
+                document_raw = document_raw.replace("```yaml", "").replace("```", "")
                 document = yaml.load(document_raw, Loader=yaml.FullLoader)
                 flaw = Flaw(document)
                 print(flaw)
+
 
 #  ┬─┐┌─┐┌─┐┌─┐┬─┐┌┬┐
 #  ├┬┘├┤ ├─┘│ │├┬┘ │
 #  ┴└─└─┘┴  └─┘┴└─ ┴
 @main.command("report")
-@click.argument('id', required=True)
+@click.argument("id", required=True)
 def report(id):
     """
     Generates a PDF report for the given ID under /tmp/rvd/reports/
@@ -151,7 +163,7 @@ def statistics():
 
 
 @statistics.command("general")
-@click.option('--label', help='Filter flaws by label.', multiple=True)
+@click.option("--label", help="Filter flaws by label.", multiple=True)
 def statistics_general(label):
     """
     Creates a table with some general information per flaw
@@ -160,9 +172,9 @@ def statistics_general(label):
     statistics.statistics_vulnerabilities_historic(label)
 
 
-# UNFINISHED
+#  UNFINISHED
 @statistics.command("scoring_comparison")
-@click.option('--label', help='Filter flaws by label.', multiple=True)
+@click.option("--label", help="Filter flaws by label.", multiple=True)
 def statistics_scoring(label):
     """
     Compares CVSS and RVSS for selected tickets
@@ -171,11 +183,15 @@ def statistics_scoring(label):
     statistics.cvss_vs_rvss(label)
 
 
-# UNFINISHED
+#  UNFINISHED
 @statistics.command("public_private")
-@click.option('--label', help='Filter flaws by label.', multiple=True)
-@click.option('--nolabel', help='Filter flaws by those who which do not\
- include label.', multiple=True)
+@click.option("--label", help="Filter flaws by label.", multiple=True)
+@click.option(
+    "--nolabel",
+    help="Filter flaws by those who which do not\
+ include label.",
+    multiple=True,
+)
 def statistics_public_private(label, nolabel):
     """
     Plots public vs private flaws given a set of filters through labels
@@ -185,9 +201,13 @@ def statistics_public_private(label, nolabel):
 
 
 @statistics.command("zero")
-@click.option('--label', help='Filter flaws by label.', multiple=True)
-@click.option('--nolabel', help='Filter flaws by those who which do not\
- include label.', multiple=True)
+@click.option("--label", help="Filter flaws by label.", multiple=True)
+@click.option(
+    "--nolabel",
+    help="Filter flaws by those who which do not\
+ include label.",
+    multiple=True,
+)
 def statistics_zero_vs_mitigated(label, nolabel):
     """
     Plots 0-days vs mitigated flaws, among the filtered ones
@@ -197,9 +217,13 @@ def statistics_zero_vs_mitigated(label, nolabel):
 
 
 @statistics.command("cwe")
-@click.option('--label', help='Filter flaws by label.', multiple=True)
-@click.option('--nolabel', help='Filter flaws by those who which do not\
- include label.', multiple=True)
+@click.option("--label", help="Filter flaws by label.", multiple=True)
+@click.option(
+    "--nolabel",
+    help="Filter flaws by those who which do not\
+ include label.",
+    multiple=True,
+)
 def statistics_cwe(label, nolabel):
     """
     Plots flaw CWEs grouped by value among the filtered ones
@@ -209,9 +233,13 @@ def statistics_cwe(label, nolabel):
 
 
 @statistics.command("mitigation_timing")
-@click.option('--label', help='Filter flaws by label.', multiple=True)
-@click.option('--nolabel', help='Filter flaws by those who which do not\
- include label.', multiple=True)
+@click.option("--label", help="Filter flaws by label.", multiple=True)
+@click.option(
+    "--nolabel",
+    help="Filter flaws by those who which do not\
+ include label.",
+    multiple=True,
+)
 def statistics_mitigation_timing(label, nolabel):
     """
     Creates a plot showing the time to mitigation for the selected tickets.
@@ -224,7 +252,7 @@ def statistics_mitigation_timing(label, nolabel):
 
 
 @statistics.command("distribution")
-@click.option('--label', help='Filter flaws by label.', multiple=True)
+@click.option("--label", help="Filter flaws by label.", multiple=True)
 def statistics_distribution(label):
     """ An averaged scoring distribution per vendor"""
     statistics = Statistics()
@@ -232,37 +260,43 @@ def statistics_distribution(label):
 
 
 @statistics.command("vendor_vulnerabilities")
-@click.option('--label', help='Filter flaws by label.', multiple=True)
+@click.option("--label", help="Filter flaws by label.", multiple=True)
 def statistics_vendor_vulnerabilities(label):
     """ # Vulnerabilities per vendor"""
     statistics = Statistics()
     statistics.vendor_vulnerabilities(label)
 
+
 #  ┌─┐┌┬┐┬┌┬┐
 #  ├┤  │││ │
 #  └─┘─┴┘┴ ┴
 @main.command("edit")
-@click.argument('id', required=False)
-@click.option('--subsequent/--no-subsequent',
-              help='Continue editing subsequently.', default=True,)
-@click.option('--label', help='Filter flaws by label.', multiple=True)
+@click.argument("id", required=False)
+@click.option(
+    "--subsequent/--no-subsequent", help="Continue editing subsequently.", default=True,
+)
+@click.option("--label", help="Filter flaws by label.", multiple=True)
 def edit(id, subsequent, label):
     """
     Edits selected (and iteratively all subsequent) tickets within the database
     """
     edit_function(id, subsequent, label)
 
+
 #  ┌┬┐┬ ┬┌─┐┬  ┬┌─┐┌─┐┌┬┐┌─┐┌─┐
 #   │││ │├─┘│  ││  ├─┤ │ ├┤ └─┐
 #  ─┴┘└─┘┴  ┴─┘┴└─┘┴ ┴ ┴ └─┘└─┘
 @main.command("duplicates")
-@click.option('--train/--no-train',
-              help='Train the classifiers.', default=False,)
-@click.option('--push/--no-push',
-              help='Push feedback.', default=False,)
-@click.option('--label', help='Filter flaws by label.', multiple=True)
-@click.option('--test/--no-test',
-              help='Test that validation works.', default=False,)
+@click.option(
+    "--train/--no-train", help="Train the classifiers.", default=False,
+)
+@click.option(
+    "--push/--no-push", help="Push feedback.", default=False,
+)
+@click.option("--label", help="Filter flaws by label.", multiple=True)
+@click.option(
+    "--test/--no-test", help="Test that validation works.", default=False,
+)
 def duplicates(train, push, label, test):
     """
     Searches and tags appropriately duplicates in the database
@@ -275,15 +309,16 @@ def duplicates(train, push, label, test):
     if test:
         # Fetch a given ticket and check for duplicates in the db
         importer = Base()
-        issue = importer.repo.get_issue(int(999))  # use existing flaw
+        issue = importer.repo.get_issue(int(999))  #  use existing flaw
         document_raw = issue.body
-        document_raw = document_raw.replace('```yaml','').replace('```', '')
+        document_raw = document_raw.replace("```yaml", "").replace("```", "")
         document = yaml.load(document_raw, Loader=yaml.FullLoader)
         # document = default_document()  # get the default document
         flaw = Flaw(document)
         print(duplicates.is_duplicate(flaw))
     else:
         duplicates.find_duplicates(train, push, label)
+
 
 #  ┬  ┬┬ ┬┬  ┌┐┌┌─┐┬─┐┌─┐
 #  └┐┌┘│ ││  │││├┤ ├┬┘└─┐
@@ -301,21 +336,24 @@ def vulners():
 
 
 @vulners.command("cve")
-@click.argument('query', required=True)
-@click.option('--push/--no-push',
-              help='Push feedback.', default=False,)
+@click.argument("query", required=True)
+@click.option(
+    "--push/--no-push", help="Push feedback.", default=False,
+)
 def cve_vulners(query, push):
     vulners = Vulners()
     vulners.cve(query, push)
 
 
 @vulners.command("search")
-@click.argument('query', required=True)
-@click.option('--push/--no-push',
-              help='Push feedback.', default=False,)
+@click.argument("query", required=True)
+@click.option(
+    "--push/--no-push", help="Push feedback.", default=False,
+)
 def search_vulners(query, push):
     vulners = Vulners()
     vulners.search(query, push)
+
 
 #  ┌─┐┬  ┬┌─┐
 #  │  └┐┌┘├┤
@@ -331,7 +369,8 @@ def cve():
     """
     cyan("Using CVE tools...")
 
-@click.option('--version', default=4, help='Version of CVE JSON.')
+
+@click.option("--version", default=4, help="Version of CVE JSON.")
 @cve.command("export")
 def cve_export(version):
     """
@@ -341,23 +380,36 @@ def cve_export(version):
     red("TODO: Not implemented")
     sys.exit(1)
 
-def cve_validate_string():
-    pass # TODO
 
-@click.option('--version', default=4, help='Version of CVE JSON.')
+@click.option("--version", default=4, help="Version of CVE JSON.")
+@click.option("--file", help="JSON file to validate.")
+@click.option("--number", help="RVD ticket number to validate.")
 @cve.command("validate")
-def cve_validate(version):
+def cve_validate(version, file, number):
     """
     Validate a CVE JSON file
+
+    Examples:
+        cve validate --file /Users/alias/Downloads/CVE-2020-10264.json
     """
     cyan("Validating a CVE JSON file...")
-    red("TODO: Not implemented")
-    sys.exit(1)
+    if file:
+        cve_jsonvalidation(file, version)
+    elif number:
+        pass
+    else:
+        red("Error, file or RVD ticket required")
+        sys.exit(1)
 
-@click.option('--all/--no-all', default=False, help='Automatically import all flaws for a given vendor.')
-@click.option('--vendor', default=None, help='Vendor to research.')
-@click.option('--product', default=None, help='Product to research.')
-@click.option('--push/--no-push', default=False, help='Push to RVD in a new ticket.')
+
+@click.option(
+    "--all/--no-all",
+    default=False,
+    help="Automatically import all flaws for a given vendor.",
+)
+@click.option("--vendor", default=None, help="Vendor to research.")
+@click.option("--product", default=None, help="Product to research.")
+@click.option("--push/--no-push", default=False, help="Push to RVD in a new ticket.")
 @cve.command("search")
 def cve_search(all, vendor, product, push):
     """
@@ -373,28 +425,33 @@ def cve_search(all, vendor, product, push):
     # cve = CVESearch()
     cyan("Searching for CVEs and CPEs with cve-search ...")
     from pycvesearch import CVESearch
+
     if all:
         if vendor:
             cve = CVESearch()
             vendor_flaws = cve.browse(vendor)
-            products = vendor_flaws['product']
+            products = vendor_flaws["product"]
             for product in products:
-                results = cve.search(vendor+"/"+product)
+                results = cve.search(vendor + "/" + product)
                 # Start producing flaws in here
-                for result in results['results']:
+                for result in results["results"]:
                     # pprint.pprint(result)
                     document = default_document()  # get the default document
                     # Add relevant elements to the document
-                    document['title'] = result['summary'][:65]
-                    document['type'] = "vulnerability"
-                    document['description'] = result['summary']
-                    document['cve'] = result['id']
-                    document['cwe'] = result['cwe']
-                    document['severity']['cvss-vector'] = "CVSS:3.0/" + str(result['cvss-vector'])
-                    document['severity']['cvss-score'] = result['cvss']
-                    document['links'] = result['references']
-                    document['flaw']['reported-by'] = result['assigner']
-                    document['flaw']['date-reported'] = arrow.get(result['Published']).format('YYYY-MM-DD')
+                    document["title"] = result["summary"][:65]
+                    document["type"] = "vulnerability"
+                    document["description"] = result["summary"]
+                    document["cve"] = result["id"]
+                    document["cwe"] = result["cwe"]
+                    document["severity"]["cvss-vector"] = "CVSS:3.0/" + str(
+                        result["cvss-vector"]
+                    )
+                    document["severity"]["cvss-score"] = result["cvss"]
+                    document["links"] = result["references"]
+                    document["flaw"]["reported-by"] = result["assigner"]
+                    document["flaw"]["date-reported"] = arrow.get(
+                        result["Published"]
+                    ).format("YYYY-MM-DD")
 
                     # Create a flaw out of the document
                     flaw = Flaw(document)
@@ -408,7 +465,7 @@ def cve_search(all, vendor, product, push):
 
                     if push:
                         pusher = Base()  # instantiate the class to push changes
-                        labels = ['vulnerability']
+                        labels = ["vulnerability"]
                         vendor_label = "vendor: " + str(vendor)
                         labels.append(vendor_label)
                         # new_keywords = ast.literal_eval(new_flaw.keywords)
@@ -442,22 +499,26 @@ def cve_search(all, vendor, product, push):
     if vendor and product:
         cve = CVESearch()
         cyan("Searching for vendor/product: ", end="")
-        print(vendor+"/"+product)
-        results = cve.search(vendor+"/"+product)
+        print(vendor + "/" + product)
+        results = cve.search(vendor + "/" + product)
         # Start producing flaws in here
-        for result in results['results']:
+        for result in results["results"]:
             # pprint.pprint(result)
             document = default_document()  # get the default document
             # Add relevant elements to the document
-            document['title'] = result['summary'][:65]
-            document['description'] = result['summary']
-            document['cve'] = result['id']
-            document['cwe'] = result['cwe']
-            document['severity']['cvss-vector'] = "CVSS:3.0/" + str(result['cvss-vector'])
-            document['severity']['cvss-score'] = result['cvss']
-            document['links'] = result['references']
-            document['flaw']['reported-by'] = result['assigner']
-            document['flaw']['date-reported'] = arrow.get(result['Published']).format('YYYY-MM-DD')
+            document["title"] = result["summary"][:65]
+            document["description"] = result["summary"]
+            document["cve"] = result["id"]
+            document["cwe"] = result["cwe"]
+            document["severity"]["cvss-vector"] = "CVSS:3.0/" + str(
+                result["cvss-vector"]
+            )
+            document["severity"]["cvss-score"] = result["cvss"]
+            document["links"] = result["references"]
+            document["flaw"]["reported-by"] = result["assigner"]
+            document["flaw"]["date-reported"] = arrow.get(result["Published"]).format(
+                "YYYY-MM-DD"
+            )
 
             # Create a flaw out of the document
             flaw = Flaw(document)
@@ -470,7 +531,7 @@ def cve_search(all, vendor, product, push):
 
             if push:
                 pusher = Base()  # instantiate the class to push changes
-                labels = ['vulnerability']
+                labels = ["vulnerability"]
                 new_keywords = ast.literal_eval(new_flaw.keywords)
                 for l in new_keywords:
                     labels.append(l)
@@ -506,6 +567,7 @@ def cve_search(all, vendor, product, push):
         red("Error, vendor or vendor and product required")
         sys.exit(1)
 
+
 # @cve.command("browse")
 # @click.argument('vendor')
 # def browse(vendor):
@@ -531,9 +593,10 @@ def cve_search(all, vendor, product, push):
 #  └┐┌┘├─┤│  │ ││├─┤ │ ├┤
 #   └┘ ┴ ┴┴─┘┴─┴┘┴ ┴ ┴ └─┘
 @main.command("validate")
-@click.argument('filename', type=click.Path(exists=True))
-@click.option('--dump/--no-dump',
-              help='Print resulting document at the end.', default=False,)
+@click.argument("filename", type=click.Path(exists=True))
+@click.option(
+    "--dump/--no-dump", help="Print resulting document at the end.", default=False,
+)
 def validation(filename, dump):
     """Validate the file provided its path"""
     validate_file(filename, dump)
@@ -551,7 +614,7 @@ def validate_file(filename, dump=False):
     cyan("Validating " + str(filename) + "...")
     doc = None
     try:
-        with open(click.format_filename(filename), 'r') as stream:
+        with open(click.format_filename(filename), "r") as stream:
             try:
                 doc = yaml.load(stream, Loader=yaml.FullLoader)
             except yaml.YAMLError as exception:
@@ -565,9 +628,9 @@ def validate_file(filename, dump=False):
         if not v.validate(doc, SCHEMA):
             # print(v.errors)
             for key in v.errors.keys():
-                print("\t" + str(key) + ": ", end='')
-                red("not valid", end='')
-                print(': ' + str(v.errors[key]))
+                print("\t" + str(key) + ": ", end="")
+                red("not valid", end="")
+                print(": " + str(v.errors[key]))
         else:
             # print(v.validated(doc))
             # valid_documents = [x for x in v.validated(doc)]
@@ -580,20 +643,21 @@ def validate_file(filename, dump=False):
     #     red("file to validate not processed correctly!")
 
     if dump:
-        print(json.dumps(v.document, indent=4,
-                         default=default))
+        print(json.dumps(v.document, indent=4, default=default))
         # flaw = Flaw(v.document)
         # print the final document after validations and normalizations
         # print(flaw)
         # print(flaw.yml())
     return validated, v.document
 
+
 #  ┌─┐┬ ┬┌┬┐┌┬┐┌─┐┬─┐┬ ┬
 #  └─┐│ │││││││├─┤├┬┘└┬┘
 #  └─┘└─┘┴ ┴┴ ┴┴ ┴┴└─ ┴
 @main.command("summary")
-@click.option('--update/--no-update',
-              help="Update the repo's README'nd file.", default=False,)
+@click.option(
+    "--update/--no-update", help="Update the repo's README'nd file.", default=False,
+)
 def summary(update):
     """Produce a Markdown summary output of RVD"""
     cyan("Summarizing RVD's content...")
@@ -607,16 +671,19 @@ def summary(update):
 #  │ │ │ ├─┤├┤ ├┬┘
 #  └─┘ ┴ ┴ ┴└─┘┴└─
 @main.command("other")
-@click.option('--title/--no-title',
-              help="Update each ticket's title and ensure it starts with \
-              RVD#number", default=False,)
+@click.option(
+    "--title/--no-title",
+    help="Update each ticket's title and ensure it starts with \
+              RVD#number",
+    default=False,
+)
 def other(title):
     """Manage 'other' topics. See options for more."""
     cyan("Other actions for RVD...")
     importer = Base()
     if title:
         # Fetch all tickets, iterate over them and update each with a
-        # title that includes RVD#<ticket-number>
+        #  title that includes RVD#<ticket-number>
         issues_all = importer.get_issues_filtered()
         for issue in issues_all:
             # Get the flaw that corresponds with the issue
@@ -646,25 +713,26 @@ def fetch():
 
 
 @fetch.command("gitlab")
-@click.argument('id', required=True)
-@click.option('--push/--no-push',
-              help='Push imported flaws to RVD.',
-              default=False,)
+@click.argument("id", required=True)
 @click.option(
-    '--all/--no-all',
+    "--push/--no-push", help="Push imported flaws to RVD.", default=False,
+)
+@click.option(
+    "--all/--no-all",
     help='Import all issues from repository. USED in "overwrite_issue".',
-    default=False,)
+    default=False,
+)
 @click.option(
-    '--dump/--no-dump',
-    help='Print in stdout results.',
-    default=False,)
+    "--dump/--no-dump", help="Print in stdout results.", default=False,
+)
 @click.option(
-    '--disclose/--no-disclose',
+    "--disclose/--no-disclose",
     help='Disclose sensitive aspects of the ticket".',
-    default=False,)
+    default=False,
+)
 @click.option(
-    '--update',
-    help='Update previously (fully) undisclosed ticket".',)
+    "--update", help='Update previously (fully) undisclosed ticket".',
+)
 def fetch_gitlab(id, push, all, dump, disclose, update):
     """
     Import ticket from private gitlab feed
@@ -680,7 +748,7 @@ def fetch_gitlab(id, push, all, dump, disclose, update):
         flaw, labels = importer_private.get_flaw(id, True)
 
         # Define disclosure date
-        flaw.date_reported = arrow.utcnow().format('YYYY-MM-DD')
+        flaw.date_reported = arrow.utcnow().format("YYYY-MM-DD")
 
         if not disclose:
             # Remove sensitive information from the ticket
@@ -729,52 +797,66 @@ def fetch_gitlab(id, push, all, dump, disclose, update):
 
 
 @fetch.command("robust")
-@click.argument('filename', required=False)
-@click.option('--push/--no-push',
-              help='Push imported flaws to RVD.', default=False,)
+@click.argument("filename", required=False)
 @click.option(
-    '--all/--no-all',
+    "--push/--no-push", help="Push imported flaws to RVD.", default=False,
+)
+@click.option(
+    "--all/--no-all",
     help='Import all issues from repository. USED in "overwrite_issue".',
-    default=False,)
-@click.option('--dump/--no-dump',
-              help='Print in stdout results.', default=False,)
+    default=False,
+)
+@click.option(
+    "--dump/--no-dump", help="Print in stdout results.", default=False,
+)
 def fetch_robust(filename, push, all, dump):
     """
     Import tickets from robust project
     """
     importer = RobustImporter()
     cyan("Cloning robust project...")
-    os.system("cd /tmp/rvd && git clone\
-               https://github.com/robust-rosin/robust")
+    os.system(
+        "cd /tmp/rvd && git clone\
+               https://github.com/robust-rosin/robust"
+    )
     # os.system("du -a /tmp/rvd/robust | grep\
     #           '\.bug$' | awk '{print $2}'")
-    stdoutdata = subprocess.getoutput("\
-        du -a /tmp/rvd/robust | grep '\.bug$' | awk '{print $2}'")
-    bugfiles = stdoutdata.split('\n')
+    stdoutdata = subprocess.getoutput(
+        "\
+        du -a /tmp/rvd/robust | grep '\.bug$' | awk '{print $2}'"
+    )
+    bugfiles = stdoutdata.split("\n")
     for bug in bugfiles:
         # normalize and validate the content of the bug
         validation, document_validated = validate_file(bug)
 
         # drop 'bugzoo' key
-        if 'bugzoo' in document_validated.keys():
+        if "bugzoo" in document_validated.keys():
             yellow("Dropping bugzoo key")
-            document_validated.pop('bugzoo')
+            document_validated.pop("bugzoo")
         # drop 'time-machine' key
-        if 'time-machine' in document_validated.keys():
+        if "time-machine" in document_validated.keys():
             yellow("Dropping time-machine key")
-            document_validated.pop('time-machine')
+            document_validated.pop("time-machine")
 
         # Make some adjustments, manually
-        document_validated['flaw']['date-reported'] = str(document_validated['flaw']['time-reported'])
-        document_validated['cwe'] = document_validated['classification']
+        document_validated["flaw"]["date-reported"] = str(
+            document_validated["flaw"]["time-reported"]
+        )
+        document_validated["cwe"] = document_validated["classification"]
 
         flaw = Flaw(document_validated)
         # add relevant keys to flaw using add_field method
-        for key in document_validated['mitigation'].keys():
-            yellow("Adding to flaw ['mitigation']['" + str(key) + "'] = " + str(document_validated['mitigation'][key]))
-            flaw.add_field(value=document_validated['mitigation'][key],
-                           key="mitigation",
-                           key2=key)
+        for key in document_validated["mitigation"].keys():
+            yellow(
+                "Adding to flaw ['mitigation']['"
+                + str(key)
+                + "'] = "
+                + str(document_validated["mitigation"][key])
+            )
+            flaw.add_field(
+                value=document_validated["mitigation"][key], key="mitigation", key2=key
+            )
 
         if dump:
             print(flaw)
@@ -787,7 +869,7 @@ def fetch_robust(filename, push, all, dump):
         if push:
             cyan("Pushing results to RVD...")
             pusher = Base()
-            labels = ['quality']
+            labels = ["quality"]
             if flaw.vendor:
                 if flaw.vendor != "N/A":
                     labels.append(flaw.vendor)
@@ -797,7 +879,7 @@ def fetch_robust(filename, push, all, dump):
                 labels.append("vendor: Universal Robots")
             else:
                 labels.append(flaw.system)
-            labels.append('mitigated')
+            labels.append("mitigated")
             labels.append("robust")
             issue = pusher.new_ticket(flaw, labels)
             # Update id
@@ -850,14 +932,18 @@ def fetch_robust(filename, push, all, dump):
 
 
 @fetch.command("overwrite")
-@click.argument('filename', required=False)
-@click.option('--push/--no-push',
-              help='Push imported flaws to RVD.', default=False,)
-@click.option('--all/--no-all',
-              help='Import all issues from repository. USED in "overwrite_issue".',
-              default=False,)
-@click.option('--dump/--no-dump',
-              help='Print in stdout results.', default=False,)
+@click.argument("filename", required=False)
+@click.option(
+    "--push/--no-push", help="Push imported flaws to RVD.", default=False,
+)
+@click.option(
+    "--all/--no-all",
+    help='Import all issues from repository. USED in "overwrite_issue".',
+    default=False,
+)
+@click.option(
+    "--dump/--no-dump", help="Print in stdout results.", default=False,
+)
 def fetch_overwrite(filename, push, all, dump):
     """
     Overwrite a series of Github tickets with new content.
@@ -894,55 +980,65 @@ def fetch_overwrite(filename, push, all, dump):
 
             # Define key elements for document
             # set up id
-            document['id'] = issue.number
+            document["id"] = issue.number
             # set up title
-            document['title'] = issue.title
+            document["title"] = issue.title
             # set up description
             if importer.get_description():
-                description_raw = importer.get_description().replace('```', '').replace('###', '')
-                description_raw = description_raw.replace('\r\n\r\n', '')
+                description_raw = (
+                    importer.get_description().replace("```", "").replace("###", "")
+                )
+                description_raw = description_raw.replace("\r\n\r\n", "")
                 # description_printed = "{}".format(description_raw)
                 # description_printed = "%s" % description_raw
                 # description_printed = description_raw.replace("\r\n", "\\n")
             else:
                 description_raw = ""
-            document['description'] = description_raw
+            document["description"] = description_raw
 
             # set up type of flaw
-            document['type'] = importer.get_flaw_type()
+            document["type"] = importer.get_flaw_type()
             # set up vendor
-            document['vendor'] = importer.get_vendor()
+            document["vendor"] = importer.get_vendor()
             # set up system
-            document['system'] = importer.get_robot_or_component()
+            document["system"] = importer.get_robot_or_component()
             # set up CWE
             if importer.get_cwe_id():
-                document['cwe'] = "None" if importer.get_cwe_id() == "N/A" else "CWE-" + str(importer.get_cwe_id())
+                document["cwe"] = (
+                    "None"
+                    if importer.get_cwe_id() == "N/A"
+                    else "CWE-" + str(importer.get_cwe_id())
+                )
             else:
-                document['cwe'] = "None"
+                document["cwe"] = "None"
             # set up RVSS score
             try:
                 if importer.get_rvss_score():
-                    document['severity']['rvss-score'] = "None" if importer.get_cwe_id() == "N/A" else int(importer.get_rvss_score())
+                    document["severity"]["rvss-score"] = (
+                        "None"
+                        if importer.get_cwe_id() == "N/A"
+                        else int(importer.get_rvss_score())
+                    )
                 else:
-                    document['severity']['rvss-score'] = "None"
+                    document["severity"]["rvss-score"] = "None"
             except ValueError:
-                document['severity']['rvss-score'] = "None"
+                document["severity"]["rvss-score"] = "None"
             except:
-                document['severity']['rvss-score'] = "None"
+                document["severity"]["rvss-score"] = "None"
             # set up rvss-vector
             if importer.get_rvss_vector():
-                document['severity']['rvss-vector'] = importer.get_rvss_vector()
+                document["severity"]["rvss-vector"] = importer.get_rvss_vector()
             else:
-                document['severity']['rvss-vector'] = "N/A"
+                document["severity"]["rvss-vector"] = "N/A"
             # set up trace
-            document['flaw']['trace'] = importer.get_stack_trace()
+            document["flaw"]["trace"] = importer.get_stack_trace()
 
             # set up some general information
             table = importer.table_rows
             labels = [l.name for l in issue.labels]
-            document['flaw']['issue']= issue.html_url
-            document['links'] = [issue.html_url]
-            document['keywords'] = labels
+            document["flaw"]["issue"] = issue.html_url
+            document["links"] = [issue.html_url]
+            document["keywords"] = labels
 
             # Process importer.table_rows, e.g.:
             #    [('Input      ', 'Value  '),
@@ -960,25 +1056,29 @@ def fetch_overwrite(filename, push, all, dump):
             #    ('Attack vector ', 'Internal network, robotics framework ')]
             for key, value in table:
                 if "Robot" in key:
-                    document['system'] = value.strip()
+                    document["system"] = value.strip()
                     if value.strip() == "ros2":
-                        document['flaw']['phase'] = "testing"
-                        document['flaw']['subsystem'] = "cognition:ros2"
-                        document['flaw']['reported-by-relationship'] = "automatic"
-                        document['flaw']['detected-by-method'] = "testing dynamic"
-                        document['flaw']['specificity'] = "ROS-specific"
-                        document['flaw']['architectural-location'] = "platform code"
-                        document['flaw']['reported-by'] = "Alias Robotics (http://aliasrobotics.com)"
+                        document["flaw"]["phase"] = "testing"
+                        document["flaw"]["subsystem"] = "cognition:ros2"
+                        document["flaw"]["reported-by-relationship"] = "automatic"
+                        document["flaw"]["detected-by-method"] = "testing dynamic"
+                        document["flaw"]["specificity"] = "ROS-specific"
+                        document["flaw"]["architectural-location"] = "platform code"
+                        document["flaw"][
+                            "reported-by"
+                        ] = "Alias Robotics (http://aliasrobotics.com)"
                 if "Package" in key:
-                    document['flaw']['package'] = value.strip()
+                    document["flaw"]["package"] = value.strip()
                 if "Date Reported" in key:
-                    document['flaw']['date-detected'] = value.strip()
-                    document['flaw']['date-reported'] = value.strip()
+                    document["flaw"]["date-detected"] = value.strip()
+                    document["flaw"]["date-reported"] = value.strip()
                 if "Module URL" in key:
-                    document['flaw']['reproduction-image'] = value.strip()
-                    if value.strip() != '' and value.strip() != 'None':
-                        document['flaw']['reproducibility'] = "always"
-                        document['flaw']['reproduction'] = "Find a\
+                    document["flaw"]["reproduction-image"] = value.strip()
+                    if value.strip() != "" and value.strip() != "None":
+                        document["flaw"]["reproducibility"] = "always"
+                        document["flaw"][
+                            "reproduction"
+                        ] = "Find a\
 pre-compiled environment in the Docker image below. Reproducing it implies\
 source the workspace, finding the appropriate test and executing it."
 
@@ -1002,14 +1102,18 @@ source the workspace, finding the appropriate test and executing it."
 
 
 @fetch.command("yml")
-@click.argument('filename', required=False)
-@click.option('--push/--no-push',
-              help='Push imported flaws to RVD.', default=False,)
-@click.option('--all/--no-all',
-              help='Import all issues from repository. USED in "overwrite_issue".',
-              default=False,)
-@click.option('--dump/--no-dump',
-              help='Print in stdout results.', default=False,)
+@click.argument("filename", required=False)
+@click.option(
+    "--push/--no-push", help="Push imported flaws to RVD.", default=False,
+)
+@click.option(
+    "--all/--no-all",
+    help='Import all issues from repository. USED in "overwrite_issue".',
+    default=False,
+)
+@click.option(
+    "--dump/--no-dump", help="Print in stdout results.", default=False,
+)
 def fetch_yml(filename, push, all, dump):
     """
    rvd import yml <filepath> imports from a yml file in the filepath
@@ -1044,5 +1148,5 @@ def start():
     main(obj={})
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start()
