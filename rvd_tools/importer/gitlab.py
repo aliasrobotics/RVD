@@ -36,7 +36,7 @@ class GitlabImporter(Base):
             self.token = os.environ["GITLAB_TOKEN"]
         except KeyError:
             red("ERROR, make sure that you've GITLAB_TOKEN exported")
-            exit(1)
+            sys.exit(1)
 
         # Initialize Gitlab's object
         self.repo = gitlab.Gitlab("https://gitlab.com", private_token=self.token)
@@ -60,7 +60,8 @@ class GitlabImporter(Base):
 
         if not "ready" in labels and importar:
             yellow(
-                "Importing a ticket that's not 'ready' just yet, make sure the ticket has 'ready' label."
+                "Importing a ticket that's not 'ready' just yet, \
+make sure the ticket has 'ready' label."
             )
             sys.exit(1)
 
@@ -109,11 +110,10 @@ class GitlabImporter(Base):
                 # print(issue.attributes.keys())
                 if label:
                     all_labels = True
-                    for l in label:
-                        if l in issue.attributes["labels"]:
+                    for lab in label:
+                        if lab in issue.attributes["labels"]:
                             continue
-                        else:
-                            all_labels = False
+                        all_labels = False
                     if all_labels:
                         # print(issue.attributes['title'])
                         row = [0, issue.attributes["iid"], issue.attributes["title"]]

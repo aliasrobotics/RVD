@@ -82,6 +82,7 @@ def listar(id, dump, private, onlyprivate, label, isoption):
             # cyan("Importing from RVD private, issue: " + str(flaw))
         else:
             # Get the issue
+            # TODO: abstract this piece of code and return a flaw directly
             issue = importer.repo.get_issue(int(id))
             cyan("Importing from RVD, issue: " + str(issue))
             document_raw = issue.body
@@ -370,20 +371,28 @@ def cve():
     cyan("Using CVE tools...")
 
 
+@click.argument("number", required=True)
 @click.option("--version", default=4, help="Version of CVE JSON.")
+@click.option("--mode", default="public", help="Mode for the disclosure of CVE JSON.")
+@click.option(
+    "--private/--no-private",
+    default=False,
+    help="Private RVD or public RVD, defaults to False which implies public.",
+)
+@click.option(
+    "--dump/--no-dump", default=False, help="Print resulting file.",
+)
 @cve.command("export")
-def cve_export(version):
+def cve_export(number, version, mode, private, dump):
     """
     Export an RVD ticket to CVE JSON
     """
     cyan("Exporting an RVD ticket into CVE JSON format...")
-    red("TODO: Not implemented")
-    sys.exit(1)
+    cve_export_file(number, version, mode, private, dump)
 
 
 @click.option("--version", default=4, help="Version of CVE JSON.")
 @click.option("--file", help="JSON file to validate.")
-@click.option("--number", help="RVD ticket number to validate.")
 @cve.command("validate")
 def cve_validate(version, file, number):
     """
@@ -395,10 +404,8 @@ def cve_validate(version, file, number):
     cyan("Validating a CVE JSON file...")
     if file:
         cve_jsonvalidation(file, version)
-    elif number:
-        pass
     else:
-        red("Error, file or RVD ticket required")
+        red("Error, file required")
         sys.exit(1)
 
 

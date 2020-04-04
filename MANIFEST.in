@@ -1,1 +1,2 @@
-include rvd_tools/cve/CVE_JSON_*
+include rvd_tools/cve/static/CVE_JSON_*
+include rvd_tools/cve/static/ids

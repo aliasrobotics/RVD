@@ -14,6 +14,16 @@ import json
 import jsonschema
 from jsonschema import validate
 from jsonschema import Draft4Validator
+from ..importer.gitlab import *
+from ..database.base import *
+from . import static  # relative-import the *package* containing the static
+from ..utils import red, yellow, green
+
+try:
+    import importlib.resources as pkg_resources
+except ImportError:
+    # Try backported to PY<37 `importlib_resources`.
+    import importlib_resources as pkg_resources
 
 
 def cve_jsonvalidation(json_doc_path, version, mode="public"):
@@ -77,3 +87,52 @@ automation-working-group/master/cve_json_schema/CVE_JSON_4.0_min_reserved.schema
         for error in errors:
             sys.stderr.write("Record did not pass: \n")
             sys.stderr.write(str(error.message) + "\n")
+
+
+def cve_export_file(number, version, mode, private, dump):
+    """
+    Export ticket number to CVE JSON format.
+
+    :param number int, ticket number
+    :param version int, CVE JSCON version number
+    :param private bool, RVD public or private source
+    :returns string, path to new ticket
+    """
+    if private:
+        importer_private = GitlabImporter()
+        flaw, labels = importer_private.get_flaw(number)
+    else:
+        importer = Base()
+        flaw, labels = importer.get_flaw(number)
+
+    # check if it already has a cve
+    if "CVE-" in flaw.cve:
+        red("It seems the ticket already has a CVE ID, double check")
+        sys.exit(1)
+
+    with pkg_resources.path(static, "ids") as path:
+        all_ids = path.read_text().split("\n")
+        next_identifier = ""
+        try:
+            for identifier in all_ids:
+                if identifier[0] == "~":
+                    continue
+                next_identifier = identifier
+                break
+        except IndexError:
+            print("IndexError, probably more CVE IDs needed!")
+            sys.exit(1)
+
+    # Ensure that the detination exists
+    os.system("mkdir -p /tmp/cve")
+    flaw.export_to_cve("/tmp/cve/" + str(next_identifier) + ".json", version, mode)
+    green("Successfully exported to /tmp/cve/" + str(next_identifier) + ".json")
+
+    if dump:
+        file = open("/tmp/cve/" + str(next_identifier) + ".json", "r")
+        print(file.read())
+        file.close()
+
+    cyan("Things left to do:")
+    yellow("\t - Edit ids file and indicate it appropriately!")
+    yellow("\t - Submit a PRs to cvelist")

@@ -7,11 +7,12 @@
 Base class for importing stuff
 """
 
-from github import Github
 import os
-from ..utils import red, gray, yellow
-from .flaw import *
+import sys
+from github import Github
 import yaml
+from .flaw import *
+from ..utils import red, gray, yellow, cyan
 
 
 class Base:
@@ -26,10 +27,10 @@ class Base:
         # Authentication for user filing issue (must have read/write access to
         # repository to add issues to)
         try:
-            self.token = os.environ['GITHUB_TOKEN']
+            self.token = os.environ["GITHUB_TOKEN"]
         except KeyError:
             red("ERROR, make sure that you've GITHUB_TOKEN exported")
-            exit(1)
+            sys.exit(1)
         # First create a Github instance:
         # or using an access token
         self.g = Github(self.token)
@@ -42,7 +43,7 @@ class Base:
         # No username/repo provided thereby, default to RVD ones
         self.username = username
         self.repo_name = repo
-        self.repo = self.g.get_repo(self.username+"/"+self.repo_name)
+        self.repo = self.g.get_repo(self.username + "/" + self.repo_name)
 
     def get_issues_filtered(self, state="open"):
         """
@@ -81,7 +82,7 @@ class Base:
                 sys.exit(1)
 
         document_raw = issue.body
-        document_raw = document_raw.replace('```yaml','').replace('```', '')
+        document_raw = document_raw.replace("```yaml", "").replace("```", "")
         document = yaml.load(document_raw)
         # print(document)
 
@@ -159,9 +160,9 @@ class Base:
         print("labels: ", end="")
         gray(labels)
         # Create the ticket
-        return self.repo.create_issue(title=flaw.title,
-                                      body=flaw.yml_markdown(),
-                                      labels=labels)
+        return self.repo.create_issue(
+            title=flaw.title, body=flaw.yml_markdown(), labels=labels
+        )
 
     def update_ticket(self, issue, flaw):
         """Push updates to the 'issue' according to 'flaw'"""
@@ -186,7 +187,30 @@ class Base:
         print("labels: ", end="")
         gray(labels)
         # Push updates
-        issue.edit(title=flaw.title,
-                   body=flaw.yml_markdown(),
-                   assignees=issue.assignees,
-                   labels=labels)
+        issue.edit(
+            title=flaw.title,
+            body=flaw.yml_markdown(),
+            assignees=issue.assignees,
+            labels=labels,
+        )
+
+    def get_flaw(self, id):
+        """
+        Returns a flaw instance populated from the ticket with id number
+
+        :param id, id number of the ticket
+        :return Flaw
+        """
+        issue = self.repo.get_issue(int(id))
+        labels = [l.name for l in issue.labels]
+        cyan("Importing from RVD, issue: " + str(issue))
+        document_raw = issue.body
+        document_raw = document_raw.replace("```yaml", "").replace("```", "")
+        try:
+            document = yaml.load(document_raw, Loader=yaml.FullLoader)
+            flaw = Flaw(document)
+            # print(flaw)
+        except yaml.scanner.ScannerError:
+            print("Not in yaml format please review")
+
+        return flaw, labels
