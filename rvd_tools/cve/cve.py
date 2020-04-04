@@ -80,12 +80,12 @@ automation-working-group/master/cve_json_schema/CVE_JSON_4.0_min_reserved.schema
 
     try:
         validate(json_doc, schema_doc)
-        sys.stdout.write("Record passed validation \n")
+        green("Record passed validation \n")
     except jsonschema.exceptions.ValidationError as incorrect:
         validator = Draft4Validator(schema_doc)
         errors = sorted(validator.iter_errors(json_doc), key=lambda e: e.path)
         for error in errors:
-            sys.stderr.write("Record did not pass: \n")
+            red("Record did not pass: \n")
             sys.stderr.write(str(error.message) + "\n")
 
 
@@ -106,7 +106,7 @@ def cve_export_file(number, version, mode, private, dump):
         flaw, labels = importer.get_flaw(number)
 
     # check if it already has a cve
-    if "CVE-" in flaw.cve:
+    if flaw.cve and "CVE-" in flaw.cve:
         red("It seems the ticket already has a CVE ID, double check")
         sys.exit(1)
 
@@ -135,6 +135,8 @@ def cve_export_file(number, version, mode, private, dump):
         print(file.read())
         file.close()
 
+    cyan("Validating the file...")
+    cve_jsonvalidation("/tmp/cve/" + str(next_identifier) + ".json", version)
     cyan("Things left to do:")
     yellow("\t - Edit ids file and indicate it appropriately!")
     yellow("\t - Submit a PRs to cvelist")
