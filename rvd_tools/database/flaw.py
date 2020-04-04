@@ -760,9 +760,7 @@ taxonomy used for its categorization, refer to \
             file.write('                                    "version_data": [\n')
             file.write("                                        {\n")
             file.write(
-                '                                            "version_value": "'
-                + str(self.system)
-                + '"\n'
+                '                                            "version_value": ""\n'
             )
             file.write("                                        }\n")
             file.write("                                    ]\n")

@@ -159,6 +159,6 @@ git add .; git commit -m 'Assign "
         )
 
     cyan("Things left to do:")
+    yellow("\t - Add version to new tickets, old ones should not conflict with it")
+    yellow("\t - Update ticket in RVD automatically")
     yellow("\t - Edit ids file and indicate it appropriately!")
-    yellow("\t - Update ticket in RVD!")
-    # yellow("\t - Submit a PRs to cvelist")
