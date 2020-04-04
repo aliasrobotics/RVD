@@ -9,9 +9,11 @@ Flaw class, object to represent all flaws
 import json
 from datetime import datetime
 import arrow
+import sys
 from cerberus import Validator
 from .schema import SCHEMA
 from ..utils import inline_green, inline_blue, inline_yellow, red, green
+from cvsslib.vector import detect_vector, calculate_vector, VectorError
 
 # from mergedeep import merge
 
@@ -104,6 +106,36 @@ class Flaw:
 
         # additional values
         self.additional_fields = {}
+
+        # CVE and CVSS handling related attributes
+        self.elements = [
+            "AC",
+            "AV",
+            "A",
+            "severity",
+            "C",
+            "I",
+            "PR",
+            "S",
+            "UI",
+        ]
+
+        self.elements_components = {
+            "AC": {"L": "LOW", "H": "HIGH"},
+            "AV": {
+                "N": "NETWORK",
+                "AN": "ADJACENT_NETWORK",
+                "L": "LOCAL",
+                "P": "PHYSICAL",
+            },
+            "A": {"L": "LOW", "H": "HIGH", "N": "NONE"},
+            "severity": "",
+            "C": {"L": "LOW", "H": "HIGH", "N": "NONE"},
+            "I": {"L": "LOW", "H": "HIGH", "N": "NONE"},
+            "PR": {"L": "LOW", "H": "HIGH", "N": "NONE"},
+            "S": {"U": "UNCHANGED", "C": "CHANGED"},
+            "UI": {"R": "REQUIRED", "N": "NONE"},
+        }
 
     def __str__(self):
         """
@@ -778,16 +810,52 @@ taxonomy used for its categorization, refer to \
             # impact
             file.write('    "impact": {\n')
             file.write('        "cvss": {\n')
-            file.write('            "attackComplexity": "LOW",\n')
-            file.write('            "attackVector": "ADJACENT_NETWORK",\n')
-            file.write('            "availabilityImpact": "HIGH",\n')
+            file.write(
+                '            "attackComplexity": "'
+                + str(self.cvss_vector_extract(self.cvss_vector, "AC"))
+                + '",\n'
+            )
+            file.write(
+                '            "attackVector": "'
+                + str(self.cvss_vector_extract(self.cvss_vector, "AV"))
+                + '",\n'
+            )
+            file.write(
+                '            "availabilityImpact": "'
+                + str(self.cvss_vector_extract(self.cvss_vector, "A"))
+                + '",\n'
+            )
             file.write('            "baseScore": ' + str(self.cvss_score) + ",\n")
-            file.write('            "baseSeverity": "HIGH",\n')
-            file.write('            "confidentialityImpact": "HIGH",\n')
-            file.write('            "integrityImpact": "HIGH",\n')
-            file.write('            "privilegesRequired": "NONE",\n')
-            file.write('            "scope": "UNCHANGED",\n')
-            file.write('            "userInteraction": "NONE",\n')
+            file.write(
+                '            "baseSeverity": "'
+                + str(self.cvss_vector_extract(self.cvss_vector, "severity"))
+                + '",\n'
+            )
+            file.write(
+                '            "confidentialityImpact": "'
+                + str(self.cvss_vector_extract(self.cvss_vector, "C"))
+                + '",\n'
+            )
+            file.write(
+                '            "integrityImpact": "'
+                + str(self.cvss_vector_extract(self.cvss_vector, "I"))
+                + '",\n'
+            )
+            file.write(
+                '            "privilegesRequired": "'
+                + str(self.cvss_vector_extract(self.cvss_vector, "PR"))
+                + '",\n'
+            )
+            file.write(
+                '            "scope": "'
+                + str(self.cvss_vector_extract(self.cvss_vector, "S"))
+                + '",\n'
+            )
+            file.write(
+                '            "userInteraction": "'
+                + str(self.cvss_vector_extract(self.cvss_vector, "UI"))
+                + '",\n'
+            )
             file.write('            "vectorString": "' + str(self.cvss_vector) + '",\n')
             file.write('            "version": "3.0"\n')
             file.write("        }\n")
@@ -800,9 +868,7 @@ taxonomy used for its categorization, refer to \
             file.write('                "description": [\n')
             file.write("                    {\n")
             file.write('                        "lang": "eng",\n')
-            file.write(
-                '                        "value": "CWE-200 Information Exposure"\n'
-            )
+            file.write('                        "value": "' + str(self.cwe) + '"\n')
             file.write("                    }\n")
             file.write("                ]\n")
             file.write("            }\n")
@@ -838,3 +904,44 @@ taxonomy used for its categorization, refer to \
 
         else:
             raise NotImplementedError
+
+    def cvss_vector_extract(self, vector, element):
+        """
+        This method extracts "element" from "vector" and
+        returns it a CVE JSON-familiar format
+
+        :param vector str, the CVSS vector
+        :param element str, the element from the CVSS vector we wish to extract
+        :returns str
+        """
+        if not element in self.elements:
+            red("Element '" + str(element) + "' not registered")
+            sys.exit(1)
+
+        if element == "severity":
+            module = detect_vector(vector)
+            base, e, c = calculate_vector(vector, module)
+            base = float(base)
+
+            if base > 9.0:
+                return "critical"
+            elif base > 7.0:
+                return "high"
+            elif base > 4.0:
+                return "medium"
+            elif base > 0.1:
+                return "low"
+            else:
+                return "none"
+
+        for elem in vector.split("/")[1:]:
+            if element is "A":
+                if element + ":" in elem:
+                    return self.elements_components[elem.split(":")[0]][
+                        elem.split(":")[1]
+                    ]
+            else:
+                if element in elem:
+                    return self.elements_components[elem.split(":")[0]][
+                        elem.split(":")[1]
+                    ]
