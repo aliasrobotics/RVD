@@ -10,7 +10,7 @@ Entry point for the rvd CLI tool.
 import click
 import yaml
 from cerberus import Validator
-from .utils import red, cyan, green, yellow, inline_magenta, inline_gray
+from .utils import red, cyan, green, yellow, inline_magenta, inline_gray, inline_green
 from .database.schema import *
 from .database.defaults import *
 from .database.flaw import *
@@ -33,6 +33,7 @@ import subprocess
 import pprint
 from datetime import datetime
 import arrow
+from arrow.parser import ParserError
 from tabulate import tabulate
 import qprompt
 import ast
@@ -70,7 +71,13 @@ Vulnerability Database..."
 @click.option(
     "--isoption", help="Filter flaws by status (open, closed, all).", default="open"
 )
-def listar(id, dump, private, onlyprivate, label, isoption):
+@click.option(
+    "--markdown/--no-markdown", help="Only valid for individual \
+ticket. Print ticket in Markdown format.", default=False,
+)
+@click.option("--fromdate", help="Filter flaws by date, until today.\
+Use YYYY-MM-DD format.", multiple=False)
+def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
     """List current flaw tickets"""
     importer = Base()
 
@@ -90,9 +97,11 @@ def listar(id, dump, private, onlyprivate, label, isoption):
             try:
                 document = yaml.load(document_raw, Loader=yaml.FullLoader)
                 # print(document)
-
                 flaw = Flaw(document)
-                print(flaw)
+                if markdown:
+                    print(flaw.markdown())
+                else:
+                    print(flaw)
             except yaml.scanner.ScannerError:
                 print("Not in yaml format please review")
 
@@ -120,6 +129,80 @@ def listar(id, dump, private, onlyprivate, label, isoption):
             table = importer.get_table(label, isoption)
             print(tabulate(table, headers=["ID", "Title"]))
             yellow(tabulate(table_private))
+        elif fromdate:
+            # Get the data from where to filter
+            # raw_date, = fromdate  # get the first element of the tuple
+            date_filter = arrow.get(fromdate)
+
+            issues_all = importer.get_issues_filtered()
+            flaws_date_filtered = []  # filtered flaws by date
+            for issue in issues_all:
+                # Build flaw
+                document_raw = issue.body
+                document_raw = document_raw.replace("```yaml", "").replace("```", "")
+                document = yaml.load(document_raw, Loader=yaml.FullLoader)
+                flaw = Flaw(document)
+
+                try:
+                    date_flaw_detected = None
+                    if flaw.date_detected:
+                        date_flaw_detected = arrow.get(flaw.date_detected)
+                except ParserError:
+                    date_flaw_detected = None
+                if date_flaw_detected:
+                    # print(str(flaw.date_detected) + " -> " + date_flaw_detected.format())  # Debug
+
+                try:
+                    date_flaw_reported = None
+                    if flaw.date_reported:
+                        date_flaw_reported = arrow.get(flaw.date_reported)
+                except ParserError:
+                    date_flaw_reported = None
+                if date_flaw_reported:
+                    # print(str(flaw.date_reported) + " -> " + date_flaw_reported.format())  # Debug
+
+                # # Debug
+                # print("ID: " + str(flaw.id) + ", comparing:")
+                # if date_filter and date_flaw_reported:
+                #     print("\t - (date_flaw_reported) " + \
+                #         date_filter.format() + "(" + date_filter.humanize() + \
+                #         ") with " + date_flaw_reported.format() + \
+                #         "(" + date_flaw_reported.humanize() + "): " + \
+                #         inline_green(date_flaw_reported >= date_filter) if date_flaw_reported >= date_filter
+                #             else inline_magenta(date_flaw_reported >= date_filter)
+                #         )
+                #
+                # if date_filter and date_flaw_detected:
+                #     print("\t - (date_flaw_detected) " + \
+                #         date_filter.format() + "(" + date_filter.humanize() + \
+                #         ") with " + date_flaw_detected.format() + \
+                #         "(" + date_flaw_detected.humanize() + "): " + \
+                #         inline_green(date_flaw_detected >= date_filter) if date_flaw_detected >= date_filter
+                #             else inline_magenta(date_flaw_detected >= date_filter)
+                #         )
+
+                # Compare flaw date with date_filter
+                if (date_flaw_reported):
+                    if (date_flaw_reported >= date_filter):
+                        flaws_date_filtered.append(flaw)
+                        continue
+                if (date_flaw_detected):
+                    if (date_flaw_detected >= date_filter):
+                        flaws_date_filtered.append(flaw)
+
+            # print(flaws_date_filtered)  # Debug
+
+            # Build a mardown table and dump it in stdout
+            markdown_table = ""
+            markdown_table += "| ID | Type | Title |" + "\n"
+            markdown_table += "|----|------|-------|" + "\n"
+            for flaw in flaws_date_filtered:
+                markdown_table += "| [RVD#" + str(flaw.id) + "](" + \
+                    str(flaw.issue) + ") | " + str(flaw.type) + " | " + \
+                    str(flaw.title) + "|" + "\n"
+
+            print(markdown_table)
+
         else:
             cyan("Listing all open flaws from RVD...")
             table = importer.get_table(label, isoption)
