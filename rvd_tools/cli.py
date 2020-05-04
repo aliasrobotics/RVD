@@ -149,8 +149,9 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
                         date_flaw_detected = arrow.get(flaw.date_detected)
                 except ParserError:
                     date_flaw_detected = None
-                if date_flaw_detected:
-                    # print(str(flaw.date_detected) + " -> " + date_flaw_detected.format())  # Debug
+
+                # if date_flaw_detected:
+                #     print(str(flaw.date_detected) + " -> " + date_flaw_detected.format())  # Debug
 
                 try:
                     date_flaw_reported = None
@@ -158,8 +159,9 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
                         date_flaw_reported = arrow.get(flaw.date_reported)
                 except ParserError:
                     date_flaw_reported = None
-                if date_flaw_reported:
-                    # print(str(flaw.date_reported) + " -> " + date_flaw_reported.format())  # Debug
+
+                # if date_flaw_reported:
+                #     print(str(flaw.date_reported) + " -> " + date_flaw_reported.format())  # Debug
 
                 # # Debug
                 # print("ID: " + str(flaw.id) + ", comparing:")
@@ -224,7 +226,12 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
 #  ┴└─└─┘┴  └─┘┴└─ ┴
 @main.command("report")
 @click.argument("id", required=True)
-def report(id):
+@click.option("--deadline", help="Deadline in days. Single number, e.g. 30.", multiple=False)
+@click.option(
+    "--disclose/--no-disclose", help="Disclose exploitation \
+and mitigation information.", default=False,
+)
+def report(id, deadline, disclose):
     """
     Generates a PDF report for the given ID under /tmp/rvd/reports/
     """
@@ -232,7 +239,7 @@ def report(id):
     print(id, end="")
     cyan(" ...")
     report = Report()
-    report.from_gitlab(id)
+    report.from_gitlab(id, deadline, disclose)
 
 
 #  ┌─┐┌┬┐┌─┐┌┬┐┬┌─┐┌┬┐┬┌─┐┌─┐

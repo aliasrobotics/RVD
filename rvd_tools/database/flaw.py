@@ -354,7 +354,7 @@ class Flaw:
 
         return return_str
 
-    def markdown(self):
+    def markdown(self, disclose=False):
         """
         Return the markdown representation of the flaw
 
@@ -463,55 +463,79 @@ taxonomy used for its categorization, refer to \
         return_str += "\\newpage" + "\n"
 
         # exploitation
-        return_str += "## Exploitation" + "\n"
-        return_str += "\n"
-        return_str += "| Item | Value |" + "\n"
-        return_str += "| ---- | ----- |" + "\n"
-        return_str += (
-            "| description | " + str(self.description_exploitation) + "|" + "\n"
-        )
-        return_str += (
-            "| exploitation-image | " + str(self.exploitation_image) + "|" + "\n"
-        )
-        return_str += (
-            "| exploitation-vector | " + str(self.exploitation_vector) + "|" + "\n"
-        )
-        # additional_fields - exploitation
-        for key in self.additional_fields.keys():
-            if isinstance(self.additional_fields[key], dict):
-                if key == "exploitation":
-                    for key2 in self.additional_fields[key].keys():
-                        return_str += (
-                            "| "
-                            + (key2)
-                            + " | "
-                            + str(self.additional_fields[key][key2])
-                            + " | "
-                            + "\n"
-                        )
+        if disclose:
+            return_str += "## Exploitation" + "\n"
+            return_str += "\n"
+            return_str += "| Item | Value |" + "\n"
+            return_str += "| ---- | ----- |" + "\n"
+            return_str += (
+                "| description | " + str(self.description_exploitation) + "|" + "\n"
+            )
+            return_str += (
+                "| exploitation-image | " + str(self.exploitation_image) + "|" + "\n"
+            )
+            return_str += (
+                "| exploitation-vector | " + str(self.exploitation_vector) + "|" + "\n"
+            )
+            # additional_fields - exploitation
+            for key in self.additional_fields.keys():
+                if isinstance(self.additional_fields[key], dict):
+                    if key == "exploitation":
+                        for key2 in self.additional_fields[key].keys():
+                            return_str += (
+                                "| "
+                                + (key2)
+                                + " | "
+                                + str(self.additional_fields[key][key2])
+                                + " | "
+                                + "\n"
+                            )
+        else:
+            return_str += "## Exploitation" + "\n"
+            return_str += "\n"
+            return_str += "| Item | Value |" + "\n"
+            return_str += "| ---- | ----- |" + "\n"
+            return_str += (
+                "| description | Not disclosed |" + "\n"
+            )
+            return_str += (
+                "| exploitation-image | Not disclosed |" + "\n"
+            )
+            return_str += (
+                "| exploitation-vector | Not disclosed |" + "\n"
+            )
+
 
         return_str += "\\newpage" + "\n"
 
         # mitigation
-        return_str += "## Mitigation" + "\n"
-        return_str += "\n"
-        return_str += "| Item | Value |" + "\n"
-        return_str += "| ---- | ----- |" + "\n"
-        return_str += "| description | " + str(self.description_mitigation) + "|" + "\n"
-        return_str += "| pull-request | " + str(self.pull_request) + "|" + "\n"
-        # additional_fields - mitigation
-        for key in self.additional_fields.keys():
-            if isinstance(self.additional_fields[key], dict):
-                if key == "mitigation":
-                    for key2 in self.additional_fields[key].keys():
-                        return_str += (
-                            "| "
-                            + (key2)
-                            + " | "
-                            + str(self.additional_fields[key][key2])
-                            + " | "
-                            + "\n"
-                        )
+        if disclose:
+            return_str += "## Mitigation" + "\n"
+            return_str += "\n"
+            return_str += "| Item | Value |" + "\n"
+            return_str += "| ---- | ----- |" + "\n"
+            return_str += "| description | " + str(self.description_mitigation) + "|" + "\n"
+            return_str += "| pull-request | " + str(self.pull_request) + "|" + "\n"
+            # additional_fields - mitigation
+            for key in self.additional_fields.keys():
+                if isinstance(self.additional_fields[key], dict):
+                    if key == "mitigation":
+                        for key2 in self.additional_fields[key].keys():
+                            return_str += (
+                                "| "
+                                + (key2)
+                                + " | "
+                                + str(self.additional_fields[key][key2])
+                                + " | "
+                                + "\n"
+                            )
+        else:
+            return_str += "## Mitigation" + "\n"
+            return_str += "\n"
+            return_str += "| Item | Value |" + "\n"
+            return_str += "| ---- | ----- |" + "\n"
+            return_str += "| description | Not disclosed |" + "\n"
+            return_str += "| pull-request |  Not disclosed |" + "\n"
 
         return_str += "\n"
 

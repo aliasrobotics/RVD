@@ -20,7 +20,7 @@ class Report:
     def __init__(self):
         pass
 
-    def from_gitlab(self, id):
+    def from_gitlab(self, id, deadline, disclose):
         """
         Generate a report from a Gitlab private archive
         """
@@ -59,9 +59,14 @@ class Report:
         markdown_content += '' + "\n"
         markdown_content += '\\newpage' + "\n"
         markdown_content += "\n"
-        markdown_content += intro_content
+        markdown_content += intro_content1
+        if deadline:
+            markdown_content += "`" + deadline + " days` " + "\n"
+        else:
+            markdown_content += "`" + "90 days" + "` " + "\n"
+        markdown_content += intro_content2
         markdown_content += "\n"
-        markdown_content += flaw.markdown()
+        markdown_content += flaw.markdown(disclose)
         markdown_path = temp_dir + "/" + str(id) + ".md"
         markdown_file = open(markdown_path, 'w+')
         markdown_file.write(markdown_content)
@@ -69,7 +74,8 @@ class Report:
         # Create the Makefile
         cyan("Creating Makefile...")
         makefile_path = temp_dir + "/Makefile"
-        makefile_content = "SOURCE_FILE := " + str(arrow.utcnow().format('YYYYMMDD')) + str(id) + ".md" + "\n"
+        # makefile_content = "SOURCE_FILE := " + str(arrow.utcnow().format('YYYYMMDD')) + str(id) + ".md" + "\n"
+        makefile_content = "SOURCE_FILE := " + str(id) + ".md" + "\n"
         makefile_content += "OUT_FILE := " + str(id) + "_report" + "\n"
         makefile_content += makefile
         makefile_file = open(makefile_path, 'w+')
@@ -92,7 +98,7 @@ class Report:
         raise NotImplementedError
 
 
-intro_content = """\
+intro_content1 = """\
 
 # The advisory
 
@@ -100,10 +106,20 @@ On behalf of Alias Robotics, a robot cybersecurity company we'd like to inform
 you by the present that vulnerabilities have been discovered in one of your
 products.
 
-In an attempt to avoid 0-days, our vulnerability policy is to notify product
-manufacturers and give them 90 days to issue the fixes starting the day of
-notification (today). During this period, our team will not publicly disclose
-the contents of the vulnerability found nor any related material that could
+In an attempt to avoid 0-days, our vulnerability policy for security flaws is to
+notify product manufacturers and give them a maximum of 90 days to issue the fixes
+starting the day of notification (today). This maximum deadline gets modified by
+considering the severity of the flaw, the amount of systems deployed (in use)
+and the risk that this flaw represents to society and the environment, among others.
+Accordingly, for this flaw, *Alias Robotics grants a maximum of """
+
+
+intro_content2 = """to issue the appropriate patches starting the day of notification """ + \
+str("(today, " + arrow.utcnow().format('YYYY-MM-DD') + ").* ") + \
+"""\
+
+During this period, our team will not publicly disclose the contents of the
+vulnerability found nor any related material that could
 relate to it. We reserve the right to bring deadlines forwards or backwards
 while we remain committed to treating all vendors strictly equally and
 we expect to be held to the same standard.
@@ -139,11 +155,11 @@ define exec_pandoc
 	@echo "Build finished for $(1)"
 endef
 .PHONY: clean all debug
-all: $(OUT_FILE)$(EXTENSION) 
+all: $(OUT_FILE)$(EXTENSION)
 $(OUT_FILE)$(EXTENSION) : $(SOURCE_FILE) $(BUILDDIR) $(PANDOC_TEMPLATE)
 	$(call exec_pandoc, $(OUT_FILE)$(EXTENSION))
 $(BUILDDIR):
-	@mkdir $(BUILDDIR)	
+	@mkdir $(BUILDDIR)
 debug: EXTENSION := .tex
 debug: $(OUT_FILE)$(EXTENSION)
 clean:
