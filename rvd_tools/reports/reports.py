@@ -129,7 +129,7 @@ flaw/s, our security engineers would be happy to support you using their usual
 hourly consulting rate. Moreover and provided that our team already found
 security flaws in your product, we highly encourage you to consider performing
 an in-depth security assessment. We offer such services at
-https://aliasrobotics.com/services.html.
+https://aliasrobotics.com/services-security.php.
 
 Do not hesitate to contact us if you have any questions.
 

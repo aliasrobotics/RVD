@@ -225,7 +225,7 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
 #  ├┬┘├┤ ├─┘│ │├┬┘ │
 #  ┴└─└─┘┴  └─┘┴└─ ┴
 @main.command("report")
-@click.argument("id", required=True)
+@click.argument("id", required=True, nargs=-1)
 @click.option("--deadline", help="Deadline in days. Single number, e.g. 30.", multiple=False)
 @click.option(
     "--disclose/--no-disclose", help="Disclose exploitation \
@@ -235,11 +235,12 @@ def report(id, deadline, disclose):
     """
     Generates a PDF report for the given ID under /tmp/rvd/reports/
     """
-    cyan("Generating a PDF report for ID: ", end="")
-    print(id, end="")
-    cyan(" ...")
-    report = Report()
-    report.from_gitlab(id, deadline, disclose)
+    for i in id:
+        cyan("Generating a PDF report for ID: ", end="")
+        print(i, end="")
+        cyan(" ...")
+        report = Report()
+        report.from_gitlab(i, deadline, disclose)
 
 
 #  ┌─┐┌┬┐┌─┐┌┬┐┬┌─┐┌┬┐┬┌─┐┌─┐
