@@ -26,6 +26,7 @@ setup(
         "pygithub",
         "retrying",
         "dedupe",
+        "jsonschema",
         # 'pycvesearch',  # needs to be installed manually, see https://github.com/cve-search/PyCVESearch
         # 'cvsslib',  # needs to be installed manually, see https://github.com/aliasrobotics/RVSS
     ],
