@@ -26,7 +26,9 @@ setup(
         "tabulate",
         "retrying",
         "vulners",
-        "xmltodict",
+	"xmltodict",
+	"importlib-resources",
+	"python-gitlab",
         # 'pycvesearch',  # needs to be installed manually, see https://github.com/cve-search/PyCVESearch
         # 'cvsslib',  # needs to be installed manually, see https://github.com/aliasrobotics/RVSS
     ],
