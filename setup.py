@@ -11,7 +11,7 @@ setup(
         "arrow",
         "bs4",
         "cerberus",
-        "dedupe",
+        "dedupe==1.10.0",
         "jsonschema",
         "mergedeep",
         "numpy",
@@ -26,9 +26,9 @@ setup(
         "tabulate",
         "retrying",
         "vulners",
-	"xmltodict",
-	"importlib-resources",
-	"python-gitlab",
+    	"xmltodict",
+    	"importlib-resources",
+    	"python-gitlab",
         # 'pycvesearch',  # needs to be installed manually, see https://github.com/cve-search/PyCVESearch
         # 'cvsslib',  # needs to be installed manually, see https://github.com/aliasrobotics/RVSS
     ],

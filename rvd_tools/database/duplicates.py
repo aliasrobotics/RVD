@@ -183,10 +183,10 @@ class Duplicates(Base):
         clustered_dupes = deduper.match(data_d, threshold)
 
         cyan('Number of duplicate sets: ' + str(len(clustered_dupes)))
-        for set in clustered_dupes:
+        for aset in clustered_dupes:
             yellow("Found a duplicated pair...")
-            ids, values = set
-            primary_issue = None  # reflects the primary ticket in a set of
+            ids, values = aset
+            primary_issue = None  # reflects the primary ticket in a aset of
                                   # duplicates all the duplicates should point
                                   # to this one
             for id in ids:
