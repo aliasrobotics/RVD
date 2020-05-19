@@ -29,6 +29,7 @@ setup(
     	"xmltodict",
     	"importlib-resources",
     	"python-gitlab",
+        "requests==2.22.0",
         # 'pycvesearch',  # needs to be installed manually, see https://github.com/cve-search/PyCVESearch
         # 'cvsslib',  # needs to be installed manually, see https://github.com/aliasrobotics/RVSS
     ],
