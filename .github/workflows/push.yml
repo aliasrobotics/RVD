@@ -65,7 +65,7 @@ jobs:
         #########
         # This should be replaced by adding RVSS as a dependency and fetching
         # it with pip3
-        export CURRENT=$(PWD)
+        export CURRENT=$(pwd)
         cd /tmp
         git clone https://github.com/aliasrobotics/RVSS
         cd RVSS
