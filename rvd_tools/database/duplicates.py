@@ -195,7 +195,10 @@ not processed due to an error")
                         try:
                             flaw = Flaw(document)
                             try:
-                                data_d[int(flaw.id)] = flaw.document_duplicates()
+                                # sanitize first some leftovers from yaml
+                                int_id = int(str(flaw.id).replace(",",""))
+                                # add to the dict now
+                                data_d[int_id] = flaw.document_duplicates()
                                 yellow("Fetched local " + relative_path + " ticket")
                             except TypeError:
                                 # likely the document wasn't properly formed,
@@ -207,6 +210,7 @@ not processed due to an error")
                             red(f"{flaw.number} is not has no correct yaml format")
                             continue
         else:
+            yellow("No local folder found, fetching from cloud")
             # Not found locally, import them manually
             if invalid:
                 issues_all = self.repo.get_issues(state="all")  # using all
