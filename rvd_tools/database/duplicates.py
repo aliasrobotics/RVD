@@ -91,6 +91,84 @@ class Duplicates(Base):
 
         return deduper
 
+    def dump_issues_local(self, issues, label, update=False):
+        """
+        Dump all tickets into a local directory, mimicing
+        the 'rvd export local' functionality.
+
+        TODO: document params
+        """
+        local_directory_path = ".rvd/"
+        if not os.path.exists(local_directory_path):
+            cyan("Creating directory .rvd/ whereto dump tickets...")
+            os.makedirs(local_directory_path)
+            update = True
+        else:
+            if update:
+                cyan("Updating all tickets, re-downloading...")
+                os.system("rm -r " + local_directory_path)
+                os.makedirs('.rvd')
+            else:
+                yellow("Directory already exists, skipping")
+
+        if update:
+            importer = Base()
+            # Fetch all issues, exluding the ones with the invalid label
+            # NOTE: includes the ones with the duplicate label
+            issues = importer.get_issues_filtered(state="all")
+            # flaws = []  # a list whereto store all flaws, from the issues
+
+            for issue in issues:
+                # Filter by label, to further align with code below
+
+                # check for PRs and skip them, should be labeled with "contribution"
+                labels = [l.name for l in issue.labels]
+                if "contribution" in labels:
+                    gray("Found a PR, skipping it")
+                    continue
+
+                # # This can't be enabled because if it was to be, training and
+                # # evaluation will not match
+                # if "duplicate" in labels:
+                #     gray("Found duplicate, skipping it")
+                #     continue
+
+                # review labels
+                all_labels = True  # indicates whether all labels are present
+                if label:
+                    for l in label:
+                        if l not in labels or "invalid" in labels:
+                            all_labels = False
+
+
+                if all_labels:
+                    # NOTE: partially re-implementing Base.import_issue()
+                    # to avoid calling again the Github API
+                    try:
+                        document_raw = issue.body
+                        document_raw = document_raw.replace('```yaml','').replace('```', '')
+                        document = yaml.load(document_raw)
+
+                        try:
+                            flaw = Flaw(document)
+                            # flaws.append(flaw)  # append to list
+                            # Dump into local storage
+                            with open(local_directory_path + str(flaw.id) + ".yml", "w+") as file:
+                                yellow("Creating file "+ str(flaw.id) + ".yml")
+                                # dump contents in file
+                                result = yaml.dump(document, file)
+
+                        except TypeError:
+                            # likely the document wasn't properly formed,
+                            # report about it and continue
+                            yellow("Warning: issue " + str(issue.number) + " \
+not processed due to an error")
+                            continue
+
+                    except yaml.parser.ParserError:
+                        red(f"{issue.number} is not has no correct yaml format")
+                        continue
+
     def read_data(self, label, invalid=True):
         """
         Read data from RVD and return in the corresponding dedupe format,
@@ -103,60 +181,93 @@ class Duplicates(Base):
         gray("Processing tickets from RVD...")
         gray("Trying first to fetch them from the local dump...")
 
-        if invalid:
-            issues_all = self.repo.get_issues(state="all")  # using all tickets, including invalid ones for training
+        local_directory_path = ".rvd/"
+        if os.path.exists(local_directory_path):
+            cyan("Found .rvd/ folder, fetching tickets...")
+            flaws = []
+            # need to fetch all tickets into flaws list
+            for root, subdirs, files in os.walk(local_directory_path):
+                for file in files:
+                    relative_path = local_directory_path + file
+                    with open(relative_path, "r") as file_doc:
+                        document = yaml.load(file_doc, Loader=yaml.FullLoader)
+                        # yellow(document)
+                        try:
+                            flaw = Flaw(document)
+                            try:
+                                data_d[int(flaw.id)] = flaw.document_duplicates()
+                                yellow("Fetched local " + relative_path + " ticket")
+                            except TypeError:
+                                # likely the document wasn't properly formed,
+                                # report about it and continue
+                                yellow("Warning: issue " + str(flaw.id) + " \
+not processed due to an error")
+                                continue
+                        except yaml.parser.ParserError:
+                            red(f"{flaw.number} is not has no correct yaml format")
+                            continue
         else:
-            issues_all = self.get_issues_filtered(state="all")
+            # Not found locally, import them manually
+            if invalid:
+                issues_all = self.repo.get_issues(state="all")  # using all
+                                # tickets, including invalid ones for training
+            else:
+                issues_all = self.get_issues_filtered(state="all")
 
-        for issue in issues_all:
-            print("Scanning..." + str(issue))
+            # Dump all tickets locally so that we don't need to re-download them
+            # next time
+            self.dump_issues_local(issues_all, label, update=False)  # set to false so
+                                                              # that only once
+                                                              # is downloaded
+            for issue in issues_all:
+                print("Scanning..." + str(issue))
 
-            # check for PRs and skip them, should be labeled with "contribution"
-            labels = [l.name for l in issue.labels]
-            if "contribution" in labels:
-                gray("Found a PR, skipping it")
-                continue
-
-            # # This can't be enabled because if it was to be, training and
-            # # evaluation will not match
-            # if "duplicate" in labels:
-            #     gray("Found duplicate, skipping it")
-            #     continue
-
-            # review labels
-            all_labels = True  # indicates whether all labels are present
-            if label:
-                for l in label:
-                    if l not in labels or "invalid" in labels:
-                        all_labels = False
-
-            if all_labels:
-                # NOTE: partially re-implementing Base.import_issue()
-                # to avoid calling again the Github API
-                try:
-                    document_raw = issue.body
-                    document_raw = document_raw.replace('```yaml','').replace('```', '')
-                    document = yaml.load(document_raw)
-
-                    try:
-                        flaw = Flaw(document)
-
-                        # print(document)
-                        # print(flaw)
-
-                        # yellow("Imported issue ", end="")
-                        # print(str(issue.id), end="")
-                        # yellow(" into a Flaw...")
-                        # data_d[int(issue.number)] = flaw.document_duplicates()
-                        data_d[int(issue.number)] = flaw.document_duplicates()
-                    except TypeError:
-                        # likely the document wasn't properly formed, report about it and continue
-                        yellow("Warning: issue " + str(issue.number) + " not processed due to an error")
-                        continue
-
-                except yaml.parser.ParserError:
-                    print(f"{issue.number} is not has no correct yaml format")
+                # check for PRs and skip them, should be labeled with "contribution"
+                labels = [l.name for l in issue.labels]
+                if "contribution" in labels:
+                    gray("Found a PR, skipping it")
                     continue
+
+                # # This can't be enabled because if it was to be, training and
+                # # evaluation will not match
+                # if "duplicate" in labels:
+                #     gray("Found duplicate, skipping it")
+                #     continue
+
+                # review labels
+                all_labels = True  # indicates whether all labels are present
+                if label:
+                    for l in label:
+                        if l not in labels or "invalid" in labels:
+                            all_labels = False
+
+                if all_labels:
+                    # NOTE: partially re-implementing Base.import_issue()
+                    # to avoid calling again the Github API
+                    try:
+                        document_raw = issue.body
+                        document_raw = document_raw.replace('```yaml','').replace('```', '')
+                        document = yaml.load(document_raw)
+
+                        try:
+                            flaw = Flaw(document)
+
+                            # print(document)
+                            # print(flaw)
+
+                            # yellow("Imported issue ", end="")
+                            # print(str(issue.id), end="")
+                            # yellow(" into a Flaw...")
+                            # data_d[int(issue.number)] = flaw.document_duplicates()
+                            data_d[int(issue.number)] = flaw.document_duplicates()
+                        except TypeError:
+                            # likely the document wasn't properly formed, report about it and continue
+                            yellow("Warning: issue " + str(issue.number) + " not processed due to an error")
+                            continue
+
+                    except yaml.parser.ParserError:
+                        print(f"{issue.number} is not has no correct yaml format")
+                        continue
         return data_d
 
     def find_duplicates(self, train, push, label):
