@@ -20,7 +20,7 @@ setup(
         "pygithub",
         "python-dateutil==2.7.3",
         "python-gitlab",
-        "pyyaml",
+        "pyyaml==5.3",
         "qprompt",
         "retrying",
         "tabulate",
