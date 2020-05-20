@@ -199,7 +199,7 @@ not processed due to an error")
                                 int_id = int(str(flaw.id).replace(",",""))
                                 # add to the dict now
                                 data_d[int_id] = flaw.document_duplicates()
-                                yellow("Fetched local " + relative_path + " ticket")
+                                # yellow("Fetched local " + relative_path + " ticket")
                             except TypeError:
                                 # likely the document wasn't properly formed,
                                 # report about it and continue
@@ -359,7 +359,7 @@ not processed due to an error")
 
         cyan('Clustering...')
         clustered_dupes = deduper.match(data_d, threshold)
-        pprint.pprint(clustered_dupes)  # debug purposes
+        # pprint.pprint(clustered_dupes)  # debug purposes
 
         # If ID 0 (corresponds with flaw passed as arg) is in there, is_duplicate
         for set in clustered_dupes:
