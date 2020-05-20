@@ -876,9 +876,26 @@ def fetch():
     #     red("A URI is needed when calling import")
     #     sys.exit(1)
     # else:
-    cyan("Creating folder for the import process...")
+    cyan("Creating the default folder for the import process...")
     os.system("mkdir -p /tmp/rvd")
 
+@fetch.command("local")
+@click.argument("id", required=True)
+def fetch_local(id):
+    """Import a given ticket id from the local export directory
+    and dump its contents in stdout"""
+
+    local_directory_path = ".rvd/"
+    cyan("Trying to import " + id + " from local export directory...")
+    for root, subdirs, files in os.walk(local_directory_path):
+        for file in files:
+            file_name = id + '.yml'
+            if file_name == file:
+                relative_path = local_directory_path + file
+                with open(relative_path, "r") as file_doc:
+                    document = yaml.load(file_doc, Loader=yaml.FullLoader)
+                    # yellow(document)
+                    print(Flaw(document))
 
 @fetch.command("gitlab")
 @click.argument("id", required=True)
