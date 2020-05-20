@@ -224,7 +224,7 @@ not processed due to an error")
                                                               # that only once
                                                               # is downloaded
             for issue in issues_all:
-                print("Scanning..." + str(issue))
+                # print("Scanning..." + str(issue))
 
                 # check for PRs and skip them, should be labeled with "contribution"
                 labels = [l.name for l in issue.labels]
