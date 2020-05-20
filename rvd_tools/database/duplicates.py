@@ -101,6 +101,8 @@ class Duplicates(Base):
         """
         data_d = {}
         gray("Processing tickets from RVD...")
+        gray("Trying first to fetch them from the local dump...")
+
         if invalid:
             issues_all = self.repo.get_issues(state="all")  # using all tickets, including invalid ones for training
         else:

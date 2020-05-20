@@ -798,6 +798,73 @@ def other(title):
                 importer.update_ticket(issue, flaw)  # labels fetched from issue
 
 
+#  ┌─┐─┐ ┬┌─┐┌─┐┬─┐┌┬┐
+#  ├┤ ┌┴┬┘├─┘│ │├┬┘ │
+#  └─┘┴ └─┴  └─┘┴└─ ┴
+@main.group("export")
+def exportar():
+    """Export flaws from RVD to a variety of sources"""
+    cyan("Exporting...")
+
+@exportar.command("local")
+@click.option(
+    "--update/--no-update",
+    help='Force the download of all tickets again".',
+    default=False,
+)
+def exportar_local(update):
+    """Export all tickets to the local export directory"""
+
+    local_directory_path = ".rvd/"
+    cyan("Creating folder for the export process...")
+    flag_fetch = False  # a flag to determine whether all tickets need to
+                        # be fetched again
+    if not os.path.exists(local_directory_path):
+        os.makedirs(local_directory_path)
+        flag_fetch = True
+    else:
+        if update:
+            cyan("Updating all tickets, re-downloading...")
+            os.system("rm -r " + local_directory_path)
+            os.makedirs('.rvd')
+            flag_fetch = True
+        else:
+            red("Directory already exists, skipping")
+
+    if flag_fetch:
+        importer = Base()
+        # Fetch all issues, exluding the ones with the invalid label
+        # NOTE: includes the ones with the duplicate label
+        issues = importer.get_issues_filtered(state="all")
+        flaws = []  # a list whereto store all flaws, from the issues
+
+        for issue in issues:
+            # NOTE: partially re-implementing Base.import_issue()
+            # to avoid calling again the Github API
+            try:
+                document_raw = issue.body
+                document_raw = document_raw.replace('```yaml','').replace('```', '')
+                document = yaml.load(document_raw)
+
+                try:
+                    flaw = Flaw(document)
+                    # flaws.append(flaw)  # append to list
+                    # Dump into local storage
+                    with open(local_directory_path + str(flaw.id) + ".yml", "w+") as file:
+                        yellow("Creating file "+ str(flaw.id) + ".yml")
+                        # dump contents in file
+                        result = yaml.dump(document, file)
+
+                except TypeError:
+                    # likely the document wasn't properly formed, report about it and continue
+                    yellow("Warning: issue " + str(issue.number) + " not processed due to an error")
+                    continue
+
+            except yaml.parser.ParserError:
+                red(f"{issue.number} is not has no correct yaml format")
+                continue
+
+
 #  ┬┌┬┐┌─┐┌─┐┬─┐┌┬┐
 #  ││││├─┘│ │├┬┘ │
 #  ┴┴ ┴┴  └─┘┴└─ ┴

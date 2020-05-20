@@ -8,3 +8,4 @@ __pycache__/
 .database/
 */.DS_Store
 .DS_Store
+.rvd/
