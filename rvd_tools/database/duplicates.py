@@ -404,6 +404,7 @@ not processed due to an error")
 
         # If ID 0 (corresponds with flaw passed as arg) is in there, is_duplicate
         dupes = []
+        print(clustered_dupes)
         for set in clustered_dupes:
             ids, values = set
             for id in ids:
