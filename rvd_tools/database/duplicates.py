@@ -410,4 +410,5 @@ not processed due to an error")
                 # print(id)
                 if int(id) == 0:
                     dupes.append(id)
+        print(dupes)
         return dupes
