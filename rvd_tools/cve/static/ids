@@ -5,7 +5,7 @@
 ~CVE-2020-10265 https://github.com/aliasrobotics/RVD/issues/1443
 ~CVE-2020-10266 https://github.com/aliasrobotics/RVD/issues/1487
 ~CVE-2020-10267 https://github.com/aliasrobotics/RVD/issues/1489
-CVE-2020-10268
+~CVE-2020-10268 TODO: file to MITRE from https://gitlab.com/aliasrobotics/offensive/rvd/flaws/-/issues/485
 CVE-2020-10269
 CVE-2020-10270
 CVE-2020-10271

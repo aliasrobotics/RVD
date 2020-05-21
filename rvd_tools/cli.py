@@ -241,6 +241,9 @@ def report(id, deadline, disclose):
         cyan(" ...")
         report = Report()
         report.from_gitlab(i, deadline, disclose)
+    # TODO make the reports and pack them together for delivery
+    # consider something like:
+    #  for d in ./* ; do ( cd "$d" && make); done
 
 
 #  ┌─┐┌┬┐┌─┐┌┬┐┬┌─┐┌┬┐┬┌─┐┌─┐

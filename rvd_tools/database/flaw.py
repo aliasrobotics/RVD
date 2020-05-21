@@ -375,6 +375,7 @@ class Flaw:
         return_str += "| cve |" + str(self.cve) + "|" + "\n"
         return_str += "| keywords |" + str(self.keywords) + "|" + "\n"
         return_str += "| vendor |" + str(self.vendor) + "|" + "\n"
+        return_str += "| system |" + str(self.system) + "|" + "\n"
 
         return_str += "\n"
         # return_str += "\newpage"
