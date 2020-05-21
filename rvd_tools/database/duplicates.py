@@ -331,7 +331,7 @@ not processed due to an error")
 
     def is_duplicate(self, flaw):
         """
-        Checks whether the flaw passes as parameter is a duplicate or not
+        Checks whether the flaw passed as parameter is a duplicate or not
         Uses training information already available in training data folder.
 
         NOTE: should be called from the RVD respository directory.
@@ -369,3 +369,45 @@ not processed due to an error")
                 if int(id) == 0:
                     return True
         return False
+
+    def get_duplicate(self, flaw):
+        """
+        Returns duplicates for a given flaw passed as parameter.
+
+        Uses training information already available in training data folder.
+        NOTE: should be called from the RVD respository directory.
+
+        :param flaw, Flaw
+        :return list
+        """
+        data_d = self.read_data(None, invalid=False)  # data dict
+        # pprint.pprint(data_d)
+
+        # Append the flaw to the data dictonary with the ID 0
+        data_d[0] = flaw.document_duplicates()
+        # pprint.pprint(data_d)
+
+        if os.path.exists(self.settings_file):
+            print('reading from', self.settings_file)
+            with open(self.settings_file, 'rb') as f:
+                deduper = dedupe.StaticDedupe(f)
+        else:
+            red("Error: settings file does not exist, stoping")
+            sys.exit(1)
+
+        cyan("Finding the threshold for data...")
+        threshold = deduper.threshold(data_d, recall_weight=1)
+
+        cyan('Clustering...')
+        clustered_dupes = deduper.match(data_d, threshold)
+        # pprint.pprint(clustered_dupes)  # debug purposes
+
+        # If ID 0 (corresponds with flaw passed as arg) is in there, is_duplicate
+        dupes = []
+        for set in clustered_dupes:
+            ids, values = set
+            for id in ids:
+                # print(id)
+                if int(id) == 0:
+                    dupes.append(id)
+        return dupes
