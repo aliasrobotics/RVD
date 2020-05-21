@@ -403,13 +403,8 @@ not processed due to an error")
         # pprint.pprint(clustered_dupes)  # debug purposes
 
         # If ID 0 (corresponds with flaw passed as arg) is in there, is_duplicate
-        dupes = []
-        print(clustered_dupes)
         for set in clustered_dupes:
             ids, values = set
-            for id in ids:
-                # print(id)
-                if int(id) == 0:
-                    dupes.append(id)
-        print(dupes)
-        return dupes
+            if 0 in ids:
+                return list(ids)
+        return []
