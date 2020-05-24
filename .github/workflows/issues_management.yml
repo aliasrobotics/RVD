@@ -65,6 +65,19 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        #########
+        # Fetch pending dependency
+        #########
+        # This should be replaced by adding RVSS as a dependency and fetching
+        # it with pip3
+        export CURRENT=$(pwd)
+        cd /tmp
+        git clone https://github.com/aliasrobotics/RVSS
+        cd RVSS
+        pip3 install .
+        cd $CURRENT
+        #########
+
         pip3 install .
         rvd summary --update
     - name: Commit changes
