@@ -1,7 +1,7 @@
 [![](https://img.shields.io/badge/vulnerabilities-187-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+label%3Avulnerability+)
-[![](https://img.shields.io/badge/bugs-784-f7b6b2.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+label%3Abug+)
+[![](https://img.shields.io/badge/bugs-787-f7b6b2.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+label%3Abug+)
 [![](https://img.shields.io/badge/malformed-0-440fa8.svg)](https://github.com/aliasrobotics/RVD/labels/malformed)
-[![](https://img.shields.io/badge/triage-771-ffe89e.svg)](https://github.com/aliasrobotics/RVD/labels/triage)
+[![](https://img.shields.io/badge/triage-774-ffe89e.svg)](https://github.com/aliasrobotics/RVD/labels/triage)
 [![](https://img.shields.io/badge/duplicates-0-cfd3d7.svg)](https://github.com/aliasrobotics/RVD/labels/duplicate)
 
 # Robot Vulnerability Database (RVD)
@@ -21,7 +21,7 @@ with original robot manufacturers. By no means Alias encourages or promote the u
 tampering with running robotic systems. This can cause serious human harm and material
 damages.**
 
-*Last updated Thu, 04 Jun 2020 09:02:20 GMT*
+*Last updated Sun, 14 Jun 2020 07:58:17 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -38,8 +38,8 @@ damages.**
 [~vulns]: https://img.shields.io/badge/vulnerabilities-199-7fe0bb.svg
 [~vulns_open]: https://img.shields.io/badge/vulnerabilities-187-red.svg
 [~vulns_closed]: https://img.shields.io/badge/vulnerabilities-12-green.svg
-[~bugs]: https://img.shields.io/badge/bugs-1038-dbf9a2.svg
-[~bugs_open]: https://img.shields.io/badge/bugs-784-red.svg
+[~bugs]: https://img.shields.io/badge/bugs-1044-dbf9a2.svg
+[~bugs_open]: https://img.shields.io/badge/bugs-787-red.svg
 [~bugs_closed]: https://img.shields.io/badge/bugs-257-green.svg
 [~others]: https://img.shields.io/badge/others-1-dbf9a2.svg
 [~others_open]: https://img.shields.io/badge/others-0-red.svg
@@ -53,94 +53,94 @@ damages.**
 <details><summary><b>Robot vulnerabilities by robot component</b></summary>
 
 By robot components, we consider both software and hardware robot components
-- [`robot component: Alpha 1S android application`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20Alpha%201S%20android%20application)
-- [`robot component: ABB VSN300 WiFi`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20VSN300%20WiFi)
-- [`robot component: moveit2`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20moveit2)
-- [`robot component: DynamixelSDK`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20DynamixelSDK)
-- [`robot component: kobuki`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20kobuki)
-- [`robot component: VSN300 WiFi Logger Card`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20VSN300%20WiFi%20Logger%20Card)
-- [`robot component: shadow-robot`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20shadow-robot)
-- [`robot component: navigation2`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20navigation2)
-- [`robot component: ROS`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ROS)
-- [`robot component: Dynamixel`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20Dynamixel)
-- [`robot component: ABB DataManager`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20DataManager)
-- [`robot component: FastRTPS`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20FastRTPS)
-- [`robot component: Sawyer Task Editor`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20Sawyer%20Task%20Editor)
-- [`robot component: ABB CP635 HMI`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20CP635%20HMI)
-- [`robot component: ABB RobView 5`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20RobView%205)
-- [`robot component: ABB PC SDK`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20PC%20SDK)
-- [`robot component: ABB WebWare SDK`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20WebWare%20SDK)
-- [`robot component: mavros`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20mavros)
-- [`robot component: Others`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20Others)
-- [`robot component: ROS2`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ROS2)
-- [`robot component: OP2 Firmware`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20OP2%20Firmware)
-- [`robot component: ABB IRC5 OPC Server`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20IRC5%20OPC%20Server)
-- [`robot component: CMS-770`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20CMS-770)
-- [`robot component: Intel NUC`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20Intel%20NUC)
-- [`robot component: IRB140's main computer`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20IRB140's%20main%20computer)
-- [`robot component: V-Sido OS`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20V-Sido%20OS)
-- [`robot component: DDS`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20DDS)
-- [`robot component: IRB140's flex pendant`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20IRB140's%20flex%20pendant)
-- [`robot component: ABB RobotStudio`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20RobotStudio)
 - [`robot component: ABB's Service Box`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB's%20Service%20Box)
-- [`robot component: ABB WebWare Server`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20WebWare%20Server)
+- [`robot component: Sawyer Task Editor`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20Sawyer%20Task%20Editor)
+- [`robot component: navigation2`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20navigation2)
 - [`robot component: ABB PickMaster 3`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20PickMaster%203)
-- [`robot component: ABB Interlink Module`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20Interlink%20Module)
-- [`robot component: ABB S4 OPC Server`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20S4%20OPC%20Server)
-- [`robot component: ABB Test Signal Viewer 1.5`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20Test%20Signal%20Viewer%201.5)
-- [`robot component: Universal Robots Controller`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20Universal%20Robots%20Controller)
-- [`robot component: ABB RobotStudio 5.6x`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20RobotStudio%205.6x)
-- [`robot component: ABB RobotStudio Lite`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20RobotStudio%20Lite)
-- [`robot component: ABB PickMaster 5`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20PickMaster%205)
+- [`robot component: VSN300 WiFi Logger Card`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20VSN300%20WiFi%20Logger%20Card)
+- [`robot component: CMS-770`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20CMS-770)
+- [`robot component: ABB PC SDK`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20PC%20SDK)
 - [`robot component: ABB RobotStudio S4`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20RobotStudio%20S4)
-- [`robot component: ABB Robot Communications Runtime`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20Robot%20Communications%20Runtime)
+- [`robot component: ROS`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ROS)
+- [`robot component: ABB WebWare SDK`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20WebWare%20SDK)
+- [`robot component: Others`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20Others)
+- [`robot component: DynamixelSDK`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20DynamixelSDK)
+- [`robot component: ABB CP635 HMI`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20CP635%20HMI)
+- [`robot component: ABB PickMaster 5`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20PickMaster%205)
+- [`robot component: ABB RobotStudio Lite`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20RobotStudio%20Lite)
+- [`robot component: ABB RobotStudio`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20RobotStudio)
+- [`robot component: OP2 Firmware`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20OP2%20Firmware)
+- [`robot component: kobuki`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20kobuki)
+- [`robot component: Universal Robots Controller`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20Universal%20Robots%20Controller)
+- [`robot component: V-Sido OS`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20V-Sido%20OS)
+- [`robot component: IRB140's main computer`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20IRB140's%20main%20computer)
+- [`robot component: shadow-robot`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20shadow-robot)
+- [`robot component: ROS2`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ROS2)
+- [`robot component: ABB DataManager`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20DataManager)
+- [`robot component: Intel NUC`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20Intel%20NUC)
+- [`robot component: ABB IRC5 OPC Server`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20IRC5%20OPC%20Server)
+- [`robot component: mavros`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20mavros)
 - [`robot component: ABB QuickTeach`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20QuickTeach)
+- [`robot component: Dynamixel`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20Dynamixel)
+- [`robot component: ABB VSN300 WiFi`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20VSN300%20WiFi)
+- [`robot component: ABB S4 OPC Server`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20S4%20OPC%20Server)
+- [`robot component: ABB WebWare Server`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20WebWare%20Server)
+- [`robot component: ABB RobotStudio 5.6x`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20RobotStudio%205.6x)
+- [`robot component: FastRTPS`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20FastRTPS)
+- [`robot component: ABB Interlink Module`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20Interlink%20Module)
+- [`robot component: DDS`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20DDS)
+- [`robot component: ABB RobView 5`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20RobView%205)
+- [`robot component: Alpha 1S android application`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20Alpha%201S%20android%20application)
+- [`robot component: moveit2`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20moveit2)
+- [`robot component: ABB Robot Communications Runtime`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20Robot%20Communications%20Runtime)
+- [`robot component: IRB140's flex pendant`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20IRB140's%20flex%20pendant)
+- [`robot component: ABB Test Signal Viewer 1.5`](https://github.com/aliasrobotics/RVD/labels/robot%20component%3A%20ABB%20Test%20Signal%20Viewer%201.5)
 </details>
 <details><summary><b>Robot vulnerabilities by robot</b></summary>
 
-- [`robot: NAO`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20NAO)
-- [`robot: UR3`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20UR3)
-- [`robot: Baxter`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Baxter)
-- [`robot: Others`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Others)
-- [`robot: turtlebot`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20turtlebot)
-- [`robot: Alpha 2`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Alpha%202)
 - [`robot: UR10`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20UR10)
-- [`robot: Rovio`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Rovio)
-- [`robot: Pepper`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Pepper)
-- [`robot: Sawyer`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Sawyer)
-- [`robot: SDA10f`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20SDA10f)
-- [`robot: UR5`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20UR5)
 - [`robot: Vgo`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Vgo)
+- [`robot: REEM-C`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20REEM-C)
+- [`robot: SDA10f`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20SDA10f)
+- [`robot: Alpha 2`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Alpha%202)
+- [`robot: Raven 2`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Raven%202)
+- [`robot: ROS (Jade and before)`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20ROS%20(Jade%20and%20before))
+- [`robot: Rovio`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Rovio)
+- [`robot: Baxter`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Baxter)
+- [`robot: UR5`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20UR5)
+- [`robot: Pepper`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Pepper)
+- [`robot: turtlebot`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20turtlebot)
+- [`robot: Spykee`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Spykee)
+- [`robot: Others`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Others)
+- [`robot: care-o-bot`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20care-o-bot)
+- [`robot: Sawyer`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Sawyer)
 - [`robot: Alpha 1S`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Alpha%201S)
 - [`robot: MARA`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20MARA)
-- [`robot: Spykee`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Spykee)
-- [`robot: care-o-bot`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20care-o-bot)
-- [`robot: ROS (Jade and before)`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20ROS%20(Jade%20and%20before))
-- [`robot: Raven 2`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20Raven%202)
-- [`robot: REEM-C`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20REEM-C)
+- [`robot: UR3`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20UR3)
+- [`robot: NAO`](https://github.com/aliasrobotics/RVD/labels/robot%3A%20NAO)
 </details>
 <details><summary><b>Robot vulnerabilities by vendor</b></summary>
 
-- [`vendor: UBTech Robotics`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20UBTech%20Robotics)
-- [`vendor: Acutronic Robotics`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Acutronic%20Robotics)
-- [`vendor: Staübli`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Staübli)
-- [`vendor: Softbank Robotics`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Softbank%20Robotics)
-- [`vendor: Intel`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Intel)
-- [`vendor: Rethink Robotics`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Rethink%20Robotics)
-- [`vendor: Vecna`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Vecna)
-- [`vendor: eProsima`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20eProsima)
-- [`vendor: RTI`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20RTI)
-- [`vendor: WowWee`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20WowWee)
-- [`vendor: ADLINK`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20ADLINK)
-- [`vendor: Robotiq`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Robotiq)
-- [`vendor: ABB`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20ABB)
-- [`vendor: Fanuc`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Fanuc)
-- [`vendor: Applied Dexterity`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Applied%20Dexterity)
-- [`vendor: PAL Robotics`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20PAL%20Robotics)
 - [`vendor: Yaskawa Motoman`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Yaskawa%20Motoman)
-- [`vendor: KUKA`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20KUKA)
-- [`vendor: Universal Robots`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Universal%20Robots)
+- [`vendor: Intel`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Intel)
+- [`vendor: UBTech Robotics`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20UBTech%20Robotics)
+- [`vendor: WowWee`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20WowWee)
+- [`vendor: RTI`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20RTI)
+- [`vendor: Vecna`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Vecna)
+- [`vendor: Rethink Robotics`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Rethink%20Robotics)
 - [`vendor: Robotis`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Robotis)
+- [`vendor: ADLINK`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20ADLINK)
+- [`vendor: PAL Robotics`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20PAL%20Robotics)
+- [`vendor: Robotiq`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Robotiq)
+- [`vendor: Applied Dexterity`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Applied%20Dexterity)
+- [`vendor: Fanuc`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Fanuc)
+- [`vendor: KUKA`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20KUKA)
+- [`vendor: eProsima`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20eProsima)
+- [`vendor: Softbank Robotics`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Softbank%20Robotics)
+- [`vendor: Universal Robots`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Universal%20Robots)
+- [`vendor: Acutronic Robotics`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Acutronic%20Robotics)
+- [`vendor: ABB`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20ABB)
+- [`vendor: Staübli`](https://github.com/aliasrobotics/RVD/labels/vendor%3A%20Staübli)
 </details>
 
 
@@ -183,7 +183,7 @@ For more including the categorization used for flaws refer to RVD's [taxonomy](d
 
 ## Sponsored and funded projects
 ### ROS
-*Last updated Thu, 04 Jun 2020 09:02:20 GMT*
+*Last updated Sun, 14 Jun 2020 07:58:17 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -200,8 +200,8 @@ For more including the categorization used for flaws refer to RVD's [taxonomy](d
 [~vulns_ros]: https://img.shields.io/badge/ros_vulnerabilities-7-7fe0bb.svg
 [~vulns_open_ros]: https://img.shields.io/badge/ros_vulnerabilities-5-red.svg
 [~vulns_closed_ros]: https://img.shields.io/badge/ros_vulnerabilities-2-green.svg
-[~bugs_ros]: https://img.shields.io/badge/ros_bugs-576-dbf9a2.svg
-[~bugs_open_ros]: https://img.shields.io/badge/ros_bugs-533-red.svg
+[~bugs_ros]: https://img.shields.io/badge/ros_bugs-582-dbf9a2.svg
+[~bugs_open_ros]: https://img.shields.io/badge/ros_bugs-536-red.svg
 [~bugs_closed_ros]: https://img.shields.io/badge/ros_bugs-46-green.svg
 [~others_ros]: https://img.shields.io/badge/ros_others-0-dbf9a2.svg
 [~others_open_ros]: https://img.shields.io/badge/ros_others-0-red.svg
@@ -213,7 +213,7 @@ For more including the categorization used for flaws refer to RVD's [taxonomy](d
 
 
 ### ROS 2
-*Last updated Thu, 04 Jun 2020 09:02:20 GMT*
+*Last updated Sun, 14 Jun 2020 07:58:17 GMT*
 
 |       | Open      | Closed  |    All |
 |-------|---------|--------|-----------|
@@ -247,14 +247,13 @@ For more including the categorization used for flaws refer to RVD's [taxonomy](d
 
 ## Disclosure policy
 
-*Together with RVD, we propose a coherent diclosure policy adopted first by Alias Robotics. Thee disclosure policy is highly inspired by [Google's Project Zero](https://googleprojectzero.blogspot.com/p/vulnerability-disclosure-faq.html). TL;DR, we adhere to a 90-day disclosure deadline for new vulnerabilities*.
+*Together with RVD, we propose a coherent diclosure policy adopted first by Alias Robotics. Thee disclosure policy is highly inspired by [Google's Project Zero](https://googleprojectzero.blogspot.com/p/vulnerability-disclosure-faq.html). TL;DR, unless otherwise specified, we adhere to a 90-day disclosure deadline for new vulnerabilities*.
 
 *This policy is strongly in line with our desire to improve the robotics industry response times to security bugs, but also results in softer landings for bugs marginally over deadline. According to [our research](https://arxiv.org/pdf/1806.06681.pdf), most vendors are ignoring security flaws completely. We call on all researchers to adopt disclosure deadlines in some form, and feel free to use our policy verbatim (we've actually done so, from [Google's](https://www.google.com/about/appsecurity/)) if you find our record and reasoning compelling. Creating pressure towards more reasonably-timed fixes will result in smaller windows of opportunity for blackhats to abuse vulnerabilities. Given the direct physical connection with the world that robots have,  in our opinion, vulnerability disclosure policies such as ours result in greater security in robotics and an overall improved safety. A security-first approach is a must to ensure safe robotic operations.*
 
-The maintainers of RVD believe that vulnerability disclosure is a two-way street where both vendors and researchers, must act responsibly.  We adhere to a **90-day disclosure deadline for new vulnerabilities** while other flaws such as simple bugs or bugs could be filed at any point in time (refer to [Appendix A](#appendix-a-vulnerabilities-bugs-bugs-and-more) for the difference between vulnerabilities, bugs and bugs). We notify vendors of vulnerabilities immediately, with **details shared in public with the defensive community after 90 days**, or sooner if the vendor releases a fix.
+The maintainers of RVD believe that vulnerability disclosure is a two-way street where both vendors and researchers, must act responsibly.  We generally adhere to a **90-day disclosure deadline for new vulnerabilities** while other flaws such as simple bugs or bugs could be filed at any point in time (refer to [Appendix A](#appendix-a-vulnerabilities-bugs-bugs-and-more) for the difference between vulnerabilities, bugs and bugs). We notify vendors of vulnerabilities immediately, with **details shared in public with the defensive community after 90 days**, or sooner if the vendor releases a fix.
 
 Similar to Google's policy, we want to acknowledge that the deadline can vary in the following ways:
-
 - If a deadline is due to expire on a weekend or public holiday, the deadline will be moved to the next normal work day.
 
 - Before the 90-day deadline has expired, if a vendor lets us know that a patch is scheduled for release on a specific day that will fall within 14 days following the deadline, we will delay the public disclosure until the availability of the patch.
