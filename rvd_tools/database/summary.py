@@ -9,6 +9,7 @@ and dumps it optionally into README.md
 """
 
 from .base import Base
+
 # from github import Label
 from time import gmtime, strftime
 from ..utils import yellow, gray, cyan
@@ -20,13 +21,19 @@ class Summary(Base):
         super().__init__()
 
         # All
-        self.issues = []  # stores the name of each one of the issues in the corresponding repository
+        self.issues = (
+            []
+        )  # stores the name of each one of the issues in the corresponding repository
         self.labels = []  # labels for all issues, list of lists [[]]
         # Open
-        self.issues_open = []  # stores the name of each one of the issues in the corresponding repository
+        self.issues_open = (
+            []
+        )  # stores the name of each one of the issues in the corresponding repository
         self.labels_open = []  # labels for all issues
         # Closed
-        self.issues_closed = []  # stores the name of each one of the issues in the corresponding repository
+        self.issues_closed = (
+            []
+        )  # stores the name of each one of the issues in the corresponding repository
         self.labels_closed = []  # labels for all issues
 
         self.malformed = 0  # number of malformed tickets
@@ -93,7 +100,9 @@ class Summary(Base):
         self.vulns_medium_ros2 = 0
         self.vulns_low_ros2 = 0
 
-        self.processed_packages_ros2 = {}  # dict containg "package_name" as keys and "number of issues" as content
+        self.processed_packages_ros2 = (
+            {}
+        )  # dict containg "package_name" as keys and "number of issues" as content
 
         # MoveIt 2 variables
         self.nbugs_moveit2 = 0
@@ -152,7 +161,9 @@ class Summary(Base):
         # Calculate total number of flaws reported, including closed ones
         self.ntotal = len(self.issues)
         # Number of open issues
-        self.open_issues_count = self.repo.open_issues_count  # or simply len(self.issues_open)
+        self.open_issues_count = (
+            self.repo.open_issues_count
+        )  # or simply len(self.issues_open)
         self.closed_issues_count = len(self.issues_closed)
 
         #######################
@@ -167,11 +178,11 @@ class Summary(Base):
                 continue
             if "bug" in l_set:
                 self.nbugs += 1
-                if 'robot component: ROS' in l_set:
+                if "robot component: ROS" in l_set:
                     self.nbugs_ros += 1
-                if 'robot component: ROS2' in l_set:
+                if "robot component: ROS2" in l_set:
                     self.nbugs_ros2 += 1
-                if 'robot component: moveit2' in l_set:
+                if "robot component: moveit2" in l_set:
                     self.nbugs_moveit2 += 1
 
         for l_set in self.labels_open:
@@ -181,11 +192,11 @@ class Summary(Base):
                 continue
             if "bug" in l_set:
                 self.nbugs_open += 1
-                if 'robot component: ROS' in l_set:
+                if "robot component: ROS" in l_set:
                     self.nbugs_open_ros += 1
-                if 'robot component: ROS2' in l_set:
+                if "robot component: ROS2" in l_set:
                     self.nbugs_open_ros2 += 1
-                if 'robot component: moveit2' in l_set:
+                if "robot component: moveit2" in l_set:
                     self.nbugs_open_moveit2 += 1
 
         for l_set in self.labels_closed:
@@ -195,11 +206,11 @@ class Summary(Base):
                 continue
             if "bug" in l_set:
                 self.nbugs_closed += 1
-                if 'robot component: ROS' in l_set:
+                if "robot component: ROS" in l_set:
                     self.nbugs_closed_ros += 1
-                if 'robot component: ROS2' in l_set:
+                if "robot component: ROS2" in l_set:
                     self.nbugs_closed_ros2 += 1
-                if 'robot component: moveit2' in l_set:
+                if "robot component: moveit2" in l_set:
                     self.nbugs_closed_moveit2 += 1
 
         # Number of vulnerabilities
@@ -210,11 +221,11 @@ class Summary(Base):
                 continue
             if "vulnerability" in l_set:
                 self.nvulnerabilities += 1
-                if 'robot component: ROS' in l_set:
+                if "robot component: ROS" in l_set:
                     self.nvulnerabilities_ros += 1
-                if 'robot component: ROS2' in l_set:
+                if "robot component: ROS2" in l_set:
                     self.nvulnerabilities_ros2 += 1
-                if 'robot component: moveit2' in l_set:
+                if "robot component: moveit2" in l_set:
                     self.nvulnerabilities_moveit2 += 1
 
         for l_set in self.labels_open:
@@ -224,11 +235,11 @@ class Summary(Base):
                 continue
             if "vulnerability" in l_set:
                 self.nvulnerabilities_open += 1
-                if 'robot component: ROS' in l_set:
+                if "robot component: ROS" in l_set:
                     self.nvulnerabilities_open_ros += 1
-                if 'robot component: ROS2' in l_set:
+                if "robot component: ROS2" in l_set:
                     self.nvulnerabilities_open_ros2 += 1
-                if 'robot component: moveit2' in l_set:
+                if "robot component: moveit2" in l_set:
                     self.nvulnerabilities_open_moveit2 += 1
 
         for l_set in self.labels_closed:
@@ -238,11 +249,11 @@ class Summary(Base):
                 continue
             if "vulnerability" in l_set:
                 self.nvulnerabilities_closed += 1
-                if 'robot component: ROS' in l_set:
+                if "robot component: ROS" in l_set:
                     self.nvulnerabilities_closed_ros += 1
-                if 'robot component: ROS2' in l_set:
+                if "robot component: ROS2" in l_set:
                     self.nvulnerabilities_closed_ros2 += 1
-                if 'robot component: moveit2' in l_set:
+                if "robot component: moveit2" in l_set:
                     self.nvulnerabilities_closed_moveit2 += 1
 
         # Number of others (neither vulns nor bugs)
@@ -254,11 +265,11 @@ class Summary(Base):
             if "vulnerability" not in l_set:
                 if "bug" not in l_set:
                     self.nothers += 1
-                    if 'robot component: ROS' in l_set:
+                    if "robot component: ROS" in l_set:
                         self.nothers_ros += 1
-                    if 'robot component: ROS2' in l_set:
+                    if "robot component: ROS2" in l_set:
                         self.nothers_ros2 += 1
-                    if 'robot component: moveit2' in l_set:
+                    if "robot component: moveit2" in l_set:
                         self.nothers_moveit2 += 1
 
         for l_set in self.labels_open:
@@ -269,11 +280,11 @@ class Summary(Base):
             if "vulnerability" not in l_set:
                 if "bug" not in l_set:
                     self.nothers_open += 1
-                    if 'robot component: ROS' in l_set:
+                    if "robot component: ROS" in l_set:
                         self.nothers_open_ros += 1
-                    if 'robot component: ROS2' in l_set:
+                    if "robot component: ROS2" in l_set:
                         self.nothers_open_ros2 += 1
-                    if 'robot component: moveit2' in l_set:
+                    if "robot component: moveit2" in l_set:
                         self.nothers_open_moveit2 += 1
 
         for l_set in self.labels_closed:
@@ -284,11 +295,11 @@ class Summary(Base):
             if "vulnerability" not in l_set:
                 if "bug" not in l_set:
                     self.nothers_closed += 1
-                    if 'robot component: ROS' in l_set:
+                    if "robot component: ROS" in l_set:
                         self.nothers_closed_ros += 1
-                    if 'robot component: ROS2' in l_set:
+                    if "robot component: ROS2" in l_set:
                         self.nothers_closed_ros2 += 1
-                    if 'robot component: moveit2' in l_set:
+                    if "robot component: moveit2" in l_set:
                         self.nothers_closed_moveit2 += 1
 
         # Number of vulnerabilities, by severity
@@ -300,11 +311,11 @@ class Summary(Base):
             if "vulnerability" in l_set:
                 if "severity: critical" in l_set:
                     self.vulns_critical += 1
-                    if 'robot component: ROS' in l_set:
+                    if "robot component: ROS" in l_set:
                         self.vulns_critical_ros += 1
-                    if 'robot component: ROS2' in l_set:
+                    if "robot component: ROS2" in l_set:
                         self.vulns_critical_ros2 += 1
-                    if 'robot component: moveit2' in l_set:
+                    if "robot component: moveit2" in l_set:
                         self.vulns_critical_moveit2 += 1
 
         for l_set in self.labels_open:
@@ -315,11 +326,11 @@ class Summary(Base):
             if "vulnerability" in l_set:
                 if "severity: high" in l_set:
                     self.vulns_high += 1
-                    if 'robot component: ROS' in l_set:
+                    if "robot component: ROS" in l_set:
                         self.vulns_high_ros += 1
-                    if 'robot component: ROS2' in l_set:
+                    if "robot component: ROS2" in l_set:
                         self.vulns_high_ros2 += 1
-                    if 'robot component: moveit2' in l_set:
+                    if "robot component: moveit2" in l_set:
                         self.vulns_high_moveit2 += 1
 
         for l_set in self.labels_open:
@@ -330,11 +341,11 @@ class Summary(Base):
             if "vulnerability" in l_set:
                 if "severity: medium" in l_set:
                     self.vulns_medium += 1
-                    if 'robot component: ROS' in l_set:
+                    if "robot component: ROS" in l_set:
                         self.vulns_medium_ros += 1
-                    if 'robot component: ROS2' in l_set:
+                    if "robot component: ROS2" in l_set:
                         self.vulns_medium_ros2 += 1
-                    if 'robot component: moveit2' in l_set:
+                    if "robot component: moveit2" in l_set:
                         self.vulns_medium_moveit2 += 1
 
         for l_set in self.labels_open:
@@ -345,21 +356,21 @@ class Summary(Base):
             if "vulnerability" in l_set:
                 if "severity: low" in l_set:
                     self.vulns_low += 1
-                    if 'robot component: ROS' in l_set:
+                    if "robot component: ROS" in l_set:
                         self.vulns_low_ros += 1
-                    if 'robot component: ROS2' in l_set:
+                    if "robot component: ROS2" in l_set:
                         self.vulns_low_ros2 += 1
-                    if 'robot component: moveit2' in l_set:
+                    if "robot component: moveit2" in l_set:
                         self.vulns_low_moveit2 += 1
 
         # Obtain the number of tickets with "malformed" label
         for l_set in self.labels_open:
-            if 'malformed' in l_set:
+            if "malformed" in l_set:
                 self.malformed += 1
 
         # Obtain the number of tickets that require triage among the open ones
         for l_set in self.labels_open:
-            if 'triage' in l_set:
+            if "triage" in l_set:
                 self.triage += 1
 
         # Obtain the number of tickets that are open and duplicates
@@ -367,7 +378,7 @@ class Summary(Base):
         #  default the closed ones however they can also be previwed by
         #  the user if desired
         for l_set in self.labels_open:
-            if 'duplicate' in l_set:
+            if "duplicate" in l_set:
                 self.duplicates += 1
 
     def upper_shields(self):
@@ -379,11 +390,36 @@ class Summary(Base):
         """
         markdown = ""
         # add the shields
-        markdown += "[![](https://img.shields.io/badge/vulnerabilities-"+str(self.nvulnerabilities_open)+"-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+label%3Avulnerability+)"  + "\n"
-        markdown += "[![](https://img.shields.io/badge/bugs-"+str(self.nbugs_open)+"-f7b6b2.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+label%3Abug+)"  + "\n"
-        markdown += "[![](https://img.shields.io/badge/malformed-"+str(self.malformed)+"-440fa8.svg)](https://github.com/aliasrobotics/RVD/labels/malformed)"  + "\n"
-        markdown += "[![](https://img.shields.io/badge/triage-"+str(self.triage)+"-ffe89e.svg)](https://github.com/aliasrobotics/RVD/labels/triage)"  + "\n"
-        markdown += "[![](https://img.shields.io/badge/duplicates-"+str(self.duplicates)+"-cfd3d7.svg)](https://github.com/aliasrobotics/RVD/labels/duplicate)"  + "\n"
+        markdown += (
+            "[![](https://img.shields.io/badge/vulnerabilities-"
+            + str(self.nvulnerabilities_open)
+            + "-red.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+label%3Avulnerability+)"
+            + "\n"
+        )
+        markdown += (
+            "[![](https://img.shields.io/badge/bugs-"
+            + str(self.nbugs_open)
+            + "-f7b6b2.svg)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+label%3Abug+)"
+            + "\n"
+        )
+        markdown += (
+            "[![](https://img.shields.io/badge/malformed-"
+            + str(self.malformed)
+            + "-440fa8.svg)](https://github.com/aliasrobotics/RVD/labels/malformed)"
+            + "\n"
+        )
+        markdown += (
+            "[![](https://img.shields.io/badge/triage-"
+            + str(self.triage)
+            + "-ffe89e.svg)](https://github.com/aliasrobotics/RVD/labels/triage)"
+            + "\n"
+        )
+        markdown += (
+            "[![](https://img.shields.io/badge/duplicates-"
+            + str(self.duplicates)
+            + "-cfd3d7.svg)](https://github.com/aliasrobotics/RVD/labels/duplicate)"
+            + "\n"
+        )
         # markdown += "[![label: upper_shield_malformed][~upper_shield_malformed]](https://github.com/aliasrobotics/RVD/labels/malformed) "  # it can also be written this way, spliting it
         markdown += "\n"
 
@@ -402,63 +438,137 @@ class Summary(Base):
         :return markdown string
         """
         markdown = ""
-        markdown += "*Last updated " + str(strftime("%a, %d %b %Y %H:%M:%S", gmtime())) + " GMT*\n"
+        markdown += (
+            "*Last updated "
+            + str(strftime("%a, %d %b %Y %H:%M:%S", gmtime()))
+            + " GMT*\n"
+        )
         markdown += "" + "\n"
         markdown += "|       | Open      | Closed  |    All |" + "\n"
         markdown += "|-------|---------|--------|-----------|" + "\n"
-        markdown += "| Vulnerabilities | [![label: vulns_open][~vulns_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+) | \
+        markdown += (
+            "| Vulnerabilities | [![label: vulns_open][~vulns_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+) | \
 [![label: vulns_closed][~vulns_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+) | \
-[![label: vulns][~vulns]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+) |" + "\n"
+[![label: vulns][~vulns]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+) |"
+            + "\n"
+        )
 
-        markdown += "| Bugs | [![label: bugs_open][~bugs_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+-label%3A%22duplicate%22+)  | \
+        markdown += (
+            "| Bugs | [![label: bugs_open][~bugs_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+-label%3A%22duplicate%22+)  | \
 [![label: bugs_closed][~bugs_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+label%3Abug+-label%3A%22invalid%22+-label%3A%22duplicate%22+) | \
-[![label: bugs][~bugs]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Abug+-label%3A%22invalid%22+-label%3A%22duplicate%22+) |" + "\n"
+[![label: bugs][~bugs]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Abug+-label%3A%22invalid%22+-label%3A%22duplicate%22+) |"
+            + "\n"
+        )
 
-        markdown += "| Others |  [![label: others_open][~others_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+) | \
+        markdown += (
+            "| Others |  [![label: others_open][~others_open]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+) | \
 [![label: others_closed][~others_closed]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+) | \
- [![label: others][~others]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+)|" + "\n"
+ [![label: others][~others]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+-label%3A%22duplicate%22+)|"
+            + "\n"
+        )
         markdown += "\n"
         markdown += "\n"
 
         # Summary of vulnerabilities (only open issues considered)
         markdown += "|       |       |           |          |          |" + "\n"
         markdown += "|-------|---------|---------|----------|----------|" + "\n"
-        markdown += "| Vulnerabilities (open) | [![label: vulns_critical][~vulns_critical]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+critical%22+-label%3A%22duplicate%22+) | \
+        markdown += (
+            "| Vulnerabilities (open) | [![label: vulns_critical][~vulns_critical]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+critical%22+-label%3A%22duplicate%22+) | \
 [![label: vulns_high][~vulns_high]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+high%22+-label%3A%22duplicate%22+) | \
 [![label: vulns_medium][~vulns_medium]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+medium%22+-label%3A%22duplicate%22+) | \
-[![label: vulns_low][~vulns_low]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+low%22+-label%3A%22duplicate%22+) |" + "\n"
+[![label: vulns_low][~vulns_low]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+low%22+-label%3A%22duplicate%22+) |"
+            + "\n"
+        )
 
         markdown += "\n"
         markdown += "\n"
-        markdown += "[~vulns]: https://img.shields.io/badge/vulnerabilities-" + str(
-            self.nvulnerabilities) + "-7fe0bb.svg" + "\n"
-        markdown += "[~vulns_open]: https://img.shields.io/badge/vulnerabilities-" + str(
-            self.nvulnerabilities_open) + "-red.svg" + "\n"
-        markdown += "[~vulns_closed]: https://img.shields.io/badge/vulnerabilities-" + str(
-            self.nvulnerabilities_closed) + "-green.svg" + "\n"
-        markdown += "[~bugs]: https://img.shields.io/badge/bugs-" + str(
-            self.nbugs) + "-dbf9a2.svg" + "\n"
-        markdown += "[~bugs_open]: https://img.shields.io/badge/bugs-" + str(
-            self.nbugs_open) + "-red.svg" + "\n"
-        markdown += "[~bugs_closed]: https://img.shields.io/badge/bugs-" + str(
-            self.nbugs_closed) + "-green.svg" + "\n"
-        markdown += "[~others]: https://img.shields.io/badge/others-" + str(self.nothers) + "-dbf9a2.svg" + "\n"
-        markdown += "[~others_open]: https://img.shields.io/badge/others-" + str(self.nothers_open) + "-red.svg" + "\n"
-        markdown += "[~others_closed]: https://img.shields.io/badge/others-" + str(
-            self.nothers_closed) + "-green.svg" + "\n"
-        markdown += "[~vulns_critical]: https://img.shields.io/badge/vuln.critical-" + str(
-            self.vulns_critical) + "-ce5b50.svg" + "\n"
-        markdown += "[~vulns_high]: https://img.shields.io/badge/vuln.high-" + str(
-            self.vulns_high) + "-e99695.svg" + "\n"
-        markdown += "[~vulns_medium]: https://img.shields.io/badge/vuln.medium-" + str(
-            self.vulns_medium) + "-e9cd95.svg" + "\n"
-        markdown += "[~vulns_low]: https://img.shields.io/badge/vuln.low-" + str(self.vulns_low) + "-e9e895.svg" + "\n"
+        markdown += (
+            "[~vulns]: https://img.shields.io/badge/vulnerabilities-"
+            + str(self.nvulnerabilities)
+            + "-7fe0bb.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_open]: https://img.shields.io/badge/vulnerabilities-"
+            + str(self.nvulnerabilities_open)
+            + "-red.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_closed]: https://img.shields.io/badge/vulnerabilities-"
+            + str(self.nvulnerabilities_closed)
+            + "-green.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~bugs]: https://img.shields.io/badge/bugs-"
+            + str(self.nbugs)
+            + "-dbf9a2.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~bugs_open]: https://img.shields.io/badge/bugs-"
+            + str(self.nbugs_open)
+            + "-red.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~bugs_closed]: https://img.shields.io/badge/bugs-"
+            + str(self.nbugs_closed)
+            + "-green.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~others]: https://img.shields.io/badge/others-"
+            + str(self.nothers)
+            + "-dbf9a2.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~others_open]: https://img.shields.io/badge/others-"
+            + str(self.nothers_open)
+            + "-red.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~others_closed]: https://img.shields.io/badge/others-"
+            + str(self.nothers_closed)
+            + "-green.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_critical]: https://img.shields.io/badge/vuln.critical-"
+            + str(self.vulns_critical)
+            + "-ce5b50.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_high]: https://img.shields.io/badge/vuln.high-"
+            + str(self.vulns_high)
+            + "-e99695.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_medium]: https://img.shields.io/badge/vuln.medium-"
+            + str(self.vulns_medium)
+            + "-e9cd95.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_low]: https://img.shields.io/badge/vuln.low-"
+            + str(self.vulns_low)
+            + "-e9e895.svg"
+            + "\n"
+        )
 
         markdown += "\n\n"
 
         markdown += "<details><summary><b>Robot vulnerabilities by robot component</b></summary>\n"
         markdown += "\n"
-        markdown += "By robot components, we consider both software and hardware robot components" + "\n"
+        markdown += (
+            "By robot components, we consider both software and hardware robot components"
+            + "\n"
+        )
         robot_component_labels = set()  # set with robot component labels
         for label_group in self.labels:
             for label in label_group:
@@ -466,10 +576,19 @@ class Summary(Base):
                     yellow("Robot component found in " + str(label))
                     robot_component_labels.add(label)
         for label in robot_component_labels:
-            markdown += "- [`" + str(label) + "`](https://github.com/aliasrobotics/RVD/labels/" + str(label.replace(" ", "%20").replace(":", "%3A")) + ")" + "\n"
+            markdown += (
+                "- [`"
+                + str(label)
+                + "`](https://github.com/aliasrobotics/RVD/labels/"
+                + str(label.replace(" ", "%20").replace(":", "%3A"))
+                + ")"
+                + "\n"
+            )
         markdown += "</details>\n"
 
-        markdown += "<details><summary><b>Robot vulnerabilities by robot</b></summary>\n"
+        markdown += (
+            "<details><summary><b>Robot vulnerabilities by robot</b></summary>\n"
+        )
         markdown += "\n"
         robot_labels = set()  # set with robot component labels
         for label_group in self.labels:
@@ -478,10 +597,19 @@ class Summary(Base):
                     yellow("Robot found in " + str(label))
                     robot_labels.add(label)
         for label in robot_labels:
-            markdown += "- [`" + str(label) + "`](https://github.com/aliasrobotics/RVD/labels/" + str(label.replace(" ", "%20").replace(":", "%3A")) + ")" + "\n"
+            markdown += (
+                "- [`"
+                + str(label)
+                + "`](https://github.com/aliasrobotics/RVD/labels/"
+                + str(label.replace(" ", "%20").replace(":", "%3A"))
+                + ")"
+                + "\n"
+            )
         markdown += "</details>\n"
 
-        markdown += "<details><summary><b>Robot vulnerabilities by vendor</b></summary>\n"
+        markdown += (
+            "<details><summary><b>Robot vulnerabilities by vendor</b></summary>\n"
+        )
         markdown += "\n"
         robot_labels = set()  # set with robot component labels
         for label_group in self.labels:
@@ -490,7 +618,14 @@ class Summary(Base):
                     yellow("Vendor found in " + str(label))
                     robot_labels.add(label)
         for label in robot_labels:
-            markdown += "- [`" + str(label) + "`](https://github.com/aliasrobotics/RVD/labels/" + str(label.replace(" ", "%20").replace(":", "%3A")) + ")" + "\n"
+            markdown += (
+                "- [`"
+                + str(label)
+                + "`](https://github.com/aliasrobotics/RVD/labels/"
+                + str(label.replace(" ", "%20").replace(":", "%3A"))
+                + ")"
+                + "\n"
+            )
         markdown += "</details>\n"
 
         markdown += "\n\n"
@@ -511,61 +646,129 @@ class Summary(Base):
         """
         markdown = ""
         markdown += "### ROS" + "\n"
-        markdown += "*Last updated " + str(strftime("%a, %d %b %Y %H:%M:%S", gmtime())) + " GMT*\n"
+        markdown += (
+            "*Last updated "
+            + str(strftime("%a, %d %b %Y %H:%M:%S", gmtime()))
+            + " GMT*\n"
+        )
         markdown += "" + "\n"
         markdown += "|       | Open      | Closed  |    All |" + "\n"
         markdown += "|-------|---------|--------|-----------|" + "\n"
-        markdown += "| `ROS` Vulnerabilities | [![label: vulns_open_ros][~vulns_open_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
+        markdown += (
+            "| `ROS` Vulnerabilities | [![label: vulns_open_ros][~vulns_open_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
 [![label: vulns_closed_ros][~vulns_closed_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
-[![label: vulns_ros][~vulns_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) |" + "\n"
+[![label: vulns_ros][~vulns_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) |"
+            + "\n"
+        )
 
-        markdown += "| `ROS` Bugs | [![label: bugs_open_ros][~bugs_open_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
+        markdown += (
+            "| `ROS` Bugs | [![label: bugs_open_ros][~bugs_open_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
 [![label: bugs_closed_ros][~bugs_closed_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+label%3Abug+-label%3A%22invalid%22+label%3A%22robot+component%3A+ROS%22+-label%3A%22duplicate%22+) | \
-[![label: bugs_ros][~bugs_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) |" + "\n"
+[![label: bugs_ros][~bugs_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) |"
+            + "\n"
+        )
 
-        markdown += "| `ROS` Others | [![label: others_open_ros][~others_open_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
+        markdown += (
+            "| `ROS` Others | [![label: others_open_ros][~others_open_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
 [![label: others_closed_ros][~others_closed_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+)  | \
-[![label: others_ros][~others_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) |" + "\n"
+[![label: others_ros][~others_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) |"
+            + "\n"
+        )
         markdown += "\n"
         markdown += "\n"
 
         # Summary of vulnerabilities (only open issues considered)
         markdown += "|       |       |           |          |          |" + "\n"
         markdown += "|-------|---------|---------|----------|----------|" + "\n"
-        markdown += "| `ROS` Vulnerabilities (open) | [![label: vulns_critical_ros][~vulns_critical_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+critical%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
+        markdown += (
+            "| `ROS` Vulnerabilities (open) | [![label: vulns_critical_ros][~vulns_critical_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+critical%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
 [![label: vulns_high_ros][~vulns_high_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+high%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
 [![label: vulns_medium_ros][~vulns_medium_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+medium%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) | \
-[![label: vulns_low_ros][~vulns_low_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+low%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) |" + "\n"
+[![label: vulns_low_ros][~vulns_low_ros]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+low%22+label%3A%22robot%20component%3A%20ROS%22+-label%3A%22duplicate%22+) |"
+            + "\n"
+        )
         markdown += "\n"
         markdown += "\n"
 
         # ros labels
-        markdown += "[~vulns_ros]: https://img.shields.io/badge/ros_vulnerabilities-" + str(
-            self.nvulnerabilities_ros) + "-7fe0bb.svg" + "\n"
-        markdown += "[~vulns_open_ros]: https://img.shields.io/badge/ros_vulnerabilities-" + str(
-            self.nvulnerabilities_open_ros) + "-red.svg" + "\n"
-        markdown += "[~vulns_closed_ros]: https://img.shields.io/badge/ros_vulnerabilities-" + str(
-            self.nvulnerabilities_closed_ros) + "-green.svg" + "\n"
-        markdown += "[~bugs_ros]: https://img.shields.io/badge/ros_bugs-" + str(
-            self.nbugs_ros) + "-dbf9a2.svg" + "\n"
-        markdown += "[~bugs_open_ros]: https://img.shields.io/badge/ros_bugs-" + str(
-            self.nbugs_open_ros) + "-red.svg" + "\n"
-        markdown += "[~bugs_closed_ros]: https://img.shields.io/badge/ros_bugs-" + str(
-            self.nbugs_closed_ros) + "-green.svg" + "\n"
-        markdown += "[~others_ros]: https://img.shields.io/badge/ros_others-" + str(
-            self.nothers_ros) + "-dbf9a2.svg" + "\n"
-        markdown += "[~others_open_ros]: https://img.shields.io/badge/ros_others-" + str(
-            self.nothers_open_ros) + "-red.svg" + "\n"
-        markdown += "[~others_closed_ros]: https://img.shields.io/badge/ros_others-" + str(
-            self.nothers_closed_ros) + "-green.svg" + "\n"
-        markdown += "[~vulns_critical_ros]: https://img.shields.io/badge/ros_vuln.critical-" + str(
-            self.vulns_critical_ros) + "-ce5b50.svg" + "\n"
-        markdown += "[~vulns_high_ros]: https://img.shields.io/badge/ros_vuln.high-" + str(
-            self.vulns_high_ros) + "-e99695.svg" + "\n"
-        markdown += "[~vulns_medium_ros]: https://img.shields.io/badge/ros_vuln.medium-" + str(
-            self.vulns_medium_ros) + "-e9cd95.svg" + "\n"
-        markdown += "[~vulns_low_ros]: https://img.shields.io/badge/ros_vuln.low-" + str(
-            self.vulns_low_ros) + "-e9e895.svg" + "\n"
+        markdown += (
+            "[~vulns_ros]: https://img.shields.io/badge/ros_vulnerabilities-"
+            + str(self.nvulnerabilities_ros)
+            + "-7fe0bb.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_open_ros]: https://img.shields.io/badge/ros_vulnerabilities-"
+            + str(self.nvulnerabilities_open_ros)
+            + "-red.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_closed_ros]: https://img.shields.io/badge/ros_vulnerabilities-"
+            + str(self.nvulnerabilities_closed_ros)
+            + "-green.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~bugs_ros]: https://img.shields.io/badge/ros_bugs-"
+            + str(self.nbugs_ros)
+            + "-dbf9a2.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~bugs_open_ros]: https://img.shields.io/badge/ros_bugs-"
+            + str(self.nbugs_open_ros)
+            + "-red.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~bugs_closed_ros]: https://img.shields.io/badge/ros_bugs-"
+            + str(self.nbugs_closed_ros)
+            + "-green.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~others_ros]: https://img.shields.io/badge/ros_others-"
+            + str(self.nothers_ros)
+            + "-dbf9a2.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~others_open_ros]: https://img.shields.io/badge/ros_others-"
+            + str(self.nothers_open_ros)
+            + "-red.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~others_closed_ros]: https://img.shields.io/badge/ros_others-"
+            + str(self.nothers_closed_ros)
+            + "-green.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_critical_ros]: https://img.shields.io/badge/ros_vuln.critical-"
+            + str(self.vulns_critical_ros)
+            + "-ce5b50.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_high_ros]: https://img.shields.io/badge/ros_vuln.high-"
+            + str(self.vulns_high_ros)
+            + "-e99695.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_medium_ros]: https://img.shields.io/badge/ros_vuln.medium-"
+            + str(self.vulns_medium_ros)
+            + "-e9cd95.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_low_ros]: https://img.shields.io/badge/ros_vuln.low-"
+            + str(self.vulns_low_ros)
+            + "-e9e895.svg"
+            + "\n"
+        )
 
         # get some space for readability
         markdown += "\n\n"
@@ -598,61 +801,129 @@ class Summary(Base):
         """
         markdown = ""
         markdown += "### ROS 2" + "\n"
-        markdown += "*Last updated " + str(strftime("%a, %d %b %Y %H:%M:%S", gmtime())) + " GMT*\n"
+        markdown += (
+            "*Last updated "
+            + str(strftime("%a, %d %b %Y %H:%M:%S", gmtime()))
+            + " GMT*\n"
+        )
         markdown += "" + "\n"
         markdown += "|       | Open      | Closed  |    All |" + "\n"
         markdown += "|-------|---------|--------|-----------|" + "\n"
-        markdown += "| `ROS 2` Vulnerabilities | [![label: vulns_open_ros2][~vulns_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
+        markdown += (
+            "| `ROS 2` Vulnerabilities | [![label: vulns_open_ros2][~vulns_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
 [![label: vulns_closed_ros2][~vulns_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
-[![label: vulns_ros2][~vulns_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) |" + "\n"
+[![label: vulns_ros2][~vulns_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) |"
+            + "\n"
+        )
 
-        markdown += "| `ROS 2` Bugs | [![label: bugs_open_ros2][~bugs_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
+        markdown += (
+            "| `ROS 2` Bugs | [![label: bugs_open_ros2][~bugs_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
 [![label: bugs_closed_ros2][~bugs_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+label%3Abug+-label%3A%22invalid%22+label%3A%22robot+component%3A+ROS2%22+-label%3A%22duplicate%22+) | \
-[![label: bugs_ros2][~bugs_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) |" + "\n"
+[![label: bugs_ros2][~bugs_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) |"
+            + "\n"
+        )
 
-        markdown += "| `ROS 2` Others | [![label: others_open_ros2][~others_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
+        markdown += (
+            "| `ROS 2` Others | [![label: others_open_ros2][~others_open_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
 [![label: others_closed_ros2][~others_closed_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aclosed+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+)  | \
-[![label: others_ros2][~others_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) |" + "\n"
+[![label: others_ros2][~others_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) |"
+            + "\n"
+        )
         markdown += "\n"
         markdown += "\n"
 
         # Summary of vulnerabilities (only open issues considered)
         markdown += "|       |       |           |          |          |" + "\n"
         markdown += "|-------|---------|---------|----------|----------|" + "\n"
-        markdown += "| `ROS 2` Vulnerabilities (open) | [![label: vulns_critical_ros2][~vulns_critical_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+critical%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
+        markdown += (
+            "| `ROS 2` Vulnerabilities (open) | [![label: vulns_critical_ros2][~vulns_critical_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+critical%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
 [![label: vulns_high_ros2][~vulns_high_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+high%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
 [![label: vulns_medium_ros2][~vulns_medium_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+medium%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) | \
-[![label: vulns_low_ros2][~vulns_low_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+low%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) |" + "\n"
+[![label: vulns_low_ros2][~vulns_low_ros2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+low%22+label%3A%22robot%20component%3A%20ROS2%22+-label%3A%22duplicate%22+) |"
+            + "\n"
+        )
         markdown += "\n"
         markdown += "\n"
 
         # ros 2 labels
-        markdown += "[~vulns_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-" + str(
-            self.nvulnerabilities_ros2) + "-7fe0bb.svg" + "\n"
-        markdown += "[~vulns_open_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-" + str(
-            self.nvulnerabilities_open_ros2) + "-red.svg" + "\n"
-        markdown += "[~vulns_closed_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-" + str(
-            self.nvulnerabilities_closed_ros2) + "-green.svg" + "\n"
-        markdown += "[~bugs_ros2]: https://img.shields.io/badge/ros2_bugs-" + str(
-            self.nbugs_ros2) + "-dbf9a2.svg" + "\n"
-        markdown += "[~bugs_open_ros2]: https://img.shields.io/badge/ros2_bugs-" + str(
-            self.nbugs_open_ros2) + "-red.svg" + "\n"
-        markdown += "[~bugs_closed_ros2]: https://img.shields.io/badge/ros2_bugs-" + str(
-            self.nbugs_closed_ros2) + "-green.svg" + "\n"
-        markdown += "[~others_ros2]: https://img.shields.io/badge/ros2_others-" + str(
-            self.nothers_ros2) + "-dbf9a2.svg" + "\n"
-        markdown += "[~others_open_ros2]: https://img.shields.io/badge/ros2_others-" + str(
-            self.nothers_open_ros2) + "-red.svg" + "\n"
-        markdown += "[~others_closed_ros2]: https://img.shields.io/badge/ros2_others-" + str(
-            self.nothers_closed_ros2) + "-green.svg" + "\n"
-        markdown += "[~vulns_critical_ros2]: https://img.shields.io/badge/ros2_vuln.critical-" + str(
-            self.vulns_critical_ros2) + "-ce5b50.svg" + "\n"
-        markdown += "[~vulns_high_ros2]: https://img.shields.io/badge/ros2_vuln.high-" + str(
-            self.vulns_high_ros2) + "-e99695.svg" + "\n"
-        markdown += "[~vulns_medium_ros2]: https://img.shields.io/badge/ros2_vuln.medium-" + str(
-            self.vulns_medium_ros2) + "-e9cd95.svg" + "\n"
-        markdown += "[~vulns_low_ros2]: https://img.shields.io/badge/ros2_vuln.low-" + str(
-            self.vulns_low_ros2) + "-e9e895.svg" + "\n"
+        markdown += (
+            "[~vulns_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-"
+            + str(self.nvulnerabilities_ros2)
+            + "-7fe0bb.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_open_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-"
+            + str(self.nvulnerabilities_open_ros2)
+            + "-red.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_closed_ros2]: https://img.shields.io/badge/ros2_vulnerabilities-"
+            + str(self.nvulnerabilities_closed_ros2)
+            + "-green.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~bugs_ros2]: https://img.shields.io/badge/ros2_bugs-"
+            + str(self.nbugs_ros2)
+            + "-dbf9a2.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~bugs_open_ros2]: https://img.shields.io/badge/ros2_bugs-"
+            + str(self.nbugs_open_ros2)
+            + "-red.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~bugs_closed_ros2]: https://img.shields.io/badge/ros2_bugs-"
+            + str(self.nbugs_closed_ros2)
+            + "-green.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~others_ros2]: https://img.shields.io/badge/ros2_others-"
+            + str(self.nothers_ros2)
+            + "-dbf9a2.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~others_open_ros2]: https://img.shields.io/badge/ros2_others-"
+            + str(self.nothers_open_ros2)
+            + "-red.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~others_closed_ros2]: https://img.shields.io/badge/ros2_others-"
+            + str(self.nothers_closed_ros2)
+            + "-green.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_critical_ros2]: https://img.shields.io/badge/ros2_vuln.critical-"
+            + str(self.vulns_critical_ros2)
+            + "-ce5b50.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_high_ros2]: https://img.shields.io/badge/ros2_vuln.high-"
+            + str(self.vulns_high_ros2)
+            + "-e99695.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_medium_ros2]: https://img.shields.io/badge/ros2_vuln.medium-"
+            + str(self.vulns_medium_ros2)
+            + "-e9cd95.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_low_ros2]: https://img.shields.io/badge/ros2_vuln.low-"
+            + str(self.vulns_low_ros2)
+            + "-e9e895.svg"
+            + "\n"
+        )
 
         # get some space for readability
         markdown += "\n\n"
@@ -664,16 +935,19 @@ class Summary(Base):
         # NOTE: only open issues are taken into account
         packages = []
         for l_set in self.labels_open:
-            if 'invalid' in l_set:
+            if "invalid" in l_set:
                 continue
-            if 'robot component: ROS2' in l_set:
+            if "robot component: ROS2" in l_set:
                 filtered_package = [i for i in l_set if "package: " in i]
                 if filtered_package != []:
-                    package = filtered_package[0].replace("package: ","")
+                    package = filtered_package[0].replace("package: ", "")
                     # print("package: "+package)
                     packages.append(package)
                 else:
-                    yellow("l_set that has ROS2 component includes NO package. Current labels: ", end="")
+                    yellow(
+                        "l_set that has ROS2 component includes NO package. Current labels: ",
+                        end="",
+                    )
                     print(str(l_set))
 
         # # now process all the packages
@@ -713,61 +987,129 @@ class Summary(Base):
         """
         markdown = ""
         markdown += "#### MoveIt 2" + "\n"
-        markdown += "*Last updated " + str(strftime("%a, %d %b %Y %H:%M:%S", gmtime())) + " GMT*\n"
+        markdown += (
+            "*Last updated "
+            + str(strftime("%a, %d %b %Y %H:%M:%S", gmtime()))
+            + " GMT*\n"
+        )
         markdown += "" + "\n"
         markdown += "|       | All      | Open  |    Closed |" + "\n"
         markdown += "|-------|---------|--------|-----------|" + "\n"
-        markdown += "| `MoveIt 2` Vulnerabilities | [![label: vulns_moveit2][~vulns_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
+        markdown += (
+            "| `MoveIt 2` Vulnerabilities | [![label: vulns_moveit2][~vulns_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: vulns_open_moveit2][~vulns_open_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
-[![label: vulns_closed_moveit2][~vulns_closed_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |" + "\n"
+[![label: vulns_closed_moveit2][~vulns_closed_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |"
+            + "\n"
+        )
 
-        markdown += "| `MoveIt 2` Bugs | [![label: bugs_moveit2][~bugs_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
+        markdown += (
+            "| `MoveIt 2` Bugs | [![label: bugs_moveit2][~bugs_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: bugs_open_moveit2][~bugs_open_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
-[![label: bugs_closed_moveit2][~bugs_closed_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |" + "\n"
+[![label: bugs_closed_moveit2][~bugs_closed_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+label%3Abug+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |"
+            + "\n"
+        )
 
-        markdown += "| `MoveIt 2` Others | [![label: others_moveit2][~others_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
+        markdown += (
+            "| `MoveIt 2` Others | [![label: others_moveit2][~others_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: others_open_moveit2][~others_open_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
-[![label: others_closed_moveit2][~others_closed_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |" + "\n"
+[![label: others_closed_moveit2][~others_closed_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3Abug+-label%3Avulnerability+-label%3A%22invalid%22+label%3A%22robot%20component%3A%20ROS2%22+) |"
+            + "\n"
+        )
         markdown += "\n"
         markdown += "\n"
 
         # Summary of vulnerabilities (only open issues considered)
         markdown += "|       |       |           |          |          |" + "\n"
         markdown += "|-------|---------|---------|----------|----------|" + "\n"
-        markdown += "| `MoveIt 2` Vulnerabilities (open) | [![label: vulns_critical_moveit2][~vulns_critical_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+critical%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
+        markdown += (
+            "| `MoveIt 2` Vulnerabilities (open) | [![label: vulns_critical_moveit2][~vulns_critical_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+critical%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: vulns_high_moveit2][~vulns_high_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+high%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
 [![label: vulns_medium_moveit2][~vulns_medium_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+medium%22+label%3A%22robot%20component%3A%20ROS2%22+) | \
-[![label: vulns_low_moveit2][~vulns_low_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+low%22+label%3A%22robot%20component%3A%20ROS2%22+) |" + "\n"
+[![label: vulns_low_moveit2][~vulns_low_moveit2]](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aopen+-label%3A%22invalid%22+label%3A%22severity%3A+low%22+label%3A%22robot%20component%3A%20ROS2%22+) |"
+            + "\n"
+        )
         markdown += "\n"
         markdown += "\n"
 
         # ros 2 labels
-        markdown += "[~vulns_moveit2]: https://img.shields.io/badge/moveit2_vulnerabilities-" + str(
-            self.nvulnerabilities_moveit2) + "-7fe0bb.svg" + "\n"
-        markdown += "[~vulns_open_moveit2]: https://img.shields.io/badge/moveit2_vulnerabilities-" + str(
-            self.nvulnerabilities_open_moveit2) + "-red.svg" + "\n"
-        markdown += "[~vulns_closed_moveit2]: https://img.shields.io/badge/moveit2_vulnerabilities-" + str(
-            self.nvulnerabilities_closed_moveit2) + "-green.svg" + "\n"
-        markdown += "[~bugs_moveit2]: https://img.shields.io/badge/moveit2_bugs-" + str(
-            self.nbugs_moveit2) + "-dbf9a2.svg" + "\n"
-        markdown += "[~bugs_open_moveit2]: https://img.shields.io/badge/moveit2_bugs-" + str(
-            self.nbugs_open_moveit2) + "-red.svg" + "\n"
-        markdown += "[~bugs_closed_moveit2]: https://img.shields.io/badge/moveit2_bugs-" + str(
-            self.nbugs_closed_moveit2) + "-green.svg" + "\n"
-        markdown += "[~others_moveit2]: https://img.shields.io/badge/moveit2_others-" + str(
-            self.nothers_moveit2) + "-dbf9a2.svg" + "\n"
-        markdown += "[~others_open_moveit2]: https://img.shields.io/badge/moveit2_others-" + str(
-            self.nothers_open_moveit2) + "-red.svg" + "\n"
-        markdown += "[~others_closed_moveit2]: https://img.shields.io/badge/moveit2_others-" + str(
-            self.nothers_closed_moveit2) + "-green.svg" + "\n"
-        markdown += "[~vulns_critical_moveit2]: https://img.shields.io/badge/moveit2_vuln.critical-" + str(
-            self.vulns_critical_moveit2) + "-ce5b50.svg" + "\n"
-        markdown += "[~vulns_high_moveit2]: https://img.shields.io/badge/moveit2_vuln.high-" + str(
-            self.vulns_high_moveit2) + "-e99695.svg" + "\n"
-        markdown += "[~vulns_medium_moveit2]: https://img.shields.io/badge/moveit2_vuln.medium-" + str(
-            self.vulns_medium_moveit2) + "-e9cd95.svg" + "\n"
-        markdown += "[~vulns_low_moveit2]: https://img.shields.io/badge/moveit2_vuln.low-" + str(
-            self.vulns_low_moveit2) + "-e9e895.svg" + "\n"
+        markdown += (
+            "[~vulns_moveit2]: https://img.shields.io/badge/moveit2_vulnerabilities-"
+            + str(self.nvulnerabilities_moveit2)
+            + "-7fe0bb.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_open_moveit2]: https://img.shields.io/badge/moveit2_vulnerabilities-"
+            + str(self.nvulnerabilities_open_moveit2)
+            + "-red.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_closed_moveit2]: https://img.shields.io/badge/moveit2_vulnerabilities-"
+            + str(self.nvulnerabilities_closed_moveit2)
+            + "-green.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~bugs_moveit2]: https://img.shields.io/badge/moveit2_bugs-"
+            + str(self.nbugs_moveit2)
+            + "-dbf9a2.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~bugs_open_moveit2]: https://img.shields.io/badge/moveit2_bugs-"
+            + str(self.nbugs_open_moveit2)
+            + "-red.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~bugs_closed_moveit2]: https://img.shields.io/badge/moveit2_bugs-"
+            + str(self.nbugs_closed_moveit2)
+            + "-green.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~others_moveit2]: https://img.shields.io/badge/moveit2_others-"
+            + str(self.nothers_moveit2)
+            + "-dbf9a2.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~others_open_moveit2]: https://img.shields.io/badge/moveit2_others-"
+            + str(self.nothers_open_moveit2)
+            + "-red.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~others_closed_moveit2]: https://img.shields.io/badge/moveit2_others-"
+            + str(self.nothers_closed_moveit2)
+            + "-green.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_critical_moveit2]: https://img.shields.io/badge/moveit2_vuln.critical-"
+            + str(self.vulns_critical_moveit2)
+            + "-ce5b50.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_high_moveit2]: https://img.shields.io/badge/moveit2_vuln.high-"
+            + str(self.vulns_high_moveit2)
+            + "-e99695.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_medium_moveit2]: https://img.shields.io/badge/moveit2_vuln.medium-"
+            + str(self.vulns_medium_moveit2)
+            + "-e9cd95.svg"
+            + "\n"
+        )
+        markdown += (
+            "[~vulns_low_moveit2]: https://img.shields.io/badge/moveit2_vuln.low-"
+            + str(self.vulns_low_moveit2)
+            + "-e9e895.svg"
+            + "\n"
+        )
         return markdown
 
     @staticmethod
@@ -799,25 +1141,61 @@ damages.**
 
         :return markdown string
         """
-        markdown = "## Concepts"  + "\n"
-        markdown += "Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. The meaning of the most relevant labels or statuses is covered below. Refer to the appendices for definitions on the terminology used:"  + "\n"
+        markdown = "## Concepts" + "\n"
+        markdown += (
+            "Each RVD issue (ticket) corresponds with a flaw that is labeled appropriately. The meaning of the most relevant labels or statuses is covered below. Refer to the appendices for definitions on the terminology used:"
+            + "\n"
+        )
 
-        markdown += "- [![](https://img.shields.io/badge/open-green.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues): Flaw that remains active or under research."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/closed-red.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aclosed): Flaw that is inactive. Reasons for inactivity relate to mitigations, duplicates, erroneous reports or similar."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/invalid-red.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Ainvalid+): Ticket discarded and removed for the overall count. This label flags invalid or failed reports including tests and related."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/duplicate-cfd3d7.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Aduplicate+): Duplicated flaw. Might go in combination with `invalid` but if not, typically, a link to the original ticket is provided."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/malformed-440fa8.svg?style=flat)](https://github.com/aliasrobotics/RVD/labels/malformed): Flaw has a malformed syntax. Refer to the templates for basic guidelines on the right syntax."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/mitigated-aaf9a7.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Amitigated+): Mitigated. A link to the corresponding mitigation is required."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/quality-ddb140.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?q=label%3Aquality): Indicates that the bug is a quality one instead of a security flaw."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/exposure-ccfc2d.svg?style=flat)](https://github.com/aliasrobotics/RVD/labels/exposure): Indicates that flaw is an exposure."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/bug-dbf9a2.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Abug+): Indicates \
-that flaw is a bug, a security bug can potentially lead to a vulnerability (*Note that this last part corresponds with the definition of a `weakness`, a bug that may have security implications. However, in an attempt to simplify and for coherence with other databases, bug and weakness terms are used interchangeably*)."  + "\n"
-        markdown += "- [![](https://img.shields.io/badge/vulnerability-7fe0bb.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3Avulnerability): Indicates that flaw is a vulnerability."  + "\n"
+        markdown += (
+            "- [![](https://img.shields.io/badge/open-green.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues): Flaw that remains active or under research."
+            + "\n"
+        )
+        markdown += (
+            "- [![](https://img.shields.io/badge/closed-red.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aclosed): Flaw that is inactive. Reasons for inactivity relate to mitigations, duplicates, erroneous reports or similar."
+            + "\n"
+        )
+        markdown += (
+            "- [![](https://img.shields.io/badge/invalid-red.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Ainvalid+): Ticket discarded and removed for the overall count. This label flags invalid or failed reports including tests and related."
+            + "\n"
+        )
+        markdown += (
+            "- [![](https://img.shields.io/badge/duplicate-cfd3d7.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Aduplicate+): Duplicated flaw. Might go in combination with `invalid` but if not, typically, a link to the original ticket is provided."
+            + "\n"
+        )
+        markdown += (
+            "- [![](https://img.shields.io/badge/malformed-440fa8.svg?style=flat)](https://github.com/aliasrobotics/RVD/labels/malformed): Flaw has a malformed syntax. Refer to the templates for basic guidelines on the right syntax."
+            + "\n"
+        )
+        markdown += (
+            "- [![](https://img.shields.io/badge/mitigated-aaf9a7.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Amitigated+): Mitigated. A link to the corresponding mitigation is required."
+            + "\n"
+        )
+        markdown += (
+            "- [![](https://img.shields.io/badge/quality-ddb140.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?q=label%3Aquality): Indicates that the bug is a quality one instead of a security flaw."
+            + "\n"
+        )
+        markdown += (
+            "- [![](https://img.shields.io/badge/exposure-ccfc2d.svg?style=flat)](https://github.com/aliasrobotics/RVD/labels/exposure): Indicates that flaw is an exposure."
+            + "\n"
+        )
+        markdown += (
+            "- [![](https://img.shields.io/badge/bug-dbf9a2.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?utf8=%E2%9C%93&q=is%3Aall+label%3Abug+): Indicates \
+that flaw is a bug, a security bug can potentially lead to a vulnerability (*Note that this last part corresponds with the definition of a `weakness`, a bug that may have security implications. However, in an attempt to simplify and for coherence with other databases, bug and weakness terms are used interchangeably*)."
+            + "\n"
+        )
+        markdown += (
+            "- [![](https://img.shields.io/badge/vulnerability-7fe0bb.svg?style=flat)](https://github.com/aliasrobotics/RVD/issues?q=is%3Aissue+is%3Aopen+label%3Avulnerability): Indicates that flaw is a vulnerability."
+            + "\n"
+        )
         # markdown += "- [![](https://img.shields.io/badge/severity_critical-ce5b50.svg?style=flat)](#) [![](https://img.shields.io/badge/severity_high-e99695.svg?style=flat)](#) [![](https://img.shields.io/badge/severity_medium-e9cd95.svg?style=flat)](#): Indicates the severity of the vunerability according to RVSS."  + "\n"
         markdown += "\n"
-        markdown += "For more including the categorization used for flaws refer to RVD's [taxonomy](docs/TAXONOMY.md)" + "\n"
+        markdown += (
+            "For more including the categorization used for flaws refer to RVD's [taxonomy](docs/TAXONOMY.md)"
+            + "\n"
+        )
         markdown += "\n"
-        markdown += "## Sponsored and funded projects"  + "\n"
+        markdown += "## Sponsored and funded projects" + "\n"
         return markdown
 
     @staticmethod
@@ -852,14 +1230,13 @@ that flaw is a bug, a security bug can potentially lead to a vulnerability (*Not
 
 ## Disclosure policy
 
-*Together with RVD, we propose a coherent diclosure policy adopted first by Alias Robotics. Thee disclosure policy is highly inspired by [Google's Project Zero](https://googleprojectzero.blogspot.com/p/vulnerability-disclosure-faq.html). TL;DR, we adhere to a 90-day disclosure deadline for new vulnerabilities*.
+*Together with RVD, we propose a coherent diclosure policy adopted first by Alias Robotics. Thee disclosure policy is highly inspired by [Google's Project Zero](https://googleprojectzero.blogspot.com/p/vulnerability-disclosure-faq.html). TL;DR, unless otherwise specified, we adhere to a 90-day disclosure deadline for new vulnerabilities*.
 
 *This policy is strongly in line with our desire to improve the robotics industry response times to security bugs, but also results in softer landings for bugs marginally over deadline. According to [our research](https://arxiv.org/pdf/1806.06681.pdf), most vendors are ignoring security flaws completely. We call on all researchers to adopt disclosure deadlines in some form, and feel free to use our policy verbatim (we've actually done so, from [Google's](https://www.google.com/about/appsecurity/)) if you find our record and reasoning compelling. Creating pressure towards more reasonably-timed fixes will result in smaller windows of opportunity for blackhats to abuse vulnerabilities. Given the direct physical connection with the world that robots have,  in our opinion, vulnerability disclosure policies such as ours result in greater security in robotics and an overall improved safety. A security-first approach is a must to ensure safe robotic operations.*
 
-The maintainers of RVD believe that vulnerability disclosure is a two-way street where both vendors and researchers, must act responsibly.  We adhere to a **90-day disclosure deadline for new vulnerabilities** while other flaws such as simple bugs or bugs could be filed at any point in time (refer to [Appendix A](#appendix-a-vulnerabilities-bugs-bugs-and-more) for the difference between vulnerabilities, bugs and bugs). We notify vendors of vulnerabilities immediately, with **details shared in public with the defensive community after 90 days**, or sooner if the vendor releases a fix.
+The maintainers of RVD believe that vulnerability disclosure is a two-way street where both vendors and researchers, must act responsibly.  We generally adhere to a **90-day disclosure deadline for new vulnerabilities** while other flaws such as simple bugs or bugs could be filed at any point in time (refer to [Appendix A](#appendix-a-vulnerabilities-bugs-bugs-and-more) for the difference between vulnerabilities, bugs and bugs). We notify vendors of vulnerabilities immediately, with **details shared in public with the defensive community after 90 days**, or sooner if the vendor releases a fix.
 
 Similar to Google's policy, we want to acknowledge that the deadline can vary in the following ways:
-
 - If a deadline is due to expire on a weekend or public holiday, the deadline will be moved to the next normal work day.
 
 - Before the 90-day deadline has expired, if a vendor lets us know that a patch is scheduled for release on a specific day that will fall within 14 days following the deadline, we will delay the public disclosure until the availability of the patch.
@@ -1088,7 +1465,9 @@ research and innovation programme under the project ROSIN with the grant agreeme
         """
         readme_content = self.generate_readme()
         # readme_content = "Hey there"
-        readme_file = open(str(os.getcwd()) + "/README.md", "w")  # NOTE, path for README.md hardcoded
+        readme_file = open(
+            str(os.getcwd()) + "/README.md", "w"
+        )  # NOTE, path for README.md hardcoded
         print(os.getcwd())
         cyan("Writing into repositorie's README.md the following content...")
         gray(readme_content)
