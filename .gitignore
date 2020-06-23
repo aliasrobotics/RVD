@@ -9,3 +9,8 @@ __pycache__/
 */.DS_Store
 .DS_Store
 .rvd/
+.bash*
+.profile
+.ssh/
+.run/
+.flow/

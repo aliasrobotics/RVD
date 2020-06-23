@@ -143,6 +143,17 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
             issues_all = importer.get_issues_filtered()
             flaws_date_filtered = []  # filtered flaws by date
             for issue in issues_all:
+                #  Filter now by label/s
+                all_labels = True  # indicates whether all labels are present
+                if label:
+                    labels_issue = [l.name for l in issue.labels]
+                    for l in label:
+                        if l not in labels_issue or "invalid" in labels_issue:
+                            all_labels = False
+                            break
+                    if not all_labels:
+                        continue  # jump issue
+
                 # Build flaw
                 document_raw = issue.body
                 document_raw = document_raw.replace("```yaml", "").replace("```", "")
