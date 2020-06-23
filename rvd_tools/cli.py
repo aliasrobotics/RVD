@@ -160,11 +160,18 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
                 document = yaml.load(document_raw, Loader=yaml.FullLoader)
                 flaw = Flaw(document)
 
+                date_formats = [
+                    "ddd, DD MMM YYYY HH:mm:ss Z",
+                    "YYYY-MM-DD",
+                    "YYY-MM-DD (HH:mm)",
+                ]
                 try:
                     date_flaw_detected = None
                     if flaw.date_detected:
-                        date_flaw_detected = arrow.get(flaw.date_detected)
-                except ParserError:
+                        date_flaw_detected = arrow.get(flaw.date_detected, date_formats)
+                except ParserError as e:
+                    red("Error while parsing date-detected of flaw " + str(flaw.id))
+                    print(e)
                     date_flaw_detected = None
 
                 # if date_flaw_detected:
@@ -173,8 +180,10 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
                 try:
                     date_flaw_reported = None
                     if flaw.date_reported:
-                        date_flaw_reported = arrow.get(flaw.date_reported)
-                except ParserError:
+                        date_flaw_reported = arrow.get(flaw.date_reported, date_formats)
+                except ParserError as e:
+                    red("Error while parsing date-reported of flaw " + str(flaw.id))
+                    print(e)
                     date_flaw_reported = None
 
                 # if date_flaw_reported:
@@ -201,6 +210,13 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
                 #         )
 
                 # Compare flaw date with date_filter
+                if not (date_flaw_reported or date_flaw_detected):
+                    yellow(
+                        "Neither date-reported nor date-detected have been understood, skipping flaw "
+                        + str(flaw.id)
+                    )
+                    continue
+
                 if date_flaw_reported:
                     if date_flaw_reported >= date_filter:
                         flaws_date_filtered.append(flaw)
