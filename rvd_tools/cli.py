@@ -72,11 +72,17 @@ Vulnerability Database..."
     "--isoption", help="Filter flaws by status (open, closed, all).", default="open"
 )
 @click.option(
-    "--markdown/--no-markdown", help="Only valid for individual \
-ticket. Print ticket in Markdown format.", default=False,
+    "--markdown/--no-markdown",
+    help="Only valid for individual \
+ticket. Print ticket in Markdown format.",
+    default=False,
 )
-@click.option("--fromdate", help="Filter flaws by date, until today.\
-Use YYYY-MM-DD format.", multiple=False)
+@click.option(
+    "--fromdate",
+    help="Filter flaws by date, until today.\
+Use YYYY-MM-DD format.",
+    multiple=False,
+)
 def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
     """List current flaw tickets"""
     importer = Base()
@@ -184,12 +190,12 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
                 #         )
 
                 # Compare flaw date with date_filter
-                if (date_flaw_reported):
-                    if (date_flaw_reported >= date_filter):
+                if date_flaw_reported:
+                    if date_flaw_reported >= date_filter:
                         flaws_date_filtered.append(flaw)
                         continue
-                if (date_flaw_detected):
-                    if (date_flaw_detected >= date_filter):
+                if date_flaw_detected:
+                    if date_flaw_detected >= date_filter:
                         flaws_date_filtered.append(flaw)
 
             # print(flaws_date_filtered)  # Debug
@@ -199,9 +205,18 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
             markdown_table += "| ID | Type | Title |" + "\n"
             markdown_table += "|----|------|-------|" + "\n"
             for flaw in flaws_date_filtered:
-                markdown_table += "| [RVD#" + str(flaw.id) + "](" + \
-                    str(flaw.issue) + ") | " + str(flaw.type) + " | " + \
-                    str(flaw.title) + "|" + "\n"
+                markdown_table += (
+                    "| [RVD#"
+                    + str(flaw.id)
+                    + "]("
+                    + str(flaw.issue)
+                    + ") | "
+                    + str(flaw.type)
+                    + " | "
+                    + str(flaw.title)
+                    + "|"
+                    + "\n"
+                )
 
             print(markdown_table)
 
@@ -226,10 +241,14 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
 #  ┴└─└─┘┴  └─┘┴└─ ┴
 @main.command("report")
 @click.argument("id", required=True, nargs=-1)
-@click.option("--deadline", help="Deadline in days. Single number, e.g. 30.", multiple=False)
 @click.option(
-    "--disclose/--no-disclose", help="Disclose exploitation \
-and mitigation information.", default=False,
+    "--deadline", help="Deadline in days. Single number, e.g. 30.", multiple=False
+)
+@click.option(
+    "--disclose/--no-disclose",
+    help="Disclose exploitation \
+and mitigation information.",
+    default=False,
 )
 def report(id, deadline, disclose):
     """
@@ -479,13 +498,18 @@ def cve():
 @click.option(
     "--push/--no-push", default=False, help="Push to a branch.",
 )
+@click.option(
+    "--useexisting/--no-useexisting",
+    default=False,
+    help="Use existing CVE in ticket, instead of assigning new one.",
+)
 @cve.command("export")
-def cve_export(number, version, mode, private, dump, push):
+def cve_export(number, version, mode, private, dump, push, useexisting):
     """
     Export an RVD ticket to CVE JSON
     """
     cyan("Exporting an RVD ticket into CVE JSON format...")
-    cve_export_file(number, version, mode, private, dump, push)
+    cve_export_file(number, version, mode, private, dump, push, useexisting)
 
 
 @click.option("--version", default=4, help="Version of CVE JSON.")
@@ -809,6 +833,7 @@ def exportar():
     """Export flaws from RVD to a variety of sources"""
     cyan("Exporting...")
 
+
 @exportar.command("local")
 @click.option(
     "--update/--no-update",
@@ -821,7 +846,7 @@ def exportar_local(update):
     local_directory_path = ".rvd/"
     cyan("Creating folder for the export process...")
     flag_fetch = False  # a flag to determine whether all tickets need to
-                        # be fetched again
+    # be fetched again
     if not os.path.exists(local_directory_path):
         os.makedirs(local_directory_path)
         flag_fetch = True
@@ -829,7 +854,7 @@ def exportar_local(update):
         if update:
             cyan("Updating all tickets, re-downloading...")
             os.system("rm -r " + local_directory_path)
-            os.makedirs('.rvd')
+            os.makedirs(".rvd")
             flag_fetch = True
         else:
             red("Directory already exists, skipping")
@@ -846,21 +871,27 @@ def exportar_local(update):
             # to avoid calling again the Github API
             try:
                 document_raw = issue.body
-                document_raw = document_raw.replace('```yaml','').replace('```', '')
+                document_raw = document_raw.replace("```yaml", "").replace("```", "")
                 document = yaml.load(document_raw)
 
                 try:
                     flaw = Flaw(document)
                     # flaws.append(flaw)  # append to list
                     # Dump into local storage
-                    with open(local_directory_path + str(flaw.id) + ".yml", "w+") as file:
-                        yellow("Creating file "+ str(flaw.id) + ".yml")
+                    with open(
+                        local_directory_path + str(flaw.id) + ".yml", "w+"
+                    ) as file:
+                        yellow("Creating file " + str(flaw.id) + ".yml")
                         # dump contents in file
                         result = yaml.dump(document, file)
 
                 except TypeError:
                     # likely the document wasn't properly formed, report about it and continue
-                    yellow("Warning: issue " + str(issue.number) + " not processed due to an error")
+                    yellow(
+                        "Warning: issue "
+                        + str(issue.number)
+                        + " not processed due to an error"
+                    )
                     continue
 
             except yaml.parser.ParserError:
@@ -882,6 +913,7 @@ def fetch():
     cyan("Creating the default folder for the import process...")
     os.system("mkdir -p /tmp/rvd")
 
+
 @fetch.command("local")
 @click.argument("id", required=True)
 def fetch_local(id):
@@ -892,13 +924,14 @@ def fetch_local(id):
     cyan("Trying to import " + id + " from local export directory...")
     for root, subdirs, files in os.walk(local_directory_path):
         for file in files:
-            file_name = id + '.yml'
+            file_name = id + ".yml"
             if file_name == file:
                 relative_path = local_directory_path + file
                 with open(relative_path, "r") as file_doc:
                     document = yaml.load(file_doc, Loader=yaml.FullLoader)
                     # yellow(document)
                     print(Flaw(document))
+
 
 @fetch.command("gitlab")
 @click.argument("id", required=True)

@@ -5,18 +5,18 @@
 ~CVE-2020-10265 https://github.com/aliasrobotics/RVD/issues/1443
 ~CVE-2020-10266 https://github.com/aliasrobotics/RVD/issues/1487
 ~CVE-2020-10267 https://github.com/aliasrobotics/RVD/issues/1489
-~CVE-2020-10268 TODO: file to MITRE from https://gitlab.com/aliasrobotics/offensive/rvd/flaws/-/issues/485
-CVE-2020-10269
-CVE-2020-10270
-CVE-2020-10271
-CVE-2020-10272
-CVE-2020-10273
-CVE-2020-10274
-CVE-2020-10275
-CVE-2020-10276
-CVE-2020-10277
-CVE-2020-10278
-CVE-2020-10279
+~CVE-2020-10268 https://github.com/aliasrobotics/RVD/issues/2550
+~CVE-2020-10269 TODO: file to MITRE from https://gitlab.com/aliasrobotics/offensive/rvd/flaws/-/issues/494
+~CVE-2020-10270 TODO: https://gitlab.com/aliasrobotics/offensive/rvd/flaws/-/issues/651
+~CVE-2020-10271 TODO: https://gitlab.com/aliasrobotics/offensive/rvd/flaws/-/issues/647
+~CVE-2020-10272 TODO: https://gitlab.com/aliasrobotics/offensive/rvd/flaws/-/issues/652
+~CVE-2020-10273 TODO: https://gitlab.com/aliasrobotics/offensive/rvd/flaws/-/issues/653
+~CVE-2020-10274 TODO: https://gitlab.com/aliasrobotics/offensive/rvd/flaws/-/issues/638
+~CVE-2020-10275 TODO: https://gitlab.com/aliasrobotics/offensive/rvd/flaws/-/issues/642
+~CVE-2020-10276 TODO: https://gitlab.com/aliasrobotics/offensive/rvd/flaws/-/issues/525
+~CVE-2020-10277 TODO: https://gitlab.com/aliasrobotics/offensive/rvd/flaws/-/issues/644
+~CVE-2020-10278 TODO: https://gitlab.com/aliasrobotics/offensive/rvd/flaws/-/issues/643
+~CVE-2020-10279 TODO: https://gitlab.com/aliasrobotics/offensive/rvd/flaws/-/issues/654
 CVE-2020-10280
 CVE-2020-10281
 CVE-2020-10282

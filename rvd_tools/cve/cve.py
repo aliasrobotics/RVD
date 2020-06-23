@@ -89,13 +89,16 @@ automation-working-group/master/cve_json_schema/CVE_JSON_4.0_min_reserved.schema
             sys.stderr.write(str(error.message) + "\n")
 
 
-def cve_export_file(number, version, mode, private, dump, push):
+def cve_export_file(number, version, mode, private, dump, push, useexisting):
     """
     Export ticket number to CVE JSON format.
 
     :param number int, ticket number
     :param version int, CVE JSCON version number
     :param private bool, RVD public or private source
+    :param dump bool, Print resulting file
+    :param push bool, Push to a branch
+    :param useexisting bool, Use existing CVE in ticket, don't assign new one
     :returns string, path to new ticket
     """
     if private:
@@ -108,22 +111,26 @@ def cve_export_file(number, version, mode, private, dump, push):
     # check if it already has a cve
     if flaw.cve and "CVE-" in flaw.cve:
         red("It seems the ticket already has a CVE ID, double check")
-        sys.exit(1)
-
-    with pkg_resources.path(static, "ids") as path:
-        all_ids = path.read_text().split("\n")
-        next_identifier = ""
-        try:
-            for identifier in all_ids:
-                if identifier[0] == "~":
-                    continue
-                next_identifier = identifier
-                break
-        except IndexError:
-            print("IndexError, probably more CVE IDs needed!")
+        if not useexisting:
             sys.exit(1)
 
-    # Ensure that the detination exists
+    if useexisting:
+        next_identifier = flaw.cve
+    else:
+        with pkg_resources.path(static, "ids") as path:
+            all_ids = path.read_text().split("\n")
+            next_identifier = ""
+            try:
+                for identifier in all_ids:
+                    if identifier[0] == "~":
+                        continue
+                    next_identifier = identifier
+                    break
+            except IndexError:
+                print("IndexError, probably more CVE IDs needed!")
+                sys.exit(1)
+
+    # Ensure that the destination exists
     os.system("mkdir -p /tmp/cve")
     flaw.export_to_cve(
         "/tmp/cve/" + str(next_identifier) + ".json", version, mode, next_identifier
