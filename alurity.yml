@@ -1,0 +1,63 @@
+#################################################
+# alurity.yml to demonstrate RVD capabilities
+#   refer to https://aliasrobotics.com/alurity.php for more details on alurity
+#################################################
+
+networks:
+  - network:
+    - driver: overlay
+    - name: rvd_net
+    - encryption: true
+    - internal: false  # give it external connection to the Internet
+    - subnet: 12.0.0.0/24
+
+containers:
+  - container:
+    - name: demo
+    - modules:
+         - base: registry.gitlab.com/aliasrobotics/offensive/alurity/alurity:latest
+         - network: rvd_net
+
+flow:
+  - container:
+    - name: demo
+    - window:
+        - name: install
+        - commands:
+          - command: "apt-get update; apt-get install python3-pip -y"
+          - split: horizontal
+          - command: "sleep 15"
+          - command: "git clone https://github.com/aliasrobotics/RVSS; cd RVSS; python3 setup.py install; cd"
+          - command: "git clone https://github.com/aliasrobotics/RVD; cd RVD; python3 setup.py install; cd"
+
+    - window:
+        - name: list
+        - commands:
+          - command: "sleep 60"
+          - command: "rvd list --label \"robot component: ROS2\""  # | wc -l"
+          - split: horizontal
+          - command: "sleep 60"
+          - command: "rvd list 922"
+          - type: "rvd list --help"
+          - split: horizontal
+          - command: "sleep 60"
+          - command: "rvd list --label \"robot component: ROS2\" --fromdate 2020-01-01"  # | wc -l"
+
+    - window:
+        - name: export
+        - commands:
+          - command: "sleep 70"
+          - command: "rvd export local"
+
+    - window:
+        - name: statistics
+        - commands:
+          - command: "sleep 70"
+          - command: "rvd statistics general"
+          - split: horizontal
+          - command: "sleep 70"
+          - command: "rvd statistics vendor_vulnerabilities"
+          - command: "rvd statistics --help"
+
+    - select: install
+  - attach: demo
