@@ -1249,13 +1249,14 @@ Each security researcher or group should reserve the right to bring deadlines fo
 In an attempt to lower the overall effort to maintain the Robot Vulnerability Database, RVD attempts to make active use of Continuous Integration (CI) and Continuous Deployment (CD) techniques through Github Actions. See our [configurations here](.github/workflows). Contributions and new ideas to this section are welcome. Please submit a Pull Request with your proposal or enhancement.
 
 Below we list some of the existing capabilities (some **deprecated** in the current setup) and some tentative ones for future versions:
-#### **Alpha** (< `0.5`)
+
+#### **Beta** (>= `0.5`)
 - [x] Comparison of stack trace before flaw submission to avoid duplicates (perfomed upstream) [**deprecated**, modern versions of the database include more information of relevance than solely the stack trace on each ticket]
 - [x] Markdown parser that conforms with RVD templates [**deprecated**, moved to YAML format]
 - [x] Automatic flaw-syntax evaluation (based on parser), tags tickets as `malformed` when applicable [**deprecated**, syntax changed]
 - [x] Automatic feedback on flaw-syntax, introduced in tickets directly as a comment [**deprecated**, syntax changed]
 
-#### **Beta** (>= `0.5`)
+#### **1.x** (>= `1.0`)
 - [x] Discussion on a more formal taxonomy to apply when categorizing flaws (see [docs/TAXONOMY.md](docs/TAXONOMY.md))
 - [x] Definition of a formal schema for RVD coherent to the taxonomy and inspired by prior work
 - [x] Automatic re-generation of README.md as summary
@@ -1266,9 +1267,12 @@ Below we list some of the existing capabilities (some **deprecated** in the curr
     - [ ] Automatic feedback on malformations
     - [ ] Notify when ticket is malformed and skip it (instead of throwing an error as of now)
     - [ ] Consider restrictions on title ("RVD#ID: ...")
-- [ ] Develop capabilities to output CVE JSON-compatible tickets
+- [ ] Unify YAML dumps in tickets (e.g. stick to yaml.dump(yaml_document))
+- [ ] Extend TAXONOMY and language to include 'exploitation-recipe'
+- [ ] Extend TAXONOMY and language to include versions, to simplify CVE submission
+- [x] Develop capabilities to output CVE JSON-compatible tickets
 
-#### **1.x** (>= `1.0`) and future
+#### Future
 - [ ] Automatic and periodic review of security advisories "in search" for robot-related vulnerabilities
 - [ ] Automatic and periodic review of NVD "in search" for robot-related vulnerabilities
 - [ ] Automatic and periodic review of CVE List "in search" for robot-related vulnerabilities
