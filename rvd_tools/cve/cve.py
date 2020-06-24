@@ -170,4 +170,6 @@ git add .; git commit -m 'Assign "
     cyan("Things left to do:")
     yellow("\t - Add version to new tickets, old ones should not conflict with it")
     yellow("\t - Update ticket in RVD automatically")
+    yellow("\t - Close ticket in RVD_private and include reference to open one")
     yellow("\t - Edit ids file and indicate it appropriately!")
+    yellow("\t - File PR automatically")
