@@ -16,6 +16,7 @@ import yaml
 from .flaw import *
 import pprint
 
+
 class Duplicates(Base):
     """
     Makes use of dedupe to manage flaw de-duplication
@@ -25,16 +26,16 @@ class Duplicates(Base):
         super().__init__()
         # If a settings file already exists, we'll just load that and skip training
         # NOTE: settings file should be re-generated using the training() method
-        self.settings_file = 'training/csv_example_learned_settings'
-        self.training_file = 'training/csv_example_training.json'
+        self.settings_file = "training/csv_example_learned_settings"
+        self.training_file = "training/csv_example_training.json"
 
         # Define the fields dedupe will pay attention to
         self.fields = [
             # {'field': 'title', 'type': 'String', 'crf': True},
             # {'field': 'title', 'type': 'String'},
-            {'field': 'type', 'type': 'String'},
+            {"field": "type", "type": "String"},
             # {'field': 'cwe', 'type': 'String'},
-            {'field': 'description', 'type': 'String', 'has missing': True},
+            {"field": "description", "type": "String", "has missing": True},
             # {'field': 'flaw_trace', 'type': 'String', 'has missing': True},
             # {'field': 'cve', 'type': 'String'},
             # {'field': 'cwe', 'type': 'String', 'crf': True},
@@ -57,8 +58,8 @@ class Duplicates(Base):
         # look for it and load it in.
         # __Note:__ if you want to train from scratch, delete the training_file
         if os.path.exists(self.training_file):
-            gray('Reading labeled examples from ', self.training_file)
-            with open(self.training_file, 'rb') as f:
+            gray("Reading labeled examples from ", self.training_file)
+            with open(self.training_file, "rb") as f:
                 deduper.prepare_training(data_d, f)
         else:
             deduper.prepare_training(data_d)
@@ -69,24 +70,24 @@ class Duplicates(Base):
         # or not.
         # use 'y', 'n' and 'u' keys to flag duplicates
         # press 'f' when you are finished
-        gray('Starting active labeling...')
+        gray("Starting active labeling...")
         dedupe.consoleLabel(deduper)
 
         # Using the examples we just labeled, train the deduper and learn
         # blocking predicates
-        gray('Training...')
+        gray("Training...")
         deduper.train()
 
         # When finished, save our training to disk
-        gray('Saving results to training file...')
-        with open(self.training_file, 'w+') as tf:
+        gray("Saving results to training file...")
+        with open(self.training_file, "w+") as tf:
             deduper.writeTraining(tf)
 
         # Save our weights and predicates to disk.  If the settings file
         # exists, we will skip all the training and learning next time we run
         # this file.
-        gray('Saving weights and predicates to settings file...')
-        with open(self.settings_file, 'wb+') as sf:
+        gray("Saving weights and predicates to settings file...")
+        with open(self.settings_file, "wb+") as sf:
             deduper.writeSettings(sf)
 
         return deduper
@@ -107,7 +108,7 @@ class Duplicates(Base):
             if update:
                 cyan("Updating all tickets, re-downloading...")
                 os.system("rm -r " + local_directory_path)
-                os.makedirs('.rvd')
+                os.makedirs(".rvd")
             else:
                 yellow("Directory already exists, skipping")
 
@@ -140,29 +141,41 @@ class Duplicates(Base):
                         if l not in labels or "invalid" in labels:
                             all_labels = False
 
-
                 if all_labels:
                     # NOTE: partially re-implementing Base.import_issue()
                     # to avoid calling again the Github API
                     try:
                         document_raw = issue.body
-                        document_raw = document_raw.replace('```yaml','').replace('```', '')
+                        document_raw = document_raw.replace("```yaml", "").replace(
+                            "```", ""
+                        )
                         document = yaml.load(document_raw)
 
                         try:
                             flaw = Flaw(document)
                             # flaws.append(flaw)  # append to list
                             # Dump into local storage
-                            with open(local_directory_path + str(flaw.id) + ".yml", "w+") as file:
-                                yellow("Creating file "+ str(flaw.id) + ".yml")
+                            with open(
+                                local_directory_path + str(flaw.id) + ".yml", "w+"
+                            ) as file:
+                                yellow("Creating file " + str(flaw.id) + ".yml")
                                 # dump contents in file
-                                result = yaml.dump(document, file)
+                                result = yaml.dump(
+                                    document,
+                                    file,
+                                    default_flow_style=False,
+                                    sort_keys=False,
+                                )
 
                         except TypeError:
                             # likely the document wasn't properly formed,
                             # report about it and continue
-                            yellow("Warning: issue " + str(issue.number) + " \
-not processed due to an error")
+                            yellow(
+                                "Warning: issue "
+                                + str(issue.number)
+                                + " \
+not processed due to an error"
+                            )
                             continue
 
                     except yaml.parser.ParserError:
@@ -196,15 +209,19 @@ not processed due to an error")
                             flaw = Flaw(document)
                             try:
                                 # sanitize first some leftovers from yaml
-                                int_id = int(str(flaw.id).replace(",",""))
+                                int_id = int(str(flaw.id).replace(",", ""))
                                 # add to the dict now
                                 data_d[int_id] = flaw.document_duplicates()
                                 # yellow("Fetched local " + relative_path + " ticket")
                             except TypeError:
                                 # likely the document wasn't properly formed,
                                 # report about it and continue
-                                yellow("Warning: issue " + str(flaw.id) + " \
-not processed due to an error")
+                                yellow(
+                                    "Warning: issue "
+                                    + str(flaw.id)
+                                    + " \
+not processed due to an error"
+                                )
                                 continue
                         except yaml.parser.ParserError:
                             red(f"{flaw.number} is not has no correct yaml format")
@@ -214,15 +231,15 @@ not processed due to an error")
             # Not found locally, import them manually
             if invalid:
                 issues_all = self.repo.get_issues(state="all")  # using all
-                                # tickets, including invalid ones for training
+                # tickets, including invalid ones for training
             else:
                 issues_all = self.get_issues_filtered(state="all")
 
             # Dump all tickets locally so that we don't need to re-download them
             # next time
             self.dump_issues_local(issues_all, label, update=False)  # set to false so
-                                                              # that only once
-                                                              # is downloaded
+            # that only once
+            # is downloaded
             for issue in issues_all:
                 # print("Scanning..." + str(issue))
 
@@ -250,7 +267,9 @@ not processed due to an error")
                     # to avoid calling again the Github API
                     try:
                         document_raw = issue.body
-                        document_raw = document_raw.replace('```yaml','').replace('```', '')
+                        document_raw = document_raw.replace("```yaml", "").replace(
+                            "```", ""
+                        )
                         document = yaml.load(document_raw)
 
                         try:
@@ -266,7 +285,11 @@ not processed due to an error")
                             data_d[int(issue.number)] = flaw.document_duplicates()
                         except TypeError:
                             # likely the document wasn't properly formed, report about it and continue
-                            yellow("Warning: issue " + str(issue.number) + " not processed due to an error")
+                            yellow(
+                                "Warning: issue "
+                                + str(issue.number)
+                                + " not processed due to an error"
+                            )
                             continue
 
                     except yaml.parser.ParserError:
@@ -286,8 +309,8 @@ not processed due to an error")
             deduper = self.train(data_d)
         else:
             if os.path.exists(self.settings_file):
-                print('reading from', self.settings_file)
-                with open(self.settings_file, 'rb') as f:
+                print("reading from", self.settings_file)
+                with open(self.settings_file, "rb") as f:
                     deduper = dedupe.StaticDedupe(f)
             else:
                 red("Error: settings file does not exist, stoping")
@@ -296,16 +319,16 @@ not processed due to an error")
         cyan("Finding the threshold for data...")
         threshold = deduper.threshold(data_d, recall_weight=1)
 
-        cyan('Clustering...')
+        cyan("Clustering...")
         clustered_dupes = deduper.match(data_d, threshold)
 
-        cyan('Number of duplicate sets: ' + str(len(clustered_dupes)))
+        cyan("Number of duplicate sets: " + str(len(clustered_dupes)))
         for aset in clustered_dupes:
             yellow("Found a duplicated pair...")
             ids, values = aset
             primary_issue = None  # reflects the primary ticket in a aset of
-                                  # duplicates all the duplicates should point
-                                  # to this one
+            # duplicates all the duplicates should point
+            # to this one
             for id in ids:
                 # print(id)
                 issue = self.repo.get_issue(int(id))
@@ -321,9 +344,18 @@ not processed due to an error")
                     primary_issue = issue
                 else:
                     # Indicate that this issue is duplicated
-                    yellow("Marking " + str(id) + " as duplicate, referencing to: " + str(primary_issue))
+                    yellow(
+                        "Marking "
+                        + str(id)
+                        + " as duplicate, referencing to: "
+                        + str(primary_issue)
+                    )
                     if push:
-                        duplicate_text = "- <ins>DUPLICATE</ins>: Tagging this ticket as duplicate. Referencing to  #" + str(primary_issue.number) + "\n"
+                        duplicate_text = (
+                            "- <ins>DUPLICATE</ins>: Tagging this ticket as duplicate. Referencing to  #"
+                            + str(primary_issue.number)
+                            + "\n"
+                        )
                         issue.create_comment(duplicate_text)
                         # labeling
                         issue.add_to_labels("duplicate")
@@ -347,8 +379,8 @@ not processed due to an error")
         # pprint.pprint(data_d)
 
         if os.path.exists(self.settings_file):
-            print('reading from', self.settings_file)
-            with open(self.settings_file, 'rb') as f:
+            print("reading from", self.settings_file)
+            with open(self.settings_file, "rb") as f:
                 deduper = dedupe.StaticDedupe(f)
         else:
             red("Error: settings file does not exist, stoping")
@@ -357,11 +389,11 @@ not processed due to an error")
         cyan("Finding the threshold for data...")
         threshold = deduper.threshold(data_d, recall_weight=1)
 
-        cyan('Clustering...')
+        cyan("Clustering...")
         clustered_dupes = deduper.match(data_d, threshold)
         # pprint.pprint(clustered_dupes)  # debug purposes
 
-        # If ID 0 (corresponds with flaw passed as arg) is in there, is_duplicate
+        #  If ID 0 (corresponds with flaw passed as arg) is in there, is_duplicate
         for set in clustered_dupes:
             ids, values = set
             for id in ids:
@@ -388,8 +420,8 @@ not processed due to an error")
         # pprint.pprint(data_d)
 
         if os.path.exists(self.settings_file):
-            print('reading from', self.settings_file)
-            with open(self.settings_file, 'rb') as f:
+            print("reading from", self.settings_file)
+            with open(self.settings_file, "rb") as f:
                 deduper = dedupe.StaticDedupe(f)
         else:
             red("Error: settings file does not exist, stoping")
@@ -398,11 +430,11 @@ not processed due to an error")
         cyan("Finding the threshold for data...")
         threshold = deduper.threshold(data_d, recall_weight=1)
 
-        cyan('Clustering...')
+        cyan("Clustering...")
         clustered_dupes = deduper.match(data_d, threshold)
         # pprint.pprint(clustered_dupes)  # debug purposes
 
-        # If ID 0 (corresponds with flaw passed as arg) is in there, is_duplicate
+        #  If ID 0 (corresponds with flaw passed as arg) is in there, is_duplicate
         for set in clustered_dupes:
             ids, values = set
             if 0 in ids:

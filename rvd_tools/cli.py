@@ -798,7 +798,12 @@ def validate_file(filename, dump=False):
     #     red("file to validate not processed correctly!")
 
     if dump:
-        print(json.dumps(v.document, indent=4, default=default))
+        # print(json.dumps(v.document, indent=4, default=default))
+        # print(yaml.dump(v.document))  # reorder
+        print(
+            yaml.dump(v.document(), default_flow_style=False, sort_keys=False)
+        )  # maintain order
+
         # flaw = Flaw(v.document)
         # print the final document after validations and normalizations
         # print(flaw)
@@ -910,7 +915,10 @@ def exportar_local(update):
                     ) as file:
                         yellow("Creating file " + str(flaw.id) + ".yml")
                         # dump contents in file
-                        result = yaml.dump(document, file)
+                        # result = yaml.dump(document, file)
+                        result = yaml.dump(
+                            document, file, default_flow_style=False, sort_keys=False
+                        )
 
                 except TypeError:
                     # likely the document wasn't properly formed, report about it and continue

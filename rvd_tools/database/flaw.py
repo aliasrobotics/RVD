@@ -97,6 +97,17 @@ class Flaw:
             self.description_exploitation = ""
             self.exploitation_image = ""
             self.exploitation_vector = ""
+        except KeyError as e:
+            # # set a local var 'self.$e', not desired
+            # var_name = "self." + str(e).replace("-", "_").replace("'", "")
+            # locals()[var_name] = ""
+            # print(var_name)
+            # print(locals()[var_name])
+
+            # Set the class attribute directly
+            var_name = str(e).replace("-", "_").replace("'", "")
+            setattr(self, var_name, "")
+            print("self." + var_name + "=" + str(getattr(self, var_name)))
 
         # mitigation
         self.description_mitigation = document["mitigation"]["description"]
@@ -285,7 +296,11 @@ class Flaw:
             "\t"
             + inline_blue("exploitation-recipe")
             + ": "
-            + str(self.exploitation_recipe)
+            + str(
+                yaml.dump(
+                    self.exploitation_recipe, default_flow_style=False, sort_keys=False,
+                )
+            )
             + "\n"
         )
         # additional_fields - exploitation
@@ -490,6 +505,9 @@ taxonomy used for its categorization, refer to \
             return_str += (
                 "| exploitation-vector | " + str(self.exploitation_vector) + "|" + "\n"
             )
+
+            # TODO: make this prettier by separating this field from the table
+            #  and into a dedicate yaml section of verbatim
             return_str += (
                 "| exploitation-recipe | " + str(self.exploitation_recipe) + "|" + "\n"
             )
@@ -574,8 +592,14 @@ taxonomy used for its categorization, refer to \
 
         :returns str
         """
-        # Deal with datetime issues
-        return json.dumps(self.document(), indent=4, default=default)
+        # # Deal with datetime issues
+        # return json.dumps(self.document(), indent=4, default=default)
+
+        # # reordered yaml
+        # return yaml.dump(self.document())
+
+        # maintain the original order of the dict
+        return yaml.dump(self.document(), default_flow_style=False, sort_keys=False)
 
     def yml_markdown(self):
         """
@@ -591,7 +615,11 @@ taxonomy used for its categorization, refer to \
         # )
 
         # YAML output
-        return "```yaml\n" + yaml.dump(self.document()) + "\n```"
+        return (
+            "```yaml\n"
+            + yaml.dump(self.document(), default_flow_style=False, sort_keys=False)
+            + "\n```"
+        )
 
     def document(self):
         """

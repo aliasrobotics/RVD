@@ -1267,8 +1267,8 @@ Below we list some of the existing capabilities (some **deprecated** in the curr
     - [ ] Automatic feedback on malformations
     - [ ] Notify when ticket is malformed and skip it (instead of throwing an error as of now)
     - [ ] Consider restrictions on title ("RVD#ID: ...")
-- [ ] Unify YAML dumps in tickets (e.g. stick to yaml.dump(yaml_document))
-- [ ] Extend TAXONOMY and language to include 'exploitation-recipe'
+- [x] Unify YAML dumps in tickets (e.g. stick to yaml.dump(yaml_document))
+- [x] Extend TAXONOMY and language to include 'exploitation-recipe'
 - [ ] Extend TAXONOMY and language to include versions, to simplify CVE submission
 - [ ] Use local cache of tickets for all verbs, instead of polling from database every time
 - [x] Develop capabilities to output CVE JSON-compatible tickets
