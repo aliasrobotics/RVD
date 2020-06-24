@@ -822,15 +822,24 @@ taxonomy used for its categorization, refer to \
             file.write("                            {\n")
             file.write(
                 '                                "product_name": "'
-                + str(self.system)
+                + str(
+                    self.system.split(",")[0].split(":")[0]
+                )  # pick only one element for now, TODO: redo
                 + '",\n'
             )
             file.write('                                "version": {\n')
             file.write('                                    "version_data": [\n')
             file.write("                                        {\n")
-            file.write(
-                '                                            "version_value": ""\n'
-            )
+            if ":" in self.system.split(",")[0]:
+                file.write(
+                    '                                            "version_value": "'
+                    + str(self.system.split(",")[0].split(":")[1])
+                    + '"\n'
+                )
+            else:
+                file.write(
+                    '                                            "version_value": ""\n'
+                )
             file.write("                                        }\n")
             file.write("                                    ]\n")
             file.write("                                }\n")
@@ -838,7 +847,9 @@ taxonomy used for its categorization, refer to \
             file.write("                        ]\n")
             file.write("                    },\n")
             file.write(
-                '                    "vendor_name": "' + str(self.vendor) + '"\n'
+                '                    "vendor_name": "'
+                + str(self.vendor.split(",")[0])
+                + '"\n'
             )
             file.write("                }\n")
             file.write("            ]\n")
