@@ -7,6 +7,7 @@
 Flaw class, object to represent all flaws
 """
 import json
+import yaml
 from datetime import datetime
 import arrow
 import sys
@@ -91,6 +92,7 @@ class Flaw:
             self.description_exploitation = document["exploitation"]["description"]
             self.exploitation_image = document["exploitation"]["exploitation-image"]
             self.exploitation_vector = document["exploitation"]["exploitation-vector"]
+            self.exploitation_recipe = document["exploitation"]["exploitation-recipe"]
         except TypeError:
             self.description_exploitation = ""
             self.exploitation_image = ""
@@ -279,7 +281,15 @@ class Flaw:
             + str(self.exploitation_vector)
             + "\n"
         )
+        return_str += (
+            "\t"
+            + inline_blue("exploitation-recipe")
+            + ": "
+            + str(self.exploitation_recipe)
+            + "\n"
+        )
         # additional_fields - exploitation
+        # TODO: review this
         for key in self.additional_fields.keys():
             if isinstance(self.additional_fields[key], dict):
                 if key == "exploitation":
@@ -313,6 +323,7 @@ class Flaw:
                 + "\n"
             )
         # additional_fields - mitigation
+        # TODO: review this
         for key in self.additional_fields.keys():
             if isinstance(self.additional_fields[key], dict):
                 if key == "mitigation":
@@ -326,6 +337,7 @@ class Flaw:
                         )
 
         # additional_fields (others)
+        # TODO: review this
         for key in self.additional_fields.keys():
             if key in [
                 "mitigation",
@@ -478,6 +490,9 @@ taxonomy used for its categorization, refer to \
             return_str += (
                 "| exploitation-vector | " + str(self.exploitation_vector) + "|" + "\n"
             )
+            return_str += (
+                "| exploitation-recipe | " + str(self.exploitation_recipe) + "|" + "\n"
+            )
             # additional_fields - exploitation
             for key in self.additional_fields.keys():
                 if isinstance(self.additional_fields[key], dict):
@@ -496,16 +511,10 @@ taxonomy used for its categorization, refer to \
             return_str += "\n"
             return_str += "| Item | Value |" + "\n"
             return_str += "| ---- | ----- |" + "\n"
-            return_str += (
-                "| description | Not disclosed |" + "\n"
-            )
-            return_str += (
-                "| exploitation-image | Not disclosed |" + "\n"
-            )
-            return_str += (
-                "| exploitation-vector | Not disclosed |" + "\n"
-            )
-
+            return_str += "| description | Not disclosed |" + "\n"
+            return_str += "| exploitation-image | Not disclosed |" + "\n"
+            return_str += "| exploitation-vector | Not disclosed |" + "\n"
+            return_str += "| exploitation-recipe | Not disclosed |" + "\n"
 
         return_str += "\\newpage" + "\n"
 
@@ -515,7 +524,9 @@ taxonomy used for its categorization, refer to \
             return_str += "\n"
             return_str += "| Item | Value |" + "\n"
             return_str += "| ---- | ----- |" + "\n"
-            return_str += "| description | " + str(self.description_mitigation) + "|" + "\n"
+            return_str += (
+                "| description | " + str(self.description_mitigation) + "|" + "\n"
+            )
             return_str += "| pull-request | " + str(self.pull_request) + "|" + "\n"
             # additional_fields - mitigation
             for key in self.additional_fields.keys():
@@ -572,12 +583,15 @@ taxonomy used for its categorization, refer to \
 
         :returns str
         """
-        # Deal with datetime issues
-        return (
-            "```yaml\n"
-            + json.dumps(self.document(), indent=4, default=default)
-            + "\n```"
-        )
+        # # JSON - Deal with datetime issues
+        # return (
+        #     "```yaml\n"
+        #     + json.dumps(self.document(), indent=4, default=default)
+        #     + "\n```"
+        # )
+
+        # YAML output
+        return "```yaml\n" + yaml.dump(self.document()) + "\n```"
 
     def document(self):
         """
@@ -629,6 +643,7 @@ taxonomy used for its categorization, refer to \
                 "description": self.description_exploitation,
                 "exploitation-image": self.exploitation_image,
                 "exploitation-vector": self.exploitation_vector,
+                "exploitation-recipe": self.exploitation_recipe,
             },
             "mitigation": {
                 "description": self.description_mitigation,
@@ -696,6 +711,7 @@ taxonomy used for its categorization, refer to \
             "exploitation_description": self.description_exploitation,
             "exploitation_exploitation-image": self.exploitation_image,
             "exploitation_exploitation-vector": self.exploitation_vector,
+            "exploitation_exploitation-recipe": self.exploitation_recipe,
             "mitigation_description": self.description_mitigation,
             "mitigation_pull-request": self.pull_request,
         }
