@@ -107,7 +107,7 @@ class Flaw:
             # Set the class attribute directly
             var_name = str(e).replace("-", "_").replace("'", "")
             setattr(self, var_name, "")
-            print("self." + var_name + "=" + str(getattr(self, var_name)))
+            # print("self." + var_name + "=" + str(getattr(self, var_name)))
 
         # mitigation
         self.description_mitigation = document["mitigation"]["description"]
