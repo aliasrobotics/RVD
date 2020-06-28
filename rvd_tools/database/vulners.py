@@ -72,7 +72,9 @@ class Vulners:
             document['severity']['cvss-vector'] = "CVSS:3.0/" + str(element['cvss']['vector'])
             document['severity']['cvss-score'] = element['cvss']['score']
             document['links'] = element['vhref']
-            document['flaw']['date-reported'] = arrow.get(element['published']).format('YYYY-MM-DD')
+            document['flaw']['date-reported'] = arrow.get(element['lastseen']).format('YYYY-MM-DD')
+            document['flaw']['date-detected'] = arrow.get(element['published']).format('YYYY-MM-DD')
+            document['flaw']['detected-by-relationship'] = "security researcher"
 
             # Create a flaw out of the document
             flaw = Flaw(document)
@@ -83,16 +85,24 @@ class Vulners:
                 print(new_flaw)
             else:
                 continue
+
             # Push to RVD
             if push:
                 pusher = Base()  # instantiate the class to push changes
                 # Get some labels for the ticket
                 labels = ['vulnerability']
-                vendor_label = "vendor: " + str(query)
-                labels.append(vendor_label)
-                new_keywords = ast.literal_eval(new_flaw.keywords)
-                for l in new_keywords:
-                    labels.append(l)
+
+                # vendor_label = "vendor: " + str(query)
+                # labels.append(vendor_label)
+
+                try:
+                    new_keywords = ast.literal_eval(new_flaw.keywords)
+                    for l in new_keywords:
+                        labels.append(l)
+
+                except SyntaxError:
+                    red("Error while parsing keywords")
+                    yellow("Continuing...")
 
                 # Push ticket
                 issue = pusher.new_ticket(new_flaw, labels)
@@ -109,4 +119,7 @@ class Vulners:
                 links.append(issue.html_url)
                 new_flaw.links = links
                 new_flaw.issue = issue.html_url
-                pusher.update_ticket(issue, new_flaw)
+                if flaw.title[:4] != "RVD#":  # already has the syntax
+                    new_title = "RVD#" + str(issue.number) + ": " + flaw.title
+                    flaw.title = new_title
+                pusher.update_ticket(issue, flaw)
