@@ -108,8 +108,9 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
                     print(flaw.markdown())
                 else:
                     print(flaw)
-            except yaml.scanner.ScannerError:
+            except yaml.scanner.ScannerError as e:
                 print("Not in yaml format please review")
+                print(e)
 
     else:
         # table = [[issue.number, issue.title] for issue in issues_public]
