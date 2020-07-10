@@ -1274,6 +1274,7 @@ Below we list some of the existing capabilities (some **deprecated** in the curr
 - [x] Develop capabilities to output CVE JSON-compatible tickets
 
 #### Future
+- [ ] Make a table with versions per product and automatically-mitigate (and close) flaws in older versions that haven't been (auto)detected in newer versions.
 - [ ] Automatic and periodic review of security advisories "in search" for robot-related vulnerabilities
 - [ ] Automatic and periodic review of NVD "in search" for robot-related vulnerabilities
 - [ ] Automatic and periodic review of CVE List "in search" for robot-related vulnerabilities
