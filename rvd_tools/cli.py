@@ -240,7 +240,7 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
 
             # Build a mardown table and dump it in stdout
             markdown_table = ""
-            markdown_table += "| ID | Type | Vendor | Title |" + "\n"
+            markdown_table += "| ID | Type | Manufacturer/s | Title |" + "\n"
             markdown_table += "|----|------|--------|-------|" + "\n"
             for flaw in flaws_date_filtered:
                 markdown_table += (
