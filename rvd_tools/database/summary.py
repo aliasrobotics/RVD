@@ -1269,7 +1269,10 @@ Below we list some of the existing capabilities (some **deprecated** in the curr
     - [ ] Consider restrictions on title ("RVD#ID: ...")
 - [x] Unify YAML dumps in tickets (e.g. stick to yaml.dump(yaml_document))
 - [x] Extend TAXONOMY and language to include 'exploitation-recipe'
-- [ ] Extend TAXONOMY and language to include versions, to simplify CVE submission
+- [ ] Extend TAXONOMY and language to include product and versions, to simplify CVE submission
+- [ ] Match both Github labels and YAML fields for selected topics:
+    - [ ] Vendor/manufacturer
+    - [ ] Products affected
 - [ ] Use local cache of tickets for all verbs, instead of polling from database every time
 - [x] Develop capabilities to output CVE JSON-compatible tickets
 
