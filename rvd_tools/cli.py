@@ -168,12 +168,17 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
                 ]
                 try:
                     date_flaw_detected = None
-                    if flaw.date_detected:
+                    if flaw.date_detected:                        
                         date_flaw_detected = arrow.get(flaw.date_detected, date_formats)
                 except ParserError as e:
                     red("Error while parsing date-detected of flaw " + str(flaw.id))
                     print(e)
                     date_flaw_detected = None
+                except TypeError as e:  # this error is often given because 
+                                        # a date is provided instead of a string
+                    # print(e)
+                    yellow("Converting to string... " + str(flaw.date_detected))
+                    date_flaw_detected = arrow.get(str(flaw.date_detected), date_formats)
 
                 # if date_flaw_detected:
                 #     print(str(flaw.date_detected) + " -> " + date_flaw_detected.format())  # Debug
@@ -186,6 +191,11 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
                     red("Error while parsing date-reported of flaw " + str(flaw.id))
                     print(e)
                     date_flaw_reported = None
+                except TypeError as e:  # this error is often given because 
+                                        # a date is provided instead of a string
+                    # print(e)
+                    yellow("Converting to string... " + str(flaw.date_detected))
+                    date_flaw_detected = arrow.get(str(flaw.date_detected), date_formats)
 
                 # if date_flaw_reported:
                 #     print(str(flaw.date_reported) + " -> " + date_flaw_reported.format())  # Debug
