@@ -21,11 +21,11 @@
 ~CVE-2020-10281 https://github.com/aliasrobotics/RVD/issues/3315
 ~CVE-2020-10282 https://github.com/aliasrobotics/RVD/issues/3316
 ~CVE-2020-10283 TODO (send) https://github.com/aliasrobotics/RVD/issues/3317
-CVE-2020-10284
-CVE-2020-10285
-CVE-2020-10286
-CVE-2020-10287
-CVE-2020-10288
+CVE-2020-10284 https://github.com/aliasrobotics/RVD/issues/3321
+CVE-2020-10285 https://github.com/aliasrobotics/RVD/issues/3322
+CVE-2020-10286 https://github.com/aliasrobotics/RVD/issues/3323
+CVE-2020-10287 https://github.com/aliasrobotics/RVD/issues/3326
+CVE-2020-10288 https://github.com/aliasrobotics/RVD/issues/3327
 CVE-2020-10289
 CVE-2020-10290
 CVE-2020-10291

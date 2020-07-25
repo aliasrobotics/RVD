@@ -1012,7 +1012,7 @@ taxonomy used for its categorization, refer to \
                 return "none"
 
         for elem in vector.split("/")[1:]:
-            if element is "A":
+            if element == "A":
                 if element + ":" in elem:
                     return self.elements_components[elem.split(":")[0]][
                         elem.split(":")[1]
