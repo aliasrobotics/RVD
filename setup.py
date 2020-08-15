@@ -16,7 +16,7 @@ setup(
         "mergedeep",
         "numpy",
         "plotly",
-        "pprint",
+        #"pprint",
         "pygithub",
         "python-dateutil==2.7.3",
         "python-gitlab",
