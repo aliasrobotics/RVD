@@ -10,7 +10,7 @@ Class to abstract the vulners database
 from ..utils import gray, red, green, cyan, yellow
 import os
 import vulners
-import pprint
+# import pprint
 from .defaults import *
 from .flaw import *
 from .base import *
@@ -48,7 +48,7 @@ class Vulners:
         """
         # augment the query
         augmented_query = query + " order:published"
-        pprint.pprint(self.api.search(augmented_query, limit))
+        print(self.api.search(augmented_query, limit))
         if push:
             yellow("Push does nothing in here!")
 
@@ -60,7 +60,7 @@ class Vulners:
         # augment the query
         augmented_query = query + " type:cve order:published"
         results = self.api.search(augmented_query, limit)
-        pprint.pprint(results)
+        print(results)
 
         for element in results:
             document = default_document()  # get the default document

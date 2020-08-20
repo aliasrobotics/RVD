@@ -30,7 +30,7 @@ import sys
 import json
 import os
 import subprocess
-import pprint
+#import pprint
 from datetime import datetime
 import arrow
 from arrow.parser import ParserError
@@ -727,7 +727,7 @@ def cve_search(all, vendor, product, push):
         cve = CVESearch()
         cyan("Browsing for vendor: ", end="")
         print(vendor)
-        pprint.pprint(cve.browse(vendor))
+        # pprint.pprint(cve.browse(vendor))
     elif product:
         red("Error, vendor is required")
         sys.exit(1)

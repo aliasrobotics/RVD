@@ -13,7 +13,7 @@ from ..database.base import Base
 from ..utils import gray, red, green, cyan, yellow
 import sys
 from tabulate import tabulate
-import pprint
+# import pprint
 from plotly import graph_objs as go
 
 # import plotly.graph_objects as go
@@ -222,7 +222,7 @@ class Statistics(Base):
 
         # visualize and import it statically
         print(self.cwe_dict)  # for importing it, use beaufiers
-        pprint.pprint(self.cwe_dict)  # for visualization
+        # pprint.pprint(self.cwe_dict)  # for visualization
 
     def populate_cwe_static(self):
         """
@@ -2020,7 +2020,8 @@ class Statistics(Base):
                 red("Adding to vendor group None (" + str(vuln.id) + ")")
                 dict_vulnerabilities["None"].append(score)
 
-        pprint.pprint(dict_vulnerabilities)
+        # pprint.pprint(dict_vulnerabilities)
+        print(dict_vulnerabilities)
 
         # construct data for plotting
         for key in dict_vulnerabilities.keys():

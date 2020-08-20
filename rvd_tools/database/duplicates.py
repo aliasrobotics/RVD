@@ -14,7 +14,7 @@ import sys
 import os
 import yaml
 from .flaw import *
-import pprint
+# import pprint
 
 
 class Duplicates(Base):
