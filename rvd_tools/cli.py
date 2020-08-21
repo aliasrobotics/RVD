@@ -101,7 +101,7 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
             document_raw = issue.body
             document_raw = document_raw.replace("```yaml", "").replace("```", "")
             try:
-                document = yaml.load(document_raw, Loader=yaml.FullLoader)
+                document = yaml.safe_load(document_raw, Loader=yaml.FullLoader)
                 # print(document)
                 flaw = Flaw(document)
                 if markdown:
@@ -158,7 +158,7 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
                 # Build flaw
                 document_raw = issue.body
                 document_raw = document_raw.replace("```yaml", "").replace("```", "")
-                document = yaml.load(document_raw, Loader=yaml.FullLoader)
+                document = yaml.safe_load(document_raw, Loader=yaml.FullLoader)
                 flaw = Flaw(document)
 
                 date_formats = [
@@ -168,13 +168,13 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
                 ]
                 try:
                     date_flaw_detected = None
-                    if flaw.date_detected:                        
+                    if flaw.date_detected:
                         date_flaw_detected = arrow.get(flaw.date_detected, date_formats)
                 except ParserError as e:
                     red("Error while parsing date-detected of flaw " + str(flaw.id))
                     print(e)
                     date_flaw_detected = None
-                except TypeError as e:  # this error is often given because 
+                except TypeError as e:  # this error is often given because
                                         # a date is provided instead of a string
                     # print(e)
                     yellow("Converting to string... " + str(flaw.date_detected))
@@ -191,7 +191,7 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
                     red("Error while parsing date-reported of flaw " + str(flaw.id))
                     print(e)
                     date_flaw_reported = None
-                except TypeError as e:  # this error is often given because 
+                except TypeError as e:  # this error is often given because
                                         # a date is provided instead of a string
                     # print(e)
                     yellow("Converting to string... " + str(flaw.date_detected))
@@ -271,7 +271,7 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
                 cyan("Importing from RVD, issue: " + str(issue))
                 document_raw = issue.body
                 document_raw = document_raw.replace("```yaml", "").replace("```", "")
-                document = yaml.load(document_raw, Loader=yaml.FullLoader)
+                document = yaml.safe_load(document_raw, Loader=yaml.FullLoader)
                 flaw = Flaw(document)
                 print(flaw)
 
@@ -466,7 +466,7 @@ def duplicates(train, push, label, test):
         issue = importer.repo.get_issue(int(999))  #  use existing flaw
         document_raw = issue.body
         document_raw = document_raw.replace("```yaml", "").replace("```", "")
-        document = yaml.load(document_raw, Loader=yaml.FullLoader)
+        document = yaml.safe_load(document_raw, Loader=yaml.FullLoader)
         # document = default_document()  # get the default document
         flaw = Flaw(document)
         print(duplicates.is_duplicate(flaw))
@@ -784,7 +784,7 @@ def validate_file(filename, dump=False):
     try:
         with open(click.format_filename(filename), "r") as stream:
             try:
-                doc = yaml.load(stream, Loader=yaml.FullLoader)
+                doc = yaml.safe_load(stream, Loader=yaml.FullLoader)
             except yaml.YAMLError as exception:
                 raise exception
     except FileNotFoundError:
@@ -917,7 +917,7 @@ def exportar_local(update):
             try:
                 document_raw = issue.body
                 document_raw = document_raw.replace("```yaml", "").replace("```", "")
-                document = yaml.load(document_raw)
+                document = yaml.safe_load(document_raw)
 
                 try:
                     flaw = Flaw(document)
@@ -976,7 +976,7 @@ def fetch_local(id):
             if file_name == file:
                 relative_path = local_directory_path + file
                 with open(relative_path, "r") as file_doc:
-                    document = yaml.load(file_doc, Loader=yaml.FullLoader)
+                    document = yaml.safe_load(file_doc, Loader=yaml.FullLoader)
                     # yellow(document)
                     print(Flaw(document))
 

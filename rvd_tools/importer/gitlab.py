@@ -54,7 +54,7 @@ class GitlabImporter(Base):
         document_raw = (
             issue.attributes["description"].replace("```yaml", "").replace("```", "")
         )
-        document = yaml.load(document_raw, Loader=yaml.FullLoader)
+        document = yaml.safe_load(document_raw, Loader=yaml.FullLoader)
         flaw = Flaw(document)
         labels = issue.attributes["labels"]
 
