@@ -1275,8 +1275,11 @@ Below we list some of the existing capabilities (some **deprecated** in the curr
     - [ ] Products affected
 - [ ] Use local cache of tickets for all verbs, instead of polling from database every time
 - [x] Develop capabilities to output CVE JSON-compatible tickets
+- [ ] Security action: Add a first-step towards a security pipeline that performs static analysis on source code
 
 #### Future
+- [ ] Security action: Unit, functional and integration tests
+- [ ] Security action: other (TODO: dep. tracking, dynamic analysis)
 - [ ] Make a table with versions per product and automatically-mitigate (and close) flaws in older versions that haven't been (auto)detected in newer versions.
 - [ ] Automatic and periodic review of security advisories "in search" for robot-related vulnerabilities
 - [ ] Automatic and periodic review of NVD "in search" for robot-related vulnerabilities
