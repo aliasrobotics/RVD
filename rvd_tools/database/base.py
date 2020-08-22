@@ -83,7 +83,7 @@ class Base:
 
         document_raw = issue.body
         document_raw = document_raw.replace("```yaml", "").replace("```", "")
-        document = yaml.load(document_raw)
+        document = yaml.safe_load(document_raw)
         # print(document)
 
         flaw = Flaw(document)
@@ -207,7 +207,7 @@ class Base:
         document_raw = issue.body
         document_raw = document_raw.replace("```yaml", "").replace("```", "")
         try:
-            document = yaml.load(document_raw, Loader=yaml.FullLoader)
+            document = yaml.safe_load(document_raw, Loader=yaml.FullLoader)
             flaw = Flaw(document)
             # print(flaw)
         except yaml.scanner.ScannerError:

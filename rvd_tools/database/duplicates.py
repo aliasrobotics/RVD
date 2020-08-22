@@ -149,7 +149,7 @@ class Duplicates(Base):
                         document_raw = document_raw.replace("```yaml", "").replace(
                             "```", ""
                         )
-                        document = yaml.load(document_raw)
+                        document = yaml.safe_load(document_raw)
 
                         try:
                             flaw = Flaw(document)
@@ -203,7 +203,7 @@ not processed due to an error"
                 for file in files:
                     relative_path = local_directory_path + file
                     with open(relative_path, "r") as file_doc:
-                        document = yaml.load(file_doc, Loader=yaml.FullLoader)
+                        document = yaml.safe_load(file_doc, Loader=yaml.FullLoader)
                         # yellow(document)
                         try:
                             flaw = Flaw(document)
@@ -270,7 +270,7 @@ not processed due to an error"
                         document_raw = document_raw.replace("```yaml", "").replace(
                             "```", ""
                         )
-                        document = yaml.load(document_raw)
+                        document = yaml.safe_load(document_raw)
 
                         try:
                             flaw = Flaw(document)
