@@ -26,10 +26,11 @@ from .importer.gitlab import *
 from .cve.cve import *
 from .statistics.statistics import *
 from .reports.reports import *
+from subprocess import call as run_cmd
+import shlex
 import sys
 import json
 import os
-import subprocess
 #import pprint
 from datetime import datetime
 import arrow
@@ -898,7 +899,8 @@ def exportar_local(update):
     else:
         if update:
             cyan("Updating all tickets, re-downloading...")
-            os.system("rm -r " + local_directory_path)
+            cmd = f"rm -r {local_directory_path}"
+            run_cmd(shlex.split(cmd))
             os.makedirs(".rvd")
             flag_fetch = True
         else:
@@ -959,7 +961,8 @@ def fetch():
     #     sys.exit(1)
     # else:
     cyan("Creating the default folder for the import process...")
-    os.system("mkdir -p /tmp/rvd")
+    cmd = "mkdir -p /tmp/rvd"
+    run_cmd(shlex.split(cmd))
 
 
 @fetch.command("local")
