@@ -10,7 +10,9 @@ Class that manages de-duplication of RVD flaws
 import dedupe
 from .base import *
 from ..utils import gray, red, green, cyan, yellow
+from subprocess import call as run_cmd
 import sys
+import shlex
 import os
 import yaml
 from .flaw import *
@@ -107,7 +109,8 @@ class Duplicates(Base):
         else:
             if update:
                 cyan("Updating all tickets, re-downloading...")
-                os.system("rm -r " + local_directory_path)
+                cmd = f"rm -r {local_directory_path}"
+                run_cmd(shlex.split(cmd))
                 os.makedirs(".rvd")
             else:
                 yellow("Directory already exists, skipping")

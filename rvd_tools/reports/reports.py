@@ -10,7 +10,9 @@ Class to generate PDF reports from tickets, both private or public
 from ..utils import cyan
 import os
 from ..importer.gitlab import *
+from subprocess import call as run_cmd
 import arrow
+import shlex
 
 
 class Report:
@@ -24,9 +26,10 @@ class Report:
         """
         Generate a report from a Gitlab private archive
         """
-        cyan("Creating temporary directory /tmp/rvd/reports/" + str(id) + " ...")
-        temp_dir = "/tmp/rvd/reports/" + str(id)
-        os.system("mkdir -p " + temp_dir)
+        cyan(f"Creating temporary directory /tmp/rvd/reports/{id} ...")
+        temp_dir = f"/tmp/rvd/reports/{id}"
+        cmd = f"mkdir -p {temp_dir}"
+        run_cmd(shlex.split(cmd))
 
         # Create the markdown file
         cyan("Creating Markdown file...")
