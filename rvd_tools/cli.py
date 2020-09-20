@@ -102,7 +102,7 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
             document_raw = issue.body
             document_raw = document_raw.replace("```yaml", "").replace("```", "")
             try:
-                document = yaml.safe_load(document_raw, Loader=yaml.FullLoader)
+                document = yaml.safe_load(document_raw)
                 # print(document)
                 flaw = Flaw(document)
                 if markdown:
@@ -159,7 +159,7 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
                 # Build flaw
                 document_raw = issue.body
                 document_raw = document_raw.replace("```yaml", "").replace("```", "")
-                document = yaml.safe_load(document_raw, Loader=yaml.FullLoader)
+                document = yaml.safe_load(document_raw)
                 flaw = Flaw(document)
 
                 date_formats = [
@@ -272,7 +272,7 @@ def listar(id, dump, private, onlyprivate, label, isoption, markdown, fromdate):
                 cyan("Importing from RVD, issue: " + str(issue))
                 document_raw = issue.body
                 document_raw = document_raw.replace("```yaml", "").replace("```", "")
-                document = yaml.safe_load(document_raw, Loader=yaml.FullLoader)
+                document = yaml.safe_load(document_raw)
                 flaw = Flaw(document)
                 print(flaw)
 
@@ -467,7 +467,7 @@ def duplicates(train, push, label, test):
         issue = importer.repo.get_issue(int(999))  #  use existing flaw
         document_raw = issue.body
         document_raw = document_raw.replace("```yaml", "").replace("```", "")
-        document = yaml.safe_load(document_raw, Loader=yaml.FullLoader)
+        document = yaml.safe_load(document_raw)
         # document = default_document()  # get the default document
         flaw = Flaw(document)
         print(duplicates.is_duplicate(flaw))
@@ -785,7 +785,7 @@ def validate_file(filename, dump=False):
     try:
         with open(click.format_filename(filename), "r") as stream:
             try:
-                doc = yaml.safe_load(stream, Loader=yaml.FullLoader)
+                doc = yaml.safe_load(stream)
             except yaml.YAMLError as exception:
                 raise exception
     except FileNotFoundError:
@@ -979,7 +979,7 @@ def fetch_local(id):
             if file_name == file:
                 relative_path = local_directory_path + file
                 with open(relative_path, "r") as file_doc:
-                    document = yaml.safe_load(file_doc, Loader=yaml.FullLoader)
+                    document = yaml.safe_load(file_doc)
                     # yellow(document)
                     print(Flaw(document))
 
