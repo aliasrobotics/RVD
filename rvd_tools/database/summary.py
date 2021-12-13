@@ -1127,6 +1127,21 @@ Vulnerabilities are rated according to the [Robot Vulnerability Scoring System (
 For a discussion regarding terminology and the difference between robot vulnerabilities, robot weaknesses, robot bugs or others
 refer to [Appendix A](#appendix-a-vulnerabilities-weaknesses-bugs-and-more).
 
+<details><summary>Cite this work:</summary>
+
+```
+@article{vilches2019introducing,
+  title={Introducing the robot vulnerability database (rvd)},
+  author={Vilches, V{\'\i}ctor Mayoral and Juan, Lander Usategui San and Dieber, Bernhard and Carbajo, Unai Ayucar and Gil-Uriarte, Endika},
+  journal={arXiv preprint arXiv:1912.11299},
+  year={2019}
+}
+
+```
+
+</details>
+
+
 **As main contributor, Alias Robotics supports and offers robot cybersecurity activities in close collaboration
 with original robot manufacturers. By no means Alias encourages or promote the unauthorized
 tampering with running robotic systems. This can cause serious human harm and material
