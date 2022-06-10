@@ -29,7 +29,7 @@ setup(
     	"xmltodict",
     	"importlib-resources",
     	"python-gitlab",
-        "requests==2.23.0",
+        "requests==2.28.0",
         "pycvesearch@git+https://github.com/cve-search/PyCVESearch#egg=pycvesearch",
         "cvsslib@git+https://github.com/aliasrobotics/RVSS#egg=cvsslib",
     ],
