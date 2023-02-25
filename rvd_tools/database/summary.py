@@ -1117,7 +1117,7 @@ class Summary(Base):
         header = """\
 # Robot Vulnerability Database (RVD)
 
-<a href="http://www.aliasrobotics.com"><img src="https://www.massrobotics.org/wp-content/uploads/2019/01/Alias-logo.png" align="left" hspace="8" vspace="2" width="200"></a>
+<a href="http://www.aliasrobotics.com"><img src="https://www.aliasrobotics.com/img/LOGO-alias.svg" align="left" hspace="8" vspace="2" width="200"></a>
 
 [![Article](https://img.shields.io/badge/article-arxiv%3A1912.11299-red.svg)](https://arxiv.org/pdf/1912.11299.pdf)
 

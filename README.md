@@ -6,7 +6,7 @@
 
 # Robot Vulnerability Database (RVD)
 
-<a href="http://www.aliasrobotics.com"><img src="https://www.massrobotics.org/wp-content/uploads/2019/01/Alias-logo.png" align="left" hspace="8" vspace="2" width="200"></a>
+<a href="http://www.aliasrobotics.com"><img src="https://www.aliasrobotics.com/img/LOGO-alias.svg" align="left" hspace="8" vspace="2" width="200"></a>
 
 [![Article](https://img.shields.io/badge/article-arxiv%3A1912.11299-red.svg)](https://arxiv.org/pdf/1912.11299.pdf)
 
@@ -204,21 +204,26 @@ For more, visit the [complete list](https://github.com/aliasrobotics/RVDP/issues
 
 ## ToC
 
-- [ToC](#toc)
-- [Concepts](#concepts)
-- [Sponsored and funded projects](#sponsored-and-funded-projects)
-	- [ROS 2](#ros-2)
-		- [ROS 2 flaws by package (only `open` ones)](#ros-2-flaws-by-package-only-open-ones)
-- [Disclosure policy](#disclosure-policy)
-- [CI/CD setup](#cicd-setup)
-- [Contributing, reporting a vulnerability](#contributing-reporting-a-vulnerability)
-- [Contact us or send feedback](#contact-us-or-send-feedback)
-	- [Automatic pings for manufacturers](#automatic-pings-for-manufacturers)
-- [Appendices](#appendices)
-	- [Appendix A: Vulnerabilities, bugs, bugs and more](#appendix-a-vulnerabilities-weaknesses-bugs-and-more)
-		- [Research on terminology](#research-on-terminology)
-		- [Discussion and interpretation](#discussion-and-interpretation)
-	- [Appendix B: How does RVD relate to CVE, the CVE List and the NVD?](#appendix-b-how-does-rvd-relate-to-cve-the-cve-list-and-the-nvd)
+- [Robot Vulnerability Database (RVD)](#robot-vulnerability-database-rvd)
+  - [ToC](#toc)
+  - [Concepts](#concepts)
+  - [Sponsored and funded projects](#sponsored-and-funded-projects)
+    - [ROS](#ros)
+    - [ROS 2](#ros-2)
+  - [Disclosure policy](#disclosure-policy)
+  - [CI/CD setup](#cicd-setup)
+      - [**Beta** (\>= `0.5`)](#beta--05)
+      - [**1.x** (\>= `1.0`)](#1x--10)
+      - [Future](#future)
+  - [Contributing, reporting a vulnerability](#contributing-reporting-a-vulnerability)
+  - [Contact us or send feedback](#contact-us-or-send-feedback)
+    - [Automatic pings for manufacturers](#automatic-pings-for-manufacturers)
+    - [Cite our work](#cite-our-work)
+  - [Appendices](#appendices)
+    - [Appendix A: Vulnerabilities, weaknesses, bugs and more](#appendix-a-vulnerabilities-weaknesses-bugs-and-more)
+      - [Research on terminology](#research-on-terminology)
+      - [Discussion and interpretation](#discussion-and-interpretation)
+    - [Appendix B: How does RVD relate to CVE, the CVE List and the NVD?](#appendix-b-how-does-rvd-relate-to-cve-the-cve-list-and-the-nvd)
     - [Appendix C: Legal disclaimer](#appendix-c-legal-disclaimer)
 
 ## Concepts

@@ -555,7 +555,7 @@ class Summary(RVDImport):
         header = """\
 # Robot Vulnerability Database (RVD)
 
-<a href="http://www.aliasrobotics.com"><img src="https://pbs.twimg.com/profile_images/1138735160428548096/px2v9MeF.png" align="left" hspace="8" vspace="2" width="200"></a>
+<a href="http://www.aliasrobotics.com"><img src="https://www.aliasrobotics.com/img/LOGO-alias.svg" align="left" hspace="8" vspace="2" width="200"></a>
 
 This repository contains Alias Robotics' Robot Vulnerability and Database (RVD), an attempt to register and record robot vulnerabilities and weaknesses. 
 
