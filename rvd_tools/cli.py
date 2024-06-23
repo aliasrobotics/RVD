@@ -580,7 +580,7 @@ def cve_validate(version, file):
 @click.option("--product", default=None, help="Product to research.")
 @click.option("--push/--no-push", default=False, help="Push to RVD in a new ticket.")
 @cve.command("search")
-def cve_search(all, vendor, product, push):
+def cve_search(all, vendor, product, push, base_url=None):
     """
     Search CVEs and CPEs from cve-search enabled DB, import them.
 
@@ -590,14 +590,19 @@ def cve_search(all, vendor, product, push):
     Makes use of the following:
     - https://github.com/cve-search/PyCVESearch
     - (indirectly) https://github.com/cve-search/cve-search
+
+    :param base_url: The base URL for the CVE search API (required). If not provided, the default URL will be used.
     """
     # cve = CVESearch()
     cyan("Searching for CVEs and CPEs with cve-search ...")
     from pycvesearch import CVESearch
 
+    if base_url is None:
+        base_url = "https://cvepremium.circl.lu/"
+
     if all:
         if vendor:
-            cve = CVESearch()
+            cve = CVESearch(base_url=base_url)
             vendor_flaws = cve.browse(vendor)
             products = vendor_flaws["product"]
             for product in products:
@@ -666,7 +671,7 @@ def cve_search(all, vendor, product, push):
         return
 
     if vendor and product:
-        cve = CVESearch()
+        cve = CVESearch(base_url=base_url)
         cyan("Searching for vendor/product: ", end="")
         print(vendor + "/" + product)
         results = cve.search(vendor + "/" + product)
@@ -725,7 +730,7 @@ def cve_search(all, vendor, product, push):
                 pusher.update_ticket(issue, new_flaw)
 
     elif vendor:
-        cve = CVESearch()
+        cve = CVESearch(base_url=base_url)
         cyan("Browsing for vendor: ", end="")
         print(vendor)
         # pprint.pprint(cve.browse(vendor))
