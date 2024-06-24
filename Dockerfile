@@ -1,12 +1,17 @@
 FROM ubuntu:20.04
 
 # [Optional] Uncomment this section to install additional OS packages.
+
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
-        net-tools python3 python3-pip python3-dev \
-        curl gnupg nmap less git aarch64-linux-gnu-gcc wget
+    net-tools python3 python3-pip python3-dev \
+    curl gnupg nmap less git gcc-aarch64-linux-gnu wget build-essential
 
 RUN pip3 install Cython
+
+# Copy the parent directory of the current directory into the Docker image
+COPY . /workspace/RDV
+WORKDIR /workspace/RDV
 ## SOURCE INSTALL
 ## Install babeltrace from sources:
 #
