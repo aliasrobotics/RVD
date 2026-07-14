@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use RVD, please cite the paper below."
+title: Robot Vulnerability Database (RVD)
+type: software
+version: 0.9
+authors:
+  - name: Alias Robotics
+repository-code: https://github.com/aliasrobotics/RVD
+url: https://cybersecurityrobotics.com/research/robot-vulnerability-database-rvd/
+preferred-citation:
+  type: article
+  title: Introducing the Robot Vulnerability Database (RVD)
+  authors:
+    - given-names: Víctor
+      family-names: Mayoral Vilches
+    - given-names: Lander
+      family-names: Usategui San Juan
+    - given-names: Bernhard
+      family-names: Dieber
+    - given-names: Unai
+      family-names: Ayucar Carbajo
+    - given-names: Endika
+      family-names: Gil-Uriarte
+  year: 2019
+  journal: arXiv
+  url: https://arxiv.org/abs/1912.11299

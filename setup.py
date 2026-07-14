@@ -36,7 +36,11 @@ setup(
         "cvsslib@git+https://github.com/aliasrobotics/RVSS#egg=cvsslib",
     ],
     url="https://github.com/aliasrobotics/RVD",
-    project_urls={"Source Code": "https://github.com/aliasrobotics/RVD"},
+    project_urls={
+        "Source Code": "https://github.com/aliasrobotics/RVD",
+        "Research": "https://cybersecurityrobotics.com/research/robot-vulnerability-database-rvd/",
+        "Vulnerability Explorer": "https://cybersecurityrobotics.com/vulnerabilities/",
+    },
     license="GPLv3",
     author="Alias Robotics",
     author_email="contact@aliasrobotics.com",
